@@ -123,10 +123,15 @@ app.layout = dbc.Container(id="root", fluid=True, class_name="g-0", children=
                                         ),
                                         dbc.Row(
                                             [
-                                                dbc.Col([html.A("Romain THOMAS 2023", href="https://github.com/romain894", target="blank", style={'text-align':'left'}), " ",
-                                                    html.A("romain.thomas@su.se", href="mailto:romain.thomas@su.se", style={'text-align':'left'})]),
-                                                dbc.Col(html.A("Stockholm Resilience Centre", href="https://www.stockholmresilience.org/", target="blank", style={'text-align':'center'})),
+                                                dbc.Col(html.Div(html.A("Romain THOMAS 2023", href="https://github.com/romain894", target="blank"), style={'text-align':'left'})),
+                                                dbc.Col(html.Div(html.A("Stockholm Resilience Centre", href="https://www.stockholmresilience.org/", target="blank"), style={'text-align':'center'})),
                                                 dbc.Col(html.Div(version, style={'text-align':'right'})),
+                                            ]
+                                        ),
+                                        dbc.Row(
+                                            [
+                                                dbc.Col(html.Div(html.A("romain.thomas@su.se", href="mailto:romain.thomas@su.se"), style={'text-align':'left'})),
+                                                dbc.Col(html.Div(html.A("Source code", href="https://github.com/romain894/openalex-analysis", target="blank"), style={'text-align':'right'})),
                                             ]
                                         ),
                                     ],
