@@ -1,0 +1,362 @@
+\hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis}{}\doxysection{Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis Class Reference}
+\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis}\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+
+
+Open\+Alex\+Analysis class which contains generic methods to do analysis over Open\+Alex entities.  
+
+
+
+
+Inheritance diagram for Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=223pt]{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a68144258787920e66a9d5c6bc2082074}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, entitie\+\_\+from\+\_\+id=None, extra\+\_\+filters=None, database\+\_\+file\+\_\+path=None, allow\+\_\+automatic\+\_\+download=True, disable\+\_\+tqdm\+\_\+loading\+\_\+bar=False, progress\+\_\+fct\+\_\+update=None, create\+\_\+dataframe=True, entitie\+\_\+name=None, load\+\_\+only\+\_\+columns=None, n\+\_\+max\+\_\+entities=default\+\_\+n\+\_\+max\+\_\+entities\+\_\+to\+\_\+download)
+\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_aa31fb4fae558f3845b267fe5091ea4b0}{get\+\_\+count\+\_\+entities\+\_\+matched}} (self, query\+\_\+filters)
+\begin{DoxyCompactList}\small\item\em Gets and return the number of entities which match the query fitlers. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_af0a63bec8dd84ec472c786563cea93af}{get\+\_\+api\+\_\+query}} (self)
+\begin{DoxyCompactList}\small\item\em Gets the api query from the parameters of the instance. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ab90ae0d0930851210b85ef314fc44ad5}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ab90ae0d0930851210b85ef314fc44ad5}} 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ab90ae0d0930851210b85ef314fc44ad5}{download\+\_\+list\+\_\+entities}} (self)
+\begin{DoxyCompactList}\small\item\em Downloads the entities which match the parameters of the instance, and store the dataset as a parquet file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a12c31677c7f975d4174328e77b9bcf66}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a12c31677c7f975d4174328e77b9bcf66}} 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a12c31677c7f975d4174328e77b9bcf66}{load\+\_\+entities\+\_\+dataframe}} (self)
+\begin{DoxyCompactList}\small\item\em Loads an entities dataset from file (or download it if needed and allowed by the instance) to the dataframe of the instance. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a2fd883397c064605c3dc19767322052f}{get\+\_\+df\+\_\+filtered\+\_\+entities\+\_\+selection\+\_\+threshold}} (self, df\+\_\+filters)
+\begin{DoxyCompactList}\small\item\em Gets df\+\_\+filtered which contains the entities of self.\+entities\+\_\+df fitting the filters in df\+\_\+filters. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a93a1e09a8cf1117f24bdde6ae40450ba}{get\+\_\+number\+\_\+of\+\_\+entities\+\_\+selected}} (self, x\+\_\+threshold, y\+\_\+threshold, cited\+\_\+by\+\_\+threshold, x\+\_\+datas, y\+\_\+datas)
+\begin{DoxyCompactList}\small\item\em Gets the number of entities selected on the plot. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a674987fcc0994cb9efde76c558ce2ca2}{create\+\_\+multi\+\_\+concept\+\_\+filters\+\_\+entities\+\_\+dataframe}} (self, concepts\+\_\+from, concepts\+\_\+filters, thresholds, x\+\_\+datas, x\+\_\+threshold, cited\+\_\+by\+\_\+threshold)
+\begin{DoxyCompactList}\small\item\em Creates the multi concept filters entities dataframe. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_acc4a6852db19a9023367de2be48c58ce}{add\+\_\+average\+\_\+combined\+\_\+concept\+\_\+score\+\_\+to\+\_\+multi\+\_\+concept\+\_\+entitie\+\_\+df}} (self, concepts\+\_\+from)
+\begin{DoxyCompactList}\small\item\em Adds a column with the average combined concept score to the multi concept entities dataframe. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_abf995f680d480a06083897b6d5bd3958}{get\+\_\+database\+\_\+file\+\_\+name}} (self, entitie\+\_\+from\+\_\+id=None, entities\+\_\+type=None, db\+\_\+format=\char`\"{}parquet\char`\"{}, extra\+\_\+text=None)
+\begin{DoxyCompactList}\small\item\em Gets the database file name according to the parameters of the ojbect or the arguments given. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_adb07ba46cd532327c5f18742cbc1ee30}{get\+\_\+entitie\+\_\+string\+\_\+name}} (self, entitie=None)
+\begin{DoxyCompactList}\small\item\em Gets the entitie type string name. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ae468b1ea80ebb8e3135a3531ab0763e9}{get\+\_\+entitie\+\_\+type\+\_\+from\+\_\+id}} (self, entitie=None)
+\begin{DoxyCompactList}\small\item\em Gets the entitie type from the entitie id. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_acdb753143ad1a9fe8f1ac82d763b4b6a}{get\+\_\+name\+\_\+of\+\_\+entitie}} (self, entitie=None, allow\+\_\+download\+\_\+from\+\_\+\+API=True)
+\begin{DoxyCompactList}\small\item\em Gets the name of entitie. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_adac0f884cbdce124e97e3e23222dc651}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_adac0f884cbdce124e97e3e23222dc651}} 
+{\bfseries per\+\_\+page}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a2d1c1579360bc46359463d1d6958ef0e}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a2d1c1579360bc46359463d1d6958ef0e}} 
+{\bfseries project\+\_\+datas\+\_\+folder\+\_\+path}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a9377746a4ac6be0deba8d9ddd2ee1140}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a9377746a4ac6be0deba8d9ddd2ee1140}} 
+{\bfseries entitie\+\_\+from\+\_\+id}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_affa003a92f736c3c99b71be9dd0a252b}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_affa003a92f736c3c99b71be9dd0a252b}} 
+{\bfseries entitie\+\_\+from\+\_\+type}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a00437eef7e84d577506fec9b295ab934}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a00437eef7e84d577506fec9b295ab934}} 
+{\bfseries extra\+\_\+filters}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ae9d4878de3e709e4e9b6f0588d67cdfc}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ae9d4878de3e709e4e9b6f0588d67cdfc}} 
+{\bfseries database\+\_\+file\+\_\+path}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_acce8cae1a954b3f49dbe9228cd1d3e5c}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_acce8cae1a954b3f49dbe9228cd1d3e5c}} 
+{\bfseries allow\+\_\+automatic\+\_\+download}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a60099b4c4ad8291ba21c19ae9186b79f}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a60099b4c4ad8291ba21c19ae9186b79f}} 
+{\bfseries entitie\+\_\+name}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ac2431d9ff3228ac196e8fbaa870e6e92}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ac2431d9ff3228ac196e8fbaa870e6e92}} 
+{\bfseries load\+\_\+only\+\_\+columns}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a721eaaa24ea46d9a355540ec89f93ad8}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a721eaaa24ea46d9a355540ec89f93ad8}} 
+{\bfseries entities\+\_\+df}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a5a5b8128c4424b082be6f18092baaad5}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a5a5b8128c4424b082be6f18092baaad5}} 
+{\bfseries entities\+\_\+multi\+\_\+filtered\+\_\+df}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_afe0c7ac4d1d1c911622d4a040a58d8e9}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_afe0c7ac4d1d1c911622d4a040a58d8e9}} 
+{\bfseries element\+\_\+count\+\_\+df}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_abc216657ad08bcf29de156d8e04104ab}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_abc216657ad08bcf29de156d8e04104ab}} 
+{\bfseries entitie\+\_\+downloading\+\_\+progress\+\_\+percentage}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a1fe8d7972de06512371b4293882a9bae}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a1fe8d7972de06512371b4293882a9bae}} 
+{\bfseries create\+\_\+element\+\_\+count\+\_\+array\+\_\+progress\+\_\+percentage}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a1eb29aace658cc79ebd752dd0461fece}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a1eb29aace658cc79ebd752dd0461fece}} 
+{\bfseries create\+\_\+element\+\_\+count\+\_\+array\+\_\+progress\+\_\+text}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a13020a3c672ca0ebdb2a09e1137e250b}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a13020a3c672ca0ebdb2a09e1137e250b}} 
+{\bfseries count\+\_\+element\+\_\+type}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a2c94939ece819abcfb2f7f3c4000269f}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a2c94939ece819abcfb2f7f3c4000269f}} 
+{\bfseries count\+\_\+element\+\_\+years}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ab8c7c97203b0a729d8ec1620f5e44ff4}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ab8c7c97203b0a729d8ec1620f5e44ff4}} 
+{\bfseries count\+\_\+entities\+\_\+cols}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a70c4cf18d89e642079bfb9c55816a801}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a70c4cf18d89e642079bfb9c55816a801}} 
+{\bfseries n\+\_\+max\+\_\+entities}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a698e28a95f5ae37747889d6cf02a7da9}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a698e28a95f5ae37747889d6cf02a7da9}} 
+{\bfseries disable\+\_\+tqdm\+\_\+loading\+\_\+bar}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ad840bd05d0b51a8be56a81ae662bdb3e}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ad840bd05d0b51a8be56a81ae662bdb3e}} 
+{\bfseries progress\+\_\+fct\+\_\+update}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ad453b41d8a66f400dd089738c4857b0f}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ad453b41d8a66f400dd089738c4857b0f}} 
+{\bfseries cc}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+Open\+Alex\+Analysis class which contains generic methods to do analysis over Open\+Alex entities. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a68144258787920e66a9d5c6bc2082074}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a68144258787920e66a9d5c6bc2082074}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie\+\_\+from\+\_\+id = {\ttfamily None},  }\item[{}]{extra\+\_\+filters = {\ttfamily None},  }\item[{}]{database\+\_\+file\+\_\+path = {\ttfamily None},  }\item[{}]{allow\+\_\+automatic\+\_\+download = {\ttfamily True},  }\item[{}]{disable\+\_\+tqdm\+\_\+loading\+\_\+bar = {\ttfamily False},  }\item[{}]{progress\+\_\+fct\+\_\+update = {\ttfamily None},  }\item[{}]{create\+\_\+dataframe = {\ttfamily True},  }\item[{}]{entitie\+\_\+name = {\ttfamily None},  }\item[{}]{load\+\_\+only\+\_\+columns = {\ttfamily None},  }\item[{}]{n\+\_\+max\+\_\+entities = {\ttfamily default\+\_\+n\+\_\+max\+\_\+entities\+\_\+to\+\_\+download} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie\+\_\+from\+\_\+id} & The entitie identifier (eg an institution id) from which to take the entities (eg the works) to analyse (str) \\
+\hline
+{\em filters} & Optional additionnal filters, refer to the documentation of openalex and pyalex for the format (dict) \\
+\hline
+{\em database\+\_\+file\+\_\+path} & The database file path to force the analyse over datas in a specific file (str) \\
+\hline
+{\em allow\+\_\+automatic\+\_\+download} & The allow automatic download (True/\+False) \\
+\hline
+{\em disable\+\_\+tqdm\+\_\+loading\+\_\+bar} & The disable tqdm loading bar (True/\+False) \\
+\hline
+{\em progress\+\_\+fct\+\_\+update} & The progress fct update UNSUED ??? \\
+\hline
+{\em create\+\_\+dataframe} & Create the dataframe at the initialisation (and download the data if needed and allowed) \\
+\hline
+{\em entitie\+\_\+name} & To specify the name of the entitie to avoid downloading it via the API if needed \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_acc4a6852db19a9023367de2be48c58ce}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_acc4a6852db19a9023367de2be48c58ce}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df@{add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df}}
+\index{add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df@{add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df()}{add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+add\+\_\+average\+\_\+combined\+\_\+concept\+\_\+score\+\_\+to\+\_\+multi\+\_\+concept\+\_\+entitie\+\_\+df (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{concepts\+\_\+from }\end{DoxyParamCaption})}
+
+
+
+Adds a column with the average combined concept score to the multi concept entities dataframe. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em concepts\+\_\+from} & The concepts to use to calculate the combined concept score (list of str) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a674987fcc0994cb9efde76c558ce2ca2}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a674987fcc0994cb9efde76c558ce2ca2}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!create\_multi\_concept\_filters\_entities\_dataframe@{create\_multi\_concept\_filters\_entities\_dataframe}}
+\index{create\_multi\_concept\_filters\_entities\_dataframe@{create\_multi\_concept\_filters\_entities\_dataframe}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{create\_multi\_concept\_filters\_entities\_dataframe()}{create\_multi\_concept\_filters\_entities\_dataframe()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+create\+\_\+multi\+\_\+concept\+\_\+filters\+\_\+entities\+\_\+dataframe (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{concepts\+\_\+from,  }\item[{}]{concepts\+\_\+filters,  }\item[{}]{thresholds,  }\item[{}]{x\+\_\+datas,  }\item[{}]{x\+\_\+threshold,  }\item[{}]{cited\+\_\+by\+\_\+threshold }\end{DoxyParamCaption})}
+
+
+
+Creates the multi concept filters entities dataframe. 
+
+Combines different datasets and filters them.
+
+
+\begin{DoxyParams}{Parameters}
+{\em concepts\+\_\+from} & The concept datasets to import and on which the filters will be applied (list of str) \\
+\hline
+{\em concepts\+\_\+filters} & The concepts which will be used to filter (list of str) \\
+\hline
+{\em thresholds} & The thresholds attached to each concepts to filter (list of float or int) \\
+\hline
+{\em x\+\_\+datas} & The dataframe key of the global filter (eg the number of works) (str) \\
+\hline
+{\em x\+\_\+threshold} & The threshold for the global filter (float or int) \\
+\hline
+{\em cited\+\_\+by\+\_\+threshold} & The cited by threshold (another global filter) (float or int) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_af0a63bec8dd84ec472c786563cea93af}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_af0a63bec8dd84ec472c786563cea93af}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!get\_api\_query@{get\_api\_query}}
+\index{get\_api\_query@{get\_api\_query}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_api\_query()}{get\_api\_query()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+get\+\_\+api\+\_\+query (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Gets the api query from the parameters of the instance. 
+
+\begin{DoxyReturn}{Returns}
+The api query (dict) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_aa31fb4fae558f3845b267fe5091ea4b0}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_aa31fb4fae558f3845b267fe5091ea4b0}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!get\_count\_entities\_matched@{get\_count\_entities\_matched}}
+\index{get\_count\_entities\_matched@{get\_count\_entities\_matched}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_count\_entities\_matched()}{get\_count\_entities\_matched()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+get\+\_\+count\+\_\+entities\+\_\+matched (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{query\+\_\+filters }\end{DoxyParamCaption})}
+
+
+
+Gets and return the number of entities which match the query fitlers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em query\+\_\+filters} & The query filters (dict)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The count entities matched (int) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_abf995f680d480a06083897b6d5bd3958}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_abf995f680d480a06083897b6d5bd3958}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!get\_database\_file\_name@{get\_database\_file\_name}}
+\index{get\_database\_file\_name@{get\_database\_file\_name}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_database\_file\_name()}{get\_database\_file\_name()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+get\+\_\+database\+\_\+file\+\_\+name (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie\+\_\+from\+\_\+id = {\ttfamily None},  }\item[{}]{entities\+\_\+type = {\ttfamily None},  }\item[{}]{db\+\_\+format = {\ttfamily \char`\"{}parquet\char`\"{}},  }\item[{}]{extra\+\_\+text = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Gets the database file name according to the parameters of the ojbect or the arguments given. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie\+\_\+from\+\_\+id} & The identifier of the entitie (eg a concept id) which was used to filter the entities (eg works) in the database (str) \\
+\hline
+{\em entities\+\_\+type} & The entities type in the database (eg works) (Entitie\+Open\+Alex) \\
+\hline
+{\em db\+\_\+format} & The database file format (str) \\
+\hline
+{\em extra\+\_\+text} & Extra text to add to the file name (str)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The database file name (str) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a2fd883397c064605c3dc19767322052f}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a2fd883397c064605c3dc19767322052f}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!get\_df\_filtered\_entities\_selection\_threshold@{get\_df\_filtered\_entities\_selection\_threshold}}
+\index{get\_df\_filtered\_entities\_selection\_threshold@{get\_df\_filtered\_entities\_selection\_threshold}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_df\_filtered\_entities\_selection\_threshold()}{get\_df\_filtered\_entities\_selection\_threshold()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+get\+\_\+df\+\_\+filtered\+\_\+entities\+\_\+selection\+\_\+threshold (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{df\+\_\+filters }\end{DoxyParamCaption})}
+
+
+
+Gets df\+\_\+filtered which contains the entities of self.\+entities\+\_\+df fitting the filters in df\+\_\+filters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em df\+\_\+filters} & The filters in a dictionnary with for the key for the data to filter and for the value the minimum threshold (dict)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+df\+\_\+filtered, corresponding the the entities fitting the thresholds (pandas Data\+Frame) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_adb07ba46cd532327c5f18742cbc1ee30}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_adb07ba46cd532327c5f18742cbc1ee30}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!get\_entitie\_string\_name@{get\_entitie\_string\_name}}
+\index{get\_entitie\_string\_name@{get\_entitie\_string\_name}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_entitie\_string\_name()}{get\_entitie\_string\_name()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+get\+\_\+entitie\+\_\+string\+\_\+name (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Gets the entitie type string name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The entitie, if not provided, the instance entitie id will be used (Base\+Open\+Alex)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The entitie type name (str) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ae468b1ea80ebb8e3135a3531ab0763e9}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_ae468b1ea80ebb8e3135a3531ab0763e9}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!get\_entitie\_type\_from\_id@{get\_entitie\_type\_from\_id}}
+\index{get\_entitie\_type\_from\_id@{get\_entitie\_type\_from\_id}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_entitie\_type\_from\_id()}{get\_entitie\_type\_from\_id()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+get\+\_\+entitie\+\_\+type\+\_\+from\+\_\+id (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Gets the entitie type from the entitie id. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The entitie id (str)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The entitie type (Base\+Open\+Alex) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_acdb753143ad1a9fe8f1ac82d763b4b6a}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_acdb753143ad1a9fe8f1ac82d763b4b6a}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!get\_name\_of\_entitie@{get\_name\_of\_entitie}}
+\index{get\_name\_of\_entitie@{get\_name\_of\_entitie}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_name\_of\_entitie()}{get\_name\_of\_entitie()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+get\+\_\+name\+\_\+of\+\_\+entitie (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie = {\ttfamily None},  }\item[{}]{allow\+\_\+download\+\_\+from\+\_\+\+API = {\ttfamily True} }\end{DoxyParamCaption})}
+
+
+
+Gets the name of entitie. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The entitie id, if not provided, use the one from the instance (str) \\
+\hline
+{\em allow\+\_\+download\+\_\+from\+\_\+\+API} & Allow to download the entitie name from the Open\+Alex API (bool)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The name of entitie (str) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a93a1e09a8cf1117f24bdde6ae40450ba}\label{classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis_a93a1e09a8cf1117f24bdde6ae40450ba}} 
+\index{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}!get\_number\_of\_entities\_selected@{get\_number\_of\_entities\_selected}}
+\index{get\_number\_of\_entities\_selected@{get\_number\_of\_entities\_selected}!EntitiesConceptsAnalysis.EntitiesConceptsAnalysis@{EntitiesConceptsAnalysis.EntitiesConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_number\_of\_entities\_selected()}{get\_number\_of\_entities\_selected()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Entities\+Concepts\+Analysis.\+get\+\_\+number\+\_\+of\+\_\+entities\+\_\+selected (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{x\+\_\+threshold,  }\item[{}]{y\+\_\+threshold,  }\item[{}]{cited\+\_\+by\+\_\+threshold,  }\item[{}]{x\+\_\+datas,  }\item[{}]{y\+\_\+datas }\end{DoxyParamCaption})}
+
+
+
+Gets the number of entities selected on the plot. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x\+\_\+threshold} & The x threshold (float or int) \\
+\hline
+{\em y\+\_\+threshold} & The y threshold (float or int) \\
+\hline
+{\em cited\+\_\+by\+\_\+threshold} & The cited by threshold (float or int) \\
+\hline
+{\em x\+\_\+datas} & The x datas key on the dataframe (str) \\
+\hline
+{\em y\+\_\+datas} & The y datas key on the dataframe (str)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of entities selected (int) 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Entities\+Concepts\+Analysis.\+py\end{DoxyCompactItemize}

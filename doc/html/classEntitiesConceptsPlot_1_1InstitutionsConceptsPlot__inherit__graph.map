@@ -1,0 +1,8 @@
+<map id="EntitiesConceptsPlot.InstitutionsConceptsPlot" name="EntitiesConceptsPlot.InstitutionsConceptsPlot">
+<area shape="rect" id="node1" title="This class contains specific methods for Institutions concepts plot." alt="" coords="721,39,955,80"/>
+<area shape="rect" id="node2" href="$classEntitiesConceptsPlot_1_1EntitiesConceptsPlot.html" title="EntitiesConceptsPlot class which contains generic methods to do plots of OpenAlex entities." alt="" coords="463,5,673,47"/>
+<area shape="rect" id="node3" href="$classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis.html" title="This class contains specific methods for Institutions concepts analysis." alt="" coords="463,71,673,112"/>
+<area shape="rect" id="node4" href="$classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis.html" title="OpenAlexAnalysis class which contains generic methods to do analysis over OpenAlex entities." alt="" coords="224,41,415,83"/>
+<area shape="rect" id="node5" href="$classOA__entities__names_1_1OA__entities__names.html" title=" " alt="" coords="5,41,176,83"/>
+<area shape="rect" id="node6" title=" " alt="" coords="272,107,367,134"/>
+</map>

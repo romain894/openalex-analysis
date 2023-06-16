@@ -1,0 +1,6 @@
+[submodule "pyalex"]
+	path = pyalex
+	url = git@github.com:romain894/pyalex.git
+[submodule "doc/doxygen-awesome-css"]
+	path = doc/doxygen-awesome-css
+	url = git@github.com:jothepro/doxygen-awesome-css.git

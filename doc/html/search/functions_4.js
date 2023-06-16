@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['filter_5fand_5fformat_5fentitie_5fdata_5ffrom_5fapi_5fresponse_73',['filter_and_format_entitie_data_from_api_response',['../classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis.html#a738988042ef13f8501502777f1581b2c',1,'EntitiesConceptsAnalysis.WorksConceptsAnalysis.filter_and_format_entitie_data_from_api_response()'],['../classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis.html#ab8adbfce91cf93340fb68bbf3c54ec7b',1,'EntitiesConceptsAnalysis.InstitutionsConceptsAnalysis.filter_and_format_entitie_data_from_api_response()']]]
+];

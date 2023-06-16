@@ -1,0 +1,89 @@
+\hypertarget{classOA__entities__names_1_1OA__entities__names}{}\doxysection{OA\+\_\+entities\+\_\+names.\+OA\+\_\+entities\+\_\+names Class Reference}
+\label{classOA__entities__names_1_1OA__entities__names}\index{OA\_entities\_names.OA\_entities\_names@{OA\_entities\_names.OA\_entities\_names}}
+
+
+Inheritance diagram for OA\+\_\+entities\+\_\+names.\+OA\+\_\+entities\+\_\+names\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classOA__entities__names_1_1OA__entities__names__inherit__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a6feb74f71ef9c713033f39021707a96c}\label{classOA__entities__names_1_1OA__entities__names_a6feb74f71ef9c713033f39021707a96c}} 
+def {\bfseries \+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_ab0ae8114366d918d92390c4c1a625771}\label{classOA__entities__names_1_1OA__entities__names_ab0ae8114366d918d92390c4c1a625771}} 
+def {\bfseries get\+\_\+concepts\+\_\+institutions\+\_\+id\+\_\+downloaded} (self)
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_ae6eaadb4e1f2e38e00d50fa5825b4266}\label{classOA__entities__names_1_1OA__entities__names_ae6eaadb4e1f2e38e00d50fa5825b4266}} 
+def \mbox{\hyperlink{classOA__entities__names_1_1OA__entities__names_ae6eaadb4e1f2e38e00d50fa5825b4266}{get\+\_\+concepts\+\_\+institutions\+\_\+names\+\_\+downloaded}} (self)
+\begin{DoxyCompactList}\small\item\em Institutions \#\#\# create the list of all the concept id with the databases downloaded. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_aff18b80006c7a5eacac992d8111f390c}\label{classOA__entities__names_1_1OA__entities__names_aff18b80006c7a5eacac992d8111f390c}} 
+def {\bfseries get\+\_\+concepts\+\_\+institutions\+\_\+names\+\_\+downloadable} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a4a874323278febc69edb2aa8dff37785}\label{classOA__entities__names_1_1OA__entities__names_a4a874323278febc69edb2aa8dff37785}} 
+string \mbox{\hyperlink{classOA__entities__names_1_1OA__entities__names_a4a874323278febc69edb2aa8dff37785}{concepts\+\_\+csv\+\_\+file}} = \char`\"{}Open\+Alex\+\_\+concepts\+\_\+in\+\_\+use\+\_\+(17\+\_\+\+August\+\_\+2022)\+\_\+-\/\+\_\+concepts.\+csv\char`\"{}
+\begin{DoxyCompactList}\small\item\em CONCEPTS \#\#\#\#\#. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a0f51ea8f5b7562bedd7857e2b85f7edc}\label{classOA__entities__names_1_1OA__entities__names_a0f51ea8f5b7562bedd7857e2b85f7edc}} 
+string {\bfseries concepts\+\_\+institutions\+\_\+database\+\_\+files\+\_\+directory} = \char`\"{}data/\char`\"{}
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_aa124c7cd825360ad7eb3f6a37939ed23}\label{classOA__entities__names_1_1OA__entities__names_aa124c7cd825360ad7eb3f6a37939ed23}} 
+int {\bfseries max\+\_\+concept\+\_\+level} = 2
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_af753fdb5a05f117b15d8a784bdc249c9}\label{classOA__entities__names_1_1OA__entities__names_af753fdb5a05f117b15d8a784bdc249c9}} 
+string {\bfseries databases\+\_\+format} = \char`\"{}.parquet\char`\"{}
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a21941556d7e57c6f2a60c0978ee19ca2}\label{classOA__entities__names_1_1OA__entities__names_a21941556d7e57c6f2a60c0978ee19ca2}} 
+{\bfseries df\+\_\+concepts} = pd.\+read\+\_\+csv(\mbox{\hyperlink{classOA__entities__names_1_1OA__entities__names_a4a874323278febc69edb2aa8dff37785}{concepts\+\_\+csv\+\_\+file}})
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a805935bcf4dc5eb1864e422afaa83acb}\label{classOA__entities__names_1_1OA__entities__names_a805935bcf4dc5eb1864e422afaa83acb}} 
+{\bfseries concepts\+\_\+names\+\_\+full} = df\+\_\+concepts\mbox{[}\mbox{[}\textquotesingle{}openalex\+\_\+id\textquotesingle{}, \textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]}\mbox{]}.set\+\_\+index(\textquotesingle{}openalex\+\_\+id\textquotesingle{})\mbox{[}\textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]}.to\+\_\+dict()
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a0f7efcde91c4d823168fdb1c130da706}\label{classOA__entities__names_1_1OA__entities__names_a0f7efcde91c4d823168fdb1c130da706}} 
+{\bfseries concepts\+\_\+levels\+\_\+full} = df\+\_\+concepts\mbox{[}\mbox{[}\textquotesingle{}openalex\+\_\+id\textquotesingle{}, \textquotesingle{}level\textquotesingle{}\mbox{]}\mbox{]}.set\+\_\+index(\textquotesingle{}openalex\+\_\+id\textquotesingle{})\mbox{[}\textquotesingle{}level\textquotesingle{}\mbox{]}.to\+\_\+dict()
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_afe8bf6be6960cc3e4d458f6b1526bada}\label{classOA__entities__names_1_1OA__entities__names_afe8bf6be6960cc3e4d458f6b1526bada}} 
+{\bfseries df\+\_\+concepts\+\_\+normalized\+\_\+names\+\_\+full} = df\+\_\+concepts\mbox{[}\mbox{[}\textquotesingle{}openalex\+\_\+id\textquotesingle{}, \textquotesingle{}normalized\+\_\+name\textquotesingle{}\mbox{]}\mbox{]}
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a5d79acd6336d7c0ca48cfdcbd8275c3c}\label{classOA__entities__names_1_1OA__entities__names_a5d79acd6336d7c0ca48cfdcbd8275c3c}} 
+{\bfseries regex}
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a54b5893fb010e4920a8245675fcfb2b9}\label{classOA__entities__names_1_1OA__entities__names_a54b5893fb010e4920a8245675fcfb2b9}} 
+{\bfseries concepts\+\_\+names} = df\+\_\+concepts\mbox{[}\mbox{[}\textquotesingle{}openalex\+\_\+id\textquotesingle{}, \textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]}\mbox{]}.set\+\_\+index(\textquotesingle{}openalex\+\_\+id\textquotesingle{})\mbox{[}\textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]}.to\+\_\+dict()
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_af3d3fbe9149260b8f65b71e49ad2dc42}\label{classOA__entities__names_1_1OA__entities__names_af3d3fbe9149260b8f65b71e49ad2dc42}} 
+{\bfseries df\+\_\+concepts\+\_\+normalized\+\_\+names} = df\+\_\+concepts\mbox{[}\mbox{[}\textquotesingle{}openalex\+\_\+id\textquotesingle{}, \textquotesingle{}normalized\+\_\+name\textquotesingle{}\mbox{]}\mbox{]}
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a3c0a7b73a9494bf77324e44e73a335ac}\label{classOA__entities__names_1_1OA__entities__names_a3c0a7b73a9494bf77324e44e73a335ac}} 
+{\bfseries df\+\_\+concepts\+\_\+institutions\+\_\+file\+\_\+names} = df\+\_\+concepts\mbox{[}\mbox{[}\textquotesingle{}openalex\+\_\+id\textquotesingle{}, \textquotesingle{}normalized\+\_\+name\+\_\+institutions\textquotesingle{}\mbox{]}\mbox{]}
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_ae630eaa49452d711ecd7caa672dd97f6}\label{classOA__entities__names_1_1OA__entities__names_ae630eaa49452d711ecd7caa672dd97f6}} 
+{\bfseries concepts\+\_\+normalized\+\_\+names} = df\+\_\+concepts\+\_\+normalized\+\_\+names.\+set\+\_\+index(\textquotesingle{}openalex\+\_\+id\textquotesingle{})\mbox{[}\textquotesingle{}normalized\+\_\+name\textquotesingle{}\mbox{]}.to\+\_\+dict()
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a9447fe15cbce53e6a1b96c825aba32ed}\label{classOA__entities__names_1_1OA__entities__names_a9447fe15cbce53e6a1b96c825aba32ed}} 
+{\bfseries concepts\+\_\+institutions\+\_\+database\+\_\+file\+\_\+name} = df\+\_\+concepts\+\_\+institutions\+\_\+file\+\_\+names.\+set\+\_\+index(\textquotesingle{}openalex\+\_\+id\textquotesingle{})\mbox{[}\textquotesingle{}normalized\+\_\+name\+\_\+institutions\textquotesingle{}\mbox{]}.to\+\_\+dict()
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a8302b2a9c03a43ec52f3ae7d8b2b9d78}\label{classOA__entities__names_1_1OA__entities__names_a8302b2a9c03a43ec52f3ae7d8b2b9d78}} 
+string \mbox{\hyperlink{classOA__entities__names_1_1OA__entities__names_a8302b2a9c03a43ec52f3ae7d8b2b9d78}{list\+\_\+of\+\_\+institutions\+\_\+file\+\_\+path}} = \char`\"{}list\+\_\+all\+\_\+institutions.\+parquet\char`\"{}
+\begin{DoxyCompactList}\small\item\em INSTITUTIONS \#\#\#\#\#. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_a9af392c59444320f021f7a267090304f}\label{classOA__entities__names_1_1OA__entities__names_a9af392c59444320f021f7a267090304f}} 
+{\bfseries institutions\+\_\+df} = pd.\+read\+\_\+parquet(\mbox{\hyperlink{classOA__entities__names_1_1OA__entities__names_a8302b2a9c03a43ec52f3ae7d8b2b9d78}{list\+\_\+of\+\_\+institutions\+\_\+file\+\_\+path}}, columns = \mbox{[}\textquotesingle{}id\textquotesingle{}, \textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]})
+\item 
+\mbox{\Hypertarget{classOA__entities__names_1_1OA__entities__names_aaaf22c9d4cccffc19c0ebe8eda6d85c7}\label{classOA__entities__names_1_1OA__entities__names_aaaf22c9d4cccffc19c0ebe8eda6d85c7}} 
+{\bfseries institutions\+\_\+names} = institutions\+\_\+df\mbox{[}\mbox{[}\textquotesingle{}id\textquotesingle{}, \textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]}\mbox{]}.set\+\_\+index(\textquotesingle{}id\textquotesingle{})\mbox{[}\textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]}.to\+\_\+dict()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Class to manage the concept names and databases file names for the webapp\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+OA\+\_\+entities\+\_\+names.\+py\end{DoxyCompactItemize}

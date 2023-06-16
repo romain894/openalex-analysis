@@ -1,0 +1,2538 @@
+This is LuaHBTeX, Version 1.14.0 (TeX Live 2022/dev/Debian)  (format=lualatex 2023.5.31)  16 JUN 2023 18:06
+ restricted system commands enabled.
+**refman.tex
+(./refman.tex
+LaTeX2e <2021-11-15> patch level 1
+Lua module: luaotfload 2021-05-21 3.18 Lua based OpenType font support
+Lua module: lualibs 2021-05-20 2.74 ConTeXt Lua standard libraries.
+Lua module: lualibs-extended 2021-05-20 2.74 ConTeXt Lua libraries -- extended c
+ollection.
+luaotfload | conf : Root cache directory is "/home/romain/.texlive2021/texmf-var
+/luatex-cache/generic/names".
+luaotfload | init : Loading fontloader "fontloader-2021-05-20.lua" from kpse-res
+olved path "/usr/share/texlive/texmf-dist/tex/luatex/luaotfload/fontloader-2021-
+05-20.lua".
+Lua-only attribute luaotfload@noligature = 1
+Lua-only attribute luaotfload@syllabe = 2
+luaotfload | init : Context OpenType loader version 3.116
+Inserting `luaotfload.node_processor' at position 1 in `pre_linebreak_filter'.
+Inserting `luaotfload.node_processor' at position 1 in `hpack_filter'.
+Inserting `luaotfload.glyph_stream' at position 1 in `glyph_stream_provider'.
+Inserting `luaotfload.define_font' at position 1 in `define_font'.
+Lua-only attribute luaotfload_color_attribute = 3
+luaotfload | conf : Root cache directory is "/home/romain/.texlive2021/texmf-var
+/luatex-cache/generic/names".
+Inserting `luaotfload.harf.strip_prefix' at position 1 in `find_opentype_file'.
+Inserting `luaotfload.harf.strip_prefix' at position 1 in `find_truetype_file'.
+Inserting `luaotfload.harf.finalize_vlist' at position 1 in `post_linebreak_filt
+er'.
+Inserting `luaotfload.harf.finalize_hlist' at position 2 in `hpack_filter'.
+Inserting `luaotfload.cleanup_files' at position 1 in `wrapup_run'.
+Inserting `luaotfload.harf.finalize_unicode' at position 1 in `finish_pdffile'.
+Inserting `luaotfload.glyphinfo' at position 1 in `glyph_info'.
+Lua-only attribute luaotfload.letterspace_done = 4
+Inserting `luaotfload.aux.set_sscale_dimens' at position 1 in `luaotfload.patch_
+font'.
+Inserting `luaotfload.aux.set_font_index' at position 2 in `luaotfload.patch_fon
+t'.
+Inserting `luaotfload.aux.patch_cambria_domh' at position 3 in `luaotfload.patch
+_font'.
+Inserting `luaotfload.aux.fixup_fontdata' at position 1 in `luaotfload.patch_fon
+t_unsafe'.
+Inserting `luaotfload.aux.set_capheight' at position 4 in `luaotfload.patch_font
+'.
+Inserting `luaotfload.aux.set_xheight' at position 5 in `luaotfload.patch_font'.
+Inserting `luaotfload.rewrite_fontname' at position 6 in `luaotfload.patch_font'
+. L3 programming layer <2022-01-21>
+Inserting `tracingstacklevels' at position 1 in `input_level_string'.
+(/usr/share/texlive/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2021/10/04 v1.4n Standard LaTeX document class
+(/usr/share/texlive/texmf-dist/tex/latex/base/bk10.clo
+File: bk10.clo 2021/10/04 v1.4n Standard LaTeX file (size option)
+luaotfload | db : Font names database loaded from /home/romain/.texlive2021/texm
+f-var/luatex-cache/generic/names/luaotfload-names.luc)
+\c@part=\count183
+\c@chapter=\count184
+\c@section=\count185
+\c@subsection=\count186
+\c@subsubsection=\count187
+\c@paragraph=\count188
+\c@subparagraph=\count189
+\c@figure=\count190
+\c@table=\count191
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen137
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2020/11/24 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array.sty
+Rollback for package 'array' requested -> date 2016-10-06.
+         Best approximation is the release introduced on 2016-10-06.
+
+(/usr/share/texlive/texmf-dist/tex/latex/tools/array-2016-10-06.sty
+Package: array 2016/10/06 v2.4d Tabular extension package (FMi)
+\col@sep=\dimen138
+\extrarowheight=\dimen139
+\NC@list=\toks16
+\extratabsurround=\skip49
+\backup@length=\skip50
+))
+(/usr/share/texlive/texmf-dist/tex/latex/base/fixltx2e.sty
+Package: fixltx2e 2016/12/29 v2.1a fixes to LaTeX (obsolete)
+Applying: [2015/01/01] Old fixltx2e package on input line 46.
+
+
+Package fixltx2e Warning: fixltx2e is not required with releases after 2015
+(fixltx2e)                All fixes are now in the LaTeX kernel.
+(fixltx2e)                See the latexrelease package for details.
+
+Already applied: [0000/00/00] Old fixltx2e package on input line 53.
+) (./doxygen.sty
+Package: doxygen 
+ (/usr/share/texlive/texmf-dist/tex/latex/base/alltt.sty
+Package: alltt 2021/01/29 v2.0g defines alltt environment
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/calc.sty
+Package: calc 2017/05/25 v4.3 Infix arithmetic (KKT,FJ)
+\calc@Acount=\count192
+\calc@Bcount=\count193
+\calc@Adimen=\dimen140
+\calc@Bdimen=\dimen141
+\calc@Askip=\skip51
+\calc@Bskip=\skip52
+LaTeX Info: Redefining \setlength on input line 80.
+LaTeX Info: Redefining \addtolength on input line 81.
+\calc@Ccount=\count194
+\calc@Cskip=\skip53
+)
+(/usr/share/texlive/texmf-dist/tex/latex/float/float.sty
+Package: float 2001/11/08 v1.3d Float enhancements (AL)
+\c@float@type=\count195
+\float@exts=\toks17
+\float@box=\box50
+\@float@everytoks=\toks18
+\@floatcapt=\box51
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/verbatim.sty
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks19
+\verbatim@line=\toks20
+\verbatim@in@stream=\read2
+)
+(/usr/share/texlive/texmf-dist/tex/latex/xcolor/xcolor.sty
+Package: xcolor 2021/10/31 v2.13 LaTeX color extensions (UK)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/color.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package xcolor Info: Driver file: luatex.def on input line 227.
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-def/luatex.def
+File: luatex.def 2021/06/01 v1.2c Graphics/color driver for luatex
+)
+(/usr/share/texlive/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2020/01/04 v1.0e Color table columns (DPC)
+\everycr=\toks21
+\minrowclearance=\skip54
+)
+\rownum=\count196
+Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1352.
+Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1356.
+Package xcolor Info: Model `RGB' extended on input line 1368.
+Package xcolor Info: Model `HTML' substituted by `rgb' on input line 1370.
+Package xcolor Info: Model `Hsb' substituted by `hsb' on input line 1371.
+Package xcolor Info: Model `tHsb' substituted by `hsb' on input line 1372.
+Package xcolor Info: Model `HSB' substituted by `hsb' on input line 1373.
+Package xcolor Info: Model `Gray' substituted by `gray' on input line 1374.
+Package xcolor Info: Model `wave' substituted by `hsb' on input line 1375.
+)
+(./longtable_doxygen.sty
+Package: longtable_doxygen 2014/10/28 v4.11 Multi-page Table package (DPC) - fr
+ozen version for doxygen
+\LTleft=\skip55
+\LTright=\skip56
+\LTpre=\skip57
+\LTpost=\skip58
+\LTchunksize=\count197
+\LTcapwidth=\dimen142
+\LT@head=\box52
+\LT@firsthead=\box53
+\LT@foot=\box54
+\LT@lastfoot=\box55
+\LT@cols=\count198
+\LT@rows=\count199
+\c@LT@tables=\count266
+\c@LT@chunks=\count267
+\LT@p@ftn=\toks22
+) (./tabu_doxygen.sty
+Package: tabu_doxygen 2011/02/26 v2.8 - flexible LaTeX tabulars (FC), frozen ve
+rsion for doxygen
+
+(/usr/share/texlive/texmf-dist/tex/latex/varwidth/varwidth.sty
+Package: varwidth 2009/03/30 ver 0.92;  Variable-width minipages
+\@vwid@box=\box56
+\sift@deathcycles=\count268
+\@vwid@loff=\dimen143
+\@vwid@roff=\dimen144
+)
+\c@taburow=\count269
+\tabu@nbcols=\count270
+\tabu@cnt=\count271
+\tabu@Xcol=\count272
+\tabu@alloc=\count273
+\tabu@nested=\count274
+\tabu@target=\dimen145
+\tabu@spreadtarget=\dimen146
+\tabu@naturalX=\dimen147
+\tabucolX=\dimen148
+\tabu@Xsum=\dimen149
+\extrarowdepth=\dimen150
+\abovetabulinesep=\dimen151
+\belowtabulinesep=\dimen152
+\tabustrutrule=\dimen153
+\tabu@thebody=\toks23
+\tabu@footnotes=\toks24
+\tabu@box=\box57
+\tabu@arstrutbox=\box58
+\tabu@hleads=\box59
+\tabu@vleads=\box60
+\tabu@cellskip=\skip59
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2021/12/21 4.1b verbatim text (tvz,hv)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/keyval.sty
+Package: keyval 2014/10/28 v1.15 key=value parser (DPC)
+\KV@toks@=\toks25
+)
+\FV@CodeLineNo=\count275
+\FV@InFile=\read3
+\FV@TabBox=\box61
+\c@FancyVerbLine=\count276
+\FV@StepNumber=\count277
+\FV@OutFile=\write3
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/tabularx.sty
+Package: tabularx 2020/01/15 v2.11c `tabularx' package (DPC)
+\TX@col@width=\dimen154
+\TX@old@table=\dimen155
+\TX@old@col=\dimen156
+\TX@target=\dimen157
+\TX@delta=\dimen158
+\TX@cols=\count278
+\TX@ftn=\toks26
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tools/multicol.sty
+Package: multicol 2021/10/28 v1.9b multicolumn formatting (FMi)
+\c@tracingmulticols=\count279
+\mult@box=\box62
+\multicol@leftmargin=\dimen159
+\c@unbalance=\count280
+\c@collectmore=\count281
+\doublecol@number=\count282
+\multicoltolerance=\count283
+\multicolpretolerance=\count284
+\full@width=\dimen160
+\page@free=\dimen161
+\premulticols=\dimen162
+\postmulticols=\dimen163
+\multicolsep=\skip60
+\multicolbaselineskip=\skip61
+\partial@page=\box63
+\last@line=\box64
+\maxbalancingoverflow=\dimen164
+\mult@rightbox=\box65
+\mult@grightbox=\box66
+\mult@firstbox=\box67
+\mult@gfirstbox=\box68
+\@tempa=\box69
+\@tempa=\box70
+\@tempa=\box71
+\@tempa=\box72
+\@tempa=\box73
+\@tempa=\box74
+\@tempa=\box75
+\@tempa=\box76
+\@tempa=\box77
+\@tempa=\box78
+\@tempa=\box79
+\@tempa=\box80
+\@tempa=\box81
+\@tempa=\box82
+\@tempa=\box83
+\@tempa=\box84
+\@tempa=\box85
+\@tempa=\box86
+\@tempa=\box87
+\@tempa=\box88
+\@tempa=\box89
+\@tempa=\box90
+\@tempa=\box91
+\@tempa=\box92
+\@tempa=\box93
+\@tempa=\box94
+\@tempa=\box95
+\@tempa=\box96
+\@tempa=\box97
+\@tempa=\box98
+\@tempa=\box99
+\@tempa=\box100
+\@tempa=\box101
+\@tempa=\box102
+\@tempa=\box103
+\@tempa=\box104
+\c@minrows=\count285
+\c@columnbadness=\count286
+\c@finalcolumnbadness=\count287
+\last@try=\dimen165
+\multicolovershoot=\dimen166
+\multicolundershoot=\dimen167
+\mult@nat@firstbox=\box105
+\colbreak@box=\box106
+\mc@col@check@num=\count288
+)
+(/usr/share/texlive/texmf-dist/tex/latex/multirow/multirow.sty
+Package: multirow 2021/03/15 v2.8 Span multiple rows of a table
+\multirow@colwidth=\skip62
+\multirow@cntb=\count289
+\multirow@dima=\skip63
+\bigstrutjot=\dimen168
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hanging/hanging.sty
+Package: hanging 2009/09/02 v1.2b hanging paragraphs and punctuation
+\h@ngcommawd=\skip64
+\h@ngfstopwd=\skip65
+\h@ngquotewd=\skip66
+\h@ngdquotewd=\skip67
+\h@ngquerywd=\skip68
+\h@ngexclwd=\skip69
+\h@ngcolonwd=\skip70
+\h@ngscolonwd=\skip71
+)
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifpdf.sty
+Package: ifpdf 2019/10/25 v3.4 ifpdf legacy package. Use iftex instead.
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+))
+(/usr/share/texlive/texmf-dist/tex/latex/adjustbox/adjustbox.sty
+Package: adjustbox 2020/08/19 v1.3 Adjusting TeX boxes (trim, clip, ...)
+
+(/usr/share/texlive/texmf-dist/tex/latex/xkeyval/xkeyval.sty
+Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
+
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkeyval.tex
+(/usr/share/texlive/texmf-dist/tex/generic/xkeyval/xkvutils.tex
+\XKV@toks=\toks27
+\XKV@tempa@toks=\toks28
+)
+\XKV@depth=\count290
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/adjustbox/adjcalc.sty
+Package: adjcalc 2012/05/16 v1.1 Provides advanced setlength with multiple back
+-ends (calc, etex, pgfmath)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/adjustbox/trimclip.sty
+Package: trimclip 2020/08/19 v1.2 Trim and clip general TeX material
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphicx.sty
+Package: graphicx 2021/09/16 v1.2d Enhanced LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/graphics.sty
+Package: graphics 2021/03/04 v1.4d Standard LaTeX Graphics (DPC,SPQR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/graphics/trig.sty
+Package: trig 2021/08/11 v1.11 sin cos tan (DPC)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/graphics-cfg/graphics.cfg
+File: graphics.cfg 2016/06/04 v1.11 sample graphics configuration
+)
+Package graphics Info: Driver file: luatex.def on input line 107.
+)
+\Gin@req@height=\dimen169
+\Gin@req@width=\dimen170
+)
+(/usr/share/texlive/texmf-dist/tex/latex/collectbox/collectbox.sty
+Package: collectbox 2012/05/17 v0.4b Collect macro arguments as boxes
+\collectedbox=\box107
+)
+\tc@llx=\dimen171
+\tc@lly=\dimen172
+\tc@urx=\dimen173
+\tc@ury=\dimen174
+
+(/usr/share/texlive/texmf-dist/tex/latex/adjustbox/tc-pgf.def
+File: tc-pgf.def 2019/01/04 v2.2 trimclip fall-back clipping driver using PGF
+
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
+\pgfutil@everybye=\toks29
+\pgfutil@tempdima=\dimen175
+\pgfutil@tempdimb=\dimen176
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-common-lists.t
+ex)) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfutil-latex.def
+\pgfutil@abb=\box108
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfrcs.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/pgf.revision.tex)
+Package: pgfrcs 2021/05/15 v3.1.9a (3.1.9a)
+))
+Package: pgf 2021/05/15 v3.1.9a (3.1.9a)
+
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/basiclayer/pgfcore.sty
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/systemlayer/pgfsys.sty
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys.code.tex
+Package: pgfsys 2021/05/15 v3.1.9a (3.1.9a)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
+\pgfkeys@pathtoks=\toks30
+\pgfkeys@temptoks=\toks31
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.t
+ex
+\pgfkeys@tmptoks=\toks32
+))
+\pgf@x=\dimen177
+\pgf@y=\dimen178
+\pgf@xa=\dimen179
+\pgf@ya=\dimen180
+\pgf@xb=\dimen181
+\pgf@yb=\dimen182
+\pgf@xc=\dimen183
+\pgf@yc=\dimen184
+\pgf@xd=\dimen185
+\pgf@yd=\dimen186
+\w@pgf@writea=\write4
+\r@pgf@reada=\read4
+\c@pgf@counta=\count291
+\c@pgf@countb=\count292
+\c@pgf@countc=\count293
+\c@pgf@countd=\count294
+\t@pgf@toka=\toks33
+\t@pgf@tokb=\toks34
+\t@pgf@tokc=\toks35
+\pgf@sys@id@count=\count295
+ (/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
+File: pgf.cfg 2021/05/15 v3.1.9a (3.1.9a)
+)
+Driver file for pgf: pgfsys-luatex.def
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-luatex.def
+File: pgfsys-luatex.def 2021/05/15 v3.1.9a (3.1.9a)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsys-common-pdf.de
+f
+File: pgfsys-common-pdf.def 2021/05/15 v3.1.9a (3.1.9a)
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.
+tex
+File: pgfsyssoftpath.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfsyssoftpath@smallbuffer@items=\count296
+\pgfsyssoftpath@bigbuffer@items=\count297
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.
+tex
+File: pgfsysprotocol.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcore.code.tex
+Package: pgfcore 2021/05/15 v3.1.9a (3.1.9a)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathcalc.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
+\pgfmath@dimen=\dimen187
+\pgfmath@count=\count298
+\pgfmath@box=\box109
+\pgfmath@toks=\toks36
+\pgfmath@stack@operand=\toks37
+\pgfmath@stack@operation=\toks38
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.trigonomet
+ric.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.random.cod
+e.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.comparison
+.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.base.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.round.code
+.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.misc.code.
+tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerari
+thmetics.code.tex)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
+\c@pgfmathroundto@lastzeros=\count299
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/math/pgfint.code.tex)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.te
+x
+File: pgfcorepoints.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@picminx=\dimen188
+\pgf@picmaxx=\dimen189
+\pgf@picminy=\dimen190
+\pgf@picmaxy=\dimen191
+\pgf@pathminx=\dimen192
+\pgf@pathmaxx=\dimen193
+\pgf@pathminy=\dimen194
+\pgf@pathmaxy=\dimen195
+\pgf@xx=\dimen196
+\pgf@xy=\dimen197
+\pgf@yx=\dimen198
+\pgf@yy=\dimen199
+\pgf@zx=\dimen256
+\pgf@zy=\dimen257
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathconstruct.
+code.tex
+File: pgfcorepathconstruct.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@path@lastx=\dimen258
+\pgf@path@lasty=\dimen259
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathusage.code
+.tex
+File: pgfcorepathusage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@shorten@end@additional=\dimen260
+\pgf@shorten@start@additional=\dimen261
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorescopes.code.te
+x
+File: pgfcorescopes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfpic=\box110
+\pgf@hbox=\box111
+\pgf@layerbox@main=\box112
+\pgf@picture@serial@count=\count300
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.c
+ode.tex
+File: pgfcoregraphicstate.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgflinewidth=\dimen262
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransformation
+s.code.tex
+File: pgfcoretransformations.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@pt@x=\dimen263
+\pgf@pt@y=\dimen264
+\pgf@pt@temp=\dimen265
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorequick.code.tex
+File: pgfcorequick.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreobjects.code.t
+ex
+File: pgfcoreobjects.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepathprocessing
+.code.tex
+File: pgfcorepathprocessing.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorearrows.code.te
+x
+File: pgfcorearrows.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfarrowsep=\dimen266
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
+File: pgfcoreshade.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@max=\dimen267
+\pgf@sys@shading@range@num=\count301
+\pgf@shadingcount=\count302
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
+File: pgfcoreimage.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreexternal.code.
+tex
+File: pgfcoreexternal.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfexternal@startupbox=\box113
+))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorelayers.code.te
+x
+File: pgfcorelayers.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcoretransparency.c
+ode.tex
+File: pgfcoretransparency.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepatterns.code.
+tex
+File: pgfcorepatterns.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/basiclayer/pgfcorerdf.code.tex
+File: pgfcorerdf.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)))
+(/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleshapes.code.tex
+File: pgfmoduleshapes.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+\pgfnodeparttextbox=\box114
+) (/usr/share/texlive/texmf-dist/tex/generic/pgf/modules/pgfmoduleplot.code.tex
+File: pgfmoduleplot.code.tex 2021/05/15 v3.1.9a (3.1.9a)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-0-65
+.sty
+Package: pgfcomp-version-0-65 2021/05/15 v3.1.9a (3.1.9a)
+\pgf@nodesepstart=\dimen268
+\pgf@nodesepend=\dimen269
+)
+(/usr/share/texlive/texmf-dist/tex/latex/pgf/compatibility/pgfcomp-version-1-18
+.sty
+Package: pgfcomp-version-1-18 2021/05/15 v3.1.9a (3.1.9a)
+)))
+Package trimclip Info: No clipping driver 'tc-luatex.def' available.
+(trimclip)             Using fall-back PGF driver.
+)
+\adjbox@Width=\dimen270
+\adjbox@Height=\dimen271
+\adjbox@Depth=\dimen272
+\adjbox@Totalheight=\dimen273
+\adjbox@pwidth=\dimen274
+\adjbox@pheight=\dimen275
+\adjbox@pdepth=\dimen276
+\adjbox@ptotalheight=\dimen277
+ (/usr/share/texlive/texmf-dist/tex/latex/ifoddpage/ifoddpage.sty
+Package: ifoddpage 2016/04/23 v1.1 Conditionals for odd/even page detection
+\c@checkoddpage=\count303
+))
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amssymb.sty
+Package: amssymb 2013/01/14 v3.01 AMS font symbols
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/amsfonts.sty
+Package: amsfonts 2013/01/14 v3.01 Basic AMSFonts support
+\@emptytoks=\toks39
+\symAMSa=\mathgroup4
+\symAMSb=\mathgroup5
+LaTeX Font Info:    Redeclaring math symbol \hbar on input line 98.
+LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
+(Font)                  U/euf/m/n --> U/euf/b/n on input line 106.
+))
+(/usr/share/texlive/texmf-dist/tex/latex/stackengine/stackengine.sty
+Package: stackengine 2021/07/22 v4.11\ Stacking text and objects in convenient 
+ways
+
+(/usr/share/texlive/texmf-dist/tex/latex/etoolbox/etoolbox.sty
+Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
+\etb@tempcnta=\count304
+)
+(/usr/share/texlive/texmf-dist/tex/generic/listofitems/listofitems.sty
+(/usr/share/texlive/texmf-dist/tex/generic/listofitems/listofitems.tex
+\loi_cnt_foreach_nest=\count305
+\loi_nestcnt=\count306
+)
+Package: listofitems 2019/08/21 v1.63 Grab items in lists using user-specified 
+sep char (CT)
+)
+\c@@stackindex=\count307
+\@boxshift=\skip72
+\stack@tmplength=\skip73
+\temp@stkl=\skip74
+\@stackedboxwidth=\skip75
+\@addedbox=\box115
+\@anchorbox=\box116
+\@insetbox=\box117
+\se@backgroundbox=\box118
+\stackedbox=\box119
+\@centerbox=\box120
+\c@ROWcellindex@=\count308
+)
+(/usr/share/texlive/texmf-dist/tex/generic/ulem/ulem.sty
+\UL@box=\box121
+\UL@hyphenbox=\box122
+\UL@skip=\skip76
+\UL@hook=\toks40
+\UL@height=\dimen278
+\UL@pe=\count309
+\UL@pixel=\dimen279
+\ULC@box=\box123
+Package: ulem 2019/11/18
+\ULdepth=\dimen280
+)
+\xrefbox=\box124
+\xreflength=\skip77
+\CodeWidthChar=\skip78
+\CodeHeightChar=\skip79
+\DoxyCodeWidth=\skip80
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2021/02/14 v1.3d Input encoding file
+\inpenc@prehook=\toks41
+\inpenc@posthook=\toks42
+
+
+Package inputenc Warning: inputenc package ignored with utf8 based engines.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2021/10/04 v1.0m Standard LaTeX package
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+)
+(/usr/share/texlive/texmf-dist/tex/latex/wasysym/wasysym.sty
+Package: wasysym 2020/01/19 v2.4 Wasy-2 symbol support package
+\symwasy=\mathgroup6
+LaTeX Font Info:    Overwriting symbol font `wasy' in version `bold'
+(Font)                  U/wasy/m/n --> U/wasy/b/n on input line 93.
+)
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifxetex.sty
+Package: ifxetex 2019/10/25 v0.7 ifxetex legacy package. Use iftex instead.
+)
+(/usr/share/texlive/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2021/04/29 v2.0v Standard LaTeX package
+LaTeX Font Info:    Trying to load font information for T1+lmr on input line 11
+2.
+
+(/usr/share/texmf/tex/latex/lm/t1lmr.fd
+File: t1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
+))
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/helvet.sty
+Package: helvet 2020/03/25 PSNFSS-v9.3 (WaS) 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/courier.sty
+Package: courier 2020/03/25 PSNFSS-v9.3 (WaS) 
+)
+(/usr/share/texlive/texmf-dist/tex/latex/sectsty/sectsty.sty
+Package: sectsty 2002/02/25 v2.0.2 Commands to change all sectional heading sty
+les
+
+
+LaTeX Warning: Command \underbar  has changed.
+               Check if current package is valid.
+
+
+LaTeX Warning: Command \underline  has changed.
+               Check if current package is valid.
+
+) (/usr/share/texlive/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2020/01/02 v5.9 Page Geometry
+
+(/usr/share/texlive/texmf-dist/tex/generic/iftex/ifvtex.sty
+Package: ifvtex 2019/10/25 v1.7 ifvtex legacy package. Use iftex instead.
+)
+\Gm@cnth=\count310
+\Gm@cntv=\count311
+\c@Gm@tempcnt=\count312
+\Gm@bindingoffset=\dimen281
+\Gm@wd@mp=\dimen282
+\Gm@odd@mp=\dimen283
+\Gm@even@mp=\dimen284
+\Gm@layoutwidth=\dimen285
+\Gm@layoutheight=\dimen286
+\Gm@layouthoffset=\dimen287
+\Gm@layoutvoffset=\dimen288
+\Gm@dimlist=\toks43
+)
+(/usr/share/texlive/texmf-dist/tex/latex/fancyhdr/fancyhdr.sty
+Package: fancyhdr 2021/01/28 v4.0.1 Extensive control of page headers and foote
+rs
+\f@nch@headwidth=\skip81
+\f@nch@O@elh=\skip82
+\f@nch@O@erh=\skip83
+\f@nch@O@olh=\skip84
+\f@nch@O@orh=\skip85
+\f@nch@O@elf=\skip86
+\f@nch@O@erf=\skip87
+\f@nch@O@olf=\skip88
+\f@nch@O@orf=\skip89
+)
+(/usr/share/texlive/texmf-dist/tex/latex/natbib/natbib.sty
+Package: natbib 2010/09/13 8.31b (PWD, AO)
+\bibhang=\skip90
+\bibsep=\skip91
+LaTeX Info: Redefining \cite on input line 694.
+\c@NAT@ctr=\count313
+)
+(/usr/share/texlive/texmf-dist/tex/latex/tocloft/tocloft.sty
+Package: tocloft 2017/08/31 v2.3i parameterised ToC, etc., typesetting
+Package tocloft Info: The document has chapter divisions on input line 51.
+\cftparskip=\skip92
+\cftbeforetoctitleskip=\skip93
+\cftaftertoctitleskip=\skip94
+\cftbeforepartskip=\skip95
+\cftpartnumwidth=\skip96
+\cftpartindent=\skip97
+\cftbeforechapskip=\skip98
+\cftchapindent=\skip99
+\cftchapnumwidth=\skip100
+\cftbeforesecskip=\skip101
+\cftsecindent=\skip102
+\cftsecnumwidth=\skip103
+\cftbeforesubsecskip=\skip104
+\cftsubsecindent=\skip105
+\cftsubsecnumwidth=\skip106
+\cftbeforesubsubsecskip=\skip107
+\cftsubsubsecindent=\skip108
+\cftsubsubsecnumwidth=\skip109
+\cftbeforeparaskip=\skip110
+\cftparaindent=\skip111
+\cftparanumwidth=\skip112
+\cftbeforesubparaskip=\skip113
+\cftsubparaindent=\skip114
+\cftsubparanumwidth=\skip115
+\cftbeforeloftitleskip=\skip116
+\cftafterloftitleskip=\skip117
+\cftbeforefigskip=\skip118
+\cftfigindent=\skip119
+\cftfignumwidth=\skip120
+\c@lofdepth=\count314
+\c@lotdepth=\count315
+\cftbeforelottitleskip=\skip121
+\cftafterlottitleskip=\skip122
+\cftbeforetabskip=\skip123
+\cfttabindent=\skip124
+\cfttabnumwidth=\skip125
+)
+\@indexfile=\write5
+
+\openout5 = refman.idx
+
+Writing index file refman.idx
+(/usr/share/texlive/texmf-dist/tex/latex/newunicodechar/newunicodechar.sty
+Package: newunicodechar 2018/04/08 v1.2 Defining Unicode characters
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref.sty
+Package: hyperref 2021-06-07 v7.00m Hypertext links for LaTeX
+
+(/usr/share/texlive/texmf-dist/tex/generic/ltxcmds/ltxcmds.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdftexcmds/pdftexcmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(/usr/share/texlive/texmf-dist/tex/generic/infwarerr/infwarerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+\pdftexcmds@toks=\toks44
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvsetkeys/kvsetkeys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/kvdefinekeys/kvdefinekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/pdfescape/pdfescape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hycolor/hycolor.sty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/letltxmacro/letltxmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/auxhook/auxhook.sty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/kvoptions/kvoptions.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+)
+\@linkdim=\dimen289
+\Hy@linkcounter=\count316
+\Hy@pagecounter=\count317
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/pd1enc.def
+File: pd1enc.def 2021-06-07 v7.00m Hyperref: PDFDocEncoding definition (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hyperref-langpatches.def
+File: hyperref-langpatches.def 2021-06-07 v7.00m Hyperref: patches for babel la
+nguages
+)
+(/usr/share/texlive/texmf-dist/tex/generic/intcalc/intcalc.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/etexcmds/etexcmds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count318
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/puenc.def
+File: puenc.def 2021-06-07 v7.00m Hyperref: PDF Unicode definition (HO)
+)
+Package hyperref Info: Hyper figures OFF on input line 4192.
+Package hyperref Info: Link nesting OFF on input line 4197.
+Package hyperref Info: Hyper index ON on input line 4200.
+Package hyperref Info: Plain pages OFF on input line 4207.
+Package hyperref Info: Backreferencing ON on input line 4210.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4445.
+
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/backref.sty
+Package: backref 2021/02/04 v1.41 Bibliographical back referencing
+
+(/usr/share/texlive/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atveryend-ltx.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atveryend pac
+kage
+with kernel methods
+)
+(/usr/share/texlive/texmf-dist/tex/generic/uniquecounter/uniquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+
+(/usr/share/texlive/texmf-dist/tex/generic/bigintcalc/bigintcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+))
+\c@Hy@tempcnt=\count319
+
+(/usr/share/texlive/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+LaTeX Info: Redefining \url on input line 4804.
+\XeTeXLinkMargin=\dimen290
+
+(/usr/share/texlive/texmf-dist/tex/generic/bitset/bitset.sty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+)
+\Fld@menulength=\count320
+\Field@Width=\dimen291
+\Fld@charsize=\dimen292
+Package hyperref Info: Hyper figures OFF on input line 6076.
+Package hyperref Info: Link nesting OFF on input line 6081.
+Package hyperref Info: Hyper index ON on input line 6084.
+Package hyperref Info: backreferencing ON on input line 6089.
+Package hyperref Info: Link coloring OFF on input line 6096.
+Package hyperref Info: Link coloring with OCG OFF on input line 6101.
+Package hyperref Info: PDF/A mode OFF on input line 6106.
+LaTeX Info: Redefining \ref on input line 6146.
+LaTeX Info: Redefining \pageref on input line 6150.
+
+(/usr/share/texlive/texmf-dist/tex/latex/base/atbegshi-ltx.sty
+Package: atbegshi-ltx 2021/01/10 v1.0c Emulation of the original atbegshi
+package with kernel methods
+)
+\Hy@abspage=\count321
+\c@Item=\count322
+\c@Hfootnote=\count323
+
+
+LaTeX Warning: Command \LT@p@ftntext  has changed.
+               Check if current package is valid.
+
+)
+
+Package hyperref Warning: Wrong driver `hpdftex.def';
+(hyperref)                pdfTeX is running in PDF mode.
+(hyperref)                Forcing driver `hluatex.def'.
+
+Package hyperref Info: Driver: hluatex.
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/hluatex.def
+File: hluatex.def 2021-06-07 v7.00m Hyperref driver for luaTeX
+
+(/usr/share/texlive/texmf-dist/tex/generic/stringenc/stringenc.sty
+Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
+)
+)
+\Fld@listcount=\count324
+\c@bookmark@seq@number=\count325
+\Hy@SectionHShift=\skip126
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 134.
+Package hyperref Info: Option `unicode' set `true' on input line 134.
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption.sty
+Package: caption 2020/10/26 v3.5g Customizing captions (AR)
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/caption3.sty
+Package: caption3 2020/10/21 v2.2e caption3 kernel (AR)
+\captionmargin=\dimen293
+\captionmargin@=\dimen294
+\captionwidth=\dimen295
+\caption@tempdima=\dimen296
+\caption@indent=\dimen297
+\caption@parindent=\dimen298
+\caption@hangindent=\dimen299
+Package caption Info: Standard document class detected.
+)
+\c@caption@flags=\count326
+\c@continuedfloat=\count327
+Package caption Info: float package is loaded.
+Package caption Info: hyperref package is loaded.
+Package caption Info: longtable package is loaded.
+
+(/usr/share/texlive/texmf-dist/tex/latex/caption/ltcaption.sty
+Package: ltcaption 2020/05/30 v1.4b longtable captions (AR)
+))
+(/usr/share/texlive/texmf-dist/tex/latex/etoc/etoc.sty
+Package: etoc 2021/09/23 v1.09e Completely customisable TOCs (JFB)
+\Etoc@toctoks=\toks45
+\c@etoc@tocid=\count328
+\c@etoc@tocdepth=\count329
+\etoc@framed@titlebox=\box125
+\etoc@framed@contentsbox=\box126
+)
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 14
+9.
+
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2020/03/25 scalable font definitions for T1/phv.
+)
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 8.99994pt on input line 149.
+
+(/usr/share/texlive/texmf-dist/tex/latex/l3backend/l3backend-luatex.def
+File: l3backend-luatex.def 2022-01-12 L3 backend support: PDF output (LuaTeX)
+\l__color_backend_stack_int=\count330
+\l__pdf_internal_box=\box127
+)
+No file refman.aux.
+
+\openout1 = refman.aux
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 149.
+LaTeX Font Info:    ... okay on input line 149.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 149.
+LaTeX Font Info:    ... okay on input line 149.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 149.
+LaTeX Font Info:    ... okay on input line 149.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 149.
+LaTeX Font Info:    ... okay on input line 149.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 149.
+LaTeX Font Info:    Trying to load font information for TS1+cmr on input line 1
+49.
+(/usr/share/texlive/texmf-dist/tex/latex/base/ts1cmr.fd
+File: ts1cmr.fd 2019/12/16 v2.5j Standard LaTeX font definitions
+)
+LaTeX Font Info:    ... okay on input line 149.
+LaTeX Font Info:    Checking defaults for TU/lmr/m/n on input line 149.
+LaTeX Font Info:    ... okay on input line 149.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 149.
+LaTeX Font Info:    ... okay on input line 149.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 149.
+LaTeX Font Info:    ... okay on input line 149.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 149.
+LaTeX Font Info:    ... okay on input line 149.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 149.
+LaTeX Font Info:    ... okay on input line 149.
+
+(/usr/share/texlive/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
+[Loading MPS to PDF converter (version 2006.09.02).]
+\scratchcounter=\count331
+\scratchdimen=\dimen300
+\scratchbox=\box128
+\nofMPsegments=\count332
+\nofMParguments=\count333
+\everyMPshowfont=\toks46
+\MPscratchCnt=\count334
+\MPscratchDim=\dimen301
+\MPnumerator=\count335
+\makeMPintoPDFobject=\count336
+\everyMPtoPDFconversion=\toks47
+) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
+Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+85.
+
+(/usr/share/texlive/texmf-dist/tex/latex/latexconfig/epstopdf-sys.cfg
+File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
+e
+))
+*geometry* driver: auto-detecting
+*geometry* detected driver: luatex
+*geometry* verbose mode - [ preamble ] result:
+* driver: luatex
+* paper: a4paper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: twoside 
+* h-part:(L,W,R)=(71.13188pt, 455.24411pt, 71.13188pt)
+* v-part:(T,H,B)=(71.13188pt, 702.78308pt, 71.13188pt)
+* \paperwidth=597.50787pt
+* \paperheight=845.04684pt
+* \textwidth=455.24411pt
+* \textheight=702.78308pt
+* \oddsidemargin=-1.1381pt
+* \evensidemargin=-1.1381pt
+* \topmargin=-31.2056pt
+* \headheight=12.0pt
+* \headsep=18.06749pt
+* \topskip=10.0pt
+* \footskip=25.29494pt
+* \marginparwidth=125.0pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidetrue
+* \@mparswitchtrue
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+Package hyperref Info: Link coloring ON on input line 149.
+(/usr/share/texlive/texmf-dist/tex/latex/hyperref/nameref.sty
+Package: nameref 2021-04-02 v2.47 Cross-referencing by name of section
+
+(/usr/share/texlive/texmf-dist/tex/latex/refcount/refcount.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(/usr/share/texlive/texmf-dist/tex/generic/gettitlestring/gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count337
+)
+LaTeX Info: Redefining \ref on input line 149.
+LaTeX Info: Redefining \pageref on input line 149.
+LaTeX Info: Redefining \nameref on input line 149.
+\@outlinefile=\write6
+
+\openout6 = refman.out
+Package backref Info: ** backref set up for natbib ** on input line 149.
+Package caption Info: Begin \AtBeginDocument code.
+Package caption Info: End \AtBeginDocument code.
+
+No file refman.toc.
+Package hyperref Info: Option `pageanchor' set `false' on input line 156.
+Package hyperref Info: Option `bookmarksnumbered' set `true' on input line 156.
+
+Package hyperref Info: Option `unicode' set `true' on input line 156.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 12.9599pt on input line 161.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 6.29996pt on input line 161.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 161
+.
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
+File: umsa.fd 2013/01/14 v3.01 AMS symbols A
+)
+LaTeX Font Info:    Trying to load font information for U+msb on input line 161
+.
+
+(/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
+File: umsb.fd 2013/01/14 v3.01 AMS symbols B
+)
+LaTeX Font Info:    Trying to load font information for U+wasy on input line 16
+1.
+
+(/usr/share/texlive/texmf-dist/tex/latex/wasysym/uwasy.fd
+File: uwasy.fd 2020/01/19 v2.4 Wasy-2 symbol font definitions
+)
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 10.79993pt on input line 163.
+ [1
+
+
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}] [2
+
+]
+\tf@toc=\write7
+
+\openout7 = refman.toc
+Package hyperref Info: Option `pageanchor' set `true' on input line 171.
+
+Chapter 1.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 18.66588pt on input line 174.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 18.66588pt on input line 174.
+LaTeX Font Info:    Font shape `T1/phv/bc/n' will be
+(Font)              scaled to size 18.66588pt on input line 174.
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 22.39185pt on input line 174.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 22.39185pt on input line 174.
+LaTeX Font Info:    Font shape `T1/phv/bc/n' will be
+(Font)              scaled to size 22.39185pt on input line 174.
+(./index.tex
+LaTeX Font Info:    Trying to load font information for T1+pcr on input line 7.
+
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
+File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
+))
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 8.99994pt on input line 176.
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 6.29996pt on input line 176.
+
+[1
+
+
+] [2
+
+]
+Chapter 2.
+(./hierarchy.tex
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 12.9599pt on input line 1.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1EntitiesConceptsPlot' on
+ page 3 undefined on input line 3.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1AuthorsConceptsPlot' on 
+page 3 undefined on input line 5.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1ConceptsConceptsPlot' on
+ page 3 undefined on input line 6.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot
+' on page 3 undefined on input line 7.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1PublishersConceptsPlot' 
+on page 3 undefined on input line 8.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1SourcesConceptsPlot' on 
+page 3 undefined on input line 9.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1WorksConceptsPlot' on pa
+ge 3 undefined on input line 10.
+
+
+LaTeX Warning: Reference `classOA__entities__names_1_1OA__entities__names' on p
+age 3 undefined on input line 12.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnal
+ysis' on page 3 undefined on input line 14.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnaly
+sis' on page 3 undefined on input line 16.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1AuthorsConceptsPlot' on 
+page 3 undefined on input line 18.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnal
+ysis' on page 3 undefined on input line 20.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1ConceptsConceptsPlot' on
+ page 3 undefined on input line 22.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1InstitutionsConcepts
+Analysis' on page 3 undefined on input line 24.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot
+' on page 3 undefined on input line 26.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1PublishersConceptsAn
+alysis' on page 3 undefined on input line 28.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1PublishersConceptsPlot' 
+on page 3 undefined on input line 30.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1SourcesConceptsAnaly
+sis' on page 3 undefined on input line 32.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1SourcesConceptsPlot' on 
+page 3 undefined on input line 34.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysi
+s' on page 3 undefined on input line 36.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1WorksConceptsPlot' on pa
+ge 3 undefined on input line 38.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnaly
+sis' on page 3 undefined on input line 43.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1InstitutionsConcepts
+Analysis' on page 3 undefined on input line 46.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1SourcesConceptsAnaly
+sis' on page 3 undefined on input line 49.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysi
+s' on page 3 undefined on input line 52.
+
+) [3] [4
+
+]
+Chapter 3.
+(./annotated.tex
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnaly
+sis' on page 5 undefined on input line 3.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1AuthorsConceptsPlot' on 
+page 5 undefined on input line 4.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnal
+ysis' on page 5 undefined on input line 5.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1ConceptsConceptsPlot' on
+ page 5 undefined on input line 6.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnal
+ysis' on page 5 undefined on input line 7.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1EntitiesConceptsPlot' on
+ page 5 undefined on input line 8.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1InstitutionsConcepts
+Analysis' on page 5 undefined on input line 9.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot
+' on page 5 undefined on input line 10.
+
+
+LaTeX Warning: Reference `classOA__entities__names_1_1OA__entities__names' on p
+age 5 undefined on input line 11.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1PublishersConceptsAn
+alysis' on page 5 undefined on input line 12.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1PublishersConceptsPlot' 
+on page 5 undefined on input line 13.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1SourcesConceptsAnaly
+sis' on page 5 undefined on input line 14.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1SourcesConceptsPlot' on 
+page 5 undefined on input line 15.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysi
+s' on page 5 undefined on input line 16.
+
+
+LaTeX Warning: Reference `classEntitiesConceptsPlot_1_1WorksConceptsPlot' on pa
+ge 5 undefined on input line 17.
+
+) [5] [6
+
+]
+Chapter 4.
+(./classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis.tex
+warning  (file classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__inherit
+__graph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__inherit
+__graph.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__inherit
+__graph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__inherit__graph.pdf, 
+id=82, 297.11pt x 313.17pt>
+File: classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__inherit__graph.
+pdf Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__inherit__graph.p
+df>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalys
+is__inherit__graph.pdf  used on input line 9.
+(luatex.def)             Requested size: 296.0pt x 312.0128pt.
+
+warning  (file classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__coll__g
+raph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__coll__g
+raph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__coll__graph.pdf, id=
+83, 297.11pt x 245.91875pt>
+File: classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__coll__graph.pdf
+ Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__coll__graph.pdf>
+
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalys
+is__coll__graph.pdf  used on input line 18.
+(luatex.def)             Requested size: 296.0pt x 245.01004pt.
+[7<./classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__inherit__graph.pd
+f
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]
+LaTeX Font Info:    Font shape `T1/phv/b/n' will be
+(Font)              scaled to size 10.79993pt on input line 21.
+LaTeX Font Info:    Trying to load font information for TS1+phv on input line 2
+4.
+ (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1phv.fd
+File: ts1phv.fd 2020/03/25 scalable font definitions for TS1/phv.
+)
+LaTeX Font Info:    Font shape `TS1/phv/m/n' will be
+(Font)              scaled to size 8.99994pt on input line 24.
+)
+(./classEntitiesConceptsPlot_1_1AuthorsConceptsPlot.tex
+warning  (file classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__inherit__graph.
+pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__inherit__graph.
+pdf) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__inherit__graph.
+pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__inherit__graph.
+pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__inherit__graph.pdf, id=97, 7
+76.9025pt x 177.66376pt>
+File: classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__inherit__graph.pdf Grap
+hic file (type pdf)
+<use classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__inherit__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__inhe
+rit__graph.pdf  used on input line 9.
+(luatex.def)             Requested size: 350.0pt x 80.04012pt.
+
+warning  (file classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__coll__graph.pdf
+) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__coll__graph.pdf
+) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__coll__graph.pdf
+) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__coll__graph.pdf
+) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__coll__graph.pdf, id=98, 776.
+9025pt x 177.66376pt>
+File: classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__coll__graph.pdf Graphic
+ file (type pdf)
+<use classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__coll__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__coll
+__graph.pdf  used on input line 18.
+(luatex.def)             Requested size: 350.0pt x 80.04012pt.
+[8<./classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis__coll__graph.pdf
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__inherit__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsPlot_1_1AuthorsConceptsPlot__coll__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]) (./classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis.tex
+warning  (file classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__inherit__graph.pdf,
+ id=128, 245.91875pt x 313.17pt>
+File: classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__inherit__graph
+.pdf Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__inherit__graph.
+pdf>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnaly
+sis__inherit__graph.pdf  used on input line 9.
+(luatex.def)             Requested size: 245.0pt x 312.0128pt.
+
+warning  (file classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__coll__
+graph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__coll__
+graph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__coll__graph.pdf, id
+=129, 228.855pt x 245.91875pt>
+File: classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__coll__graph.pd
+f Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__coll__graph.pdf
+>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnaly
+sis__coll__graph.pdf  used on input line 18.
+(luatex.def)             Requested size: 228.0pt x 245.01004pt.
+[9<./classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__inherit__graph.p
+df
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]) (./classEntitiesConceptsPlot_1_1ConceptsConceptsPlot.tex
+warning  (file classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__inherit__graph
+.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__inherit__graph
+.pdf) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__inherit__graph
+.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__inherit__graph
+.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__inherit__graph.pdf, id=144,
+ 783.92876pt x 160.6pt>
+File: classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__inherit__graph.pdf Gra
+phic file (type pdf)
+<use classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__inherit__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__inh
+erit__graph.pdf  used on input line 9.
+(luatex.def)             Requested size: 350.0pt x 71.70325pt.
+
+warning  (file classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__coll__graph.pd
+f) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__coll__graph.pd
+f) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__coll__graph.pd
+f) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__coll__graph.pd
+f) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__coll__graph.pdf, id=145, 78
+3.92876pt x 160.6pt>
+File: classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__coll__graph.pdf Graphi
+c file (type pdf)
+<use classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__coll__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__col
+l__graph.pdf  used on input line 18.
+(luatex.def)             Requested size: 350.0pt x 71.70325pt.
+[10<./classEntitiesConceptsAnalysis_1_1ConceptsConceptsAnalysis__coll__graph.pdf
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__inherit__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsPlot_1_1ConceptsConceptsPlot__coll__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]) (./classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis.tex
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 11 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 12 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 9 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 10 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 15 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 13 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 14 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 3 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 8 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 7 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inheri
+t__graph.pdf) (pdfe): invalid 6 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inherit__graph.pdf,
+ id=176, 794.97pt x 357.335pt>
+File: classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inherit__graph
+.pdf Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inherit__graph.
+pdf>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnaly
+sis__inherit__graph.pdf  used on input line 14.
+(luatex.def)             Requested size: 350.0pt x 157.32602pt.
+
+warning  (file classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__coll__
+graph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__coll__graph.pdf, id
+=177, 223.83624pt x 178.6675pt>
+File: classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__coll__graph.pd
+f Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__coll__graph.pdf
+>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnaly
+sis__coll__graph.pdf  used on input line 23.
+(luatex.def)             Requested size: 223.0pt x 178.00456pt.
+
+Underfull \hbox (badness 1221) in paragraph at lines 29--31
+\T1/phv/m/n/10 _[]download=True, disable[]_[]tqdm[]_[]loading[]_[]bar=False, pro
+gress[]_[]fct[]_[]update=None, create[]_[]dataframe=True,
+ []
+
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 8.09995pt on input line 32.
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <9> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 32.
+LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
+(Font)              scaled to size 8.09995pt on input line 32.
+[11<./classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__inherit__graph.
+pdf
+warning  (pdfe): invalid 11 0 R offset 15
+
+warning  (pdfe): invalid 12 0 R offset 15
+
+warning  (pdfe): invalid 9 0 R offset 15
+
+warning  (pdfe): invalid 10 0 R offset 15
+
+warning  (pdfe): invalid 15 0 R offset 15
+
+warning  (pdfe): invalid 13 0 R offset 15
+
+warning  (pdfe): invalid 14 0 R offset 15
+
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+
+warning  (pdfe): invalid 8 0 R offset 15
+
+warning  (pdfe): invalid 7 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+><./classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis__coll__graph.pdf
+warning  (pdfe): invalid 3 0 R offset 15
+>]
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 42.
+LaTeX Font Info:    Font shape `T1/phv/m/sl' will be
+(Font)              scaled to size 6.29996pt on input line 42.
+ [12]
+LaTeX Font Info:    Font shape `T1/phv/m/n' will be
+(Font)              scaled to size 7.19995pt on input line 137.
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <8> not available
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 137.
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <7> not available
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 137.
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.1 on input line 157.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 165--166
+\T1/pcr/m/n/8 def Entities[]Concepts[]Analysis.[]Entities[]Concepts[]Analysis.[
+]add[]_[]average[]_[]combined[]_[]concept[]_[]score[]_[]to[]_[]
+ []
+
+[13]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.2 on input line 175.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 180--181
+\T1/pcr/m/n/8 def Entities[]Concepts[]Analysis.[]Entities[]Concepts[]Analysis.[
+]create[]_[]multi[]_[]concept[]_[]filters[]_[]entities[]_[]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.3 on input line 202.
+
+
+Underfull \hbox (badness 10000) detected at line 213
+[][][]
+ []
+
+[14]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.4 on input line 230.
+
+
+Underfull \hbox (badness 10000) detected at line 231
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.5 on input line 254.
+
+
+Underfull \hbox (badness 10000) detected at line 255
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 262--263
+\T1/pcr/m/n/8 def Entities[]Concepts[]Analysis.[]Entities[]Concepts[]Analysis.[
+]get[]_[]df[]_[]filtered[]_[]entities[]_[]selection[]_[]
+ []
+
+[15]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.6 on input line 272.
+
+
+Underfull \hbox (badness 10000) detected at line 273
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.7 on input line 290.
+
+
+Underfull \hbox (badness 10000) detected at line 291
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.8 on input line 308.
+
+
+Underfull \hbox (badness 10000) detected at line 309
+[][][]
+ []
+
+[16]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.9 on input line 328.
+
+
+Underfull \hbox (badness 10000) detected at line 329
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.10 on input line 354.
+
+
+Underfull \hbox (badness 10000) detected at line 355
+[][][]
+ []
+
+) (./classEntitiesConceptsPlot_1_1EntitiesConceptsPlot.tex
+warning  (file classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inherit__graph
+.pdf) (pdfe): invalid 7 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inherit__graph
+.pdf) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inherit__graph
+.pdf) (pdfe): invalid 8 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inherit__graph
+.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inherit__graph
+.pdf) (pdfe): invalid 3 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inherit__graph
+.pdf) (pdfe): invalid 4 0 R offset 15
+<classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inherit__graph.pdf, id=296,
+ 449.68pt x 357.335pt>
+File: classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inherit__graph.pdf Gra
+phic file (type pdf)
+<use classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inherit__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inh
+erit__graph.pdf  used on input line 14.
+(luatex.def)             Requested size: 350.0pt x 278.13675pt.
+[17]
+Underfull \hbox (badness 1490) in paragraph at lines 22--23
+\T1/phv/m/n/10 cited[]_[]by[]_[]threshold=0, display[]_[]only[]_[]selected[]_[]
+entities=None, display[]_[]threshold[]_[]lines=None, entity[]_[]to[]_[]
+ []
+
+[18<./classEntitiesConceptsPlot_1_1EntitiesConceptsPlot__inherit__graph.pdf
+warning  (pdfe): invalid 7 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 8 0 R offset 15
+
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+>]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.11 on input line 48.
+
+
+Underfull \hbox (badness 10000) detected at line 49
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.12 on input line 80.
+
+
+Underfull \hbox (badness 10000) detected at line 81
+[][][]
+ []
+
+LaTeX Font Info:    Trying to load font information for TS1+pcr on input line 8
+8.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pcr.fd
+File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
+)
+LaTeX Font Info:    Font shape `TS1/pcr/m/it' in size <8> not available
+(Font)              Font shape `TS1/pcr/m/sl' tried instead on input line 88.
+
+Underfull \hbox (badness 10000) in paragraph at lines 88--89
+\T1/pcr/m/n/8 def Entities[]Concepts[]Plot.[]Entities[]Concepts[]Plot.[]get[]_[
+]figure[]_[]time[]_[]series[]_[]element[]_[]used[]_[]by[]_[]entities
+ []
+
+[19]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.13 on input line 108.
+
+
+Underfull \hbox (badness 10000) detected at line 109
+[][][]
+ []
+
+) (./classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis.tex
+warning  (file classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__in
+herit__graph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__in
+herit__graph.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__in
+herit__graph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__inherit__graph.
+pdf, id=337, 313.17pt x 313.17pt>
+File: classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__inherit__g
+raph.pdf Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__inherit__gr
+aph.pdf>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1InstitutionsConceptsA
+nalysis__inherit__graph.pdf  used on input line 14.
+(luatex.def)             Requested size: 312.0pt x 312.0128pt.
+[20]
+warning  (file classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__co
+ll__graph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__co
+ll__graph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__coll__graph.pdf
+, id=345, 313.17pt x 245.91875pt>
+File: classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__coll__grap
+h.pdf Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__coll__graph
+.pdf>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1InstitutionsConceptsA
+nalysis__coll__graph.pdf  used on input line 23.
+(luatex.def)             Requested size: 312.0pt x 245.01004pt.
+[21<./classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__inherit__gr
+aph.pdf
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsAnalysis_1_1InstitutionsConceptsAnalysis__coll__graph.p
+df
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]
+Underfull \hbox (badness 10000) in paragraph at lines 55--56
+\T1/pcr/m/n/8 def Entities[]Concepts[]Analysis.[]Institutions[]Concepts[]Analysi
+s.[]filter[]_[]and[]_[]format[]_[]entitie[]_[]data[]_[]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.14 on input line 65.
+
+
+Underfull \hbox (badness 10000) detected at line 66
+[][][]
+ []
+
+[22]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.15 on input line 85.
+
+
+Underfull \hbox (badness 10000) detected at line 86
+[][][]
+ []
+
+) (./classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot.tex
+warning  (file classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__inherit__g
+raph.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__inherit__g
+raph.pdf) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__inherit__g
+raph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__inherit__g
+raph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__inherit__graph.pdf, id=
+384, 794.97pt x 177.66376pt>
+File: classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__inherit__graph.pdf
+ Graphic file (type pdf)
+<use classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__inherit__graph.pdf>
+
+Package luatex.def Info: classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot_
+_inherit__graph.pdf  used on input line 14.
+(luatex.def)             Requested size: 350.0pt x 78.22108pt.
+
+warning  (file classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__coll__grap
+h.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__coll__grap
+h.pdf) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__coll__grap
+h.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__coll__grap
+h.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__coll__graph.pdf, id=385
+, 794.97pt x 177.66376pt>
+File: classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__coll__graph.pdf Gr
+aphic file (type pdf)
+<use classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__coll__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot_
+_coll__graph.pdf  used on input line 23.
+(luatex.def)             Requested size: 350.0pt x 78.22108pt.
+[23<./classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__inherit__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsPlot_1_1InstitutionsConceptsPlot__coll__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]
+Underfull \hbox (badness 10000) in paragraph at lines 46--47
+\T1/pcr/m/n/8 def Entities[]Concepts[]Plot.[]Institutions[]Concepts[]Plot.[]get[]_[]figure[]_[]institutions[]_[]multi[]_[]concepts[]_[]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.16 on input line 68.
+
+
+Underfull \hbox (badness 10000) detected at line 69
+[][][]
+ []
+
+[24]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.17 on input line 86.
+
+
+Underfull \hbox (badness 10000) detected at line 87
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.18 on input line 104.
+
+
+Underfull \hbox (badness 10000) detected at line 105
+[][][]
+ []
+
+) (./classOA__entities__names_1_1OA__entities__names.tex
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 11 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 12 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 9 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 10 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 15 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 13 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 14 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 3 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 8 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 7 0 R offset 15
+
+warning  (file classOA__entities__names_1_1OA__entities__names__inherit__graph.p
+df) (pdfe): invalid 6 0 R offset 15
+<classOA__entities__names_1_1OA__entities__names__inherit__graph.pdf, id=425, 7
+94.97pt x 357.335pt>
+File: classOA__entities__names_1_1OA__entities__names__inherit__graph.pdf Graph
+ic file (type pdf)
+<use classOA__entities__names_1_1OA__entities__names__inherit__graph.pdf>
+Package luatex.def Info: classOA__entities__names_1_1OA__entities__names__inher
+it__graph.pdf  used on input line 9.
+(luatex.def)             Requested size: 350.0pt x 157.32602pt.
+[25<./classOA__entities__names_1_1OA__entities__names__inherit__graph.pdf
+warning  (pdfe): invalid 11 0 R offset 15
+
+warning  (pdfe): invalid 12 0 R offset 15
+
+warning  (pdfe): invalid 9 0 R offset 15
+
+warning  (pdfe): invalid 10 0 R offset 15
+
+warning  (pdfe): invalid 15 0 R offset 15
+
+warning  (pdfe): invalid 13 0 R offset 15
+
+warning  (pdfe): invalid 14 0 R offset 15
+
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+
+warning  (pdfe): invalid 8 0 R offset 15
+
+warning  (pdfe): invalid 7 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+>]
+Underfull \hbox (badness 6978) in paragraph at lines 57--60
+[][] \T1/phv/b/n/10 concepts[]_[]names \T1/phv/m/n/10 = df[]_[]concepts[][]\TS1
+/phv/m/n/10 '\T1/phv/m/n/10 openalex[]_[]id\TS1/phv/m/n/10 '\T1/phv/m/n/10 , \T
+S1/phv/m/n/10 '\T1/phv/m/n/10 display[]_[]name\TS1/phv/m/n/10 '[][]\T1/phv/m/n/
+10 .set[]_[]index(\TS1/phv/m/n/10 '\T1/phv/m/n/10 openalex[]_[]id\TS1/phv/m/n/1
+0 '\T1/phv/m/n/10 )[]\TS1/phv/m/n/10 '\T1/phv/m/n/10 display[]_[]
+ []
+
+) (./classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis.tex
+warning  (file classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__inhe
+rit__graph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__inhe
+rit__graph.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__inhe
+rit__graph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__inherit__graph.pd
+f, id=446, 250.9375pt x 313.17pt>
+File: classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__inherit__gra
+ph.pdf Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__inherit__grap
+h.pdf>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1PublishersConceptsAna
+lysis__inherit__graph.pdf  used on input line 9.
+(luatex.def)             Requested size: 250.0pt x 312.01758pt.
+[26]
+warning  (file classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__coll
+__graph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__coll
+__graph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__coll__graph.pdf, 
+id=476, 233.87375pt x 245.91875pt>
+File: classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__coll__graph.
+pdf Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__coll__graph.p
+df>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1PublishersConceptsAna
+lysis__coll__graph.pdf  used on input line 18.
+(luatex.def)             Requested size: 233.0pt x 245.0138pt.
+[27<./classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__inherit__grap
+h.pdf
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis__coll__graph.pdf
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]) (./classEntitiesConceptsPlot_1_1PublishersConceptsPlot.tex
+warning  (file classEntitiesConceptsPlot_1_1PublishersConceptsPlot__inherit__gra
+ph.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1PublishersConceptsPlot__inherit__gra
+ph.pdf) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1PublishersConceptsPlot__inherit__gra
+ph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1PublishersConceptsPlot__inherit__gra
+ph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1PublishersConceptsPlot__inherit__graph.pdf, id=49
+6, 788.9475pt x 160.6pt>
+File: classEntitiesConceptsPlot_1_1PublishersConceptsPlot__inherit__graph.pdf G
+raphic file (type pdf)
+<use classEntitiesConceptsPlot_1_1PublishersConceptsPlot__inherit__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1PublishersConceptsPlot__i
+nherit__graph.pdf  used on input line 9.
+(luatex.def)             Requested size: 350.0pt x 71.24744pt.
+
+warning  (file classEntitiesConceptsPlot_1_1PublishersConceptsPlot__coll__graph.
+pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1PublishersConceptsPlot__coll__graph.
+pdf) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1PublishersConceptsPlot__coll__graph.
+pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1PublishersConceptsPlot__coll__graph.
+pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1PublishersConceptsPlot__coll__graph.pdf, id=497, 
+788.9475pt x 160.6pt>
+File: classEntitiesConceptsPlot_1_1PublishersConceptsPlot__coll__graph.pdf Grap
+hic file (type pdf)
+<use classEntitiesConceptsPlot_1_1PublishersConceptsPlot__coll__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1PublishersConceptsPlot__c
+oll__graph.pdf  used on input line 18.
+(luatex.def)             Requested size: 350.0pt x 71.24744pt.
+) (./classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis.tex
+warning  (file classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__inherit
+__graph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__inherit
+__graph.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__inherit
+__graph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__inherit__graph.pdf, 
+id=498, 297.11pt x 313.17pt>
+File: classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__inherit__graph.
+pdf Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__inherit__graph.p
+df>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalys
+is__inherit__graph.pdf  used on input line 9.
+(luatex.def)             Requested size: 296.0pt x 312.0128pt.
+[28<./classEntitiesConceptsPlot_1_1PublishersConceptsPlot__inherit__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsPlot_1_1PublishersConceptsPlot__coll__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]
+warning  (file classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__coll__g
+raph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__coll__g
+raph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__coll__graph.pdf, id=
+521, 297.11pt x 245.91875pt>
+File: classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__coll__graph.pdf
+ Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__coll__graph.pdf>
+
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalys
+is__coll__graph.pdf  used on input line 18.
+(luatex.def)             Requested size: 296.0pt x 245.01004pt.
+[29<./classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__inherit__graph.p
+df
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsAnalysis_1_1SourcesConceptsAnalysis__coll__graph.pdf
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]) (./classEntitiesConceptsPlot_1_1SourcesConceptsPlot.tex
+warning  (file classEntitiesConceptsPlot_1_1SourcesConceptsPlot__inherit__graph.
+pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1SourcesConceptsPlot__inherit__graph.
+pdf) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1SourcesConceptsPlot__inherit__graph.
+pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1SourcesConceptsPlot__inherit__graph.
+pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1SourcesConceptsPlot__inherit__graph.pdf, id=542, 
+776.9025pt x 177.66376pt>
+File: classEntitiesConceptsPlot_1_1SourcesConceptsPlot__inherit__graph.pdf Grap
+hic file (type pdf)
+<use classEntitiesConceptsPlot_1_1SourcesConceptsPlot__inherit__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1SourcesConceptsPlot__inhe
+rit__graph.pdf  used on input line 9.
+(luatex.def)             Requested size: 350.0pt x 80.04012pt.
+
+warning  (file classEntitiesConceptsPlot_1_1SourcesConceptsPlot__coll__graph.pdf
+) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1SourcesConceptsPlot__coll__graph.pdf
+) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1SourcesConceptsPlot__coll__graph.pdf
+) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1SourcesConceptsPlot__coll__graph.pdf
+) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1SourcesConceptsPlot__coll__graph.pdf, id=543, 776
+.9025pt x 177.66376pt>
+File: classEntitiesConceptsPlot_1_1SourcesConceptsPlot__coll__graph.pdf Graphic
+ file (type pdf)
+<use classEntitiesConceptsPlot_1_1SourcesConceptsPlot__coll__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1SourcesConceptsPlot__coll
+__graph.pdf  used on input line 18.
+(luatex.def)             Requested size: 350.0pt x 80.04012pt.
+) (./classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis.tex
+warning  (file classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__inherit__
+graph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__inherit__
+graph.pdf) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__inherit__
+graph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__inherit__graph.pdf, id
+=544, 289.08pt x 313.17pt>
+File: classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__inherit__graph.pd
+f Graphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__inherit__graph.pdf
+>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis
+__inherit__graph.pdf  used on input line 14.
+(luatex.def)             Requested size: 288.0pt x 312.01758pt.
+[30<./classEntitiesConceptsPlot_1_1SourcesConceptsPlot__inherit__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsPlot_1_1SourcesConceptsPlot__coll__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]
+warning  (file classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__coll__gra
+ph.pdf) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__coll__gra
+ph.pdf) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__coll__graph.pdf, id=56
+8, 289.08pt x 245.91875pt>
+File: classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__coll__graph.pdf G
+raphic file (type pdf)
+<use classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__coll__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis
+__coll__graph.pdf  used on input line 23.
+(luatex.def)             Requested size: 288.0pt x 245.0138pt.
+[31<./classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__inherit__graph.pdf
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__coll__graph.pdf
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>] [32]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.19 on input line 111.
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.20 on input line 136.
+
+
+Underfull \hbox (badness 10000) in paragraph at lines 141--142
+\T1/pcr/m/n/8 def Entities[]Concepts[]Analysis.[]Works[]Concepts[]Analysis.[]fil
+ter[]_[]and[]_[]format[]_[]entitie[]_[]data[]_[]from[]_[]api[]_[]
+ []
+
+[33]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.21 on input line 151.
+
+
+Underfull \hbox (badness 10000) detected at line 152
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.22 on input line 169.
+
+
+Underfull \hbox (badness 10000) detected at line 170
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.23 on input line 187.
+
+[34]
+Underfull \hbox (badness 10000) detected at line 188
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.24 on input line 205.
+
+
+Underfull \hbox (badness 10000) detected at line 206
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 219
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.25 on input line 238.
+
+
+Overfull \vbox (24.42535pt too high) has occurred while \output is active []
+
+
+[35]) (./classEntitiesConceptsPlot_1_1WorksConceptsPlot.tex
+warning  (file classEntitiesConceptsPlot_1_1WorksConceptsPlot__inherit__graph.pd
+f) (pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1WorksConceptsPlot__inherit__graph.pd
+f) (pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1WorksConceptsPlot__inherit__graph.pd
+f) (pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1WorksConceptsPlot__inherit__graph.pd
+f) (pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1WorksConceptsPlot__inherit__graph.pdf, id=656, 76
+8.8725pt x 177.66376pt>
+File: classEntitiesConceptsPlot_1_1WorksConceptsPlot__inherit__graph.pdf Graphi
+c file (type pdf)
+<use classEntitiesConceptsPlot_1_1WorksConceptsPlot__inherit__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1WorksConceptsPlot__inheri
+t__graph.pdf  used on input line 14.
+(luatex.def)             Requested size: 350.0pt x 80.87508pt.
+
+warning  (file classEntitiesConceptsPlot_1_1WorksConceptsPlot__coll__graph.pdf) 
+(pdfe): invalid 5 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1WorksConceptsPlot__coll__graph.pdf) 
+(pdfe): invalid 6 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1WorksConceptsPlot__coll__graph.pdf) 
+(pdfe): invalid 4 0 R offset 15
+
+warning  (file classEntitiesConceptsPlot_1_1WorksConceptsPlot__coll__graph.pdf) 
+(pdfe): invalid 3 0 R offset 15
+<classEntitiesConceptsPlot_1_1WorksConceptsPlot__coll__graph.pdf, id=657, 768.8
+725pt x 177.66376pt>
+File: classEntitiesConceptsPlot_1_1WorksConceptsPlot__coll__graph.pdf Graphic f
+ile (type pdf)
+<use classEntitiesConceptsPlot_1_1WorksConceptsPlot__coll__graph.pdf>
+Package luatex.def Info: classEntitiesConceptsPlot_1_1WorksConceptsPlot__coll__
+graph.pdf  used on input line 23.
+(luatex.def)             Requested size: 350.0pt x 80.87508pt.
+[36<./classEntitiesConceptsPlot_1_1WorksConceptsPlot__inherit__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+><./classEntitiesConceptsPlot_1_1WorksConceptsPlot__coll__graph.pdf
+warning  (pdfe): invalid 5 0 R offset 15
+
+warning  (pdfe): invalid 6 0 R offset 15
+
+warning  (pdfe): invalid 4 0 R offset 15
+
+warning  (pdfe): invalid 3 0 R offset 15
+>]
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.26 on input line 56.
+
+
+Underfull \hbox (badness 10000) detected at line 57
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.27 on input line 74.
+
+
+Underfull \hbox (badness 10000) detected at line 75
+[][][]
+ []
+
+
+Package longtable Warning: Column widths have changed
+(longtable)                in table 4.28 on input line 92.
+
+
+Underfull \hbox (badness 10000) detected at line 93
+[][][]
+ []
+
+) [37] [38
+
+]
+No file refman.ind.
+
+Package longtable Warning: Table widths have changed. Rerun LaTeX.
+
+(./refman.aux)
+
+LaTeX Warning: There were undefined references.
+
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+
+Package rerunfilecheck Warning: File `refman.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+Package rerunfilecheck Info: Checksums for `refman.out':
+(rerunfilecheck)             Before: <no file>
+(rerunfilecheck)             After:  DB2C4C3B5D5D8E1BD1E74A40612A09A1;18644.
+)
+
+Here is how much of LuaTeX's memory you used:
+ 26655 strings out of 477805
+ 125011,953878 words of node,token memory allocated
+ 1612 words of node memory still in use:
+   4 hlist, 1 vlist, 2 rule, 2 glue, 98 kern, 1 glyph, 101 attribute, 109 glue_s
+pec, 101 attribute_list, 5 write, 1 pdf_dest nodes
+   avail lists: 1:11,2:3149,3:764,4:284,5:927,6:211,7:9259,8:82,9:1871,10:22,11:
+779,12:3
+ 45652 multiletter control sequences out of 65536+600000
+ 90 fonts using 6301655 bytes
+ 120i,15n,115p,953b,647s stack positions out of 5000i,500n,10000p,200000b,80000s
+{/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/share/texlive/texmf-dis
+t/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/urw/courier/ucrr8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/cour
+ier/ucrro8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.p
+fb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvb8ac.pfb></usr/sha
+re/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
+Output written on refman.pdf (40 pages, 323679 bytes).
+
+PDF statistics: 743 PDF objects out of 1000 (max. 8388607)
+ 602 compressed objects within 7 object streams
+ 297 named destinations out of 1000 (max. 131072)
+ 16 words of extra memory for PDF output out of 10000 (max. 100000000)
+

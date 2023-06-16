@@ -1,0 +1,66 @@
+\@ifundefined {etoctocstyle}{\let \etoc@startlocaltoc \@gobble \let \etoc@settocdepth \@gobble \let \etoc@depthtag \@gobble \let \etoc@setlocaltop \@gobble }{}
+\contentsline {chapter}{\numberline {1}Automatic literature analysis}{1}{chapter.1}%
+\contentsline {chapter}{\numberline {2}Hierarchical Index}{3}{chapter.2}%
+\contentsline {section}{\numberline {2.1}Class Hierarchy}{3}{section.2.1}%
+\contentsline {chapter}{\numberline {3}Class Index}{5}{chapter.3}%
+\contentsline {section}{\numberline {3.1}Class List}{5}{section.3.1}%
+\contentsline {chapter}{\numberline {4}Class Documentation}{7}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Authors\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis Class Reference}{7}{section.4.1}%
+\contentsline {section}{\numberline {4.2}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Authors\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot Class Reference}{8}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis Class Reference}{9}{section.4.3}%
+\contentsline {section}{\numberline {4.4}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot Class Reference}{10}{section.4.4}%
+\contentsline {section}{\numberline {4.5}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis Class Reference}{11}{section.4.5}%
+\contentsline {subsection}{\numberline {4.5.1}Detailed Description}{13}{subsection.4.5.1}%
+\contentsline {subsection}{\numberline {4.5.2}Constructor \& Destructor Documentation}{13}{subsection.4.5.2}%
+\contentsline {subsubsection}{\numberline {4.5.2.1}\_\_init\_\_()}{13}{subsubsection.4.5.2.1}%
+\contentsline {subsection}{\numberline {4.5.3}Member Function Documentation}{13}{subsection.4.5.3}%
+\contentsline {subsubsection}{\numberline {4.5.3.1}add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df()}{13}{subsubsection.4.5.3.1}%
+\contentsline {subsubsection}{\numberline {4.5.3.2}create\_multi\_concept\_filters\_entities\_dataframe()}{14}{subsubsection.4.5.3.2}%
+\contentsline {subsubsection}{\numberline {4.5.3.3}get\_api\_query()}{14}{subsubsection.4.5.3.3}%
+\contentsline {subsubsection}{\numberline {4.5.3.4}get\_count\_entities\_matched()}{15}{subsubsection.4.5.3.4}%
+\contentsline {subsubsection}{\numberline {4.5.3.5}get\_database\_file\_name()}{15}{subsubsection.4.5.3.5}%
+\contentsline {subsubsection}{\numberline {4.5.3.6}get\_df\_filtered\_entities\_selection\_threshold()}{15}{subsubsection.4.5.3.6}%
+\contentsline {subsubsection}{\numberline {4.5.3.7}get\_entitie\_string\_name()}{16}{subsubsection.4.5.3.7}%
+\contentsline {subsubsection}{\numberline {4.5.3.8}get\_entitie\_type\_from\_id()}{16}{subsubsection.4.5.3.8}%
+\contentsline {subsubsection}{\numberline {4.5.3.9}get\_name\_of\_entitie()}{17}{subsubsection.4.5.3.9}%
+\contentsline {subsubsection}{\numberline {4.5.3.10}get\_number\_of\_entities\_selected()}{17}{subsubsection.4.5.3.10}%
+\contentsline {section}{\numberline {4.6}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot Class Reference}{18}{section.4.6}%
+\contentsline {subsection}{\numberline {4.6.1}Detailed Description}{18}{subsection.4.6.1}%
+\contentsline {subsection}{\numberline {4.6.2}Member Function Documentation}{18}{subsection.4.6.2}%
+\contentsline {subsubsection}{\numberline {4.6.2.1}get\_figure\_entities\_of\_a\_concept\_color\_country()}{19}{subsubsection.4.6.2.1}%
+\contentsline {subsubsection}{\numberline {4.6.2.2}get\_figure\_entities\_selection\_threshold()}{19}{subsubsection.4.6.2.2}%
+\contentsline {subsubsection}{\numberline {4.6.2.3}get\_figure\_time\_series\_element\_used\_by\_entities()}{20}{subsubsection.4.6.2.3}%
+\contentsline {section}{\numberline {4.7}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Institutions\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis Class Reference}{20}{section.4.7}%
+\contentsline {subsection}{\numberline {4.7.1}Detailed Description}{22}{subsection.4.7.1}%
+\contentsline {subsection}{\numberline {4.7.2}Member Function Documentation}{22}{subsection.4.7.2}%
+\contentsline {subsubsection}{\numberline {4.7.2.1}filter\_and\_format\_entitie\_data\_from\_api\_response()}{22}{subsubsection.4.7.2.1}%
+\contentsline {subsubsection}{\numberline {4.7.2.2}get\_sum\_concept\_scores()}{22}{subsubsection.4.7.2.2}%
+\contentsline {section}{\numberline {4.8}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Institutions\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot Class Reference}{23}{section.4.8}%
+\contentsline {subsection}{\numberline {4.8.1}Detailed Description}{24}{subsection.4.8.1}%
+\contentsline {subsection}{\numberline {4.8.2}Member Function Documentation}{24}{subsection.4.8.2}%
+\contentsline {subsubsection}{\numberline {4.8.2.1}get\_figure\_institutions\_multi\_concepts\_filtered()}{24}{subsubsection.4.8.2.1}%
+\contentsline {subsubsection}{\numberline {4.8.2.2}getCustomData()}{24}{subsubsection.4.8.2.2}%
+\contentsline {subsubsection}{\numberline {4.8.2.3}getHoverTemplate()}{25}{subsubsection.4.8.2.3}%
+\contentsline {section}{\numberline {4.9}OA\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}names.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}OA\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}\_\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}names Class Reference}{25}{section.4.9}%
+\contentsline {subsection}{\numberline {4.9.1}Detailed Description}{26}{subsection.4.9.1}%
+\contentsline {section}{\numberline {4.10}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Publishers\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis Class Reference}{27}{section.4.10}%
+\contentsline {section}{\numberline {4.11}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Publishers\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot Class Reference}{28}{section.4.11}%
+\contentsline {section}{\numberline {4.12}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Sources\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis Class Reference}{29}{section.4.12}%
+\contentsline {section}{\numberline {4.13}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Sources\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot Class Reference}{30}{section.4.13}%
+\contentsline {section}{\numberline {4.14}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Works\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Analysis Class Reference}{31}{section.4.14}%
+\contentsline {subsection}{\numberline {4.14.1}Detailed Description}{32}{subsection.4.14.1}%
+\contentsline {subsection}{\numberline {4.14.2}Member Function Documentation}{33}{subsection.4.14.2}%
+\contentsline {subsubsection}{\numberline {4.14.2.1}add\_statistics\_to\_element\_count\_array()}{33}{subsubsection.4.14.2.1}%
+\contentsline {subsubsection}{\numberline {4.14.2.2}create\_element\_used\_count\_array()}{33}{subsubsection.4.14.2.2}%
+\contentsline {subsubsection}{\numberline {4.14.2.3}filter\_and\_format\_entitie\_data\_from\_api\_response()}{34}{subsubsection.4.14.2.3}%
+\contentsline {subsubsection}{\numberline {4.14.2.4}get\_country\_code()}{34}{subsubsection.4.14.2.4}%
+\contentsline {subsubsection}{\numberline {4.14.2.5}get\_institution\_name()}{34}{subsubsection.4.14.2.5}%
+\contentsline {subsubsection}{\numberline {4.14.2.6}get\_works\_concepts\_count()}{35}{subsubsection.4.14.2.6}%
+\contentsline {subsubsection}{\numberline {4.14.2.7}get\_works\_references\_count()}{35}{subsubsection.4.14.2.7}%
+\contentsline {subsubsection}{\numberline {4.14.2.8}sort\_count\_array()}{35}{subsubsection.4.14.2.8}%
+\contentsline {section}{\numberline {4.15}Entities\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot.\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Works\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Concepts\discretionary {\mbox {\scriptsize $\hookleftarrow $}}{}{}Plot Class Reference}{36}{section.4.15}%
+\contentsline {subsection}{\numberline {4.15.1}Detailed Description}{36}{subsection.4.15.1}%
+\contentsline {subsection}{\numberline {4.15.2}Member Function Documentation}{36}{subsection.4.15.2}%
+\contentsline {subsubsection}{\numberline {4.15.2.1}get\_figure\_nb\_time\_referenced()}{36}{subsubsection.4.15.2.1}%
+\contentsline {subsubsection}{\numberline {4.15.2.2}getCustomData()}{37}{subsubsection.4.15.2.2}%
+\contentsline {subsubsection}{\numberline {4.15.2.3}getHoverTemplate()}{37}{subsubsection.4.15.2.3}%

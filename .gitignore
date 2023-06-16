@@ -1,0 +1,13 @@
+/data/*
+/__pycache__/*
+/pages/__pycache__/*
+/jupyter_notebooks/.ipynb_checkpoints/*
+/old_jupyter_notebooks/*
+/.ipynb_checkpoints/*
+/Tests.ipynb
+/dash_app_passwords.py
+
+!/datas/README.md
+
+# Other files
+.~lock*

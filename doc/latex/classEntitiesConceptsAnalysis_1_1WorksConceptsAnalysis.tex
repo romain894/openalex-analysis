@@ -1,0 +1,243 @@
+\hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis}{}\doxysection{Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis Class Reference}
+\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis}\index{EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}}
+
+
+This class contains specific methods for Works concepts analysis.  
+
+
+
+
+Inheritance diagram for Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=288pt]{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a738988042ef13f8501502777f1581b2c}{filter\+\_\+and\+\_\+format\+\_\+entitie\+\_\+data\+\_\+from\+\_\+api\+\_\+response}} (self, entitie)
+\begin{DoxyCompactList}\small\item\em Filter and format the works data downloaded from the API. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_ae296ea64094774847f98eb8d67116f90}{get\+\_\+country\+\_\+code}} (self, entitie)
+\begin{DoxyCompactList}\small\item\em Gets the country code from an entitie. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_aa38b5a7f9f364df0121faee47b70d6b4}{get\+\_\+institution\+\_\+name}} (self, entitie)
+\begin{DoxyCompactList}\small\item\em Gets the institution name from an entitie. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a75d089a66f3bc188b6f9e866dc28a7de}{get\+\_\+works\+\_\+references\+\_\+count}} (self, count\+\_\+years=\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Gets the works references count of the works list of the instance. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_ae6a92987dd76c38345ad03d0cf540ff7}{get\+\_\+works\+\_\+concepts\+\_\+count}} (self, count\+\_\+years=\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Gets the concepts count of the works list of the instance. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_af8a9daf70c6e7ca977897ef798d441aa}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_af8a9daf70c6e7ca977897ef798d441aa}} 
+def {\bfseries get\+\_\+element\+\_\+count} (self, element\+\_\+type, count\+\_\+years=\mbox{[}$\,$\mbox{]})
+\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_aa29134d3384f25ea6b2eb30c98988b9f}{create\+\_\+element\+\_\+used\+\_\+count\+\_\+array}} (self, element\+\_\+type, entities\+\_\+from=\mbox{[}$\,$\mbox{]}, out\+\_\+file\+\_\+name=None, save\+\_\+out\+\_\+array=False, count\+\_\+years=\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Creates the element used count array. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a3d10be694c4cf6026909d4e4350f8077}{sort\+\_\+count\+\_\+array}} (self, sort\+\_\+by=\textquotesingle{}h\+\_\+used\+\_\+all\+\_\+l\+\_\+use\+\_\+main\textquotesingle{}, sort\+\_\+by\+\_\+ascending=False)
+\begin{DoxyCompactList}\small\item\em Sort the dataframe with the count array (element\+\_\+count\+\_\+df) \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a98c9710e623d321735f7160e97ff03b2}{add\+\_\+statistics\+\_\+to\+\_\+element\+\_\+count\+\_\+array}} (self, sort\+\_\+by=\textquotesingle{}h\+\_\+used\+\_\+all\+\_\+l\+\_\+use\+\_\+main\textquotesingle{}, sort\+\_\+by\+\_\+ascending=False, min\+\_\+concept\+\_\+level=None)
+\begin{DoxyCompactList}\small\item\em Adds a statistics to the element count array (statistics between the main entitie to compare (second column in the dataframe) and the sum of the other entities) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a54eca76bb56cfc779868fdc94d4e61fd}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a54eca76bb56cfc779868fdc94d4e61fd}} 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a54eca76bb56cfc779868fdc94d4e61fd}{add\+\_\+statistics\+\_\+to\+\_\+references\+\_\+works\+\_\+count\+\_\+array}} (self)
+\begin{DoxyCompactList}\small\item\em Adds a statistics to the references works count array (statistics between the main entitie to compare (second column in the dataframe) and the sum of the other entities) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a4adbe039e2af93c68262852bb6705980}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a4adbe039e2af93c68262852bb6705980}} 
+def \mbox{\hyperlink{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a4adbe039e2af93c68262852bb6705980}{add\+\_\+statistics\+\_\+to\+\_\+concept\+\_\+count\+\_\+array}} (self, min\+\_\+concept\+\_\+level=None)
+\begin{DoxyCompactList}\small\item\em Adds a statistics to the concepts count array (statistics between the main entitie to compare (second column in the dataframe) and the sum of the other entities) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_adbfb0424976611abf5f5633ce8194cce}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_adbfb0424976611abf5f5633ce8194cce}} 
+{\bfseries entitie\+\_\+from\+\_\+type}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_ae5c3c6a99ce47a978f9fcdc864434efc}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_ae5c3c6a99ce47a978f9fcdc864434efc}} 
+{\bfseries count\+\_\+element\+\_\+type}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a07235bd6d07f4ebf1cce75617bc4e712}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a07235bd6d07f4ebf1cce75617bc4e712}} 
+{\bfseries count\+\_\+element\+\_\+years}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_af7478018f705a02a2ead95506fed408e}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_af7478018f705a02a2ead95506fed408e}} 
+{\bfseries count\+\_\+entities\+\_\+cols}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_afcc7fcf7bd9e8457905773936ac6b9da}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_afcc7fcf7bd9e8457905773936ac6b9da}} 
+{\bfseries entitie\+\_\+from\+\_\+id}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_ad1514049b2d555a3f8a22bc99d66c190}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_ad1514049b2d555a3f8a22bc99d66c190}} 
+{\bfseries element\+\_\+count\+\_\+df}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a4ad859fb1b590603929765d3deea089b}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a4ad859fb1b590603929765d3deea089b}} 
+{\bfseries create\+\_\+element\+\_\+count\+\_\+array\+\_\+progress\+\_\+percentage}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a9c2475859d4308d93bf5441802b44a4b}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a9c2475859d4308d93bf5441802b44a4b}} 
+{\bfseries create\+\_\+element\+\_\+count\+\_\+array\+\_\+progress\+\_\+text}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a95fdd7f6aefac708fca4c9f5e3647fc6}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a95fdd7f6aefac708fca4c9f5e3647fc6}} 
+{\bfseries Entitie\+Open\+Alex} = Works
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class contains specific methods for Works concepts analysis. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a98c9710e623d321735f7160e97ff03b2}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a98c9710e623d321735f7160e97ff03b2}} 
+\index{EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}!add\_statistics\_to\_element\_count\_array@{add\_statistics\_to\_element\_count\_array}}
+\index{add\_statistics\_to\_element\_count\_array@{add\_statistics\_to\_element\_count\_array}!EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{add\_statistics\_to\_element\_count\_array()}{add\_statistics\_to\_element\_count\_array()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis.\+add\+\_\+statistics\+\_\+to\+\_\+element\+\_\+count\+\_\+array (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{sort\+\_\+by = {\ttfamily \textquotesingle{}h\+\_\+used\+\_\+all\+\_\+l\+\_\+use\+\_\+main\textquotesingle{}},  }\item[{}]{sort\+\_\+by\+\_\+ascending = {\ttfamily False},  }\item[{}]{min\+\_\+concept\+\_\+level = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Adds a statistics to the element count array (statistics between the main entitie to compare (second column in the dataframe) and the sum of the other entities) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sort\+\_\+by} & The key to sort the dataframe (str) \\
+\hline
+{\em sort\+\_\+by\+\_\+ascending} & Whenever to sort the dataframe ascending (bool) \\
+\hline
+{\em min\+\_\+concept\+\_\+level} & In case the element is a concept, this is the minimum level of the concepts we will keep (aka remove the lower (= more global) concepts) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_aa29134d3384f25ea6b2eb30c98988b9f}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_aa29134d3384f25ea6b2eb30c98988b9f}} 
+\index{EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}!create\_element\_used\_count\_array@{create\_element\_used\_count\_array}}
+\index{create\_element\_used\_count\_array@{create\_element\_used\_count\_array}!EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{create\_element\_used\_count\_array()}{create\_element\_used\_count\_array()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis.\+create\+\_\+element\+\_\+used\+\_\+count\+\_\+array (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{element\+\_\+type,  }\item[{}]{entities\+\_\+from = {\ttfamily \mbox{[}\mbox{]}},  }\item[{}]{out\+\_\+file\+\_\+name = {\ttfamily None},  }\item[{}]{save\+\_\+out\+\_\+array = {\ttfamily False},  }\item[{}]{count\+\_\+years = {\ttfamily \mbox{[}\mbox{]}} }\end{DoxyParamCaption})}
+
+
+
+Creates the element used count array. 
+
+Count the number of times each element (eg reference, concept..) is used and save the array as CSV (optional)
+
+
+\begin{DoxyParams}{Parameters}
+{\em element\+\_\+type} & The element type \\
+\hline
+{\em entities\+\_\+from} & The extra entities to which to count the concepts (list of str) \\
+\hline
+{\em out\+\_\+file\+\_\+name} & The out CSV file name, if not provided, an appropriate name is generated (str) \\
+\hline
+{\em save\+\_\+out\+\_\+array} & Save out array (bool) \\
+\hline
+{\em count\+\_\+years} & If given, it will compute the count for each year (list\mbox{[}int\mbox{]}) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a738988042ef13f8501502777f1581b2c}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a738988042ef13f8501502777f1581b2c}} 
+\index{EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}!filter\_and\_format\_entitie\_data\_from\_api\_response@{filter\_and\_format\_entitie\_data\_from\_api\_response}}
+\index{filter\_and\_format\_entitie\_data\_from\_api\_response@{filter\_and\_format\_entitie\_data\_from\_api\_response}!EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{filter\_and\_format\_entitie\_data\_from\_api\_response()}{filter\_and\_format\_entitie\_data\_from\_api\_response()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis.\+filter\+\_\+and\+\_\+format\+\_\+entitie\+\_\+data\+\_\+from\+\_\+api\+\_\+response (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie }\end{DoxyParamCaption})}
+
+
+
+Filter and format the works data downloaded from the API. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The works data from the API (dict)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The works datas (dict) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_ae296ea64094774847f98eb8d67116f90}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_ae296ea64094774847f98eb8d67116f90}} 
+\index{EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}!get\_country\_code@{get\_country\_code}}
+\index{get\_country\_code@{get\_country\_code}!EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_country\_code()}{get\_country\_code()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis.\+get\+\_\+country\+\_\+code (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie }\end{DoxyParamCaption})}
+
+
+
+Gets the country code from an entitie. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The entitie (dict)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The country code (str) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_aa38b5a7f9f364df0121faee47b70d6b4}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_aa38b5a7f9f364df0121faee47b70d6b4}} 
+\index{EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}!get\_institution\_name@{get\_institution\_name}}
+\index{get\_institution\_name@{get\_institution\_name}!EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_institution\_name()}{get\_institution\_name()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis.\+get\+\_\+institution\+\_\+name (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie }\end{DoxyParamCaption})}
+
+
+
+Gets the institution name from an entitie. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The entitie (dict)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The institution name (str) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_ae6a92987dd76c38345ad03d0cf540ff7}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_ae6a92987dd76c38345ad03d0cf540ff7}} 
+\index{EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}!get\_works\_concepts\_count@{get\_works\_concepts\_count}}
+\index{get\_works\_concepts\_count@{get\_works\_concepts\_count}!EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_works\_concepts\_count()}{get\_works\_concepts\_count()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis.\+get\+\_\+works\+\_\+concepts\+\_\+count (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{count\+\_\+years = {\ttfamily \mbox{[}\mbox{]}} }\end{DoxyParamCaption})}
+
+
+
+Gets the concepts count of the works list of the instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em count\+\_\+only\+\_\+year} & If different than None, count only the concepts of the works of the given year (int)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The concept count (pandas Serie) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a75d089a66f3bc188b6f9e866dc28a7de}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a75d089a66f3bc188b6f9e866dc28a7de}} 
+\index{EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}!get\_works\_references\_count@{get\_works\_references\_count}}
+\index{get\_works\_references\_count@{get\_works\_references\_count}!EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_works\_references\_count()}{get\_works\_references\_count()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis.\+get\+\_\+works\+\_\+references\+\_\+count (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{count\+\_\+years = {\ttfamily \mbox{[}\mbox{]}} }\end{DoxyParamCaption})}
+
+
+
+Gets the works references count of the works list of the instance. 
+
+\begin{DoxyReturn}{Returns}
+The works references count (pandas Serie) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a3d10be694c4cf6026909d4e4350f8077}\label{classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis_a3d10be694c4cf6026909d4e4350f8077}} 
+\index{EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}!sort\_count\_array@{sort\_count\_array}}
+\index{sort\_count\_array@{sort\_count\_array}!EntitiesConceptsAnalysis.WorksConceptsAnalysis@{EntitiesConceptsAnalysis.WorksConceptsAnalysis}}
+\doxysubsubsection{\texorpdfstring{sort\_count\_array()}{sort\_count\_array()}}
+{\footnotesize\ttfamily def Entities\+Concepts\+Analysis.\+Works\+Concepts\+Analysis.\+sort\+\_\+count\+\_\+array (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{sort\+\_\+by = {\ttfamily \textquotesingle{}h\+\_\+used\+\_\+all\+\_\+l\+\_\+use\+\_\+main\textquotesingle{}},  }\item[{}]{sort\+\_\+by\+\_\+ascending = {\ttfamily False} }\end{DoxyParamCaption})}
+
+
+
+Sort the dataframe with the count array (element\+\_\+count\+\_\+df) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sort\+\_\+by} & The key to sort the dataframe (str) \\
+\hline
+{\em sort\+\_\+by\+\_\+ascending} & Whenever to sort the dataframe ascending (bool) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Entities\+Concepts\+Analysis.\+py\end{DoxyCompactItemize}
