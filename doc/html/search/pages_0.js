@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['automatic_20literature_20analysis_99',['Automatic literature analysis',['../index.html',1,'']]]
+  ['openalex_20analysis_99',['OpenAlex Analysis',['../index.html',1,'']]]
 ];

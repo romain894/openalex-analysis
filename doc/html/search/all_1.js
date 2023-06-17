@@ -5,6 +5,5 @@ var searchData=
   ['add_5fstatistics_5fto_5felement_5fcount_5farray_3',['add_statistics_to_element_count_array',['../classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis.html#a98c9710e623d321735f7160e97ff03b2',1,'EntitiesConceptsAnalysis::WorksConceptsAnalysis']]],
   ['add_5fstatistics_5fto_5freferences_5fworks_5fcount_5farray_4',['add_statistics_to_references_works_count_array',['../classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis.html#a54eca76bb56cfc779868fdc94d4e61fd',1,'EntitiesConceptsAnalysis::WorksConceptsAnalysis']]],
   ['authorsconceptsanalysis_5',['AuthorsConceptsAnalysis',['../classEntitiesConceptsAnalysis_1_1AuthorsConceptsAnalysis.html',1,'EntitiesConceptsAnalysis']]],
-  ['authorsconceptsplot_6',['AuthorsConceptsPlot',['../classEntitiesConceptsPlot_1_1AuthorsConceptsPlot.html',1,'EntitiesConceptsPlot']]],
-  ['automatic_20literature_20analysis_7',['Automatic literature analysis',['../index.html',1,'']]]
+  ['authorsconceptsplot_6',['AuthorsConceptsPlot',['../classEntitiesConceptsPlot_1_1AuthorsConceptsPlot.html',1,'EntitiesConceptsPlot']]]
 ];
