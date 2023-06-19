@@ -460,6 +460,16 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         else:
             raise ValueError("Can't get the entitie name because not allowed to download from API and not provided at the initialisation")
 
+
+    def get_info_about_entitie(self, entitie, infos = ["display_name"], return_as_pd_serie = True, allow_download_from_API = True):
+        if entitie == None:
+            entitie = self.entitie_from_id
+        if allow_download_from_API:
+            return get_info_about_entitie_from_api(entitie, infos = infos, return_as_pd_serie = return_as_pd_serie)
+        else:
+            raise ValueError("Can't get the entitie info because not allowed to download from API")
+
+
 def get_entitie_type_from_id(entitie):
     """!
     @brief      Gets the entitie type from the entitie id
@@ -484,6 +494,7 @@ def get_entitie_type_from_id(entitie):
         case _:
             raise ValueError("Entitie id "+entitie+" not valid")
 
+
 @cache.cache()
 def get_name_of_entitie_from_api_cache(entitie):
     """!
@@ -498,6 +509,7 @@ def get_name_of_entitie_from_api_cache(entitie):
     e = get_entitie_type_from_id(entitie)()[entitie]
     return e['display_name']
 
+
 def get_name_of_entitie_from_api_no_cache(entitie):
     """!
     @brief      Gets the name of entitie from api
@@ -511,11 +523,64 @@ def get_name_of_entitie_from_api_no_cache(entitie):
     e = get_entitie_type_from_id(entitie)()[entitie]
     return e['display_name']
 
+
 def get_name_of_entitie_from_api(entitie):
     if cache != None:
         return get_name_of_entitie_from_api_cache(entitie)
     else:
         return get_name_of_entitie_from_api_no_cache(entitie)
+
+
+@cache.cache()
+def get_info_about_entitie_from_api_cache(entitie, infos = ["display_name"]):
+    """!
+    @brief      Gets information about entitie from api
+    
+    @param      entitie  The entitie id (str)
+    @param      infos    The infos (str)
+    
+    @return     The name of entitie (str)
+    """
+    return get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
+
+
+def get_info_about_entitie_from_api_no_cache(entitie, infos = ["display_name"]):
+    """!
+    @brief      Gets information about entitie from api
+    
+    @param      entitie  The entitie id (str)
+    @param      infos    The infos (str)
+    
+    @return     The name of entitie (str)
+    """
+    print("Getting name of "+entitie+" from the OpenAlex API ...")
+    # call the API
+    e = get_entitie_type_from_id(entitie)()[entitie]
+    if "author_citation_style" in infos:
+        if len(e["authorships"]) == 0:
+            e["author_citation_style"] = "Unknown author"
+        if len(e["authorships"]) >= 1:
+            e["author_citation_style"] = e["authorships"][0]['author']['display_name']
+        if len(e["authorships"]) >= 2:
+            e["author_citation_style"] += ", "+e["authorships"][1]['author']['display_name']
+        if len(e["authorships"]) > 1:
+            e["author_citation_style"] += " et al."
+        #e["author_citation_style"] =
+    e = {key: val for key, val in e.items() if key in infos}
+    return e
+
+
+def get_info_about_entitie_from_api(entitie, infos = ["display_name"], return_as_pd_serie = True):
+    res = None
+    if cache != None:
+        res = get_info_about_entitie_from_api_cache(entitie, infos = infos)
+    else:
+        res = get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
+    if return_as_pd_serie:
+        data = [val for val in res.values()]
+        index = [key for key in res]
+        res = pd.Series(data=data, index=index)
+    return res
 
 
         
