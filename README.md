@@ -8,4 +8,6 @@ To clone this repo: `git clone --recurse-submodules git@github.com:romain894/ope
 
 Documentation (python library only): [https://romain894.github.io/openalex-analysis](https://romain894.github.io/openalex-analysis)
 
+Licence: GPL V3
+
 Romain Thomas 2023
