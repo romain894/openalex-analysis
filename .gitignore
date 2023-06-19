@@ -4,7 +4,7 @@
 /jupyter_notebooks/.ipynb_checkpoints/*
 /old_jupyter_notebooks/*
 /.ipynb_checkpoints/*
-/Tests.ipynb
+/Tests*
 /dash_app_passwords.py
 
 !/data/README.md
