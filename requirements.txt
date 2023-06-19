@@ -9,7 +9,10 @@ Flask==2.2.3
 jupyter_dash==0.4.2
 numpy==1.24.3
 pandas==2.0.1
-plotly==5.14.1
+plotly==5.15.0
+psutil==5.9.4
+pytest==7.3.2
 python_redis_cache==2.1.2
 redis==4.5.5
+Requests==2.31.0
 tqdm==4.65.0

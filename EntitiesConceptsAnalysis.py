@@ -7,6 +7,7 @@ import json
 import pandas as pd
 import numpy as np
 import country_converter as coco
+import psutil
 from OA_entities_names import OA_entities_names
 
 import os, sys
@@ -105,6 +106,9 @@ class EntitiesConceptsAnalysis(OA_entities_names):
 
         self.disable_tqdm_loading_bar = disable_tqdm_loading_bar
         self.progress_fct_update = progress_fct_update
+
+        # maximum values for the storage usage (used to remove the databases)
+        self.max_storage_percent = 95 # it will delete databases if storage usage > 95%
 
         # initialize the values only if entitie_from_type is known
         if self.entitie_from_id != None:
@@ -210,6 +214,8 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         # # convert to multi index dataframe (we create an index for each 'subcolumn' (=when there is a '.'))
         # tuple_cols = entities_list_df.columns.str.split('.')
         # entities_list_df.columns = pd.MultiIndex.from_tuples(tuple(i) for i in tuple_cols)
+        print("Checking space left on disk...")
+        self.auto_remove_databases_saved()
         # save as compressed parquet file
         print("Saving the list of entities as a parquet file...")
         entities_list_df.to_parquet(self.database_file_path, compression='brotli')
@@ -239,7 +245,27 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         except:
             # couldn't load the parquet file (eg no row in parquet file so error because can't find columns to load)
             self.entities_df = pd.DataFrame()
-        
+
+
+    def auto_remove_databases_saved(self):
+        """!
+        @brief      Remove databases files (the data downloaded from OpenAlex) if the
+                    storage is full. It keeps the last accessed files
+        """
+        while psutil.disk_usage(self.project_datas_folder_path).percent > self.max_storage_percent:
+            first_accessed_file = None
+            first_accessed_file_time = 0
+            for file in os.listdir(self.project_datas_folder_path):
+                if file.endswith(".parquet"):
+                    if os.stat(join(self.project_datas_folder_path, file)).st_atime < first_accessed_file_time or first_accessed_file_time == 0:
+                        first_accessed_file_time = os.stat(join(self.project_datas_folder_path, file)).st_atime
+                        first_accessed_file = file
+            if first_accessed_file == None:
+                print("No more file to delete.")
+                print("Space used on disk: "+str(psutil.disk_usage(self.project_datas_folder_path).percent)+"%")
+                break
+            os.remove(join(self.project_datas_folder_path, first_accessed_file))
+            print("Removed file "+str(join(self.project_datas_folder_path, first_accessed_file))+"_(last_used:_"+str(first_accessed_file_time)+")")                
 
 
     def get_df_filtered_entities_selection_threshold(self, df_filters):
