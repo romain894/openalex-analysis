@@ -25,7 +25,7 @@ By default, the library will run out of the box. Nevertheless, some optional con
 
 These settings needs to be given for each instance. For a more convienient usage, you can define these values in a dictionary and provide this dictionnary at the instanciation as follow:
 
-```
+```python
 parameters = {
     'n_max_entities': 600,
     'project_datas_folder_path': "data",
