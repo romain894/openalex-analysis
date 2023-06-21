@@ -9,31 +9,24 @@ import numpy as np
 import country_converter as coco
 import psutil
 from OA_entities_names import OA_entities_names
-
 import os, sys
+from redis import StrictRedis
+from redis_cache import RedisCache
 sys.path.append(os.path.abspath('pyalex'))
 from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
 
-enable_redis_cache = True
-cache = None
-if enable_redis_cache:
-    import os
-    from redis import StrictRedis
-    from redis_cache import RedisCache
-    redis_url = os.environ.get('DOCKER_REDIS_URL', "localhost")
-    client = StrictRedis(host=redis_url, decode_responses=True, port=6379, db=2)
-    cache = RedisCache(redis_client=client)
+redis_url = os.environ.get('DOCKER_REDIS_URL', "localhost")
+client = StrictRedis(host=redis_url, decode_responses=True, port=6379, db=2)
+cache = RedisCache(redis_client=client)
 
-config.email = "romain.thomas@su.se"
-
-default_n_max_entities_to_download = 10000#None#50000
 
 
 class EntitiesConceptsAnalysis(OA_entities_names):
     """!
     OpenAlexAnalysis class which contains generic methods to do analysis over OpenAlex entities
     """
-    def __init__(self, entitie_from_id = None,
+    def __init__(self,
+                 entitie_from_id = None,
                  extra_filters = None,
                  database_file_path = None,
                  allow_automatic_download = True,
@@ -42,7 +35,12 @@ class EntitiesConceptsAnalysis(OA_entities_names):
                  create_dataframe = True,
                  entitie_name = None,
                  load_only_columns = None,
-                 n_max_entities = default_n_max_entities_to_download):
+                 n_max_entities = 10000,
+                 project_datas_folder_path = "data",
+                 parquet_compression = "brotli",
+                 max_storage_percent = 95,
+                 email = None,
+                 enable_redis_cache = False):
         """!
         @param      entitie_from_id           The entitie identifier (eg an
                                               institution id) from which to take
@@ -68,7 +66,8 @@ class EntitiesConceptsAnalysis(OA_entities_names):
                                               API if needed
         """
         self.per_page = 200 # maximum allowed by the API
-        self.project_datas_folder_path = "data"
+        self.project_datas_folder_path = project_datas_folder_path
+        self.parquet_compression = parquet_compression
 
         self.entitie_from_id = entitie_from_id
         self.entitie_from_type = None
@@ -77,6 +76,8 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         self.allow_automatic_download = allow_automatic_download
         self.entitie_name = entitie_name
         self.load_only_columns = load_only_columns
+        config.email = email
+        self.enable_redis_cache = enable_redis_cache
 
         # dictionary containning for each concept a list of the entities linked to the concept
         # self.entities_concepts = {} # DEPRECATED
@@ -108,7 +109,7 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         self.progress_fct_update = progress_fct_update
 
         # maximum values for the storage usage (used to remove the databases)
-        self.max_storage_percent = 95 # it will delete databases if storage usage > 95%
+        self.max_storage_percent = max_storage_percent # it will delete databases if storage usage > max_storage_percent
 
         # initialize the values only if entitie_from_type is known
         if self.entitie_from_id != None:
@@ -121,6 +122,37 @@ class EntitiesConceptsAnalysis(OA_entities_names):
 
         if entitie_from_id != None and create_dataframe == True:
             self.load_entities_dataframe()
+
+
+        # define the function which may use the cache
+        if self.enable_redis_cache == True:
+            # use the cache
+            @cache.cache()
+            def get_name_of_entitie_from_api(entitie):
+                print("Getting name of "+entitie+" from the OpenAlex API (not found in cache)...")
+                return get_name_of_entitie_from_api_no_cache(entitie)
+        else:
+            # don't use the cache
+            def get_name_of_entitie_from_api(entitie):
+                print("Getting name of "+entitie+" from the OpenAlex API (cache disabled)...")
+                return get_name_of_entitie_from_api_no_cache(entitie)
+
+        self.get_name_of_entitie_from_api = get_name_of_entitie_from_api
+
+
+        if self.enable_redis_cache == True:
+            # use the cache
+            @cache.cache()
+            def get_info_about_entitie_from_api(entitie, infos = ["display_name"]):
+                print("Getting information about "+entitie+" from the OpenAlex API (not found in cache)...")
+                return get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
+        else:
+            # don't use the cache
+            def get_info_about_entitie_from_api(entitie, infos = ["display_name"]):
+                print("Getting information about "+entitie+" from the OpenAlex API (cahe disabled)...")
+                return get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
+
+        self.get_info_about_entitie_from_api = get_info_about_entitie_from_api
 
 
     def get_count_entities_matched(self, query_filters):
@@ -218,7 +250,7 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         self.auto_remove_databases_saved()
         # save as compressed parquet file
         print("Saving the list of entities as a parquet file...")
-        entities_list_df.to_parquet(self.database_file_path, compression='brotli')
+        entities_list_df.to_parquet(self.database_file_path, compression=self.parquet_compression)
 
 
     def load_entities_dataframe(self):
@@ -456,7 +488,7 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         if entitie == self.entitie_from_id and self.entitie_name != None:
             return self.entitie_name
         elif allow_download_from_API:
-            return get_name_of_entitie_from_api(entitie)
+            return self.get_name_of_entitie_from_api(entitie)
         else:
             raise ValueError("Can't get the entitie name because not allowed to download from API and not provided at the initialisation")
 
@@ -465,9 +497,11 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         if entitie == None:
             entitie = self.entitie_from_id
         if allow_download_from_API:
-            return get_info_about_entitie_from_api(entitie, infos = infos, return_as_pd_serie = return_as_pd_serie)
+            return self.get_info_about_entitie_from_api(entitie, infos = infos, return_as_pd_serie = return_as_pd_serie)
         else:
             raise ValueError("Can't get the entitie info because not allowed to download from API")
+
+
 
 
 def get_entitie_type_from_id(entitie):
@@ -495,21 +529,6 @@ def get_entitie_type_from_id(entitie):
             raise ValueError("Entitie id "+entitie+" not valid")
 
 
-@cache.cache()
-def get_name_of_entitie_from_api_cache(entitie):
-    """!
-    @brief      Gets the name of entitie from api
-
-    @param      entitie  The entitie id
-
-    @return     The name of entitie (str)
-    """
-    print("Getting name of "+entitie+" from the OpenAlex API (not found in cache)...")
-    # call the API
-    e = get_entitie_type_from_id(entitie)()[entitie]
-    return e['display_name']
-
-
 def get_name_of_entitie_from_api_no_cache(entitie):
     """!
     @brief      Gets the name of entitie from api
@@ -518,30 +537,9 @@ def get_name_of_entitie_from_api_no_cache(entitie):
 
     @return     The name of entitie (str)
     """
-    print("Getting name of "+entitie+" from the OpenAlex API (not found in cache)...")
     # call the API
     e = get_entitie_type_from_id(entitie)()[entitie]
     return e['display_name']
-
-
-def get_name_of_entitie_from_api(entitie):
-    if cache != None:
-        return get_name_of_entitie_from_api_cache(entitie)
-    else:
-        return get_name_of_entitie_from_api_no_cache(entitie)
-
-
-@cache.cache()
-def get_info_about_entitie_from_api_cache(entitie, infos = ["display_name"]):
-    """!
-    @brief      Gets information about entitie from api
-    
-    @param      entitie  The entitie id (str)
-    @param      infos    The infos (str)
-    
-    @return     The name of entitie (str)
-    """
-    return get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
 
 
 def get_info_about_entitie_from_api_no_cache(entitie, infos = ["display_name"]):
@@ -553,7 +551,6 @@ def get_info_about_entitie_from_api_no_cache(entitie, infos = ["display_name"]):
     
     @return     The name of entitie (str)
     """
-    print("Getting name of "+entitie+" from the OpenAlex API ...")
     # call the API
     e = get_entitie_type_from_id(entitie)()[entitie]
     if "author_citation_style" in infos:
@@ -571,17 +568,12 @@ def get_info_about_entitie_from_api_no_cache(entitie, infos = ["display_name"]):
 
 
 def get_info_about_entitie_from_api(entitie, infos = ["display_name"], return_as_pd_serie = True):
-    res = None
-    if cache != None:
-        res = get_info_about_entitie_from_api_cache(entitie, infos = infos)
-    else:
-        res = get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
+    res = self.get_info_about_entitie_from_api(entitie, infos = infos)
     if return_as_pd_serie:
         data = [val for val in res.values()]
         index = [key for key in res]
         res = pd.Series(data=data, index=index)
     return res
-
 
         
 class WorksConceptsAnalysis(EntitiesConceptsAnalysis, Works):
