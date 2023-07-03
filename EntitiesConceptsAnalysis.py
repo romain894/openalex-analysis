@@ -47,7 +47,6 @@ class AnalysisConfig(dict):
 config = AnalysisConfig(email=None,
                         api_key=None,
                         openalex_url="https://api.openalex.org",
-                        http_retry_times=5,
                         allow_automatic_download = True,
                         disable_tqdm_loading_bar = False,
                         n_max_entities = 10000,
