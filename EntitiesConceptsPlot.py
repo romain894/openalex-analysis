@@ -11,6 +11,7 @@ import dash
 from dash import Dash, dcc, html, Input, Output
 import dash_bootstrap_components as dbc # dash app theme
 import plotly.io as pio # plotly theme
+import EntitiesConceptsAnalysis
 from EntitiesConceptsAnalysis import WorksConceptsAnalysis, AuthorsConceptsAnalysis, SourcesConceptsAnalysis, InstitutionsConceptsAnalysis, ConceptsConceptsAnalysis, PublishersConceptsAnalysis
 
 import os, sys

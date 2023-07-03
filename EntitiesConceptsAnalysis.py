@@ -15,9 +15,47 @@ from redis_cache import RedisCache
 sys.path.append(os.path.abspath('pyalex'))
 from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
 
-redis_url = os.environ.get('DOCKER_REDIS_URL', "localhost")
-client = StrictRedis(host=redis_url, decode_responses=True, port=6379, db=2)
-cache = RedisCache(redis_client=client)
+# redis_url = os.environ.get('DOCKER_REDIS_URL', "localhost")
+# client = StrictRedis(host=redis_url, decode_responses=True, port=6379, db=2)
+
+
+class AnalysisConfig(dict):
+    """!
+        @brief      TODO
+
+        @param      email                     Email
+        @param      api_key                   API key
+        @param      openalex_url              OpenAlex URL
+        @param      http_retry_times          HTTP retry times
+        @param      allow_automatic_download  The allow automatic download
+                                              (True/False)
+        @param      disable_tqdm_loading_bar  The disable tqdm loading bar
+                                              (True/False)
+        @param      n_max_entities            TODO
+        @param      project_datas_folder_path TODO
+        @param      parquet_compression       TODO
+        @param      max_storage_percent       TODO
+        @param      redis_parameters          TODO
+    """
+    def __getattr__(self, key):
+        return super().__getitem__(key)
+
+    def __setattr__(self, key, value):
+        return super().__setitem__(key, value)
+
+
+config = AnalysisConfig(email=None,
+                        api_key=None,
+                        openalex_url="https://api.openalex.org",
+                        http_retry_times=5,
+                        allow_automatic_download = True,
+                        disable_tqdm_loading_bar = False,
+                        n_max_entities = 10000,
+                        project_datas_folder_path = "data",
+                        parquet_compression = "brotli",
+                        max_storage_percent = 95,
+                        redis_parameters = None
+                        )
 
 
 
@@ -29,18 +67,10 @@ class EntitiesConceptsAnalysis(OA_entities_names):
                  entitie_from_id = None,
                  extra_filters = None,
                  database_file_path = None,
-                 allow_automatic_download = True,
-                 disable_tqdm_loading_bar = False,
-                 progress_fct_update = None,
                  create_dataframe = True,
                  entitie_name = None,
                  load_only_columns = None,
-                 n_max_entities = 10000,
-                 project_datas_folder_path = "data",
-                 parquet_compression = "brotli",
-                 max_storage_percent = 95,
-                 email = None,
-                 enable_redis_cache = False):
+                ):
         """!
         @param      entitie_from_id           The entitie identifier (eg an
                                               institution id) from which to take
@@ -53,11 +83,6 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         @param      database_file_path        The database file path to force
                                               the analyse over datas in a
                                               specific file (str)
-        @param      allow_automatic_download  The allow automatic download
-                                              (True/False)
-        @param      disable_tqdm_loading_bar  The disable tqdm loading bar
-                                              (True/False)
-        @param      progress_fct_update       The progress fct update UNSUED ???
         @param      create_dataframe          Create the dataframe at the
                                               initialisation (and download the
                                               data if needed and allowed)
@@ -66,18 +91,13 @@ class EntitiesConceptsAnalysis(OA_entities_names):
                                               API if needed
         """
         self.per_page = 200 # maximum allowed by the API
-        self.project_datas_folder_path = project_datas_folder_path
-        self.parquet_compression = parquet_compression
 
         self.entitie_from_id = entitie_from_id
         self.entitie_from_type = None
         self.extra_filters = extra_filters
         self.database_file_path = database_file_path
-        self.allow_automatic_download = allow_automatic_download
         self.entitie_name = entitie_name
         self.load_only_columns = load_only_columns
-        config.email = email
-        self.enable_redis_cache = enable_redis_cache
 
         # dictionary containning for each concept a list of the entities linked to the concept
         # self.entities_concepts = {} # DEPRECATED
@@ -103,19 +123,15 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         self.count_element_type = None
         self.count_element_years = None
         self.count_entities_cols = []
-        self.n_max_entities = n_max_entities
-
-        self.disable_tqdm_loading_bar = disable_tqdm_loading_bar
-        self.progress_fct_update = progress_fct_update
 
         # maximum values for the storage usage (used to remove the databases)
-        self.max_storage_percent = max_storage_percent # it will delete databases if storage usage > max_storage_percent
+        # self.max_storage_percent = max_storage_percent # it will delete databases if storage usage > max_storage_percent
 
         # initialize the values only if entitie_from_type is known
         if self.entitie_from_id != None:
             self.entitie_from_type = self.get_entitie_type_from_id(self.entitie_from_id)
             if self.database_file_path == None:
-                self.database_file_path = join(self.project_datas_folder_path, self.get_database_file_name())
+                self.database_file_path = join(config.project_datas_folder_path, self.get_database_file_name())
 
         # to convert country code to country name
         self.cc = coco.CountryConverter()
@@ -124,8 +140,13 @@ class EntitiesConceptsAnalysis(OA_entities_names):
             self.load_entities_dataframe()
 
 
+        if config.redis_parameters != None:
+            redis_client = StrictRedis(**config.redis_parameters)
+            cache = RedisCache(redis_client=redis_client)
+
+
         # define the function which may use the cache
-        if self.enable_redis_cache == True:
+        if config.redis_parameters != None:
             # use the cache
             @cache.cache()
             def get_name_of_entitie_from_api(entitie):
@@ -140,7 +161,7 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         self.get_name_of_entitie_from_api = get_name_of_entitie_from_api
 
 
-        if self.enable_redis_cache == True:
+        if config.redis_parameters != None:
             # use the cache
             @cache.cache()
             def get_info_about_entitie_from_api(entitie, infos = ["display_name"]):
@@ -201,20 +222,20 @@ class EntitiesConceptsAnalysis(OA_entities_names):
 
         count_entities_matched = self.get_count_entities_matched(query)
 
-        if self.n_max_entities == None or self.n_max_entities > count_entities_matched:
-            self.n_max_entities = count_entities_matched
-            print("All the", self.n_max_entities, "entities will be downloaded")
+        if config.n_max_entities == None or config.n_max_entities > count_entities_matched:
+            config.n_max_entities = count_entities_matched
+            print("All the", config.n_max_entities, "entities will be downloaded")
         else:
-            print("Only", self.n_max_entities, "entities will be downloaded ( out of", count_entities_matched, ")")
+            print("Only", config.n_max_entities, "entities will be downloaded ( out of", count_entities_matched, ")")
 
         # create a list to store the entities
-        entities_list = [None] * self.n_max_entities
+        entities_list = [None] * config.n_max_entities
 
         # create the pager entitie to iterate over the pages of entities to download
-        pager = self.EntitieOpenAlex().filter(**query).paginate(per_page = self.per_page, n_max = self.n_max_entities)
+        pager = self.EntitieOpenAlex().filter(**query).paginate(per_page = self.per_page, n_max = config.n_max_entities)
 
         print("Downloading the list of entities thought the OpenAlex API...")
-        with tqdm(total=self.n_max_entities, disable=self.disable_tqdm_loading_bar) as pbar:
+        with tqdm(total=config.n_max_entities, disable=config.disable_tqdm_loading_bar) as pbar:
             i = 0
             self.entitie_downloading_progress_percentage = 0
             for page in pager:
@@ -224,7 +245,7 @@ class EntitiesConceptsAnalysis(OA_entities_names):
                     self.filter_and_format_entitie_data_from_api_response(entitie)
                     # print(entitie)
                     # raise ValueError("toto stop")
-                    if i < self.n_max_entities:
+                    if i < config.n_max_entities:
                         entities_list[i] = entitie
                     else:
                         entities_list.append(entitie)
@@ -233,7 +254,7 @@ class EntitiesConceptsAnalysis(OA_entities_names):
                 # update the progress bar
                 pbar.update(self.per_page)
                 # update the progress percentage variable
-                self.entitie_downloading_progress_percentage = i/self.n_max_entities*100
+                self.entitie_downloading_progress_percentage = i/config.n_max_entities*100
         self.entitie_downloading_progress_percentage = 100
 
         # sort the list by concept score
@@ -250,7 +271,7 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         self.auto_remove_databases_saved()
         # save as compressed parquet file
         print("Saving the list of entities as a parquet file...")
-        entities_list_df.to_parquet(self.database_file_path, compression=self.parquet_compression)
+        entities_list_df.to_parquet(self.database_file_path, compression=config.parquet_compression)
 
 
     def load_entities_dataframe(self):
@@ -265,7 +286,7 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         if exists(self.database_file_path):
             # the database exists, we can load it
             pass
-        elif self.allow_automatic_download == True:
+        elif config.allow_automatic_download == True:
             # the database doesn't exist and we can download the datas
             # we create the database and then load it
             self.download_list_entities()
@@ -284,20 +305,20 @@ class EntitiesConceptsAnalysis(OA_entities_names):
         @brief      Remove databases files (the data downloaded from OpenAlex) if the
                     storage is full. It keeps the last accessed files
         """
-        while psutil.disk_usage(self.project_datas_folder_path).percent > self.max_storage_percent:
+        while psutil.disk_usage(config.project_datas_folder_path).percent > config.max_storage_percent:
             first_accessed_file = None
             first_accessed_file_time = 0
-            for file in os.listdir(self.project_datas_folder_path):
+            for file in os.listdir(config.project_datas_folder_path):
                 if file.endswith(".parquet"):
-                    if os.stat(join(self.project_datas_folder_path, file)).st_atime < first_accessed_file_time or first_accessed_file_time == 0:
-                        first_accessed_file_time = os.stat(join(self.project_datas_folder_path, file)).st_atime
+                    if os.stat(join(config.project_datas_folder_path, file)).st_atime < first_accessed_file_time or first_accessed_file_time == 0:
+                        first_accessed_file_time = os.stat(join(config.project_datas_folder_path, file)).st_atime
                         first_accessed_file = file
             if first_accessed_file == None:
                 print("No more file to delete.")
-                print("Space used on disk: "+str(psutil.disk_usage(self.project_datas_folder_path).percent)+"%")
+                print("Space used on disk: "+str(psutil.disk_usage(config.project_datas_folder_path).percent)+"%")
                 break
-            os.remove(join(self.project_datas_folder_path, first_accessed_file))
-            print("Removed file "+str(join(self.project_datas_folder_path, first_accessed_file))+"_(last_used:_"+str(first_accessed_file_time)+")")                
+            os.remove(join(config.project_datas_folder_path, first_accessed_file))
+            print("Removed file "+str(join(config.project_datas_folder_path, first_accessed_file))+"_(last_used:_"+str(first_accessed_file_time)+")")                
 
 
     def get_df_filtered_entities_selection_threshold(self, df_filters):
@@ -441,7 +462,7 @@ class EntitiesConceptsAnalysis(OA_entities_names):
             #file_name += "_"+str(abs(hash(json.dumps(self.extra_filters, sort_keys=True))))
             # Can be a problem in case of many filters as file names are limited to 255 char
             file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
-        file_name += "_max_"+str(self.n_max_entities)
+        file_name += "_max_"+str(config.n_max_entities)
         if extra_text != None:
             file_name += "_" + extra_text
         return file_name+"."+db_format
@@ -738,7 +759,7 @@ class WorksConceptsAnalysis(EntitiesConceptsAnalysis, Works):
                 if self.get_entitie_type_from_id(self.entitie_from_id) == Concepts:
                     out_file_name += "_("+self.concepts_normalized_names[self.entitie_from_id].replace(' ', '_')+")"
             out_file_name += ".csv"
-            out_file_name = join(self.project_datas_folder_path, out_file_name)
+            out_file_name = join(config.project_datas_folder_path, out_file_name)
 
         self.element_count_df = pd.DataFrame()
         self.element_count_df.index.name = self.count_element_type+"s"
