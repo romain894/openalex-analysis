@@ -1,4 +1,4 @@
-from EntitiesConceptsPlot import InstitutionsConceptsPlot, WorksConceptsPlot
+from EntitiesPlot import InstitutionsPlot
 from OA_entities_names import OA_entities_names
 # from jupyter_dash import JupyterDash
 import dash_bootstrap_components as dbc # dash app theme
@@ -354,13 +354,13 @@ def update_plot_and_text_infos(x_threshold, y_threshold, cited_by_threshold, dis
 
     print("concept_dropdown:", concept_dropdown)
     
-    icp = InstitutionsConceptsPlot(concept_dropdown)
+    iplt = InstitutionsPlot(concept_dropdown)
     plot_parameters = plot_parameters_template.copy()
     plot_parameters['plot_title'] = "Plot of the institutions related to "+OA_concepts.concepts_names[concept_dropdown]+" studies"
     plot_parameters['y_datas'] = concept_dropdown
     plot_parameters['y_legend'] = "Concept score ("+OA_concepts.concepts_names[concept_dropdown]+")"
-    fig_out = icp.get_figure_entities_selection_threshold(concept_dropdown, plot_parameters, x_threshold, y_threshold, cited_by_threshold, display_only_selected_institutions, display_threshold_lines, institution_to_highlight)
-    html_text_out = f"Number of institutions selected: {icp.get_number_of_entities_selected(x_threshold, y_threshold, cited_by_threshold, plot_parameters['x_datas'], plot_parameters['y_datas'])} (out of {len(icp.entities_df)})"
+    fig_out = iplt.get_figure_entities_selection_threshold(concept_dropdown, plot_parameters, x_threshold, y_threshold, cited_by_threshold, display_only_selected_institutions, display_threshold_lines, institution_to_highlight)
+    html_text_out = f"Number of institutions selected: {iplt.get_number_of_entities_selected(x_threshold, y_threshold, cited_by_threshold, plot_parameters['x_datas'], plot_parameters['y_datas'])} (out of {len(iplt.entities_df)})"
     print("plotting...")
     return fig_out, html_text_out
 
@@ -372,7 +372,7 @@ def update_plot_and_text_infos(x_threshold, y_threshold, cited_by_threshold, dis
     prevent_initial_call=True,
 )
 def downlad_data_plot_single_concept(n_clicks, concept_dropdown):
-    ica = InstitutionsConceptsPlot(concept_dropdown)
+    ica = InstitutionsPlot(concept_dropdown)
     return dcc.send_data_frame(ica.entities_df.to_csv, ica.get_database_file_name(db_format = "csv"))
     
 
@@ -386,7 +386,7 @@ def downlad_data_plot_single_concept(n_clicks, concept_dropdown):
     prevent_initial_call=True,
 )
 def download_list_institutions_selected_single_concept(n_clicks, input_x_threshold, input_y_threshold, input_cited_by_average_threshold, concept_dropdown):
-    ica = InstitutionsConceptsPlot(concept_dropdown)
+    ica = InstitutionsPlot(concept_dropdown)
     df_filters = {}
     if input_cited_by_average_threshold > 0:
         df_filters['works_cited_by_count_average'] = input_cited_by_average_threshold
@@ -443,7 +443,7 @@ def download_new_concept(set_progress, n_clicks, concept_dropdown, multi_concept
     print(n_clicks)
     # if it's not the initial call
     if n_clicks != None:
-        ica = InstitutionsConceptsPlot(concept_dropdown, allow_automatic_download = True, disable_tqdm_loading_bar = True, progress_fct_update = set_progress, create_dataframe = False)
+        ica = InstitutionsPlot(concept_dropdown, allow_automatic_download = True, disable_tqdm_loading_bar = True, progress_fct_update = set_progress, create_dataframe = False)
         download_thread = threading.Thread(target=ica.download_list_entities)
         download_thread.start()
         while download_thread.is_alive():
@@ -538,9 +538,9 @@ def update_plot_multi_concept_graph_button_disabled_status(concepts_filters, con
     prevent_initial_call=True,
 )
 def update_plot_multi_concept_graph_button(button_clicked, concepts_from, concepts_filters, thresholds, x_threshold, cited_by_threshold):
-    icp = InstitutionsConceptsPlot()
-    fig_out = icp.get_figure_institutions_multi_concepts_filtered(plot_multi_concepts_parameters_template, concepts_from, concepts_filters, thresholds, x_threshold, cited_by_threshold, institution_to_highlight)
-    return fig_out, str(len(icp.entities_multi_filtered_df.index))+" institutions plotted."
+    iplt = InstitutionsPlot()
+    fig_out = iplt.get_figure_institutions_multi_concepts_filtered(plot_multi_concepts_parameters_template, concepts_from, concepts_filters, thresholds, x_threshold, cited_by_threshold, institution_to_highlight)
+    return fig_out, str(len(iplt.entities_multi_filtered_df.index))+" institutions plotted."
 
         
 
@@ -555,7 +555,7 @@ def update_plot_multi_concept_graph_button(button_clicked, concepts_from, concep
     prevent_initial_call=True,
 )
 def download_list_institutions_mult_concept(n_clicks, concepts_from, concepts_filters, thresholds, x_threshold, cited_by_threshold):
-    ica = InstitutionsConceptsPlot()
+    ica = InstitutionsPlot()
     ica.create_multi_concept_filters_entities_dataframe(concepts_from, concepts_filters, thresholds, plot_multi_concepts_parameters_template['x_datas'], x_threshold, cited_by_threshold)
     ica.add_average_combined_concept_score_to_multi_concept_entitie_df(concepts_from)
     return dcc.send_data_frame(ica.entities_multi_filtered_df.reset_index(drop=True).to_csv, "institutions_multi_concepts_user_filtered.csv")        

@@ -1,5 +1,5 @@
-from EntitiesConceptsPlot import InstitutionsConceptsPlot, WorksConceptsPlot
-from EntitiesConceptsAnalysis import get_info_about_entitie_from_api
+from EntitiesPlot import WorksPlot
+from EntitiesAnalysis import get_info_about_entitie_from_api
 from OA_entities_names import OA_entities_names
 # from jupyter_dash import JupyterDash
 import dash_bootstrap_components as dbc # dash app theme
@@ -421,12 +421,12 @@ def update_button_start_references_analysis_disabled_status(concept_dropdown, li
     return disabled_download_btn
 
 
-def get_dash_table_references_works_count(wcp, id_table):
-    df = wcp.element_count_df.iloc[:50].copy().round(2).reset_index()
+def get_dash_table_references_works_count(wplt, id_table):
+    df = wplt.element_count_df.iloc[:50].copy().round(2).reset_index()
     # add a column at the last position with the works links and transform the works link at the first column to names
     df = df.rename(columns={'element': 'Element names'})
     df['Element link'] = df['Element names'].copy()
-    if wcp.count_element_type == 'concept':
+    if wplt.count_element_type == 'concept':
         # The column concept_name already contains the name so we drop Element names and rename concept_name
         df = df.drop('Element names', axis=1)
         df = df.rename(columns={'concept_name': 'Element names'})
@@ -527,8 +527,8 @@ def update_results_reference_analysis(set_progress,
                                       element_count_type
                                       ):
     print("\nUpdating results...")
-    wcp = WorksConceptsPlot()
-    # wcp = WorksConceptsPlot(concept_dropdown)
+    wplt = WorksPlot()
+    # wplt = WorksPlot(concept_dropdown)
     # format the list of entities to load for the lib:
     # create the filter to download only the works from the entities of the concept to study
     concept_filter = {'concepts': {'id': concept_dropdown}}
@@ -553,43 +553,43 @@ def update_results_reference_analysis(set_progress,
                                     #'extra_filters': concept_filter,
                                     'entitie_name': OA_concepts.concepts_names_full[concept_dropdown]}
 
-    create_ref_thread = threading.Thread(target=wcp.create_element_used_count_array, kwargs={'element_type': element_count_type, 'entities_from':entities_ref_to_count, 'save_out_array': False})
+    create_ref_thread = threading.Thread(target=wplt.create_element_used_count_array, kwargs={'element_type': element_count_type, 'entities_from':entities_ref_to_count, 'save_out_array': False})
     create_ref_thread.start()
     while create_ref_thread.is_alive():
         time.sleep(0.2)
-        loading_text_info = wcp.create_element_count_array_progress_text+" "+str(round(wcp.create_element_count_array_progress_percentage, 1))+"%"
-        set_progress((str(wcp.create_element_count_array_progress_percentage), loading_text_info))
+        loading_text_info = wplt.create_element_count_array_progress_text+" "+str(round(wplt.create_element_count_array_progress_percentage, 1))+"%"
+        set_progress((str(wplt.create_element_count_array_progress_percentage), loading_text_info))
 
-    # set_progress((str(wcp.create_element_count_array_progress_percentage), wcp.create_element_count_array_progress_text))
-    set_progress((str(wcp.create_element_count_array_progress_percentage), "Adding statistics on the references array..."))
+    # set_progress((str(wplt.create_element_count_array_progress_percentage), wplt.create_element_count_array_progress_text))
+    set_progress((str(wplt.create_element_count_array_progress_percentage), "Adding statistics on the references array..."))
 
     # create the raw dataframe
-    fig_nb_time_referenced = WorksConceptsPlot(**entities_ref_to_count[0]).get_figure_nb_time_referenced(element_type = element_count_type)
+    fig_nb_time_referenced = WorksPlot(**entities_ref_to_count[0]).get_figure_nb_time_referenced(element_type = element_count_type)
 
     raw_array = no_update
     if download_raw_array != None:
         if len(download_raw_array):
             if download_raw_array_max_rows == None:
-                download_raw_array_max_rows = len(wcp.element_count_df.index)
-            raw_array = dcc.send_data_frame(wcp.element_count_df.iloc[:download_raw_array_max_rows].to_csv, element_count_type+"s_works_analysis_user.csv")
+                download_raw_array_max_rows = len(wplt.element_count_df.index)
+            raw_array = dcc.send_data_frame(wplt.element_count_df.iloc[:download_raw_array_max_rows].to_csv, element_count_type+"s_works_analysis_user.csv")
 
 
     # add statistics on the dataframe and create the table and sort by the most used by the main entitie
-    wcp.add_statistics_to_element_count_array(sort_by = wcp.count_entities_cols[0])
-    table_most_cited_concept = get_dash_table_references_works_count(wcp, id_table = {'type': 'table', 'index': 'most_used_by_main'})
+    wplt.add_statistics_to_element_count_array(sort_by = wplt.count_entities_cols[0])
+    table_most_cited_concept = get_dash_table_references_works_count(wplt, id_table = {'type': 'table', 'index': 'most_used_by_main'})
 
-    wcp.sort_count_array(sort_by = 'sum_all_entities')
-    table_sum_all_entities = get_dash_table_references_works_count(wcp, id_table = {'type': 'table', 'index': 'most_used_by_all'})
+    wplt.sort_count_array(sort_by = 'sum_all_entities')
+    table_sum_all_entities = get_dash_table_references_works_count(wplt, id_table = {'type': 'table', 'index': 'most_used_by_all'})
 
-    wcp.sort_count_array(sort_by = 'h_used_all_l_use_main')
-    table_h_used_all_l_use_main = get_dash_table_references_works_count(wcp, id_table = {'type': 'table', 'index': 'h_used_all_l_use_main'})
+    wplt.sort_count_array(sort_by = 'h_used_all_l_use_main')
+    table_h_used_all_l_use_main = get_dash_table_references_works_count(wplt, id_table = {'type': 'table', 'index': 'h_used_all_l_use_main'})
 
     enriched_array = no_update
     if download_enriched_array != None:
         if len(download_enriched_array):
             if download_enriched_array_max_rows == None:
-                download_enriched_array_max_rows = len(wcp.element_count_df.index)
-            raw_array = dcc.send_data_frame(wcp.element_count_df.iloc[:download_enriched_array_max_rows].to_csv, element_count_type+"s_works_analysis_user.csv")
+                download_enriched_array_max_rows = len(wplt.element_count_df.index)
+            raw_array = dcc.send_data_frame(wplt.element_count_df.iloc[:download_enriched_array_max_rows].to_csv, element_count_type+"s_works_analysis_user.csv")
 
     return fig_nb_time_referenced, table_most_cited_concept, raw_array, table_sum_all_entities, table_h_used_all_l_use_main, enriched_array, element_count_type
 

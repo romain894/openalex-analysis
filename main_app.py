@@ -10,6 +10,17 @@ import dash_loading_spinners
 import os
 from layout_parameters import *
 
+# Redis cache
+redis_parameters = {
+    'host':os.environ.get('DOCKER_REDIS_URL', "localhost"),
+    'decode_responses':True,
+    'port':6379,
+    'db':2,
+}
+  
+
+# Access passwords
+
 VALID_USERNAME_PASSWORD_PAIRS = None
 if os.path.exists("dash_app_passwords.py"):
     from dash_app_passwords import *
