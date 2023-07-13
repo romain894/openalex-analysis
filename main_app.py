@@ -9,8 +9,10 @@ from flask import Flask
 import dash_loading_spinners
 import os
 from layout_parameters import *
+import EntitiesPlot
 
 # Redis cache
+# CONFIGURATION SETUP TO FIX
 redis_parameters = {
     'host':os.environ.get('DOCKER_REDIS_URL', "localhost"),
     'decode_responses':True,

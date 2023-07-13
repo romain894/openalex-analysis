@@ -41,6 +41,12 @@ class AnalysisConfig(dict):
         return super().__getitem__(key)
 
     def __setattr__(self, key, value):
+        if key == 'redis_parameters':
+            if value != None:
+                super().__setitem__('redis_client', StrictRedis(value))
+                super().__setitem__('cache', RedisCache(redis_client=self.redis_client))
+                # redis_client = StrictRedis(**config.redis_parameters)
+                # cache = RedisCache(redis_client=redis_client)
         return super().__setitem__(key, value)
 
 
@@ -137,42 +143,6 @@ class EntitiesAnalysis(OA_entities_names):
 
         if entitie_from_id != None and create_dataframe == True:
             self.load_entities_dataframe()
-
-
-        if config.redis_parameters != None:
-            redis_client = StrictRedis(**config.redis_parameters)
-            cache = RedisCache(redis_client=redis_client)
-
-
-        # define the function which may use the cache
-        if config.redis_parameters != None:
-            # use the cache
-            @cache.cache()
-            def get_name_of_entitie_from_api(entitie):
-                print("Getting name of "+entitie+" from the OpenAlex API (not found in cache)...")
-                return get_name_of_entitie_from_api_no_cache(entitie)
-        else:
-            # don't use the cache
-            def get_name_of_entitie_from_api(entitie):
-                print("Getting name of "+entitie+" from the OpenAlex API (cache disabled)...")
-                return get_name_of_entitie_from_api_no_cache(entitie)
-
-        self.get_name_of_entitie_from_api = get_name_of_entitie_from_api
-
-
-        if config.redis_parameters != None:
-            # use the cache
-            @cache.cache()
-            def get_info_about_entitie_from_api(entitie, infos = ["display_name"]):
-                print("Getting information about "+entitie+" from the OpenAlex API (not found in cache)...")
-                return get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
-        else:
-            # don't use the cache
-            def get_info_about_entitie_from_api(entitie, infos = ["display_name"]):
-                print("Getting information about "+entitie+" from the OpenAlex API (cahe disabled)...")
-                return get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
-
-        self.get_info_about_entitie_from_api = get_info_about_entitie_from_api
 
 
     def get_count_entities_matched(self, query_filters):
@@ -549,7 +519,7 @@ def get_entitie_type_from_id(entitie):
             raise ValueError("Entitie id "+entitie+" not valid")
 
 
-def get_name_of_entitie_from_api_no_cache(entitie):
+def get_name_of_entitie_from_api_core(entitie):
     """!
     @brief      Gets the name of entitie from api
 
@@ -561,8 +531,29 @@ def get_name_of_entitie_from_api_no_cache(entitie):
     e = get_entitie_type_from_id(entitie)()[entitie]
     return e['display_name']
 
+# @config.cache.cache()
+# def get_name_of_entitie_from_api_cache(entitie):
+#     print("Getting name of "+entitie+" from the OpenAlex API (not found in cache)...")
+#     return get_info_about_entitie_from_api_core(entitie)
 
-def get_info_about_entitie_from_api_no_cache(entitie, infos = ["display_name"]):
+# def get_name_of_entitie_from_api_no_cache(entitie):
+    # print("Getting name of "+entitie+" from the OpenAlex API (cache disabled)...")
+    # return get_info_about_entitie_from_api_core(entitie)
+
+def get_name_of_entitie_from_api(entitie):
+    # if config.redis_parameters != None:
+    #     return get_name_of_entitie_from_api_cache(entitie)
+    # else:
+    #     return get_name_of_entitie_from_api_no_cache(entitie)
+    if config.redis_parameters != None:
+        print("Getting name of "+entitie+" from the OpenAlex API (not found in cache)...")
+        return config.cache.cache(get_name_of_entitie_from_api_core(entitie))
+    else:
+        print("Getting name of "+entitie+" from the OpenAlex API (cache disabled)...")
+        return get_name_of_entitie_from_api_core(entitie)
+
+
+def get_info_about_entitie_from_api_core(entitie, infos = ["display_name"]):
     """!
     @brief      Gets information about entitie from api
     
@@ -587,8 +578,26 @@ def get_info_about_entitie_from_api_no_cache(entitie, infos = ["display_name"]):
     return e
 
 
+# @config.cache.cache()
+# def get_info_about_entitie_from_api_cache(entitie, infos = ["display_name"]):
+#     print("Getting information about "+entitie+" from the OpenAlex API (not found in cache)...")
+#     return get_info_about_entitie_from_api_core(entitie, infos = infos)
+
+# def get_info_about_entitie_from_api_no_cache(entitie, infos = ["display_name"]):
+#     print("Getting information about "+entitie+" from the OpenAlex API (cahe disabled)...")
+#     return get_info_about_entitie_from_api_core(entitie, infos = infos)
+
 def get_info_about_entitie_from_api(entitie, infos = ["display_name"], return_as_pd_serie = True):
-    res = self.get_info_about_entitie_from_api(entitie, infos = infos)
+    # if config.redis_parameters != None:
+    #     res = get_info_about_entitie_from_api_cache(entitie, infos = infos)
+    # else:
+    #     res = get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
+    if config.redis_parameters != None:
+        print("Getting information about "+entitie+" from the OpenAlex API (not found in cache)...")
+        res = config.cache.cache(get_info_about_entitie_from_api_core(entitie, infos = infos))
+    else:
+        print("Getting information about "+entitie+" from the OpenAlex API (cahe disabled)...")
+        res = get_info_about_entitie_from_api_core(entitie, infos = infos)
     if return_as_pd_serie:
         data = [val for val in res.values()]
         index = [key for key in res]
