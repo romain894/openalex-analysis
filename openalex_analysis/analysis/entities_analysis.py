@@ -481,7 +481,7 @@ class EntitiesAnalysis(OA_entities_names):
         if entitie == self.entitie_from_id and self.entitie_name != None:
             return self.entitie_name
         elif allow_download_from_API:
-            return self.get_name_of_entitie_from_api(entitie)
+            return get_name_of_entitie_from_api(entitie)
         else:
             raise ValueError("Can't get the entitie name because not allowed to download from API and not provided at the initialisation")
 
@@ -490,7 +490,7 @@ class EntitiesAnalysis(OA_entities_names):
         if entitie == None:
             entitie = self.entitie_from_id
         if allow_download_from_API:
-            return self.get_info_about_entitie_from_api(entitie, infos = infos, return_as_pd_serie = return_as_pd_serie)
+            return get_info_about_entitie_from_api(entitie, infos = infos, return_as_pd_serie = return_as_pd_serie)
         else:
             raise ValueError("Can't get the entitie info because not allowed to download from API")
 
