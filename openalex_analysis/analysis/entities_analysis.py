@@ -8,7 +8,7 @@ import pandas as pd
 import numpy as np
 import country_converter as coco
 import psutil
-from OA_entities_names import OA_entities_names
+from openalex_analysis.analysis.OA_entities_names import OA_entities_names
 import os, sys
 from redis import StrictRedis
 from redis_cache import RedisCache
@@ -143,6 +143,9 @@ class EntitiesAnalysis(OA_entities_names):
 
         if entitie_from_id != None and create_dataframe == True:
             self.load_entities_dataframe()
+
+        # debug: print config
+        # print(config)
 
 
     def get_count_entities_matched(self, query_filters):

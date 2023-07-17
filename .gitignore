@@ -1,6 +1,5 @@
 /data/*
-/__pycache__/*
-/pages/__pycache__/*
+**/__pycache__/*
 /jupyter_notebooks/.ipynb_checkpoints/*
 /old_jupyter_notebooks/*
 /.ipynb_checkpoints/*

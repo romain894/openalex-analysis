@@ -11,8 +11,10 @@ import dash
 from dash import Dash, dcc, html, Input, Output
 import dash_bootstrap_components as dbc # dash app theme
 import plotly.io as pio # plotly theme
-import EntitiesAnalysis
-from EntitiesAnalysis import WorksAnalysis, AuthorsAnalysis, SourcesAnalysis, InstitutionsAnalysis, ConceptsAnalysis, PublishersAnalysis
+# import EntitiesAnalysis
+# from EntitiesAnalysis import WorksAnalysis, AuthorsAnalysis, SourcesAnalysis, InstitutionsAnalysis, ConceptsAnalysis, PublishersAnalysis
+from openalex_analysis.analysis import *
+
 
 import os, sys
 sys.path.append(os.path.abspath('pyalex'))
