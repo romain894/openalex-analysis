@@ -1,29 +1,16 @@
 import dash_bootstrap_components as dbc # dash app theme
-from dash import Dash, dcc, html, Input, Output, State, ALL, Patch, DiskcacheManager, CeleryManager
+from dash import Dash, dcc, html, Input, Output, State, ALL, Patch, CeleryManager
 from dash.long_callback import CeleryLongCallbackManager
 import dash
 import dash_auth
-import diskcache #for the long callback manager
 from celery import Celery # for redis cache and long callback manager
 from flask import Flask
 import dash_loading_spinners
 import os
-from layout_parameters import *
-import EntitiesPlot
-
-# Redis cache
-# CONFIGURATION SETUP TO FIX
-redis_parameters = {
-    'host':os.environ.get('DOCKER_REDIS_URL', "localhost"),
-    'decode_responses':True,
-    'port':6379,
-    'db':2,
-}
-  
+from layout_parameters import *  
 
 # Access passwords
 
-VALID_USERNAME_PASSWORD_PAIRS = None
 if os.path.exists("dash_app_passwords.py"):
     from dash_app_passwords import *
     VALID_USERNAME_PASSWORD_PAIRS = dash_app_passwords
@@ -38,18 +25,6 @@ else:
 version = os.environ.get('DASH_APP_VERSION', "V dev")
 celery_broker_url = os.environ.get('DOCKER_CELERY_BROKER_URL', "redis://localhost:6379/0")
 celery_backend_url = os.environ.get('DOCKER_CELERY_BACKEND_URL', "redis://localhost:6379/1")
-
-
-## Diskcache
-# cache = diskcache.Cache("./cache")
-# long_callback_manager = DiskcacheManager(cache)
-
-# Redis cache:
-# cache = Cache(app.server, config={
-#     'CACHE_TYPE': 'redis',
-#     'CACHE_REDIS_URL': 'localhost:6379',
-#     'CACHE_DEFAULT_TIMEOUT': 450
-# })
 
 celery_app = Celery(
     __name__, broker=celery_broker_url, backend=celery_backend_url

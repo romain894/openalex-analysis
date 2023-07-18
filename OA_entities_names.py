@@ -6,12 +6,14 @@ from os import listdir
 
 default_n_max_entities_to_download = 10000 # temporary here, should be better integrated
 
+# TODO: UPDATE WITH COMPRESSED DATA FILES
+
 class OA_entities_names():
     """Class to manage the concept names and databases file names for the webapp"""
 
     ##### CONCEPTS #####
 
-    concepts_csv_file = "OpenAlex_concepts_in_use_(17_August_2022)_-_concepts.csv"
+    concepts_csv_file = "entitie_name_files_update_tools/OpenAlex_concepts_in_use_(17_August_2022)_-_concepts.csv"
     concepts_institutions_database_files_directory = "data/"
     max_concept_level = 2 # only for institions
     databases_format = ".parquet"
@@ -53,7 +55,7 @@ class OA_entities_names():
 
     ##### INSTITUTIONS #####
 
-    list_of_institutions_file_path = "list_all_institutions.parquet"
+    list_of_institutions_file_path = "entitie_name_files_update_tools/list_all_institutions_full.parquet"
     institutions_df = pd.read_parquet(list_of_institutions_file_path, columns = ['id', 'display_name'])
     # convert the concept id from link to just id
     institutions_df['id'] = institutions_df['id'].str.strip("https://openalex.org/").str.upper()

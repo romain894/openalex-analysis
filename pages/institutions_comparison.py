@@ -1,15 +1,11 @@
-from EntitiesPlot import WorksPlot
-from EntitiesAnalysis import get_info_about_entitie_from_api
+from openalex_analysis.plot import config, WorksPlot, get_info_about_entitie_from_api
 from OA_entities_names import OA_entities_names
 # from jupyter_dash import JupyterDash
 import dash_bootstrap_components as dbc # dash app theme
 import plotly.io as pio # plotly theme
-from dash import Dash, dcc, html, Input, Output, State, ALL, MATCH, Patch, DiskcacheManager, callback, dash_table, no_update
+from dash import Dash, dcc, html, Input, Output, State, ALL, MATCH, Patch, callback, dash_table, no_update
 from dash.exceptions import PreventUpdate
 import dash
-#from dash.long_callback import DiskcacheLongCallbackManager
-# import dash_auth
-# import diskcache #for the long callback manager
 import threading
 # from flask import Flask
 import time
@@ -28,6 +24,28 @@ app = dash.get_app()
 
 # concept names and BD file names:
 OA_concepts = OA_entities_names()
+
+# openalex_analysis configuartion:
+if os.path.exists("dash_app_configuration.py"):
+    from dash_app_configuration import *
+    print('OK: Loadeded the configuration from "dash_app_configuration.py"')
+else:
+    from dash_app_configuration_template import *
+    print('WARNING: Loaded the default configuration, from the template file ("dash_app_configuration_template.py")')
+    print('Please copy the template file, rename it "dash_app_configuration.py" and set the configuration in it')
+config.email = config_email
+config.api_key = config_api_key
+config.openalex_url = config_openalex_url
+config.allow_automatic_download = config_allow_automatic_download
+config.disable_tqdm_loading_bar = config_disable_tqdm_loading_bar
+config.n_max_entities = config_n_max_entities
+config.project_datas_folder_path = config_project_datas_folder_path
+config.parquet_compression = config_parquet_compression
+config.max_storage_percent = config_max_storage_percent
+config.redis_enabled = config_redis_enabled
+config.redis_client = config_redis_client
+config.redis_cache = config_redis_cache
+print('OK: Configuration set')
 
 
 works_infos = ["display_name", "author_citation_style", "publication_year"]

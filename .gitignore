@@ -5,6 +5,7 @@
 /.ipynb_checkpoints/*
 /Tests*
 /dash_app_passwords.py
+/dash_app_configuration.py
 
 !/data/README.md
 

@@ -1,24 +1,22 @@
 # Romain THOMAS 2023
 # Stockholm Resilience Centre, Stockholm University
 
-from tqdm import tqdm
+import os, sys
 from os.path import exists, join # To check if a file exist
+import psutil
 import json
+
+from tqdm import tqdm
 import pandas as pd
 import numpy as np
 import country_converter as coco
-import psutil
-import os, sys
 from redis import StrictRedis
 from redis_cache import RedisCache
-
-from openalex_analysis.names import EntitieNames
 
 # sys.path.append(os.path.abspath('pyalex'))
 from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
 
-# redis_url = os.environ.get('DOCKER_REDIS_URL', "localhost")
-# client = StrictRedis(host=redis_url, decode_responses=True, port=6379, db=2)
+from openalex_analysis.names import EntitieNames
 
 
 class AnalysisConfig(dict):
@@ -37,18 +35,20 @@ class AnalysisConfig(dict):
         @param      project_datas_folder_path TODO
         @param      parquet_compression       TODO
         @param      max_storage_percent       TODO
-        @param      redis_parameters          TODO
+        @param      redis_parameters          TODO TO UPDATE DOC
     """
     def __getattr__(self, key):
         return super().__getitem__(key)
 
     def __setattr__(self, key, value):
-        if key == 'redis_parameters':
-            if value != None:
-                super().__setitem__('redis_client', StrictRedis(value))
-                super().__setitem__('cache', RedisCache(redis_client=self.redis_client))
-                # redis_client = StrictRedis(**config.redis_parameters)
-                # cache = RedisCache(redis_client=redis_client)
+        # if key == 'redis_parameters':
+        #     print("coucou1")
+        #     if value != None:
+        #         print("coucou2")
+        #         super().__setitem__('redis_client', StrictRedis(value))
+        #         super().__setitem__('cache', RedisCache(redis_client=self.redis_client))
+        #         # redis_client = StrictRedis(**config.redis_parameters)
+        #         # cache = RedisCache(redis_client=redis_client)
         return super().__setitem__(key, value)
 
 
@@ -61,15 +61,23 @@ config = AnalysisConfig(email=None,
                         project_datas_folder_path = "data",
                         parquet_compression = "brotli",
                         max_storage_percent = 95,
-                        redis_parameters = None
+                        redis_enabled = False,
+                        redis_client = None,
+                        redis_cache = None,
                         )
-
 
 
 class EntitiesAnalysis(EntitieNames):
     """!
     OpenAlexAnalysis class which contains generic methods to do analysis over OpenAlex entities
     """
+
+    
+
+    # to convert country code to country name
+    cc = coco.CountryConverter()
+
+
     def __init__(self,
                  entitie_from_id = None,
                  extra_filters = None,
@@ -140,15 +148,8 @@ class EntitiesAnalysis(EntitieNames):
             if self.database_file_path == None:
                 self.database_file_path = join(config.project_datas_folder_path, self.get_database_file_name())
 
-        # to convert country code to country name
-        self.cc = coco.CountryConverter()
-
         if entitie_from_id != None and create_dataframe == True:
             self.load_entities_dataframe()
-
-        # debug: print config
-        # print(config)
-
 
     def get_count_entities_matched(self, query_filters):
         """!
@@ -550,9 +551,10 @@ def get_name_of_entitie_from_api(entitie):
     #     return get_name_of_entitie_from_api_cache(entitie)
     # else:
     #     return get_name_of_entitie_from_api_no_cache(entitie)
-    if config.redis_parameters != None:
-        print("Getting name of "+entitie+" from the OpenAlex API (not found in cache)...")
-        return config.cache.cache(get_name_of_entitie_from_api_core(entitie))
+    if config.redis_enabled == True:
+        print("Getting name of "+entitie+" from the OpenAlex API (cache enabled)...")
+        get_name_of_entitie_from_api_core_cached = config.redis_cache.cache()(get_name_of_entitie_from_api_core)
+        return get_name_of_entitie_from_api_core_cached(entitie)
     else:
         print("Getting name of "+entitie+" from the OpenAlex API (cache disabled)...")
         return get_name_of_entitie_from_api_core(entitie)
@@ -597,9 +599,10 @@ def get_info_about_entitie_from_api(entitie, infos = ["display_name"], return_as
     #     res = get_info_about_entitie_from_api_cache(entitie, infos = infos)
     # else:
     #     res = get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
-    if config.redis_parameters != None:
-        print("Getting information about "+entitie+" from the OpenAlex API (not found in cache)...")
-        res = config.cache.cache(get_info_about_entitie_from_api_core(entitie, infos = infos))
+    if config.redis_enabled == True:
+        print("Getting information about "+entitie+" from the OpenAlex API (cache enabled)...")
+        get_info_about_entitie_from_api_core_cached = config.redis_cache.cache()(get_info_about_entitie_from_api_core)
+        res = get_info_about_entitie_from_api_core_cached(entitie, infos = infos)
     else:
         print("Getting information about "+entitie+" from the OpenAlex API (cahe disabled)...")
         res = get_info_about_entitie_from_api_core(entitie, infos = infos)
@@ -642,7 +645,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         # country_name
         country_code = self.get_country_code(entitie)
         if country_code != None:
-            entitie['country_name'] = self.cc.convert(names = [self.get_country_code(entitie)], to = 'name_short')
+            entitie['country_name'] = cc.convert(names = [self.get_country_code(entitie)], to = 'name_short')
         else:
             entitie['country_name'] = None
         # institution_name
@@ -887,7 +890,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             case 'reference':
                 self.add_statistics_to_references_works_count_array()
             case 'concept':
-                self.add_statistics_to_concept_count_array(min_concept_level= min_concept_level)
+                self.add_statistics_to_concept_count_array(min_concept_level = min_concept_level)
 
 
     def add_statistics_to_references_works_count_array(self):
@@ -911,16 +914,18 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             # Classic pandas index
             element_count_concepts_serie = element_count_concepts_serie.str.strip("https://openalex.org/")
             concept_names_serie = element_count_concepts_serie.apply(lambda c:EntitieNames.concepts_names[c]).convert_dtypes()
-            concept_ids_serie = element_count_concepts_serie.apply(lambda c:EntitieNames.concepts_names[c]).convert_dtypes()
+            concept_levels_serie = element_count_concepts_serie.apply(lambda c:EntitieNames.concepts_levels[c]).convert_dtypes()
         else:
             # pandas multi index
             concept_names_serie = element_count_concepts_serie.apply(lambda c:EntitieNames.concepts_names[c[0].strip("https://openalex.org/")]).convert_dtypes()
-            concept_ids_serie = element_count_concepts_serie.apply(lambda c:EntitieNames.concepts_names[c[0].strip("https://openalex.org/")]).convert_dtypes()
+            concept_levels_serie = element_count_concepts_serie.apply(lambda c:EntitieNames.concepts_levels[c[0].strip("https://openalex.org/")]).convert_dtypes()
 
         self.element_count_df.insert(loc=0, column='concept_name', value=concept_names_serie)
-        self.element_count_df.insert(loc=1, column='concept_level', value=concept_ids_serie)
+        self.element_count_df.insert(loc=1, column='concept_level', value=concept_levels_serie)
 
         if min_concept_level != None:
+            print(type(min_concept_level))
+            print((self.element_count_df.concept_level.iloc[0]))
             self.element_count_df = self.element_count_df.loc[self.element_count_df.concept_level>=min_concept_level]
 
         
