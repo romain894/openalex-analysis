@@ -8,10 +8,12 @@ import pandas as pd
 import numpy as np
 import country_converter as coco
 import psutil
-from openalex_analysis.analysis.OA_entities_names import OA_entities_names
 import os, sys
 from redis import StrictRedis
 from redis_cache import RedisCache
+
+from openalex_analysis.names import EntitieNames
+
 sys.path.append(os.path.abspath('pyalex'))
 from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
 
@@ -64,7 +66,7 @@ config = AnalysisConfig(email=None,
 
 
 
-class EntitiesAnalysis(OA_entities_names):
+class EntitiesAnalysis(EntitieNames):
     """!
     OpenAlexAnalysis class which contains generic methods to do analysis over OpenAlex entities
     """
@@ -908,12 +910,12 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         if type(self.element_count_df.index) == pd.Index:
             # Classic pandas index
             element_count_concepts_serie = element_count_concepts_serie.str.strip("https://openalex.org/")
-            concept_names_serie = element_count_concepts_serie.apply(lambda c:OA_entities_names.concepts_names_full[c]).convert_dtypes()
-            concept_ids_serie = element_count_concepts_serie.apply(lambda c:OA_entities_names.concepts_levels_full[c]).convert_dtypes()
+            concept_names_serie = element_count_concepts_serie.apply(lambda c:EntitieNames.concepts_names[c]).convert_dtypes()
+            concept_ids_serie = element_count_concepts_serie.apply(lambda c:EntitieNames.concepts_names[c]).convert_dtypes()
         else:
             # pandas multi index
-            concept_names_serie = element_count_concepts_serie.apply(lambda c:OA_entities_names.concepts_names_full[c[0].strip("https://openalex.org/")]).convert_dtypes()
-            concept_ids_serie = element_count_concepts_serie.apply(lambda c:OA_entities_names.concepts_levels_full[c[0].strip("https://openalex.org/")]).convert_dtypes()
+            concept_names_serie = element_count_concepts_serie.apply(lambda c:EntitieNames.concepts_names[c[0].strip("https://openalex.org/")]).convert_dtypes()
+            concept_ids_serie = element_count_concepts_serie.apply(lambda c:EntitieNames.concepts_names[c[0].strip("https://openalex.org/")]).convert_dtypes()
 
         self.element_count_df.insert(loc=0, column='concept_name', value=concept_names_serie)
         self.element_count_df.insert(loc=1, column='concept_level', value=concept_ids_serie)
