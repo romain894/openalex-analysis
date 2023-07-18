@@ -8,7 +8,6 @@ import plotly.express as px
 import plotly.graph_objects as go
 from jupyter_dash import JupyterDash
 import dash
-from dash import Dash, dcc, html, Input, Output
 import dash_bootstrap_components as dbc # dash app theme
 import plotly.io as pio # plotly theme
 # import EntitiesAnalysis
@@ -17,7 +16,7 @@ from openalex_analysis.analysis import *
 
 
 import os, sys
-sys.path.append(os.path.abspath('pyalex'))
+# sys.path.append(os.path.abspath('pyalex'))
 from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
 
 figure_height = 800

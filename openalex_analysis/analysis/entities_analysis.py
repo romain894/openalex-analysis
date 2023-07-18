@@ -14,7 +14,7 @@ from redis_cache import RedisCache
 
 from openalex_analysis.names import EntitieNames
 
-sys.path.append(os.path.abspath('pyalex'))
+# sys.path.append(os.path.abspath('pyalex'))
 from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
 
 # redis_url = os.environ.get('DOCKER_REDIS_URL', "localhost")
