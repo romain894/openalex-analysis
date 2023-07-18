@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['publishersconceptsanalysis_43',['PublishersConceptsAnalysis',['../classEntitiesConceptsAnalysis_1_1PublishersConceptsAnalysis.html',1,'EntitiesConceptsAnalysis']]],
-  ['publishersconceptsplot_44',['PublishersConceptsPlot',['../classEntitiesConceptsPlot_1_1PublishersConceptsPlot.html',1,'EntitiesConceptsPlot']]]
+  ['publishersanalysis_49',['PublishersAnalysis',['../classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1PublishersAnalysis.html',1,'openalex_analysis::analysis::entities_analysis']]],
+  ['publishersplot_50',['PublishersPlot',['../classopenalex__analysis_1_1plot_1_1entities__plot_1_1PublishersPlot.html',1,'openalex_analysis::plot::entities_plot']]]
 ];

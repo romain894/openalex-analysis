@@ -1010,9 +1010,9 @@ class InstitutionsAnalysis(EntitiesAnalysis, Institutions):
         return sum([item['score'] for item in institutions['x_concepts'] if item['id'] in concept_links])
         
 
-class ConceptsAnalysis(EntitiesAnalysis):
+class ConceptsAnalysis(EntitiesAnalysis, Concepts):
     EntitieOpenAlex = Concepts
 
 
-class PublishersAnalysis(EntitiesAnalysis):
+class PublishersAnalysis(EntitiesAnalysis, Publishers):
     EntitieOpenAlex = Publishers

@@ -1,0 +1,38 @@
+\hypertarget{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames}{}\doxysection{openalex\+\_\+analysis.\+names.\+entitie\+\_\+names.\+Entitie\+Names Class Reference}
+\label{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames}\index{openalex\_analysis.names.entitie\_names.EntitieNames@{openalex\_analysis.names.entitie\_names.EntitieNames}}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a53393300b16748924e225d19aa828b10}\label{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a53393300b16748924e225d19aa828b10}} 
+string \mbox{\hyperlink{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a53393300b16748924e225d19aa828b10}{concepts\+\_\+parquet\+\_\+file\+\_\+path}} = \char`\"{}data/list\+\_\+all\+\_\+concepts.\+parquet\char`\"{}
+\begin{DoxyCompactList}\small\item\em CONCEPTS \#\#\#\#\#. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a0641eda0d37b788598e7d57b645622d1}\label{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a0641eda0d37b788598e7d57b645622d1}} 
+{\bfseries concepts\+\_\+df} = pd.\+read\+\_\+parquet(Bytes\+IO(pkgutil.\+get\+\_\+data(\+\_\+\+\_\+name\+\_\+\+\_\+, \mbox{\hyperlink{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a53393300b16748924e225d19aa828b10}{concepts\+\_\+parquet\+\_\+file\+\_\+path}})))
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_ad755b0e398c180075d5611ee1c0fe522}\label{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_ad755b0e398c180075d5611ee1c0fe522}} 
+{\bfseries concepts\+\_\+names} = concepts\+\_\+df\mbox{[}\mbox{[}\textquotesingle{}openalex\+\_\+id\textquotesingle{}, \textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]}\mbox{]}.set\+\_\+index(\textquotesingle{}openalex\+\_\+id\textquotesingle{})\mbox{[}\textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]}.to\+\_\+dict()
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_ab7a7d0fdac3c131921f4c26917a231c5}\label{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_ab7a7d0fdac3c131921f4c26917a231c5}} 
+{\bfseries concepts\+\_\+levels} = concepts\+\_\+df\mbox{[}\mbox{[}\textquotesingle{}openalex\+\_\+id\textquotesingle{}, \textquotesingle{}level\textquotesingle{}\mbox{]}\mbox{]}.set\+\_\+index(\textquotesingle{}openalex\+\_\+id\textquotesingle{})\mbox{[}\textquotesingle{}level\textquotesingle{}\mbox{]}.to\+\_\+dict()
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a10e14563e5563b89968c3756815e0549}\label{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a10e14563e5563b89968c3756815e0549}} 
+{\bfseries concepts\+\_\+normalized\+\_\+names} = concepts\+\_\+df\mbox{[}\mbox{[}\textquotesingle{}openalex\+\_\+id\textquotesingle{}, \textquotesingle{}normalized\+\_\+name\textquotesingle{}\mbox{]}\mbox{]}.set\+\_\+index(\textquotesingle{}openalex\+\_\+id\textquotesingle{})\mbox{[}\textquotesingle{}normalized\+\_\+name\textquotesingle{}\mbox{]}.to\+\_\+dict()
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a4b23a30aefa46f6ecc53970a0b11b130}\label{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a4b23a30aefa46f6ecc53970a0b11b130}} 
+string \mbox{\hyperlink{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a4b23a30aefa46f6ecc53970a0b11b130}{institutions\+\_\+parquet\+\_\+file\+\_\+path}} = \char`\"{}data/list\+\_\+all\+\_\+institutions.\+parquet\char`\"{}
+\begin{DoxyCompactList}\small\item\em INSTITUTIONS \#\#\#\#\#. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_aa387b57c49aaf864e95bd4bcd6e4d67d}\label{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_aa387b57c49aaf864e95bd4bcd6e4d67d}} 
+{\bfseries institutions\+\_\+df} = pd.\+read\+\_\+parquet(Bytes\+IO(pkgutil.\+get\+\_\+data(\+\_\+\+\_\+name\+\_\+\+\_\+, \mbox{\hyperlink{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a4b23a30aefa46f6ecc53970a0b11b130}{institutions\+\_\+parquet\+\_\+file\+\_\+path}})))
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a07cfb33f3dbbd6380ba612bf070b7a87}\label{classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames_a07cfb33f3dbbd6380ba612bf070b7a87}} 
+{\bfseries institutions\+\_\+names} = institutions\+\_\+df\mbox{[}\mbox{[}\textquotesingle{}id\textquotesingle{}, \textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]}\mbox{]}.set\+\_\+index(\textquotesingle{}id\textquotesingle{})\mbox{[}\textquotesingle{}display\+\_\+name\textquotesingle{}\mbox{]}.to\+\_\+dict()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Class to manage the concept and institution names\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+openalex\+\_\+analysis/names/entitie\+\_\+names.\+py\end{DoxyCompactItemize}

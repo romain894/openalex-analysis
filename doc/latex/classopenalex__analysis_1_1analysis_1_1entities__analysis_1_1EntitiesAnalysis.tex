@@ -1,0 +1,358 @@
+\hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis}{}\doxysection{openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis Class Reference}
+\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis}\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+
+
+Open\+Alex\+Analysis class which contains generic methods to do analysis over Open\+Alex entities.  
+
+
+
+
+Inheritance diagram for openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=271pt]{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_afc8d59a1e114d675b947d23b6505d13d}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, entitie\+\_\+from\+\_\+id=None, extra\+\_\+filters=None, database\+\_\+file\+\_\+path=None, create\+\_\+dataframe=True, entitie\+\_\+name=None, load\+\_\+only\+\_\+columns=None)
+\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a816105852dbcc403a6fcc88fecc65ef0}{get\+\_\+count\+\_\+entities\+\_\+matched}} (self, query\+\_\+filters)
+\begin{DoxyCompactList}\small\item\em Gets and return the number of entities which match the query fitlers. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a5add58921f76dc22e3314fa139dc76e8}{get\+\_\+api\+\_\+query}} (self)
+\begin{DoxyCompactList}\small\item\em Gets the api query from the parameters of the instance. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_aa5357a167d7801a2f6bf2bc0d33f336c}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_aa5357a167d7801a2f6bf2bc0d33f336c}} 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_aa5357a167d7801a2f6bf2bc0d33f336c}{download\+\_\+list\+\_\+entities}} (self)
+\begin{DoxyCompactList}\small\item\em Downloads the entities which match the parameters of the instance, and store the dataset as a parquet file. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a29ed794b6de5dccfcd45a6e8004dc02a}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a29ed794b6de5dccfcd45a6e8004dc02a}} 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a29ed794b6de5dccfcd45a6e8004dc02a}{load\+\_\+entities\+\_\+dataframe}} (self)
+\begin{DoxyCompactList}\small\item\em Loads an entities dataset from file (or download it if needed and allowed by the instance) to the dataframe of the instance. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ac042f50d5f2680ef3863b9155aa75326}{auto\+\_\+remove\+\_\+databases\+\_\+saved}} (self)
+\begin{DoxyCompactList}\small\item\em Remove databases files (the data downloaded from Open\+Alex) if the storage is full. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_abc970749330619b77271820bf85d7aaa}{get\+\_\+df\+\_\+filtered\+\_\+entities\+\_\+selection\+\_\+threshold}} (self, df\+\_\+filters)
+\begin{DoxyCompactList}\small\item\em Gets df\+\_\+filtered which contains the entities of self.\+entities\+\_\+df fitting the filters in df\+\_\+filters. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a83e5c9ee4e1c5dc12e873285b057cc41}{get\+\_\+number\+\_\+of\+\_\+entities\+\_\+selected}} (self, x\+\_\+threshold, y\+\_\+threshold, cited\+\_\+by\+\_\+threshold, x\+\_\+datas, y\+\_\+datas)
+\begin{DoxyCompactList}\small\item\em Gets the number of entities selected on the plot. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_acf9ea1eeea89845ff3f437edf8831d33}{create\+\_\+multi\+\_\+concept\+\_\+filters\+\_\+entities\+\_\+dataframe}} (self, concepts\+\_\+from, concepts\+\_\+filters, thresholds, x\+\_\+datas, x\+\_\+threshold, cited\+\_\+by\+\_\+threshold)
+\begin{DoxyCompactList}\small\item\em Creates the multi concept filters entities dataframe. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ad1942fbae45711f1158d60fb5552a90f}{add\+\_\+average\+\_\+combined\+\_\+concept\+\_\+score\+\_\+to\+\_\+multi\+\_\+concept\+\_\+entitie\+\_\+df}} (self, concepts\+\_\+from)
+\begin{DoxyCompactList}\small\item\em Adds a column with the average combined concept score to the multi concept entities dataframe. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a32f3a958a500d78c70453dd321060017}{get\+\_\+database\+\_\+file\+\_\+name}} (self, entitie\+\_\+from\+\_\+id=None, entities\+\_\+type=None, db\+\_\+format=\char`\"{}parquet\char`\"{}, extra\+\_\+text=None)
+\begin{DoxyCompactList}\small\item\em Gets the database file name according to the parameters of the ojbect or the arguments given. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a6878c98b443c7b81ca9c6f540d3f6171}{get\+\_\+entitie\+\_\+string\+\_\+name}} (self, entitie=None)
+\begin{DoxyCompactList}\small\item\em Gets the entitie type string name. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a4790cf3af5653018cec2af894e98b635}{get\+\_\+entitie\+\_\+type\+\_\+from\+\_\+id}} (self, entitie=None)
+\begin{DoxyCompactList}\small\item\em Gets the entitie type from the entitie id. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a5772d3595738b3f2b1e051aea95e3d17}{get\+\_\+name\+\_\+of\+\_\+entitie}} (self, entitie=None, allow\+\_\+download\+\_\+from\+\_\+\+API=True)
+\begin{DoxyCompactList}\small\item\em Gets the name of entitie. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a828ba7767840663d63ffa1845f157e67}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a828ba7767840663d63ffa1845f157e67}} 
+def {\bfseries get\+\_\+info\+\_\+about\+\_\+entitie} (self, entitie, infos=\mbox{[}\char`\"{}display\+\_\+name\char`\"{}\mbox{]}, return\+\_\+as\+\_\+pd\+\_\+serie=True, allow\+\_\+download\+\_\+from\+\_\+\+API=True)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a0065e853e5ad0559b40fa8c71ec9ae4e}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a0065e853e5ad0559b40fa8c71ec9ae4e}} 
+{\bfseries per\+\_\+page}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a4263fbebcd3d4864b60245a83f1e74db}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a4263fbebcd3d4864b60245a83f1e74db}} 
+{\bfseries entitie\+\_\+from\+\_\+id}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a8f7d3efcb1e32e19ef165f5460f618c1}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a8f7d3efcb1e32e19ef165f5460f618c1}} 
+{\bfseries entitie\+\_\+from\+\_\+type}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a9aad8a9b531451e745f7d4fb138a36e4}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a9aad8a9b531451e745f7d4fb138a36e4}} 
+{\bfseries extra\+\_\+filters}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a06cf744d9377b5c3a4ea27a7c199c1da}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a06cf744d9377b5c3a4ea27a7c199c1da}} 
+{\bfseries database\+\_\+file\+\_\+path}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ab9f8b6436545afe8dfe6250c5cec39f2}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ab9f8b6436545afe8dfe6250c5cec39f2}} 
+{\bfseries entitie\+\_\+name}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a1261381fc5d4fee5d55e2509de39721b}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a1261381fc5d4fee5d55e2509de39721b}} 
+{\bfseries load\+\_\+only\+\_\+columns}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ae3d628af7f1e5d75206ccc1c39e093fd}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ae3d628af7f1e5d75206ccc1c39e093fd}} 
+{\bfseries entities\+\_\+df}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a765756b8b78fca5808403a7d02165c7a}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a765756b8b78fca5808403a7d02165c7a}} 
+{\bfseries entities\+\_\+multi\+\_\+filtered\+\_\+df}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a375f016ded73d3003ac18f986c32885a}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a375f016ded73d3003ac18f986c32885a}} 
+{\bfseries element\+\_\+count\+\_\+df}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a3ef1117952886d67e96403d9bc21093c}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a3ef1117952886d67e96403d9bc21093c}} 
+{\bfseries entitie\+\_\+downloading\+\_\+progress\+\_\+percentage}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ac94bf85b9486963011d68637d6928b5f}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ac94bf85b9486963011d68637d6928b5f}} 
+{\bfseries create\+\_\+element\+\_\+count\+\_\+array\+\_\+progress\+\_\+percentage}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a470697b6c6baf855d4a885e0a1abd1a3}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a470697b6c6baf855d4a885e0a1abd1a3}} 
+{\bfseries create\+\_\+element\+\_\+count\+\_\+array\+\_\+progress\+\_\+text}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_acfda7e2b029aa92e7c257ce4716d2fe3}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_acfda7e2b029aa92e7c257ce4716d2fe3}} 
+{\bfseries count\+\_\+element\+\_\+type}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a662b46eae6839ff97d1c4930b490631e}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a662b46eae6839ff97d1c4930b490631e}} 
+{\bfseries count\+\_\+element\+\_\+years}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a2acaf46da73f15699dc518712e8d8914}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a2acaf46da73f15699dc518712e8d8914}} 
+{\bfseries count\+\_\+entities\+\_\+cols}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_accaa805055b290624a0d88e2c8626212}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_accaa805055b290624a0d88e2c8626212}} 
+{\bfseries cc} = coco.\+Country\+Converter()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Open\+Alex\+Analysis class which contains generic methods to do analysis over Open\+Alex entities. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_afc8d59a1e114d675b947d23b6505d13d}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_afc8d59a1e114d675b947d23b6505d13d}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie\+\_\+from\+\_\+id = {\ttfamily None},  }\item[{}]{extra\+\_\+filters = {\ttfamily None},  }\item[{}]{database\+\_\+file\+\_\+path = {\ttfamily None},  }\item[{}]{create\+\_\+dataframe = {\ttfamily True},  }\item[{}]{entitie\+\_\+name = {\ttfamily None},  }\item[{}]{load\+\_\+only\+\_\+columns = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie\+\_\+from\+\_\+id} & The entitie identifier (eg an institution id) from which to take the entities (eg the works) to analyse (str) \\
+\hline
+{\em filters} & Optional additionnal filters, refer to the documentation of openalex and pyalex for the format (dict) \\
+\hline
+{\em database\+\_\+file\+\_\+path} & The database file path to force the analyse over datas in a specific file (str) \\
+\hline
+{\em create\+\_\+dataframe} & Create the dataframe at the initialisation (and download the data if needed and allowed) \\
+\hline
+{\em entitie\+\_\+name} & To specify the name of the entitie to avoid downloading it via the API if needed \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ad1942fbae45711f1158d60fb5552a90f}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ad1942fbae45711f1158d60fb5552a90f}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df@{add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df}}
+\index{add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df@{add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df()}{add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+add\+\_\+average\+\_\+combined\+\_\+concept\+\_\+score\+\_\+to\+\_\+multi\+\_\+concept\+\_\+entitie\+\_\+df (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{concepts\+\_\+from }\end{DoxyParamCaption})}
+
+
+
+Adds a column with the average combined concept score to the multi concept entities dataframe. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em concepts\+\_\+from} & The concepts to use to calculate the combined concept score (list of str) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ac042f50d5f2680ef3863b9155aa75326}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_ac042f50d5f2680ef3863b9155aa75326}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!auto\_remove\_databases\_saved@{auto\_remove\_databases\_saved}}
+\index{auto\_remove\_databases\_saved@{auto\_remove\_databases\_saved}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{auto\_remove\_databases\_saved()}{auto\_remove\_databases\_saved()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+auto\+\_\+remove\+\_\+databases\+\_\+saved (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Remove databases files (the data downloaded from Open\+Alex) if the storage is full. 
+
+It keeps the last accessed files \mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_acf9ea1eeea89845ff3f437edf8831d33}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_acf9ea1eeea89845ff3f437edf8831d33}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!create\_multi\_concept\_filters\_entities\_dataframe@{create\_multi\_concept\_filters\_entities\_dataframe}}
+\index{create\_multi\_concept\_filters\_entities\_dataframe@{create\_multi\_concept\_filters\_entities\_dataframe}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{create\_multi\_concept\_filters\_entities\_dataframe()}{create\_multi\_concept\_filters\_entities\_dataframe()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+create\+\_\+multi\+\_\+concept\+\_\+filters\+\_\+entities\+\_\+dataframe (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{concepts\+\_\+from,  }\item[{}]{concepts\+\_\+filters,  }\item[{}]{thresholds,  }\item[{}]{x\+\_\+datas,  }\item[{}]{x\+\_\+threshold,  }\item[{}]{cited\+\_\+by\+\_\+threshold }\end{DoxyParamCaption})}
+
+
+
+Creates the multi concept filters entities dataframe. 
+
+Combines different datasets and filters them.
+
+
+\begin{DoxyParams}{Parameters}
+{\em concepts\+\_\+from} & The concept datasets to import and on which the filters will be applied (list of str) \\
+\hline
+{\em concepts\+\_\+filters} & The concepts which will be used to filter (list of str) \\
+\hline
+{\em thresholds} & The thresholds attached to each concepts to filter (list of float or int) \\
+\hline
+{\em x\+\_\+datas} & The dataframe key of the global filter (eg the number of works) (str) \\
+\hline
+{\em x\+\_\+threshold} & The threshold for the global filter (float or int) \\
+\hline
+{\em cited\+\_\+by\+\_\+threshold} & The cited by threshold (another global filter) (float or int) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a5add58921f76dc22e3314fa139dc76e8}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a5add58921f76dc22e3314fa139dc76e8}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!get\_api\_query@{get\_api\_query}}
+\index{get\_api\_query@{get\_api\_query}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_api\_query()}{get\_api\_query()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+get\+\_\+api\+\_\+query (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Gets the api query from the parameters of the instance. 
+
+\begin{DoxyReturn}{Returns}
+The api query (dict) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a816105852dbcc403a6fcc88fecc65ef0}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a816105852dbcc403a6fcc88fecc65ef0}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!get\_count\_entities\_matched@{get\_count\_entities\_matched}}
+\index{get\_count\_entities\_matched@{get\_count\_entities\_matched}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_count\_entities\_matched()}{get\_count\_entities\_matched()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+get\+\_\+count\+\_\+entities\+\_\+matched (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{query\+\_\+filters }\end{DoxyParamCaption})}
+
+
+
+Gets and return the number of entities which match the query fitlers. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em query\+\_\+filters} & The query filters (dict)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The count entities matched (int) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a32f3a958a500d78c70453dd321060017}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a32f3a958a500d78c70453dd321060017}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!get\_database\_file\_name@{get\_database\_file\_name}}
+\index{get\_database\_file\_name@{get\_database\_file\_name}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_database\_file\_name()}{get\_database\_file\_name()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+get\+\_\+database\+\_\+file\+\_\+name (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie\+\_\+from\+\_\+id = {\ttfamily None},  }\item[{}]{entities\+\_\+type = {\ttfamily None},  }\item[{}]{db\+\_\+format = {\ttfamily \char`\"{}parquet\char`\"{}},  }\item[{}]{extra\+\_\+text = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Gets the database file name according to the parameters of the ojbect or the arguments given. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie\+\_\+from\+\_\+id} & The identifier of the entitie (eg a concept id) which was used to filter the entities (eg works) in the database (str) \\
+\hline
+{\em entities\+\_\+type} & The entities type in the database (eg works) (Entitie\+Open\+Alex) \\
+\hline
+{\em db\+\_\+format} & The database file format (str) \\
+\hline
+{\em extra\+\_\+text} & Extra text to add to the file name (str)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The database file name (str) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_abc970749330619b77271820bf85d7aaa}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_abc970749330619b77271820bf85d7aaa}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!get\_df\_filtered\_entities\_selection\_threshold@{get\_df\_filtered\_entities\_selection\_threshold}}
+\index{get\_df\_filtered\_entities\_selection\_threshold@{get\_df\_filtered\_entities\_selection\_threshold}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_df\_filtered\_entities\_selection\_threshold()}{get\_df\_filtered\_entities\_selection\_threshold()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+get\+\_\+df\+\_\+filtered\+\_\+entities\+\_\+selection\+\_\+threshold (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{df\+\_\+filters }\end{DoxyParamCaption})}
+
+
+
+Gets df\+\_\+filtered which contains the entities of self.\+entities\+\_\+df fitting the filters in df\+\_\+filters. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em df\+\_\+filters} & The filters in a dictionnary with for the key for the data to filter and for the value the minimum threshold (dict)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+df\+\_\+filtered, corresponding the the entities fitting the thresholds (pandas Data\+Frame) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a6878c98b443c7b81ca9c6f540d3f6171}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a6878c98b443c7b81ca9c6f540d3f6171}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!get\_entitie\_string\_name@{get\_entitie\_string\_name}}
+\index{get\_entitie\_string\_name@{get\_entitie\_string\_name}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_entitie\_string\_name()}{get\_entitie\_string\_name()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+get\+\_\+entitie\+\_\+string\+\_\+name (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Gets the entitie type string name. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The entitie, if not provided, the instance entitie id will be used (Base\+Open\+Alex)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The entitie type name (str) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a4790cf3af5653018cec2af894e98b635}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a4790cf3af5653018cec2af894e98b635}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!get\_entitie\_type\_from\_id@{get\_entitie\_type\_from\_id}}
+\index{get\_entitie\_type\_from\_id@{get\_entitie\_type\_from\_id}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_entitie\_type\_from\_id()}{get\_entitie\_type\_from\_id()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+get\+\_\+entitie\+\_\+type\+\_\+from\+\_\+id (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Gets the entitie type from the entitie id. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The entitie id (str)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The entitie type (Base\+Open\+Alex) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a5772d3595738b3f2b1e051aea95e3d17}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a5772d3595738b3f2b1e051aea95e3d17}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!get\_name\_of\_entitie@{get\_name\_of\_entitie}}
+\index{get\_name\_of\_entitie@{get\_name\_of\_entitie}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_name\_of\_entitie()}{get\_name\_of\_entitie()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+get\+\_\+name\+\_\+of\+\_\+entitie (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie = {\ttfamily None},  }\item[{}]{allow\+\_\+download\+\_\+from\+\_\+\+API = {\ttfamily True} }\end{DoxyParamCaption})}
+
+
+
+Gets the name of entitie. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The entitie id, if not provided, use the one from the instance (str) \\
+\hline
+{\em allow\+\_\+download\+\_\+from\+\_\+\+API} & Allow to download the entitie name from the Open\+Alex API (bool)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The name of entitie (str) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a83e5c9ee4e1c5dc12e873285b057cc41}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis_a83e5c9ee4e1c5dc12e873285b057cc41}} 
+\index{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}!get\_number\_of\_entities\_selected@{get\_number\_of\_entities\_selected}}
+\index{get\_number\_of\_entities\_selected@{get\_number\_of\_entities\_selected}!openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis@{openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_number\_of\_entities\_selected()}{get\_number\_of\_entities\_selected()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Entities\+Analysis.\+get\+\_\+number\+\_\+of\+\_\+entities\+\_\+selected (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{x\+\_\+threshold,  }\item[{}]{y\+\_\+threshold,  }\item[{}]{cited\+\_\+by\+\_\+threshold,  }\item[{}]{x\+\_\+datas,  }\item[{}]{y\+\_\+datas }\end{DoxyParamCaption})}
+
+
+
+Gets the number of entities selected on the plot. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em x\+\_\+threshold} & The x threshold (float or int) \\
+\hline
+{\em y\+\_\+threshold} & The y threshold (float or int) \\
+\hline
+{\em cited\+\_\+by\+\_\+threshold} & The cited by threshold (float or int) \\
+\hline
+{\em x\+\_\+datas} & The x datas key on the dataframe (str) \\
+\hline
+{\em y\+\_\+datas} & The y datas key on the dataframe (str)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The number of entities selected (int) 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+openalex\+\_\+analysis/analysis/entities\+\_\+analysis.\+py\end{DoxyCompactItemize}

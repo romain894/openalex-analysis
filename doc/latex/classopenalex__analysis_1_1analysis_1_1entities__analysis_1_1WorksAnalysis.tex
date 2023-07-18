@@ -1,0 +1,243 @@
+\hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis}{}\doxysection{openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis Class Reference}
+\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis}\index{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}}
+
+
+This class contains specific methods for Works concepts analysis.  
+
+
+
+
+Inheritance diagram for openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=339pt]{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=339pt]{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis__coll__graph}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a0418ca00a84c3e64e3db46445cd08313}{filter\+\_\+and\+\_\+format\+\_\+entitie\+\_\+data\+\_\+from\+\_\+api\+\_\+response}} (self, entitie)
+\begin{DoxyCompactList}\small\item\em Filter and format the works data downloaded from the API. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_abca9abb7b3eb1e9fa4e8780f253428e3}{get\+\_\+country\+\_\+code}} (self, entitie)
+\begin{DoxyCompactList}\small\item\em Gets the country code from an entitie. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a3c9907c2781f2cacb3c4e27a44dbb068}{get\+\_\+institution\+\_\+name}} (self, entitie)
+\begin{DoxyCompactList}\small\item\em Gets the institution name from an entitie. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a6e5a7e3fa55d49fc4c77c7c531189447}{get\+\_\+works\+\_\+references\+\_\+count}} (self, count\+\_\+years=\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Gets the works references count of the works list of the instance. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a7e7ac480d46217e04fcb3cb17c1f930e}{get\+\_\+works\+\_\+concepts\+\_\+count}} (self, count\+\_\+years=\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Gets the concepts count of the works list of the instance. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a18c23747eda8e40f2ad2938e0bfc5e95}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a18c23747eda8e40f2ad2938e0bfc5e95}} 
+def {\bfseries get\+\_\+element\+\_\+count} (self, element\+\_\+type, count\+\_\+years=\mbox{[}$\,$\mbox{]})
+\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a0dfc2b983ba08f0909b12d5144a1a1e1}{create\+\_\+element\+\_\+used\+\_\+count\+\_\+array}} (self, element\+\_\+type, entities\+\_\+from=\mbox{[}$\,$\mbox{]}, out\+\_\+file\+\_\+name=None, save\+\_\+out\+\_\+array=False, count\+\_\+years=\mbox{[}$\,$\mbox{]})
+\begin{DoxyCompactList}\small\item\em Creates the element used count array. \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_ad7d4d5ca0aed5d29fa2bdf5246612349}{sort\+\_\+count\+\_\+array}} (self, sort\+\_\+by=\textquotesingle{}h\+\_\+used\+\_\+all\+\_\+l\+\_\+use\+\_\+main\textquotesingle{}, sort\+\_\+by\+\_\+ascending=False)
+\begin{DoxyCompactList}\small\item\em Sort the dataframe with the count array (element\+\_\+count\+\_\+df) \end{DoxyCompactList}\item 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a5780fbdb7585e39bdd721def65100bfd}{add\+\_\+statistics\+\_\+to\+\_\+element\+\_\+count\+\_\+array}} (self, sort\+\_\+by=\textquotesingle{}h\+\_\+used\+\_\+all\+\_\+l\+\_\+use\+\_\+main\textquotesingle{}, sort\+\_\+by\+\_\+ascending=False, min\+\_\+concept\+\_\+level=None)
+\begin{DoxyCompactList}\small\item\em Adds a statistics to the element count array (statistics between the main entitie to compare (second column in the dataframe) and the sum of the other entities) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a836b18613183d237696bbb739c57a20d}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a836b18613183d237696bbb739c57a20d}} 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a836b18613183d237696bbb739c57a20d}{add\+\_\+statistics\+\_\+to\+\_\+references\+\_\+works\+\_\+count\+\_\+array}} (self)
+\begin{DoxyCompactList}\small\item\em Adds a statistics to the references works count array (statistics between the main entitie to compare (second column in the dataframe) and the sum of the other entities) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_aa081c22f2b59cef5932fc08af5953152}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_aa081c22f2b59cef5932fc08af5953152}} 
+def \mbox{\hyperlink{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_aa081c22f2b59cef5932fc08af5953152}{add\+\_\+statistics\+\_\+to\+\_\+concept\+\_\+count\+\_\+array}} (self, min\+\_\+concept\+\_\+level=None)
+\begin{DoxyCompactList}\small\item\em Adds a statistics to the concepts count array (statistics between the main entitie to compare (second column in the dataframe) and the sum of the other entities) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a7713efed92f29e276595ac7a7ab5e3d0}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a7713efed92f29e276595ac7a7ab5e3d0}} 
+{\bfseries entitie\+\_\+from\+\_\+type}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a1f8b1de04dd5c7e4c7c4a2c08783ad43}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a1f8b1de04dd5c7e4c7c4a2c08783ad43}} 
+{\bfseries count\+\_\+element\+\_\+type}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a6d8e007045a489f6ad9ab603a7feaec3}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a6d8e007045a489f6ad9ab603a7feaec3}} 
+{\bfseries count\+\_\+element\+\_\+years}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a4e999130fd1c63e4b87b904f2712334a}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a4e999130fd1c63e4b87b904f2712334a}} 
+{\bfseries count\+\_\+entities\+\_\+cols}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a1f53565f6c07b56fd0b72b5ab8f7ca49}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a1f53565f6c07b56fd0b72b5ab8f7ca49}} 
+{\bfseries entitie\+\_\+from\+\_\+id}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a6c0c91929bae1e33b93fd0a5297db4fc}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a6c0c91929bae1e33b93fd0a5297db4fc}} 
+{\bfseries element\+\_\+count\+\_\+df}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a9d4863e04a01d1a9758096664d0d3c06}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a9d4863e04a01d1a9758096664d0d3c06}} 
+{\bfseries create\+\_\+element\+\_\+count\+\_\+array\+\_\+progress\+\_\+percentage}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a0c5fe94230d9108394c06f12b55d7db3}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a0c5fe94230d9108394c06f12b55d7db3}} 
+{\bfseries create\+\_\+element\+\_\+count\+\_\+array\+\_\+progress\+\_\+text}
+\end{DoxyCompactItemize}
+\doxysubsection*{Static Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a67b2b7941c8a091f7e37274e91d60693}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a67b2b7941c8a091f7e37274e91d60693}} 
+{\bfseries Entitie\+Open\+Alex} = Works
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+This class contains specific methods for Works concepts analysis. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a5780fbdb7585e39bdd721def65100bfd}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a5780fbdb7585e39bdd721def65100bfd}} 
+\index{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}!add\_statistics\_to\_element\_count\_array@{add\_statistics\_to\_element\_count\_array}}
+\index{add\_statistics\_to\_element\_count\_array@{add\_statistics\_to\_element\_count\_array}!openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}}
+\doxysubsubsection{\texorpdfstring{add\_statistics\_to\_element\_count\_array()}{add\_statistics\_to\_element\_count\_array()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis.\+add\+\_\+statistics\+\_\+to\+\_\+element\+\_\+count\+\_\+array (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{sort\+\_\+by = {\ttfamily \textquotesingle{}h\+\_\+used\+\_\+all\+\_\+l\+\_\+use\+\_\+main\textquotesingle{}},  }\item[{}]{sort\+\_\+by\+\_\+ascending = {\ttfamily False},  }\item[{}]{min\+\_\+concept\+\_\+level = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Adds a statistics to the element count array (statistics between the main entitie to compare (second column in the dataframe) and the sum of the other entities) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sort\+\_\+by} & The key to sort the dataframe (str) \\
+\hline
+{\em sort\+\_\+by\+\_\+ascending} & Whenever to sort the dataframe ascending (bool) \\
+\hline
+{\em min\+\_\+concept\+\_\+level} & In case the element is a concept, this is the minimum level of the concepts we will keep (aka remove the lower (= more global) concepts) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a0dfc2b983ba08f0909b12d5144a1a1e1}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a0dfc2b983ba08f0909b12d5144a1a1e1}} 
+\index{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}!create\_element\_used\_count\_array@{create\_element\_used\_count\_array}}
+\index{create\_element\_used\_count\_array@{create\_element\_used\_count\_array}!openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}}
+\doxysubsubsection{\texorpdfstring{create\_element\_used\_count\_array()}{create\_element\_used\_count\_array()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis.\+create\+\_\+element\+\_\+used\+\_\+count\+\_\+array (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{element\+\_\+type,  }\item[{}]{entities\+\_\+from = {\ttfamily \mbox{[}\mbox{]}},  }\item[{}]{out\+\_\+file\+\_\+name = {\ttfamily None},  }\item[{}]{save\+\_\+out\+\_\+array = {\ttfamily False},  }\item[{}]{count\+\_\+years = {\ttfamily \mbox{[}\mbox{]}} }\end{DoxyParamCaption})}
+
+
+
+Creates the element used count array. 
+
+Count the number of times each element (eg reference, concept..) is used and save the array as CSV (optional)
+
+
+\begin{DoxyParams}{Parameters}
+{\em element\+\_\+type} & The element type \\
+\hline
+{\em entities\+\_\+from} & The extra entities to which to count the concepts (list of str) \\
+\hline
+{\em out\+\_\+file\+\_\+name} & The out CSV file name, if not provided, an appropriate name is generated (str) \\
+\hline
+{\em save\+\_\+out\+\_\+array} & Save out array (bool) \\
+\hline
+{\em count\+\_\+years} & If given, it will compute the count for each year (list\mbox{[}int\mbox{]}) \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a0418ca00a84c3e64e3db46445cd08313}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a0418ca00a84c3e64e3db46445cd08313}} 
+\index{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}!filter\_and\_format\_entitie\_data\_from\_api\_response@{filter\_and\_format\_entitie\_data\_from\_api\_response}}
+\index{filter\_and\_format\_entitie\_data\_from\_api\_response@{filter\_and\_format\_entitie\_data\_from\_api\_response}!openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}}
+\doxysubsubsection{\texorpdfstring{filter\_and\_format\_entitie\_data\_from\_api\_response()}{filter\_and\_format\_entitie\_data\_from\_api\_response()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis.\+filter\+\_\+and\+\_\+format\+\_\+entitie\+\_\+data\+\_\+from\+\_\+api\+\_\+response (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie }\end{DoxyParamCaption})}
+
+
+
+Filter and format the works data downloaded from the API. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The works data from the API (dict)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The works datas (dict) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_abca9abb7b3eb1e9fa4e8780f253428e3}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_abca9abb7b3eb1e9fa4e8780f253428e3}} 
+\index{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}!get\_country\_code@{get\_country\_code}}
+\index{get\_country\_code@{get\_country\_code}!openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_country\_code()}{get\_country\_code()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis.\+get\+\_\+country\+\_\+code (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie }\end{DoxyParamCaption})}
+
+
+
+Gets the country code from an entitie. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The entitie (dict)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The country code (str) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a3c9907c2781f2cacb3c4e27a44dbb068}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a3c9907c2781f2cacb3c4e27a44dbb068}} 
+\index{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}!get\_institution\_name@{get\_institution\_name}}
+\index{get\_institution\_name@{get\_institution\_name}!openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_institution\_name()}{get\_institution\_name()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis.\+get\+\_\+institution\+\_\+name (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{entitie }\end{DoxyParamCaption})}
+
+
+
+Gets the institution name from an entitie. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em entitie} & The entitie (dict)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The institution name (str) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a7e7ac480d46217e04fcb3cb17c1f930e}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a7e7ac480d46217e04fcb3cb17c1f930e}} 
+\index{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}!get\_works\_concepts\_count@{get\_works\_concepts\_count}}
+\index{get\_works\_concepts\_count@{get\_works\_concepts\_count}!openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_works\_concepts\_count()}{get\_works\_concepts\_count()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis.\+get\+\_\+works\+\_\+concepts\+\_\+count (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{count\+\_\+years = {\ttfamily \mbox{[}\mbox{]}} }\end{DoxyParamCaption})}
+
+
+
+Gets the concepts count of the works list of the instance. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em count\+\_\+only\+\_\+year} & If different than None, count only the concepts of the works of the given year (int)\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The concept count (pandas Serie) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a6e5a7e3fa55d49fc4c77c7c531189447}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_a6e5a7e3fa55d49fc4c77c7c531189447}} 
+\index{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}!get\_works\_references\_count@{get\_works\_references\_count}}
+\index{get\_works\_references\_count@{get\_works\_references\_count}!openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}}
+\doxysubsubsection{\texorpdfstring{get\_works\_references\_count()}{get\_works\_references\_count()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis.\+get\+\_\+works\+\_\+references\+\_\+count (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{count\+\_\+years = {\ttfamily \mbox{[}\mbox{]}} }\end{DoxyParamCaption})}
+
+
+
+Gets the works references count of the works list of the instance. 
+
+\begin{DoxyReturn}{Returns}
+The works references count (pandas Serie) 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_ad7d4d5ca0aed5d29fa2bdf5246612349}\label{classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis_ad7d4d5ca0aed5d29fa2bdf5246612349}} 
+\index{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}!sort\_count\_array@{sort\_count\_array}}
+\index{sort\_count\_array@{sort\_count\_array}!openalex\_analysis.analysis.entities\_analysis.WorksAnalysis@{openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}}
+\doxysubsubsection{\texorpdfstring{sort\_count\_array()}{sort\_count\_array()}}
+{\footnotesize\ttfamily def openalex\+\_\+analysis.\+analysis.\+entities\+\_\+analysis.\+Works\+Analysis.\+sort\+\_\+count\+\_\+array (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{sort\+\_\+by = {\ttfamily \textquotesingle{}h\+\_\+used\+\_\+all\+\_\+l\+\_\+use\+\_\+main\textquotesingle{}},  }\item[{}]{sort\+\_\+by\+\_\+ascending = {\ttfamily False} }\end{DoxyParamCaption})}
+
+
+
+Sort the dataframe with the count array (element\+\_\+count\+\_\+df) 
+
+
+\begin{DoxyParams}{Parameters}
+{\em sort\+\_\+by} & The key to sort the dataframe (str) \\
+\hline
+{\em sort\+\_\+by\+\_\+ascending} & Whenever to sort the dataframe ascending (bool) \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+openalex\+\_\+analysis/analysis/entities\+\_\+analysis.\+py\end{DoxyCompactItemize}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['list_5fof_5finstitutions_5ffile_5fpath_98',['list_of_institutions_file_path',['../classOA__entities__names_1_1OA__entities__names.html#a8302b2a9c03a43ec52f3ae7d8b2b9d78',1,'OA_entities_names::OA_entities_names']]]
+  ['institutions_5fparquet_5ffile_5fpath_108',['institutions_parquet_file_path',['../classopenalex__analysis_1_1names_1_1entitie__names_1_1EntitieNames.html#a4b23a30aefa46f6ecc53970a0b11b130',1,'openalex_analysis::names::entitie_names::EntitieNames']]]
 ];

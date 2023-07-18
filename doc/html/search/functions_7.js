@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['sort_5fcount_5farray_96',['sort_count_array',['../classEntitiesConceptsAnalysis_1_1WorksConceptsAnalysis.html#a3d10be694c4cf6026909d4e4350f8077',1,'EntitiesConceptsAnalysis::WorksConceptsAnalysis']]]
+  ['sort_5fcount_5farray_105',['sort_count_array',['../classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1WorksAnalysis.html#ad7d4d5ca0aed5d29fa2bdf5246612349',1,'openalex_analysis::analysis::entities_analysis::WorksAnalysis']]]
 ];

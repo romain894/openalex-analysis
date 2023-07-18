@@ -1,0 +1,9 @@
+<map id="openalex_analysis.plot.entities_plot.EntitiesPlot" name="openalex_analysis.plot.entities_plot.EntitiesPlot">
+<area shape="rect" id="node1" title="EntitiesPlot class which contains generic methods to do plots of OpenAlex entities." alt="" coords="5,169,231,211"/>
+<area shape="rect" id="node2" href="$classopenalex__analysis_1_1plot_1_1entities__plot_1_1AuthorsPlot.html" title=" " alt="" coords="279,5,504,47"/>
+<area shape="rect" id="node3" href="$classopenalex__analysis_1_1plot_1_1entities__plot_1_1ConceptsPlot.html" title=" " alt="" coords="279,71,504,112"/>
+<area shape="rect" id="node4" href="$classopenalex__analysis_1_1plot_1_1entities__plot_1_1InstitutionsPlot.html" title="This class contains specific methods for Institutions concepts plot." alt="" coords="279,136,504,177"/>
+<area shape="rect" id="node5" href="$classopenalex__analysis_1_1plot_1_1entities__plot_1_1PublishersPlot.html" title=" " alt="" coords="279,201,504,243"/>
+<area shape="rect" id="node6" href="$classopenalex__analysis_1_1plot_1_1entities__plot_1_1SourcesPlot.html" title=" " alt="" coords="279,267,504,308"/>
+<area shape="rect" id="node7" href="$classopenalex__analysis_1_1plot_1_1entities__plot_1_1WorksPlot.html" title="This class contains specific methods for Works concepts plot." alt="" coords="279,332,504,373"/>
+</map>

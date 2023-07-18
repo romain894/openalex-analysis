@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['download_5flist_5fentities_72',['download_list_entities',['../classEntitiesConceptsAnalysis_1_1EntitiesConceptsAnalysis.html#ab90ae0d0930851210b85ef314fc44ad5',1,'EntitiesConceptsAnalysis::EntitiesConceptsAnalysis']]]
+  ['download_5flist_5fentities_81',['download_list_entities',['../classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis.html#aa5357a167d7801a2f6bf2bc0d33f336c',1,'openalex_analysis::analysis::entities_analysis::EntitiesAnalysis']]]
 ];
