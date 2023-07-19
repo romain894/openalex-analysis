@@ -11,46 +11,85 @@ Documentation (python library only)\+: \href{https://romain894.github.io/openale
 Licence\+: GPL V3\hypertarget{index_autotoc_md2}{}\doxysection{TODO}\label{index_autotoc_md2}
 
 \begin{DoxyItemize}
-\item Recode the cache enabling part and add option to set the Redis URL, port and DB
 \item Add more examples in Readme and Jupyter Notebooks
-\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysection{Setting up}\label{index_autotoc_md3}
-\hypertarget{index_autotoc_md4}{}\doxysubsection{Open\+Alex Analysis python library}\label{index_autotoc_md4}
-By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case.\hypertarget{index_autotoc_md5}{}\doxysubsubsection{Settings}\label{index_autotoc_md5}
-These settings needs to be given for each instance. For a more convienient usage, you can define these values in a dictionary and provide this dictionnary at the instanciation as follow\+:
+\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysection{Open\+Alex Analysis python library}\label{index_autotoc_md3}
+By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case (see section Configure the library).\hypertarget{index_autotoc_md4}{}\doxysubsection{Basic exmaple}\label{index_autotoc_md4}
+More exmaples can be found in the notebooks {\ttfamily Works\+\_\+examples.\+ipynb} and {\ttfamily Concepts\+\_\+\+Works\+\_\+analysis.\+ipynb}
 
 
 \begin{DoxyCode}{0}
-\DoxyCodeLine{parameters = \{}
-\DoxyCodeLine{    'n\_max\_entities': 600,}
-\DoxyCodeLine{    'project\_datas\_folder\_path': "{}data"{},}
-\DoxyCodeLine{\}}
+\DoxyCodeLine{from openalex\_analysis.plot import WorksPlot}
 \DoxyCodeLine{}
 \DoxyCodeLine{concept\_sustainability\_id = 'C66204764'}
 \DoxyCodeLine{}
-\DoxyCodeLine{wcp = WorksConceptsPlot(concept\_sustainability\_id, **parameters)}
+\DoxyCodeLine{\# get the works about sustainability}
+\DoxyCodeLine{wplt = WorksPlot(concept\_sustainability\_id)}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# calculate the most cited works by the dataset previously downloaded}
+\DoxyCodeLine{wplt.create\_element\_used\_count\_array('reference')}
 
 \end{DoxyCode}
-\hypertarget{index_autotoc_md6}{}\doxyparagraph{n\+\_\+max\+\_\+entities}\label{index_autotoc_md6}
-When downloading a list of entities from the API (eg a list of works), the maximum number of entities to download. Set to None to have no limitation. This number must be a multiple of 200 (the is the number of element per page used by the library)
+\hypertarget{index_autotoc_md5}{}\doxysubsection{Configure the library}\label{index_autotoc_md5}
 
-Default\+: {\ttfamily n\+\_\+max\+\_\+entities = 10 000}\hypertarget{index_autotoc_md7}{}\doxyparagraph{project\+\_\+datas\+\_\+folder\+\_\+path}\label{index_autotoc_md7}
-Path to store the data downloaded from the API. The data will be stored as parquet files, with each file corresponding to one request.
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from openalex\_analysis.plot import config, InstitutionsPlot}
+\DoxyCodeLine{}
+\DoxyCodeLine{config.email = "{}email@example.com"{}}
+\DoxyCodeLine{}
+\DoxyCodeLine{InstitutionsPlot()}
 
-Default\+: {\ttfamily project\+\_\+datas\+\_\+folder\+\_\+path = \char`\"{}data\char`\"{}}\hypertarget{index_autotoc_md8}{}\doxyparagraph{parquet\+\_\+compression}\label{index_autotoc_md8}
-By default, the parquet files are compressed. The compression can be disabled by setting with parquet\+\_\+compression = None. For other parquet compression algorithms, see the pandas documentation.
+\end{DoxyCode}
 
-Compressing reduces by 2 to 10 the file size while needing a negligeable time to compress or decompress. Disabling the compression is usefull if you want to read the parquet files with an external software.
 
-Default\+: {\ttfamily parquet\+\_\+compression = \char`\"{}brotli\char`\"{}}\hypertarget{index_autotoc_md9}{}\doxyparagraph{max\+\_\+storage\+\_\+percent}\label{index_autotoc_md9}
-Maximum storage usage percentage on the disk before starting to delete data stored in project\+\_\+datas\+\_\+folder\+\_\+path. The parquet file with the oldest last read data will be deleted first.
+The notebook {\ttfamily Setup\+\_\+example.\+ipynb} contains more setup examples.\hypertarget{index_autotoc_md6}{}\doxysubsubsection{Default settings}\label{index_autotoc_md6}
 
-Default\+: {\ttfamily max\+\_\+storage\+\_\+percent = 95}\hypertarget{index_autotoc_md10}{}\doxyparagraph{disable\+\_\+tqdm\+\_\+loading\+\_\+bar}\label{index_autotoc_md10}
-If set to True, it will disable the loading bar in the terminal output when downloading data from the Open\+Alex API.
+\begin{DoxyCode}{0}
+\DoxyCodeLine{config.email = None}
+\DoxyCodeLine{config.api\_key = None}
+\DoxyCodeLine{config.openalex\_url = "{}https://api.openalex.org"{}}
+\DoxyCodeLine{config.allow\_automatic\_download = True}
+\DoxyCodeLine{config.disable\_tqdm\_loading\_bar = False}
+\DoxyCodeLine{config.n\_max\_entities = 10000}
+\DoxyCodeLine{config.project\_datas\_folder\_path = "{}data"{}}
+\DoxyCodeLine{config.parquet\_compression = "{}brotli"{}}
+\DoxyCodeLine{config.max\_storage\_percent = 95}
+\DoxyCodeLine{config.redis\_enabled = False}
+\DoxyCodeLine{\# Uncomment the following lines if you want to use Redis cache}
+\DoxyCodeLine{\# config.redis\_client = StrictRedis(host=os.environ.get('DOCKER\_REDIS\_URL', "{}localhost"{}),}
+\DoxyCodeLine{\#                                  decode\_responses=True,}
+\DoxyCodeLine{\#                                  port=6379,}
+\DoxyCodeLine{\#                                  db=2,)}
+\DoxyCodeLine{\# config.redis\_cache = RedisCache(redis\_client=config\_redis\_client)}
+\DoxyCodeLine{\# Don't forget to add the following two lines with all the imports}
+\DoxyCodeLine{\# from redis import StrictRedis}
+\DoxyCodeLine{\# from redis\_cache import RedisCache}
 
-Default\+: {\ttfamily disable\+\_\+tqdm\+\_\+loading\+\_\+bar = False}\hypertarget{index_autotoc_md11}{}\doxyparagraph{email}\label{index_autotoc_md11}
-To use the polite pool of the Open\+Alex API, you need to provide an email. By default, it\textquotesingle{}s set to None so it will use the default pool and will be slower to do requests.
+\end{DoxyCode}
 
-Default\+: {\ttfamily email = None}\hypertarget{index_autotoc_md12}{}\doxyparagraph{enable\+\_\+redis\+\_\+cache}\label{index_autotoc_md12}
-To enable the Redis cache. To enable it, you need to have a running instance of Redit (for example in a Docker), on the localhost (can be overide by the system environnement variable \$\+DOCKER\+\_\+\+REDIS\+\_\+\+URL), on the port 6379 and with nothing else running on the database 2.\hypertarget{index_autotoc_md13}{}\doxysubsubsection{Examples}\label{index_autotoc_md13}
-TODO\hypertarget{index_autotoc_md14}{}\doxysubsection{Analysis web app}\label{index_autotoc_md14}
+
+email \+: The email address is need to access the polite pool from Open\+Alex which is faster than the default one.
+
+api\+\_\+key \+: optional, if you have one from Open\+Alex
+
+openalex\+\_\+url \+: Open\+Alex URL
+
+allow\+\_\+automatic\+\_\+download \+: Allow the library to download dataset from Open\+Alex if not already present on the disk
+
+disable\+\_\+tqdm\+\_\+loading\+\_\+bar \+: If set to True, it will disable the loading bar in the terminal output when downloading data from the Open\+Alex API.
+
+n\+\_\+max\+\_\+entities \+: When downloading a list of entities from the API (eg a list of works), the maximum number of entities to download. Set to None to have no limitation. This number must be a multiple of 200 (the is the number of element per page used by the library)
+
+project\+\_\+datas\+\_\+folder\+\_\+path \+: Path to store the data downloaded from the API. The data will be stored as parquet files, with each file corresponding to one request.
+
+parquet\+\_\+compression \+: By default, the parquet files are compressed. The compression can be disabled by setting with parquet\+\_\+compression = None. For other parquet compression algorithms, see the pandas documentation. Compressing reduces by 2 to 10 the file size while needing a negligeable time to compress or decompress. Disabling the compression is usefull if you want to read the parquet files with an external software.
+
+max\+\_\+storage\+\_\+percent \+: Maximum storage usage percentage on the disk before starting to delete data stored in project\+\_\+datas\+\_\+folder\+\_\+path. The parquet file with the oldest last read data will be deleted first.
+
+redis\+\_\+enabled \+: Whenever Redis cache is enabled or not
+
+redis\+\_\+client \+: The Redis client configuration. Don\textquotesingle{}t forget to add {\ttfamily from redis import Strict\+Redis} where the configuration is defined.
+
+redis\+\_\+cache \+: The Redis cache configuration. Don\textquotesingle{}t forget to add {\ttfamily from redis\+\_\+cache import Redis\+Cache} where the configuration is defined.\hypertarget{index_autotoc_md7}{}\doxysection{Analysis web app}\label{index_autotoc_md7}
+TODO
+
 Romain Thomas 2023 
