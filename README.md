@@ -22,7 +22,7 @@ By default, the library will run out of the box. Nevertheless, some optional con
 
 More exmaples can be found in the notebooks `Works_examples.ipynb` and `Concepts_Works_analysis.ipynb`
 
-```
+```python
 from openalex_analysis.plot import WorksPlot
 
 concept_sustainability_id = 'C66204764'
