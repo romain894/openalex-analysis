@@ -832,8 +832,8 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             # we didn't count per year so we can do a simple sort
             self.element_count_df = self.element_count_df.sort_values(by=sort_by, ascending = sort_by_ascending)
         else:
-            sum_years_to_sort = self.element_count_df[sort_by].groupby(level=0, axis=0).sum().sort_values(ascending=sort_by_ascending)#.sort_values(by=['sum_all_entities'], ascending=False)
-            self.element_count_df = self.element_count_df.sort_index(ascending=False, key=lambda x: sum_years_to_sort[x])
+            sorted_sums = self.element_count_df[sort_by].groupby(level=0).sum().sort_values(ascending=sort_by_ascending)
+            self.element_count_df = self.element_count_df.reindex(sorted_sums.index, level=0)
 
 
     def add_statistics_to_element_count_array(self, sort_by = 'h_used_all_l_use_main', sort_by_ascending = False, min_concept_level = None):
