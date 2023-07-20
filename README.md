@@ -71,41 +71,29 @@ config.redis_enabled = False
 # from redis_cache import RedisCache
 ```
 
-email
-: The email address is need to access the polite pool from OpenAlex which is faster than the default one.
+- `email` The email address is need to access the polite pool from OpenAlex which is faster than the default one.
 
-api_key
-: optional, if you have one from OpenAlex
+- `api_key` Optional, if you have one from OpenAlex
 
-openalex_url
-: OpenAlex URL
+- `openalex_url` OpenAlex URL
 
-allow_automatic_download
-: Allow the library to download dataset from OpenAlex if not already present on the disk
+- `allow_automatic_download` Allow the library to download dataset from OpenAlex if not already present on the disk
 
-disable_tqdm_loading_bar
-: If set to True, it will disable the loading bar in the terminal output when downloading data from the OpenAlex API.
+- `disable_tqdm_loading_bar` If set to True, it will disable the loading bar in the terminal output when downloading data from the OpenAlex API.
 
-n_max_entities
-: When downloading a list of entities from the API (eg a list of works), the maximum number of entities to download. Set to None to have no limitation. This number must be a multiple of 200 (the is the number of element per page used by the library)
+- `n_max_entities` When downloading a list of entities from the API (eg a list of works), the maximum number of entities to download. Set to None to have no limitation. This number must be a multiple of 200 (the is the number of element per page used by the library)
 
-project_datas_folder_path
-: Path to store the data downloaded from the API. The data will be stored as parquet files, with each file corresponding to one request.
+- `project_datas_folder_path` Path to store the data downloaded from the API. The data will be stored as parquet files, with each file corresponding to one request.
 
-parquet_compression
-: By default, the parquet files are compressed. The compression can be disabled by setting with parquet_compression = None. For other parquet compression algorithms, see the pandas documentation. Compressing reduces by 2 to 10 the file size while needing a negligeable time to compress or decompress. Disabling the compression is usefull if you want to read the parquet files with an external software.
+- `parquet_compression` By default, the parquet files are compressed. The compression can be disabled by setting with parquet_compression = None. For other parquet compression algorithms, see the pandas documentation. Compressing reduces by 2 to 10 the file size while needing a negligeable time to compress or decompress. Disabling the compression is usefull if you want to read the parquet files with an external software.
 
-max_storage_percent
-: Maximum storage usage percentage on the disk before starting to delete data stored in project_datas_folder_path. The parquet file with the oldest last read data will be deleted first.
+- `max_storage_percent` Maximum storage usage percentage on the disk before starting to delete data stored in project_datas_folder_path. The parquet file with the oldest last read data will be deleted first.
 
-redis_enabled
-: Whenever Redis cache is enabled or not
+- `redis_enabled` Whenever Redis cache is enabled or not
 
-redis_client
-: The Redis client configuration. Don't forget to add `from redis import StrictRedis` where the configuration is defined.
+- `redis_client` The Redis client configuration. Don't forget to add `from redis import StrictRedis` where the configuration is defined.
 
-redis_cache
-: The Redis cache configuration. Don't forget to add `from redis_cache import RedisCache` where the configuration is defined.
+- `redis_cache` The Redis cache configuration. Don't forget to add `from redis_cache import RedisCache` where the configuration is defined.
 
 
 
