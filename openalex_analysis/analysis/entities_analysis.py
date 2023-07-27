@@ -198,19 +198,20 @@ class EntitiesAnalysis(EntitieNames):
         count_entities_matched = self.get_count_entities_matched(query)
 
         if config.n_max_entities == None or config.n_max_entities > count_entities_matched:
-            config.n_max_entities = count_entities_matched
-            print("All the", config.n_max_entities, "entities will be downloaded")
+            n_entities_to_download = count_entities_matched
+            print("All the", n_entities_to_download, "entities will be downloaded")
         else:
-            print("Only", config.n_max_entities, "entities will be downloaded ( out of", count_entities_matched, ")")
+            n_entities_to_download = config.n_max_entities
+            print("Only", n_entities_to_download, "entities will be downloaded ( out of", count_entities_matched, ")")
 
         # create a list to store the entities
-        entities_list = [None] * config.n_max_entities
+        entities_list = [None] * n_entities_to_download
 
         # create the pager entitie to iterate over the pages of entities to download
-        pager = self.EntitieOpenAlex().filter(**query).paginate(per_page = self.per_page, n_max = config.n_max_entities)
+        pager = self.EntitieOpenAlex().filter(**query).paginate(per_page = self.per_page, n_max = n_entities_to_download)
 
         print("Downloading the list of entities thought the OpenAlex API...")
-        with tqdm(total=config.n_max_entities, disable=config.disable_tqdm_loading_bar) as pbar:
+        with tqdm(total=n_entities_to_download, disable=config.disable_tqdm_loading_bar) as pbar:
             i = 0
             self.entitie_downloading_progress_percentage = 0
             for page in pager:
@@ -220,7 +221,7 @@ class EntitiesAnalysis(EntitieNames):
                     self.filter_and_format_entitie_data_from_api_response(entitie)
                     # print(entitie)
                     # raise ValueError("toto stop")
-                    if i < config.n_max_entities:
+                    if i < n_entities_to_download:
                         entities_list[i] = entitie
                     else:
                         entities_list.append(entitie)
@@ -229,7 +230,7 @@ class EntitiesAnalysis(EntitieNames):
                 # update the progress bar
                 pbar.update(self.per_page)
                 # update the progress percentage variable
-                self.entitie_downloading_progress_percentage = i/config.n_max_entities*100
+                self.entitie_downloading_progress_percentage = i/n_entities_to_download*100
         self.entitie_downloading_progress_percentage = 100
 
         # sort the list by concept score
