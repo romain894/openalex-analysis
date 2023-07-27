@@ -645,7 +645,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         # country_name
         country_code = self.get_country_code(entitie)
         if country_code != None:
-            entitie['country_name'] = cc.convert(names = [self.get_country_code(entitie)], to = 'name_short')
+            entitie['country_name'] = self.cc.convert(names = [self.get_country_code(entitie)], to = 'name_short')
         else:
             entitie['country_name'] = None
         # institution_name
