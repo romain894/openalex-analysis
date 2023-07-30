@@ -13,6 +13,7 @@ Licence: GPL V3
 ## TODO
 
   - Add more examples in Readme and Jupyter Notebooks
+  - Update Docker config
 
 # OpenAlex Analysis python library
 
@@ -20,7 +21,7 @@ By default, the library will run out of the box. Nevertheless, some optional con
 
 ## Basic exmaple
 
-More exmaples can be found in the notebooks `Works_examples.ipynb` and `Concepts_Works_analysis.ipynb`
+More examples can be found in the notebooks `Works_examples.ipynb` and `Concepts_Works_analysis.ipynb`
 
 ```python
 from openalex_analysis.plot import WorksPlot
@@ -56,7 +57,7 @@ config.openalex_url = "https://api.openalex.org"
 config.allow_automatic_download = True
 config.disable_tqdm_loading_bar = False
 config.n_max_entities = 10000
-config.project_datas_folder_path = "data"
+config.project_datas_folder_path = "data"·
 config.parquet_compression = "brotli"
 config.max_storage_percent = 95
 config.redis_enabled = False
