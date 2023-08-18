@@ -12,7 +12,7 @@ import time
 import dash_loading_spinners
 import os, sys
 sys.path.append(os.path.abspath('../'))
-from layout_parameters import *
+import layout_parameters
 
 dash.register_page(__name__)
 
@@ -23,24 +23,24 @@ OA_concepts = OA_entities_names()
 
 # openalex_analysis configuartion:
 if os.path.exists("dash_app_configuration.py"):
-    from dash_app_configuration import *
+    import dash_app_configuration as dash_app_config
     print('OK: Loadeded the configuration from "dash_app_configuration.py"')
 else:
-    from dash_app_configuration_template import *
+    import dash_app_configuration_template as dash_app_config
     print('WARNING: Loaded the default configuration, from the template file ("dash_app_configuration_template.py")')
     print('Please copy the template file, rename it "dash_app_configuration.py" and set the configuration in it')
-config.email = config_email
-config.api_key = config_api_key
-config.openalex_url = config_openalex_url
-config.allow_automatic_download = config_allow_automatic_download
-config.disable_tqdm_loading_bar = config_disable_tqdm_loading_bar
-config.n_max_entities = config_n_max_entities
-config.project_datas_folder_path = config_project_datas_folder_path
-config.parquet_compression = config_parquet_compression
-config.max_storage_percent = config_max_storage_percent
-config.redis_enabled = config_redis_enabled
-config.redis_client = config_redis_client
-config.redis_cache = config_redis_cache
+config.email = dash_app_config.config_email
+config.api_key = dash_app_config.config_api_key
+config.openalex_url = dash_app_config.config_openalex_url
+config.allow_automatic_download = dash_app_config.config_allow_automatic_download
+config.disable_tqdm_loading_bar = dash_app_config.config_disable_tqdm_loading_bar
+config.n_max_entities = dash_app_config.config_n_max_entities
+config.project_datas_folder_path = dash_app_config.config_project_datas_folder_path
+config.parquet_compression = dash_app_config.config_parquet_compression
+config.max_storage_percent = dash_app_config.config_max_storage_percent
+config.redis_enabled = dash_app_config.config_redis_enabled
+config.redis_client = dash_app_config.config_redis_client
+config.redis_cache = dash_app_config.config_redis_cache
 print('OK: Configuration set')
 
 
@@ -150,19 +150,19 @@ main_container = dbc.Container(className="div-app", id="div-app", fluid=True, ch
                                                 options=[' Display threshold lines'],
                                                 value=[' Display threshold lines'],
                                                 inline=True,
-                                                style={'margin-right': default_big_margin},
+                                                style={'margin-right': layout_parameters.default_big_margin},
                                                 #switch=True,
                                             ),
                                             dbc.Checklist(
                                                 id='display_only_selected_institutions',
                                                 options=[' Display only selected institutions'],
                                                 inline=True,
-                                                style={'margin-right': default_huge_margin},
+                                                style={'margin-right': layout_parameters.default_huge_margin},
                                                 #switch=True,
                                             ),
                                             html.Br(),
                                             html.Div(id='n_selected_institutions_output',
-                                                    style={'margin-right': default_big_margin}),
+                                                    style={'margin-right': layout_parameters.default_big_margin}),
                                         ]
                                     ),
                                 ]
@@ -175,9 +175,9 @@ main_container = dbc.Container(className="div-app", id="div-app", fluid=True, ch
                         gap=2,
                     ),
                 ],
-                **layout_dynamic_width
+                **layout_parameters.layout_dynamic_width
             ),
-            html.Div(id='div_single_concept_plot', style={'width': default_graph_width, 'margin': default_graph_margin}, children=[
+            html.Div(id='div_single_concept_plot', style={'width': layout_parameters.default_graph_width, 'margin': layout_parameters.default_graph_margin}, children=[
                 dcc.Loading(
                     id="loading-1",
                     children=[
@@ -189,7 +189,7 @@ main_container = dbc.Container(className="div-app", id="div-app", fluid=True, ch
                     parent_style={'visibility': 'visible'}
                 ),
                 html.Div(id='div_download_data_single_concept',
-                    style={'display': 'inline-block', 'margin-right': default_big_margin},
+                    style={'display': 'inline-block', 'margin-right': layout_parameters.default_big_margin},
                     children=[
                         dbc.Button(id='button_download_data_single_concept',
                             children="Download dataset as CSV",),
@@ -197,7 +197,7 @@ main_container = dbc.Container(className="div-app", id="div-app", fluid=True, ch
                     ]
                 ),
                 html.Div(id='div_download_list_institutions_selected_single_concept',
-                    style={'display': 'inline-block', 'margin-right': default_big_margin},
+                    style={'display': 'inline-block', 'margin-right': layout_parameters.default_big_margin},
                     children=[
                         dbc.Button(id='button_download_list_institutions_selected_single_concept',
                             children="Download list of institutions selected as CSV",),
@@ -250,7 +250,7 @@ main_container = dbc.Container(className="div-app", id="div-app", fluid=True, ch
                         # style={'visibility': 'hidden'}
                     ),
                 ],
-                **layout_dynamic_width
+                **layout_parameters.layout_dynamic_width
             ),
         ]
     ),
@@ -269,19 +269,19 @@ main_container = dbc.Container(className="div-app", id="div-app", fluid=True, ch
                     'Remember that the "Works threshold" and "Cited by average threshold" defined above will hide the institutions not fitting them.',
                     html.Br(),
                     "Then, you can optionally apply filters based on specific concept scores:",
-                    dbc.Button("Add filter", id="add_filter_btn", style={'display': 'inline-block', 'margin-left': default_margin},),
-                    dbc.Button("Remove filter", id="remove_filter_btn", style={'display': 'inline-block', 'margin-left': default_margin},),
+                    dbc.Button("Add filter", id="add_filter_btn", style={'display': 'inline-block', 'margin-left': layout_parameters.default_margin},),
+                    dbc.Button("Remove filter", id="remove_filter_btn", style={'display': 'inline-block', 'margin-left': layout_parameters.default_margin},),
                     html.Div(id="concepts_filters_container", children=[]),
                     'The "Average combined concepts score" is the average of the score of the concepts selected to plot the institutions from (aka the average of the score of the concepts selected in the menu right after Multi concepts plot)',
-                    dbc.Button("Plot multi concept graph", id="plot_multi_concept_graph_button", style={'display': 'inline-block', 'margin-left': default_margin},),
+                    dbc.Button("Plot multi concept graph", id="plot_multi_concept_graph_button", style={'display': 'inline-block', 'margin-left': layout_parameters.default_margin},),
                     html.Div(id='plot_multi_concept_graph_button_infos',
-                                style={'display': 'inline-block', 'margin-left': default_big_margin, 'color': 'red'},
+                                style={'display': 'inline-block', 'margin-left': layout_parameters.default_big_margin, 'color': 'red'},
                                 children=""),
                     html.Div(id='multi_concept_institutions_plot_number',
-                                style={'display': 'inline-block', 'margin-left': default_big_margin},
+                                style={'display': 'inline-block', 'margin-left': layout_parameters.default_big_margin},
                                 children="0 institutions plotted."),                    
                 ],
-                **layout_dynamic_width
+                **layout_parameters.layout_dynamic_width
             ),
             #html.Div(id='div_multi_concept_plot', style={'width': default_graph_width, 'margin': default_graph_margin}, children=[
             dbc.Row(
@@ -441,7 +441,7 @@ def update_download_button_disabled_status(concept):
         ),
         (
             Output("percentage_concept_download_dropdown", "style"),
-            {"visibility": "visible", 'display': 'inline-block', 'margin-right': default_big_margin},
+            {"visibility": "visible", 'display': 'inline-block', 'margin-right': layout_parameters.default_big_margin},
             {"visibility": "hidden"},
         ),
     ],

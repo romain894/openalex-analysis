@@ -12,7 +12,7 @@ import time
 import dash_loading_spinners
 import os, sys
 sys.path.append(os.path.abspath('../'))
-from layout_parameters import *
+import layout_parameters
 import pandas as pd
 import base64
 import io
@@ -27,24 +27,24 @@ OA_concepts = OA_entities_names()
 
 # openalex_analysis configuartion:
 if os.path.exists("dash_app_configuration.py"):
-    from dash_app_configuration import *
+    import dash_app_configuration as dash_app_config
     print('OK: Loadeded the configuration from "dash_app_configuration.py"')
 else:
-    from dash_app_configuration_template import *
+    import dash_app_configuration_template as dash_app_config
     print('WARNING: Loaded the default configuration, from the template file ("dash_app_configuration_template.py")')
     print('Please copy the template file, rename it "dash_app_configuration.py" and set the configuration in it')
-config.email = config_email
-config.api_key = config_api_key
-config.openalex_url = config_openalex_url
-config.allow_automatic_download = config_allow_automatic_download
-config.disable_tqdm_loading_bar = config_disable_tqdm_loading_bar
-config.n_max_entities = config_n_max_entities
-config.project_datas_folder_path = config_project_datas_folder_path
-config.parquet_compression = config_parquet_compression
-config.max_storage_percent = config_max_storage_percent
-config.redis_enabled = config_redis_enabled
-config.redis_client = config_redis_client
-config.redis_cache = config_redis_cache
+config.email = dash_app_config.config_email
+config.api_key = dash_app_config.config_api_key
+config.openalex_url = dash_app_config.config_openalex_url
+config.allow_automatic_download = dash_app_config.config_allow_automatic_download
+config.disable_tqdm_loading_bar = dash_app_config.config_disable_tqdm_loading_bar
+config.n_max_entities = dash_app_config.config_n_max_entities
+config.project_datas_folder_path = dash_app_config.config_project_datas_folder_path
+config.parquet_compression = dash_app_config.config_parquet_compression
+config.max_storage_percent = dash_app_config.config_max_storage_percent
+config.redis_enabled = dash_app_config.config_redis_enabled
+config.redis_client = dash_app_config.config_redis_client
+config.redis_cache = dash_app_config.config_redis_cache
 print('OK: Configuration set')
 
 
@@ -115,7 +115,7 @@ main_container = dbc.Container(className="container-app-references-analysis", id
                         id = "table_entities_to_compare",
                         columns=[{'id': "id", 'name': "id"}, {'id': "display_name", 'name': "display_name"}],
                         style_cell = {'textAlign': 'left',},
-                        style_data_conditional = dash_table_conditional_style,
+                        style_data_conditional = layout_parameters.dash_table_conditional_style,
                     ),
                     html.Br(),
                     dbc.Button(id='ref_a_button_remove_entitie_from_list_to_compare', children="Remove the selected institution(s)"),
@@ -151,7 +151,7 @@ main_container = dbc.Container(className="container-app-references-analysis", id
                                 options=['Download the raw references array'],
                                 # value=['Download the raw references array'],
                                 inline=True,
-                                style={'margin-right': default_big_margin},
+                                style={'margin-right': layout_parameters.default_big_margin},
                                 #switch=True,
                             ) ,md=4, xxl=3),
                             dbc.Col(html.Div("Maximum number of rows to download (optional):"), width='auto'),
@@ -170,7 +170,7 @@ main_container = dbc.Container(className="container-app-references-analysis", id
                                 id='download_enriched_ref_array_checklist',
                                 options=['Download the enriched references array'],
                                 inline=True,
-                                style={'margin-right': default_big_margin},
+                                style={'margin-right': layout_parameters.default_big_margin},
                                 #switch=True,
                             ) ,md=4, xxl=3),
                             dbc.Col(html.Div("Maximum number of rows to download (optional):"), width='auto'),
@@ -198,7 +198,7 @@ main_container = dbc.Container(className="container-app-references-analysis", id
                     html.Div(children="",
                         id='text_progress_references_analysis'),
                 ],
-                **layout_dynamic_width
+                **layout_parameters.layout_dynamic_width
             ),
         ]
     ),
@@ -521,7 +521,7 @@ def get_dash_table_references_works_count(wplt, id_table):
         ),
         (
             Output('text_progress_references_analysis', 'style'),
-            {'visibility': 'visible', 'display': 'inline-block', 'margin-right': default_big_margin},
+            {'visibility': 'visible', 'display': 'inline-block', 'margin-right': layout_parameters.default_big_margin},
             {'visibility': 'hidden'},
         ),
     ],
