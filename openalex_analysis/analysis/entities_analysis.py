@@ -862,10 +862,13 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             raise ValueError("Need at least 2 entities in the dataframe to compare entities")
         main_entitie_col_id = self.element_count_df.columns.values[0]
         print("Main entitie:", main_entitie_col_id)
+        nb_entities = len(self.element_count_df.columns)
         self.element_count_df.fillna(value=0, inplace=True)
         print("Computing sum_all_entities...")
         # self.element_count_df['sum_all_entities'] = self.element_count_df.iloc[:, 1:1+nb_entities].sum(axis=1)
         self.element_count_df['sum_all_entities'] = self.element_count_df.sum(axis=1)
+        print("Computing average_all_entities...")
+        self.element_count_df['average_all_entities'] = self.element_count_df['sum_all_entities']/nb_entities
         # print("Computing nb_cited_sum_other_entities...")
         # self.element_count_df['nb_cited_sum_other_entities'] = self.element_count_df['sum_all_entities'] - self.element_count_df[main_entitie_col_id]
         print("Computing proportion_used_by_main_entitie")
