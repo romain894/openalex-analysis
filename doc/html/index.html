@@ -76,13 +76,14 @@ $(function() {
 TODO</h1>
 <ul>
 <li>Add more examples in Readme and Jupyter Notebooks</li>
+<li>Update Docker config</li>
 </ul>
 <h1><a class="anchor" id="autotoc_md3"></a>
 OpenAlex Analysis python library</h1>
 <p>By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case (see section Configure the library).</p>
 <h2><a class="anchor" id="autotoc_md4"></a>
 Basic exmaple</h2>
-<p>More exmaples can be found in the notebooks <code>Works_examples.ipynb</code> and <code>Concepts_Works_analysis.ipynb</code></p>
+<p>More examples can be found in the notebooks <code>Works_examples.ipynb</code> and <code>Concepts_Works_analysis.ipynb</code></p>
 <div class="fragment"><div class="line">from openalex_analysis.plot import WorksPlot</div>
 <div class="line"> </div>
 <div class="line">concept_sustainability_id = &#39;C66204764&#39;</div>
@@ -108,7 +109,7 @@ Default settings</h3>
 <div class="line">config.allow_automatic_download = True</div>
 <div class="line">config.disable_tqdm_loading_bar = False</div>
 <div class="line">config.n_max_entities = 10000</div>
-<div class="line">config.project_datas_folder_path = &quot;data&quot;</div>
+<div class="line">config.project_datas_folder_path = &quot;data&quot;·</div>
 <div class="line">config.parquet_compression = &quot;brotli&quot;</div>
 <div class="line">config.max_storage_percent = 95</div>
 <div class="line">config.redis_enabled = False</div>
@@ -121,18 +122,20 @@ Default settings</h3>
 <div class="line"># Don&#39;t forget to add the following two lines with all the imports</div>
 <div class="line"># from redis import StrictRedis</div>
 <div class="line"># from redis_cache import RedisCache</div>
-</div><!-- fragment --><p>email : The email address is need to access the polite pool from OpenAlex which is faster than the default one.</p>
-<p>api_key : optional, if you have one from OpenAlex</p>
-<p>openalex_url : OpenAlex URL</p>
-<p>allow_automatic_download : Allow the library to download dataset from OpenAlex if not already present on the disk</p>
-<p>disable_tqdm_loading_bar : If set to True, it will disable the loading bar in the terminal output when downloading data from the OpenAlex API.</p>
-<p>n_max_entities : When downloading a list of entities from the API (eg a list of works), the maximum number of entities to download. Set to None to have no limitation. This number must be a multiple of 200 (the is the number of element per page used by the library)</p>
-<p>project_datas_folder_path : Path to store the data downloaded from the API. The data will be stored as parquet files, with each file corresponding to one request.</p>
-<p>parquet_compression : By default, the parquet files are compressed. The compression can be disabled by setting with parquet_compression = None. For other parquet compression algorithms, see the pandas documentation. Compressing reduces by 2 to 10 the file size while needing a negligeable time to compress or decompress. Disabling the compression is usefull if you want to read the parquet files with an external software.</p>
-<p>max_storage_percent : Maximum storage usage percentage on the disk before starting to delete data stored in project_datas_folder_path. The parquet file with the oldest last read data will be deleted first.</p>
-<p>redis_enabled : Whenever Redis cache is enabled or not</p>
-<p>redis_client : The Redis client configuration. Don't forget to add <code>from redis import StrictRedis</code> where the configuration is defined.</p>
-<p>redis_cache : The Redis cache configuration. Don't forget to add <code>from redis_cache import RedisCache</code> where the configuration is defined.</p>
+</div><!-- fragment --><ul>
+<li><code>email</code> The email address is need to access the polite pool from OpenAlex which is faster than the default one.</li>
+<li><code>api_key</code> Optional, if you have one from OpenAlex</li>
+<li><code>openalex_url</code> OpenAlex URL</li>
+<li><code>allow_automatic_download</code> Allow the library to download dataset from OpenAlex if not already present on the disk</li>
+<li><code>disable_tqdm_loading_bar</code> If set to True, it will disable the loading bar in the terminal output when downloading data from the OpenAlex API.</li>
+<li><code>n_max_entities</code> When downloading a list of entities from the API (eg a list of works), the maximum number of entities to download. Set to None to have no limitation. This number must be a multiple of 200 (the is the number of element per page used by the library)</li>
+<li><code>project_datas_folder_path</code> Path to store the data downloaded from the API. The data will be stored as parquet files, with each file corresponding to one request.</li>
+<li><code>parquet_compression</code> By default, the parquet files are compressed. The compression can be disabled by setting with parquet_compression = None. For other parquet compression algorithms, see the pandas documentation. Compressing reduces by 2 to 10 the file size while needing a negligeable time to compress or decompress. Disabling the compression is usefull if you want to read the parquet files with an external software.</li>
+<li><code>max_storage_percent</code> Maximum storage usage percentage on the disk before starting to delete data stored in project_datas_folder_path. The parquet file with the oldest last read data will be deleted first.</li>
+<li><code>redis_enabled</code> Whenever Redis cache is enabled or not</li>
+<li><code>redis_client</code> The Redis client configuration. Don't forget to add <code>from redis import StrictRedis</code> where the configuration is defined.</li>
+<li><code>redis_cache</code> The Redis cache configuration. Don't forget to add <code>from redis_cache import RedisCache</code> where the configuration is defined.</li>
+</ul>
 <h1><a class="anchor" id="autotoc_md7"></a>
 Analysis web app</h1>
 <p>TODO</p>
