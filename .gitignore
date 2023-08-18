@@ -4,6 +4,10 @@
 /old_jupyter_notebooks/*
 /.ipynb_checkpoints/*
 /Tests*
+Test3.ipynb
+Institution_comparison_report.ipynb
+Institution_comparison_tests.ipynb
+Institution_comparison_report_engineering.ipynb
 /dash_app_passwords.py
 /dash_app_configuration.py
 
