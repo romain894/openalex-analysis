@@ -59,9 +59,11 @@ main_container = dbc.Container(className="container-app-references-analysis", id
                     html.H1(children="Comparison of institutions"),
                     html.P(children="Analysis of works (aka articles) of a concept (eg sustainability) from different institutions."),
                     html.P(children="""
-                        First we select the concept where the works should come from. It allows us to focus the analysis on a specific field. 
-                        Then we select a list of institutions. We will import the works of these institutions which fit the concept previously selected. 
-                        With this set of works we can count the number of time each reference or concept was used and see the results in the tables below.
+                        First we select the concept (eg sustainability) where the works should come from (to create the datasets). 
+                        It allows us to focus the analysis on a specific field (eg sustainability).   
+                        Then we select a list of institutions. We will import the works of these institutions which fit the concept previously selected
+                        (eg the works about sustainability from those institutions). 
+                        With this dataset of works we can count the number of time each reference or concept was used and see the results in the tables below.
                         """),
                     #html.Br(),
                     html.H2(children="Analysis parameters"),
@@ -215,6 +217,7 @@ main_container = dbc.Container(className="container-app-references-analysis", id
                     ),
                     html.Br(),
                     html.H3(children="Tables"),
+                    html.P(children="The following numbers in the tables are the number times each element in the row (reference or concept) was used by the dataset in the column (dataset of articles from an institution or a concept)."),
                     dcc.Store(id='element_type_counted'),
                     # html.H4(children="Most used by the main institution"),
                     # html.Div(id='div_table_most_used_ref_concept', children=dash_table.DataTable(id='table_most_used_ref_concept')),
