@@ -48,7 +48,7 @@ config.redis_cache = dash_app_config.config_redis_cache
 print('OK: Configuration set')
 
 
-works_infos = ["display_name", "author_citation_style", "publication_year"]
+works_infos = ["display_name", "author_citation_style", "publication_year", "doi"]
 
         
 main_container = dbc.Container(className="container-app-references-analysis", id="container-app-references-analysis", fluid=True, children=[
@@ -455,13 +455,20 @@ def get_dash_table_references_works_count(wplt, id_table):
         df = df.drop('display_name', axis=1)
         df = df.rename(columns={'publication_year': 'year', 'author_citation_style': 'authors'})
         # df['Element names'] = df['Element names'].str.replace("https://openalex.org/", "").apply(get_name_of_entitie_from_api)
+    # remove columns useless for normal user:
+    df = df.drop([
+            'proportion_used_by_main_entitie',
+            'sum_all_entities_rank',
+            'proportion_used_by_main_entitie_rank',
+            'h_used_all_l_use_main'
+        ], axis=1)
     # replace _ by spaces in columns names to allow line break:
     df.columns = df.columns.str.replace("_", " ")
     table = dash_table.DataTable(
         df.to_dict('records', index = True),
         [{"name": i, "id": i} for i in df.columns],
         id = id_table,
-        style_cell = dash_table_style_cell,
+        style_cell = layout_parameters.dash_table_style_cell,
         # style_data_conditional = dash_table_ref_conditional_style,
         style_data_conditional = [
             {
@@ -478,7 +485,7 @@ def get_dash_table_references_works_count(wplt, id_table):
                 'backgroundColor': 'rgb(240, 240, 240)',
             },
         ],
-        style_header = dash_table_style_header,
+        style_header = layout_parameters.dash_table_style_header,
         # fixed_columns={'headers': True, 'data': 1},
         style_table={'minWidth': '100%', 'overflowX': 'auto'},
         page_size=10,
@@ -625,7 +632,9 @@ def update_table(active_cell, data, element_type_counted):
     if active_cell:
         if element_type_counted == 'reference':
             div_children = [
-                html.A(data[active_cell['row']]['Element names'], href=data[active_cell['row']]['Element link'], target="_blank"),
+                html.A(data[active_cell['row']]['Element names'], href=data[active_cell['row']]['doi'], target="_blank"),
+                # " ",
+                # html.A("(OpenAlex link)", href=data[active_cell['row']]['Element link'], target="_blank"),
                 html.Br(),
                 data[active_cell['row']]['authors'],
                 html.Br(),

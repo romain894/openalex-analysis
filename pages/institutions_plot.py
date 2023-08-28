@@ -3,14 +3,15 @@ from OA_entities_names import OA_entities_names
 # from jupyter_dash import JupyterDash
 import dash_bootstrap_components as dbc # dash app theme
 import plotly.io as pio # plotly theme
-from dash import Dash, dcc, html, Input, Output, State, ALL, Patch, callback
+from dash import dcc, html, Input, Output, State, ALL, Patch
 from dash.exceptions import PreventUpdate
 import dash
 import threading
 # from flask import Flask
 import time
 import dash_loading_spinners
-import os, sys
+import os
+import sys
 sys.path.append(os.path.abspath('../'))
 import layout_parameters
 

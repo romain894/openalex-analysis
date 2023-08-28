@@ -5,22 +5,20 @@ import dash
 import dash_auth
 from celery import Celery # for redis cache and long callback manager
 from flask import Flask
-import dash_loading_spinners
+# import dash_loading_spinners
 import os
-from layout_parameters import *  
+import layout_parameters
 
 # Access passwords
-
-if os.path.exists("dash_app_passwords.py"):
-    from dash_app_passwords import *
-    VALID_USERNAME_PASSWORD_PAIRS = dash_app_passwords
-    print('OK: Loadeded the password from "dash_app_passwords.py"')
+if os.path.exists("dash_app_configuration.py"):
+    import dash_app_passwords as dash_app_config
+    VALID_USERNAME_PASSWORD_PAIRS = dash_app_config.dash_app_passwords
+    print('OK: Loadeded the configuration from "dash_app_configuration.py"')
 else:
-    from dash_app_passwords_template import *
-    VALID_USERNAME_PASSWORD_PAIRS = dash_app_passwords
-    print("WARNING: Loaded the default user (admin) and password (admin), from the template file")
-    print('Please copy the template file ("dash_app_passwords_template.py"), rename it and set the password in it')
-
+    import dash_app_passwords_template as dash_app_config
+    VALID_USERNAME_PASSWORD_PAIRS = dash_app_config.dash_app_passwords
+    print('WARNING: Loaded the default configuration, from the template file ("dash_app_configuration_template.py")')
+    print('Please copy the template file, rename it "dash_app_configuration.py" and set the configuration in it')
 
 version = os.environ.get('DASH_APP_VERSION', "V dev")
 celery_broker_url = os.environ.get('DOCKER_CELERY_BROKER_URL', "redis://localhost:6379/0")
@@ -123,7 +121,7 @@ app.layout = dbc.Container(id="root", fluid=True, class_name="g-0", children=
                                             ]
                                         ),
                                     ],
-                                    **layout_dynamic_width
+                                    **layout_parameters.layout_dynamic_width
                                 )
                             ]
                         )
