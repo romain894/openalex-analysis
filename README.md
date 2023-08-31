@@ -2,7 +2,9 @@
 
 Scientific literature analysis using the OpenAlex API.
 
-This repo provides classes and methods to extract statistics, plots and graphs, as well as examples in Jupyter Notebooks. There is also a web app built with Dash and some docker config files to deploy it.
+This repo provides classes and methods to extract statistics, plots and graphs, as well as examples in Jupyter Notebooks.
+
+A web app based on the library is available [here](https://github.com/romain894/webapp-openalex-analysis).
 
 To clone this repo: `git clone --recurse-submodules git@github.com:romain894/openalex-analysis.git`
 
@@ -19,7 +21,7 @@ Licence: GPL V3
 
 By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case (see section Configure the library).
 
-## Basic exmaple
+## Basic example
 
 More examples can be found in the notebooks `Works_examples.ipynb` and `Concepts_Works_analysis.ipynb`
 
@@ -96,11 +98,6 @@ config.redis_enabled = False
 
 - `redis_cache` The Redis cache configuration. Don't forget to add `from redis_cache import RedisCache` where the configuration is defined.
 
-
-
-# Analysis web app
-
-TODO
 
 
 Romain Thomas 2023
