@@ -1,0 +1,38 @@
+[build-system]
+requires      = ["setuptools>=65", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "openalex-analysis"
+version = "0.7.4"
+description = "A python library to analyse articles, institutions, and others entities from the OpenAlex API"
+readme = "README.md"
+authors = [{ name = "Romain Thomas", email = "romain.thomas@su.se" }]
+license = { file = "LICENCE.txt" }
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Intended Audience :: Science/Research",
+]
+keywords = ["feed", "reader", "tutorial"]
+dependencies = [
+    "country_converter >= 1.0.0",
+    "numpy >= 1.21.5",
+    "pandas >= 2.0.1",
+    "plotly >= 5.15.0",
+    "psutil >= 5.9.4",
+    "pyalex >= 0.11",
+    "python_redis_cache >= 2.1.2",
+    "redis >= 4.5.5",
+    "tqdm >= 4.65.0",
+]
+requires-python = ">=3.9"
+
+[tool.setuptools]
+include-package-data = true
+packages = ["openalex_analysis", "openalex_analysis.names", "openalex_analysis.analysis", "openalex_analysis.plot"]
+
+[project.urls]
+Homepage = "https://github.com/romain894/openalex-analysis"

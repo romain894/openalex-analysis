@@ -1,0 +1,2 @@
+include openalex_analysis/names/list_all_concepts.parquet
+include openalex_analysis/names/list_all_institutions.parquet

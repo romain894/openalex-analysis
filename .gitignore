@@ -1,5 +1,9 @@
 /data/*
 **/__pycache__/*
+
+openalex_analysis.egg-info/
+dist/
+
 /jupyter_notebooks/.ipynb_checkpoints/*
 /old_jupyter_notebooks/*
 /.ipynb_checkpoints/*

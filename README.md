@@ -14,8 +14,7 @@ Licence: GPL V3
 
 ## TODO
 
-  - Add more examples in Readme and Jupyter Notebooks
-  - Update Docker config
+  - Add more examples in Readme
 
 # OpenAlex Analysis python library
 

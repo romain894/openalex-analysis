@@ -10,7 +10,7 @@ class EntitieNames():
     """Class to manage the concept and institution names"""
 
     ##### CONCEPTS #####
-    concepts_parquet_file_path = "data/list_all_concepts.parquet"
+    concepts_parquet_file_path = "list_all_concepts.parquet"
 
     # Import the list of concepts
     concepts_df = pd.read_parquet(BytesIO(pkgutil.get_data(__name__, concepts_parquet_file_path)))
@@ -25,7 +25,7 @@ class EntitieNames():
 
 
     ##### INSTITUTIONS #####
-    institutions_parquet_file_path = "data/list_all_institutions.parquet"
+    institutions_parquet_file_path = "list_all_institutions.parquet"
 
     # Import the list of institutions
     institutions_df = pd.read_parquet(BytesIO(pkgutil.get_data(__name__, institutions_parquet_file_path)))
