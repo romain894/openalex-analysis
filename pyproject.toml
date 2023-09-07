@@ -16,7 +16,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Intended Audience :: Science/Research",
 ]
-keywords = ["feed", "reader", "tutorial"]
+keywords = ["OpenAlex", "Data analysis", "Scientific research", "Plotly"]
 dependencies = [
     "country_converter >= 1.0.0",
     "numpy >= 1.21.5",
