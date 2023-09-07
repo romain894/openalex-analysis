@@ -6,23 +6,17 @@ This repo provides classes and methods to extract statistics, plots and graphs, 
 
 A web app based on the library is available [here](https://github.com/romain894/webapp-openalex-analysis).
 
-To clone this repo: `git clone --recurse-submodules git@github.com:romain894/openalex-analysis.git`
+Documentation : [https://romain894.github.io/openalex-analysis](https://romain894.github.io/openalex-analysis)
 
-Documentation (python library only): [https://romain894.github.io/openalex-analysis](https://romain894.github.io/openalex-analysis)
+[OpenAlex documentation](https://docs.openalex.org/) [Explore OpenAlex in a GUI](https://explore.openalex.org/)
 
 Licence: GPL V3
 
-## TODO
+## Examples
 
-  - Add more examples in Readme
+### Basic
 
-# OpenAlex Analysis python library
-
-By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case (see section Configure the library).
-
-## Basic example
-
-More examples can be found in the notebooks `Works_examples.ipynb` and `Concepts_Works_analysis.ipynb`
+More examples can be found in the notebooks [Works_examples.ipynb](https://github.com/romain894/openalex-analysis/blob/main/Works_examples.ipynb) and [Concepts_Works_analysis.ipynb](https://github.com/romain894/openalex-analysis/blob/main/Concepts_works_analysis.ipynb)
 
 ```python
 from openalex_analysis.plot import WorksPlot
@@ -32,12 +26,21 @@ concept_sustainability_id = 'C66204764'
 # get the works about sustainability
 wplt = WorksPlot(concept_sustainability_id)
 
-# calculate the most cited works by the dataset previously downloaded
+# compute the most cited works by the dataset previously downloaded
 wplt.create_element_used_count_array('reference')
-
 ```
 
+### Concepts yearly count
+
+
+
+
 ## Configure the library
+
+By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case.
+
+Setting up the email address allows you to use the polite pool from OpenAlex which is faster than the default one.
+
 
 ```python
 from openalex_analysis.plot import config, InstitutionsPlot
@@ -47,7 +50,7 @@ config.email = "email@example.com"
 InstitutionsPlot()
 ```
 
-The notebook `Setup_example.ipynb` contains more setup examples.
+The notebook [Setup_example.ipynb](https://github.com/romain894/openalex-analysis/blob/main/Setup_example.ipynb) contains more setup examples.
 
 ### Default settings
 
