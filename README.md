@@ -26,8 +26,35 @@ concept_sustainability_id = 'C66204764'
 # get the works about sustainability
 wplt = WorksPlot(concept_sustainability_id)
 
+print("\nFirst entities in the dataset:")
+print(wplt.entities_df[['id', 'title']].head(3))
+
 # compute the most cited works by the dataset previously downloaded
 wplt.create_element_used_count_array('reference')
+
+print("\nMost cited work within the dataset:")
+print(wplt.element_count_df.head(3))
+```
+
+```
+Loading dataframe of works of the concept C66204764
+Loading the list of entities from a parquet file...
+
+First entities in the dataset:
+                                 id                                              title
+0  https://openalex.org/W2101946146  Asset Stock Accumulation and Sustainability of...
+1  https://openalex.org/W1999167944  Planetary boundaries: Guiding human developmen...
+2  https://openalex.org/W2122266551  Agricultural sustainability and intensive prod... 
+
+Getting name of C66204764 from the OpenAlex API (cache disabled)...
+Creating the works references count of works C66204764...
+
+Most cited work within the dataset:
+                                  C66204764 Sustainability
+element                                                   
+https://openalex.org/W2026816730                       262
+https://openalex.org/W2096885696                       249
+https://openalex.org/W2103847341                       203
 ```
 
 ### Concepts yearly count
