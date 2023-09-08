@@ -102,7 +102,7 @@ wplt.get_figure_time_series_element_used_by_entities().write_image("Plot_yearly_
 wplt.get_figure_time_series_element_used_by_entities()
 ```
 
-![Plot of the yearly usage of sustainability by SRC and UTT](Plot_yearly_usage_sustainability_SRC_UTT.svg)
+![Plot of the yearly usage of sustainability by SRC and UTT](https://github.com/romain894/openalex-analysis/blob/main/Plot_yearly_usage_sustainability_SRC_UTT.svg)
 
 ## Configure the library
 
