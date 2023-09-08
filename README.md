@@ -14,9 +14,9 @@ Licence: GPL V3
 
 ## Examples
 
-### Basic
-
 More examples can be found in the notebooks [Works_examples.ipynb](https://github.com/romain894/openalex-analysis/blob/main/Works_examples.ipynb) and [Concepts_Works_analysis.ipynb](https://github.com/romain894/openalex-analysis/blob/main/Concepts_works_analysis.ipynb)
+
+### Basic
 
 ```python
 from openalex_analysis.plot import WorksPlot
@@ -59,8 +59,38 @@ https://openalex.org/W2103847341                       203
 
 ### Concepts yearly count
 
+```python
+from openalex_analysis.plot import InstitutionsPlot, WorksPlot
+
+concept_sustainability_id = 'C66204764'
+# create the filter for the API to get only the articles about sustainability
+sustainability_concept_filter = {"concepts": {"id": concept_sustainability_id}}
+
+# set the years we want to count
+count_years = list(range(2004, 2024))
+
+institution_ids_list = ["I138595864", "I140494188"]
+institution_names_list = ["Stockholm Resilience Centre", "University of Technology of Troyes"]
+
+# create a list of dictionaries with each dictionary containing the ID, name and filter for each institution
+entities_ref_to_count = [None] * len(institution_ids_list)
+for i in range(len(institution_ids_list)):
+    entities_ref_to_count[i] = {'entitie_from_id': institution_ids_list[i],
+                                'extra_filters': sustainability_concept_filter,
+                                'entitie_name': institution_names_list[i]}
 
 
+wplt = WorksPlot()
+wplt.create_element_used_count_array('concept', entities_ref_to_count, count_years = count_years)
+
+wplt.add_statistics_to_element_count_array(sort_by = 'sum_all_entities', min_concept_level = 2)
+
+wplt.get_figure_time_series_element_used_by_entities().write_image("Plot_yearly_usage_sustainability_SRC_UTT.svg", width=1200)
+
+wplt.get_figure_time_series_element_used_by_entities()
+```
+
+![Plot of the yearly usage of sustainability by SRC and UTT](Plot_yearly_usage_sustainability_SRC_UTT.svg)
 
 ## Configure the library
 
