@@ -18,6 +18,12 @@ More examples can be found in the notebooks [Works_examples.ipynb](https://githu
 
 ### Basic
 
+In the example, we create a dataset with the works about sustainability.
+
+This dataset can be used as it, it is stored in a parquet file (more optimized than CSV) on the computer and can be simply imported as a dataframe with Pandas.
+
+After getting this dataset, we continue by extracting the most cited articles by the dataset. For that, we extract all the references of the articles present in the dataset and rank these references.
+
 ```python
 from openalex_analysis.plot import WorksPlot
 
@@ -58,6 +64,12 @@ https://openalex.org/W2103847341                       203
 ```
 
 ### Concepts yearly count
+
+In this example, we will create two datasets: one with the articles about sustainability of the SRC (Stockholm Resilience Centre) and one with the articles about sustainability of the UTT (University of Technology of Troyes).
+
+We will then plot the yearly usage of the concept sustainability by these institutions (in this case it's equal to the number of articles in the dataset, as the dataset contains only the articles about sustainability).
+
+We could also plot the yearly usage of other concepts or of the references by changing the parameters of the functions `create_element_used_count_array()` and `get_figure_time_series_element_used_by_entities()`.
 
 ```python
 from openalex_analysis.plot import InstitutionsPlot, WorksPlot
