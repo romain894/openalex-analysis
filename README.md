@@ -4,6 +4,11 @@ Scientific literature analysis using the OpenAlex API.
 
 This repo provides classes and methods to extract statistics, plots and graphs, as well as examples in Jupyter Notebooks.
 
+Install with:
+```
+pip install openalex-analysis
+```
+
 A web app based on the library is available [here](https://github.com/romain894/webapp-openalex-analysis).
 
 Documentation : [https://romain894.github.io/openalex-analysis](https://romain894.github.io/openalex-analysis)
