@@ -2,20 +2,28 @@
 \Hypertarget{index_md_README}%
  Scientific literature analysis using the Open\+Alex API.
 
-This repo provides classes and methods to extract statistics, plots and graphs, as well as examples in Jupyter Notebooks. There is also a web app built with Dash and some docker config files to deploy it.
+This repo provides classes and methods to extract statistics, plots and graphs, as well as examples in Jupyter Notebooks.
 
-To clone this repo\+: {\ttfamily git clone -\/-\/recurse-\/submodules git@github.\+com\+:romain894/openalex-\/analysis.\+git}
+Install with\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{pip install openalex-\/analysis}
 
-Documentation (python library only)\+: \href{https://romain894.github.io/openalex-analysis}{\texttt{ https\+://romain894.\+github.\+io/openalex-\/analysis}}
+\end{DoxyCode}
 
-Licence\+: GPL V3\hypertarget{index_autotoc_md2}{}\doxysection{TODO}\label{index_autotoc_md2}
 
-\begin{DoxyItemize}
-\item Add more examples in Readme and Jupyter Notebooks
-\item Update Docker config
-\end{DoxyItemize}\hypertarget{index_autotoc_md3}{}\doxysection{Open\+Alex Analysis python library}\label{index_autotoc_md3}
-By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case (see section Configure the library).\hypertarget{index_autotoc_md4}{}\doxysubsection{Basic exmaple}\label{index_autotoc_md4}
-More examples can be found in the notebooks {\ttfamily Works\+\_\+examples.\+ipynb} and {\ttfamily Concepts\+\_\+\+Works\+\_\+analysis.\+ipynb}
+A web app based on the library is available \href{https://github.com/romain894/webapp-openalex-analysis}{\texttt{ here}}.
+
+Documentation \+: \href{https://romain894.github.io/openalex-analysis}{\texttt{ https\+://romain894.\+github.\+io/openalex-\/analysis}}
+
+\href{https://docs.openalex.org/}{\texttt{ Open\+Alex documentation}} \href{https://explore.openalex.org/}{\texttt{ Explore Open\+Alex in a GUI}}
+
+Licence\+: GPL V3\hypertarget{index_autotoc_md2}{}\doxysection{Examples}\label{index_autotoc_md2}
+More examples can be found in the notebooks \href{https://github.com/romain894/openalex-analysis/blob/main/Works_examples.ipynb}{\texttt{ Works\+\_\+examples.\+ipynb}} and \href{https://github.com/romain894/openalex-analysis/blob/main/Concepts_works_analysis.ipynb}{\texttt{ Concepts\+\_\+\+Works\+\_\+analysis.\+ipynb}}\hypertarget{index_autotoc_md3}{}\doxysubsection{Basic}\label{index_autotoc_md3}
+In the example, we create a dataset with the works about sustainability.
+
+This dataset can be used as it, it is stored in a parquet file (more optimized than CSV) on the computer and can be simply imported as a dataframe with Pandas.
+
+After getting this dataset, we continue by extracting the most cited articles by the dataset. For that, we extract all the references of the articles present in the dataset and rank these references.
 
 
 \begin{DoxyCode}{0}
@@ -26,11 +34,86 @@ More examples can be found in the notebooks {\ttfamily Works\+\_\+examples.\+ipy
 \DoxyCodeLine{\# get the works about sustainability}
 \DoxyCodeLine{wplt = WorksPlot(concept\_sustainability\_id)}
 \DoxyCodeLine{}
-\DoxyCodeLine{\# calculate the most cited works by the dataset previously downloaded}
+\DoxyCodeLine{print("{}\(\backslash\)nFirst entities in the dataset:"{})}
+\DoxyCodeLine{print(wplt.entities\_df[['id', 'title']].head(3))}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# compute the most cited works by the dataset previously downloaded}
 \DoxyCodeLine{wplt.create\_element\_used\_count\_array('reference')}
+\DoxyCodeLine{}
+\DoxyCodeLine{print("{}\(\backslash\)nMost cited work within the dataset:"{})}
+\DoxyCodeLine{print(wplt.element\_count\_df.head(3))}
 
 \end{DoxyCode}
-\hypertarget{index_autotoc_md5}{}\doxysubsection{Configure the library}\label{index_autotoc_md5}
+
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{Loading dataframe of works of the concept C66204764}
+\DoxyCodeLine{Loading the list of entities from a parquet file...}
+\DoxyCodeLine{}
+\DoxyCodeLine{First entities in the dataset:}
+\DoxyCodeLine{                                 id                                              title}
+\DoxyCodeLine{0  https://openalex.org/W2101946146  Asset Stock Accumulation and Sustainability of...}
+\DoxyCodeLine{1  https://openalex.org/W1999167944  Planetary boundaries: Guiding human developmen...}
+\DoxyCodeLine{2  https://openalex.org/W2122266551  Agricultural sustainability and intensive prod... }
+\DoxyCodeLine{}
+\DoxyCodeLine{Getting name of C66204764 from the OpenAlex API (cache disabled)...}
+\DoxyCodeLine{Creating the works references count of works C66204764...}
+\DoxyCodeLine{}
+\DoxyCodeLine{Most cited work within the dataset:}
+\DoxyCodeLine{                                  C66204764 Sustainability}
+\DoxyCodeLine{element                                                   }
+\DoxyCodeLine{https://openalex.org/W2026816730                       262}
+\DoxyCodeLine{https://openalex.org/W2096885696                       249}
+\DoxyCodeLine{https://openalex.org/W2103847341                       203}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md4}{}\doxysubsection{Concepts yearly count}\label{index_autotoc_md4}
+In this example, we will create two datasets\+: one with the articles about sustainability of the SRC (Stockholm Resilience Centre) and one with the articles about sustainability of the UTT (University of Technology of Troyes).
+
+We will then plot the yearly usage of the concept sustainability by these institutions (in this case it\textquotesingle{}s equal to the number of articles in the dataset, as the dataset contains only the articles about sustainability).
+
+We could also plot the yearly usage of other concepts or of the references by changing the parameters of the functions {\ttfamily create\+\_\+element\+\_\+used\+\_\+count\+\_\+array()} and {\ttfamily get\+\_\+figure\+\_\+time\+\_\+series\+\_\+element\+\_\+used\+\_\+by\+\_\+entities()}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from openalex\_analysis.plot import InstitutionsPlot, WorksPlot}
+\DoxyCodeLine{}
+\DoxyCodeLine{concept\_sustainability\_id = 'C66204764'}
+\DoxyCodeLine{\# create the filter for the API to get only the articles about sustainability}
+\DoxyCodeLine{sustainability\_concept\_filter = \{"{}concepts"{}: \{"{}id"{}: concept\_sustainability\_id\}\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# set the years we want to count}
+\DoxyCodeLine{count\_years = list(range(2004, 2024))}
+\DoxyCodeLine{}
+\DoxyCodeLine{institution\_ids\_list = ["{}I138595864"{}, "{}I140494188"{}]}
+\DoxyCodeLine{institution\_names\_list = ["{}Stockholm Resilience Centre"{}, "{}University of Technology of Troyes"{}]}
+\DoxyCodeLine{}
+\DoxyCodeLine{\# create a list of dictionaries with each dictionary containing the ID, name and filter for each institution}
+\DoxyCodeLine{entities\_ref\_to\_count = [None] * len(institution\_ids\_list)}
+\DoxyCodeLine{for i in range(len(institution\_ids\_list)):}
+\DoxyCodeLine{    entities\_ref\_to\_count[i] = \{'entitie\_from\_id': institution\_ids\_list[i],}
+\DoxyCodeLine{                                'extra\_filters': sustainability\_concept\_filter,}
+\DoxyCodeLine{                                'entitie\_name': institution\_names\_list[i]\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{}
+\DoxyCodeLine{wplt = WorksPlot()}
+\DoxyCodeLine{wplt.create\_element\_used\_count\_array('concept', entities\_ref\_to\_count, count\_years = count\_years)}
+\DoxyCodeLine{}
+\DoxyCodeLine{wplt.add\_statistics\_to\_element\_count\_array(sort\_by = 'sum\_all\_entities', min\_concept\_level = 2)}
+\DoxyCodeLine{}
+\DoxyCodeLine{wplt.get\_figure\_time\_series\_element\_used\_by\_entities().write\_image("{}Plot\_yearly\_usage\_sustainability\_SRC\_UTT.svg"{}, width=1200)}
+\DoxyCodeLine{}
+\DoxyCodeLine{wplt.get\_figure\_time\_series\_element\_used\_by\_entities()}
+
+\end{DoxyCode}
+
+
+\hypertarget{index_autotoc_md5}{}\doxysection{Configure the library}\label{index_autotoc_md5}
+By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case.
+
+Setting up the email address allows you to use the polite pool from Open\+Alex which is faster than the default one.
+
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{from openalex\_analysis.plot import config, InstitutionsPlot}
@@ -42,7 +125,7 @@ More examples can be found in the notebooks {\ttfamily Works\+\_\+examples.\+ipy
 \end{DoxyCode}
 
 
-The notebook {\ttfamily Setup\+\_\+example.\+ipynb} contains more setup examples.\hypertarget{index_autotoc_md6}{}\doxysubsubsection{Default settings}\label{index_autotoc_md6}
+The notebook \href{https://github.com/romain894/openalex-analysis/blob/main/Setup_example.ipynb}{\texttt{ Setup\+\_\+example.\+ipynb}} contains more setup examples.\hypertarget{index_autotoc_md6}{}\doxysubsection{Default settings}\label{index_autotoc_md6}
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{config.email = None}
@@ -82,7 +165,6 @@ The notebook {\ttfamily Setup\+\_\+example.\+ipynb} contains more setup examples
 \item {\ttfamily redis\+\_\+enabled} Whenever Redis cache is enabled or not
 \item {\ttfamily redis\+\_\+client} The Redis client configuration. Don\textquotesingle{}t forget to add {\ttfamily from redis import Strict\+Redis} where the configuration is defined.
 \item {\ttfamily redis\+\_\+cache} The Redis cache configuration. Don\textquotesingle{}t forget to add {\ttfamily from redis\+\_\+cache import Redis\+Cache} where the configuration is defined.
-\end{DoxyItemize}\hypertarget{index_autotoc_md7}{}\doxysection{Analysis web app}\label{index_autotoc_md7}
-TODO
+\end{DoxyItemize}
 
 Romain Thomas 2023 

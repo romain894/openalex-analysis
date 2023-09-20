@@ -1,0 +1,185 @@
+\begin{theindex}
+
+  \item {\_\_init\_\_}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{19}
+
+  \indexspace
+
+  \item {add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{20}
+  \item {add\_statistics\_to\_element\_count\_array}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}, 
+		\hyperpage{38}
+  \item {auto\_remove\_databases\_saved}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{20}
+
+  \indexspace
+
+  \item {create\_element\_used\_count\_array}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}, 
+		\hyperpage{38}
+  \item {create\_multi\_concept\_filters\_entities\_dataframe}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{20}
+
+  \indexspace
+
+  \item {filter\_and\_format\_entitie\_data\_from\_api\_response}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.InstitutionsAnalysis}, 
+		\hyperpage{28}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}, 
+		\hyperpage{38}
+
+  \indexspace
+
+  \item {get\_api\_query}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{21}
+  \item {get\_count\_entities\_matched}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{21}
+  \item {get\_country\_code}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}, 
+		\hyperpage{39}
+  \item {get\_database\_file\_name}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{21}
+  \item {get\_df\_filtered\_entities\_selection\_threshold}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{22}
+  \item {get\_entitie\_string\_name}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{22}
+  \item {get\_entitie\_type\_from\_id}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{22}
+  \item {get\_figure\_entities\_of\_a\_concept\_color\_country}
+    \subitem {openalex\_analysis.plot.entities\_plot.EntitiesPlot}, 
+		\hyperpage{25}
+  \item {get\_figure\_entities\_selection\_threshold}
+    \subitem {openalex\_analysis.plot.entities\_plot.EntitiesPlot}, 
+		\hyperpage{25}
+  \item {get\_figure\_institutions\_multi\_concepts\_filtered}
+    \subitem {openalex\_analysis.plot.entities\_plot.InstitutionsPlot}, 
+		\hyperpage{30}
+  \item {get\_figure\_nb\_time\_referenced}
+    \subitem {openalex\_analysis.plot.entities\_plot.WorksPlot}, 
+		\hyperpage{41}
+  \item {get\_figure\_time\_series\_element\_used\_by\_entities}
+    \subitem {openalex\_analysis.plot.entities\_plot.EntitiesPlot}, 
+		\hyperpage{26}
+  \item {get\_institution\_name}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}, 
+		\hyperpage{39}
+  \item {get\_name\_of\_entitie}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{23}
+  \item {get\_number\_of\_entities\_selected}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{23}
+  \item {get\_sum\_concept\_scores}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.InstitutionsAnalysis}, 
+		\hyperpage{28}
+  \item {get\_works\_concepts\_count}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}, 
+		\hyperpage{40}
+  \item {get\_works\_references\_count}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}, 
+		\hyperpage{40}
+  \item {getCustomData}
+    \subitem {openalex\_analysis.plot.entities\_plot.InstitutionsPlot}, 
+		\hyperpage{30}
+    \subitem {openalex\_analysis.plot.entities\_plot.WorksPlot}, 
+		\hyperpage{42}
+  \item {getHoverTemplate}
+    \subitem {openalex\_analysis.plot.entities\_plot.InstitutionsPlot}, 
+		\hyperpage{31}
+    \subitem {openalex\_analysis.plot.entities\_plot.WorksPlot}, 
+		\hyperpage{42}
+
+  \indexspace
+
+  \item {openalex\_analysis.analysis.entities\_analysis.AnalysisConfig}, 
+		\hyperpage{11}
+  \item {openalex\_analysis.analysis.entities\_analysis.AuthorsAnalysis}, 
+		\hyperpage{13}
+  \item {openalex\_analysis.analysis.entities\_analysis.ConceptsAnalysis}, 
+		\hyperpage{15}
+  \item {openalex\_analysis.analysis.entities\_analysis.EntitiesAnalysis}, 
+		\hyperpage{17}
+    \subitem {\_\_init\_\_}, \hyperpage{19}
+    \subitem {add\_average\_combined\_concept\_score\_to\_multi\_concept\_entitie\_df}, 
+		\hyperpage{20}
+    \subitem {auto\_remove\_databases\_saved}, \hyperpage{20}
+    \subitem {create\_multi\_concept\_filters\_entities\_dataframe}, 
+		\hyperpage{20}
+    \subitem {get\_api\_query}, \hyperpage{21}
+    \subitem {get\_count\_entities\_matched}, \hyperpage{21}
+    \subitem {get\_database\_file\_name}, \hyperpage{21}
+    \subitem {get\_df\_filtered\_entities\_selection\_threshold}, 
+		\hyperpage{22}
+    \subitem {get\_entitie\_string\_name}, \hyperpage{22}
+    \subitem {get\_entitie\_type\_from\_id}, \hyperpage{22}
+    \subitem {get\_name\_of\_entitie}, \hyperpage{23}
+    \subitem {get\_number\_of\_entities\_selected}, \hyperpage{23}
+  \item {openalex\_analysis.analysis.entities\_analysis.InstitutionsAnalysis}, 
+		\hyperpage{27}
+    \subitem {filter\_and\_format\_entitie\_data\_from\_api\_response}, 
+		\hyperpage{28}
+    \subitem {get\_sum\_concept\_scores}, \hyperpage{28}
+  \item {openalex\_analysis.analysis.entities\_analysis.PublishersAnalysis}, 
+		\hyperpage{32}
+  \item {openalex\_analysis.analysis.entities\_analysis.SourcesAnalysis}, 
+		\hyperpage{34}
+  \item {openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}, 
+		\hyperpage{36}
+    \subitem {add\_statistics\_to\_element\_count\_array}, 
+		\hyperpage{38}
+    \subitem {create\_element\_used\_count\_array}, \hyperpage{38}
+    \subitem {filter\_and\_format\_entitie\_data\_from\_api\_response}, 
+		\hyperpage{38}
+    \subitem {get\_country\_code}, \hyperpage{39}
+    \subitem {get\_institution\_name}, \hyperpage{39}
+    \subitem {get\_works\_concepts\_count}, \hyperpage{40}
+    \subitem {get\_works\_references\_count}, \hyperpage{40}
+    \subitem {sort\_count\_array}, \hyperpage{40}
+  \item {openalex\_analysis.names.entitie\_names.EntitieNames}, 
+		\hyperpage{17}
+  \item {openalex\_analysis.plot.entities\_plot.AuthorsPlot}, 
+		\hyperpage{14}
+  \item {openalex\_analysis.plot.entities\_plot.ConceptsPlot}, 
+		\hyperpage{16}
+  \item {openalex\_analysis.plot.entities\_plot.EntitiesPlot}, 
+		\hyperpage{24}
+    \subitem {get\_figure\_entities\_of\_a\_concept\_color\_country}, 
+		\hyperpage{25}
+    \subitem {get\_figure\_entities\_selection\_threshold}, 
+		\hyperpage{25}
+    \subitem {get\_figure\_time\_series\_element\_used\_by\_entities}, 
+		\hyperpage{26}
+  \item {openalex\_analysis.plot.entities\_plot.InstitutionsPlot}, 
+		\hyperpage{29}
+    \subitem {get\_figure\_institutions\_multi\_concepts\_filtered}, 
+		\hyperpage{30}
+    \subitem {getCustomData}, \hyperpage{30}
+    \subitem {getHoverTemplate}, \hyperpage{31}
+  \item {openalex\_analysis.plot.entities\_plot.PublishersPlot}, 
+		\hyperpage{33}
+  \item {openalex\_analysis.plot.entities\_plot.SourcesPlot}, 
+		\hyperpage{35}
+  \item {openalex\_analysis.plot.entities\_plot.WorksPlot}, 
+		\hyperpage{41}
+    \subitem {get\_figure\_nb\_time\_referenced}, \hyperpage{41}
+    \subitem {getCustomData}, \hyperpage{42}
+    \subitem {getHoverTemplate}, \hyperpage{42}
+
+  \indexspace
+
+  \item {sort\_count\_array}
+    \subitem {openalex\_analysis.analysis.entities\_analysis.WorksAnalysis}, 
+		\hyperpage{40}
+
+\end{theindex}

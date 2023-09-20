@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['oa_5fentities_5fnames_66',['OA_entities_names',['../classOA__entities__names_1_1OA__entities__names.html',1,'OA_entities_names']]]
+  ['publishersanalysis_62',['PublishersAnalysis',['../classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1PublishersAnalysis.html',1,'openalex_analysis::analysis::entities_analysis']]],
+  ['publishersplot_63',['PublishersPlot',['../classopenalex__analysis_1_1plot_1_1entities__plot_1_1PublishersPlot.html',1,'openalex_analysis::plot::entities_plot']]]
 ];

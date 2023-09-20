@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['openalex_20analysis_111',['OpenAlex Analysis',['../index.html',1,'']]]
+  ['openalex_20analysis_103',['OpenAlex Analysis',['../index.html',1,'']]]
 ];
