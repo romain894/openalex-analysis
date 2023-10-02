@@ -1,8 +1,8 @@
 # OpenAlex Analysis
 
-Scientific literature analysis using the OpenAlex API.
+A python library to extract or analyse articles, institutions, and others entities from the OpenAlex API
 
-This repo provides classes and methods to extract statistics, plots and graphs, as well as examples in Jupyter Notebooks.
+This repo provides classes and methods to extract the data and create statistics, plots and graphs, as well as examples in Jupyter Notebooks.
 
 Install with:
 ```
@@ -21,7 +21,63 @@ Licence: GPL V3
 
 More examples can be found in the notebooks [Works_examples.ipynb](https://github.com/romain894/openalex-analysis/blob/main/Works_examples.ipynb) and [Concepts_Works_analysis.ipynb](https://github.com/romain894/openalex-analysis/blob/main/Concepts_works_analysis.ipynb)
 
-### Basic
+### Get a dataset
+
+You can use the library simply to get and manage dataset of OpenAlex. The library can download these dataset and cache them on the computer automatically.
+
+These datasets can then be used in python outside the library as they are just simple dataframe objects.
+
+Bellow, a few examples:
+
+#### Get works from a concept
+
+Get the works about regime shift:
+
+```bash
+from openalex_analysis.analysis import WorksAnalysis
+
+concept_regime_shift_id = 'C2780893879'
+
+wplt = WorksAnalysis(concept_regime_shift_id)
+
+my_dataset = wplt.entities_df
+```
+
+#### Get the works about sustainability and regime shift
+
+```bash
+from openalex_analysis.analysis import WorksAnalysis
+
+concept_regime_shift_id = 'C2780893879'
+concept_sustainability = 'C66204764'
+extra_filters = {
+    'concepts':{'id':[concept_regime_shift_id, concept_sustainability]},
+}
+
+wplt = WorksAnalysis(extra_filters = extra_filters)
+
+my_dataset = wplt.entities_df
+```
+
+#### Get the works about sustainability from the Stockholm Resilience Centre published in 2020
+
+```bash
+from openalex_analysis.analysis import WorksAnalysis
+
+concept_sustainability = 'C66204764'
+institution_src_id = "I138595864"
+extra_filters = {
+    'publication_year':2020,
+    'authorships':{'institutions':{'id':institution_src_id}},
+}
+
+wplt = WorksAnalysis(concept_sustainability,
+                     extra_filters = extra_filters)
+
+my_dataset = wplt.entities_df
+```
+
+### Basic analysis
 
 In the example, we create a dataset with the works about sustainability.
 

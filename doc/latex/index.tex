@@ -1,8 +1,8 @@
 \label{index_md_README}%
 \Hypertarget{index_md_README}%
- Scientific literature analysis using the Open\+Alex API.
+ A python library to extract or analyse articles, institutions, and others entities from the Open\+Alex API
 
-This repo provides classes and methods to extract statistics, plots and graphs, as well as examples in Jupyter Notebooks.
+This repo provides classes and methods to extract the data and create statistics, plots and graphs, as well as examples in Jupyter Notebooks.
 
 Install with\+: 
 \begin{DoxyCode}{0}
@@ -18,7 +18,60 @@ Documentation \+: \href{https://romain894.github.io/openalex-analysis}{\texttt{ 
 \href{https://docs.openalex.org/}{\texttt{ Open\+Alex documentation}} \href{https://explore.openalex.org/}{\texttt{ Explore Open\+Alex in a GUI}}
 
 Licence\+: GPL V3\hypertarget{index_autotoc_md2}{}\doxysection{Examples}\label{index_autotoc_md2}
-More examples can be found in the notebooks \href{https://github.com/romain894/openalex-analysis/blob/main/Works_examples.ipynb}{\texttt{ Works\+\_\+examples.\+ipynb}} and \href{https://github.com/romain894/openalex-analysis/blob/main/Concepts_works_analysis.ipynb}{\texttt{ Concepts\+\_\+\+Works\+\_\+analysis.\+ipynb}}\hypertarget{index_autotoc_md3}{}\doxysubsection{Basic}\label{index_autotoc_md3}
+More examples can be found in the notebooks \href{https://github.com/romain894/openalex-analysis/blob/main/Works_examples.ipynb}{\texttt{ Works\+\_\+examples.\+ipynb}} and \href{https://github.com/romain894/openalex-analysis/blob/main/Concepts_works_analysis.ipynb}{\texttt{ Concepts\+\_\+\+Works\+\_\+analysis.\+ipynb}}\hypertarget{index_autotoc_md3}{}\doxysubsection{Get a dataset}\label{index_autotoc_md3}
+You can use the library simply to get and manage dataset of Open\+Alex. The library can download these dataset and cache them on the computer automatically.
+
+These datasets can then be used in python outside the library as they are just simple dataframe objects.
+
+Bellow, a few examples\+:\hypertarget{index_autotoc_md4}{}\doxysubsubsection{Get works from a concept}\label{index_autotoc_md4}
+Get the works about regime shift\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from openalex\_analysis.analysis import WorksAnalysis}
+\DoxyCodeLine{}
+\DoxyCodeLine{concept\_regime\_shift\_id = 'C2780893879'}
+\DoxyCodeLine{}
+\DoxyCodeLine{wplt = WorksAnalysis(concept\_regime\_shift\_id)}
+\DoxyCodeLine{}
+\DoxyCodeLine{my\_dataset = wplt.entities\_df}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md5}{}\doxysubsubsection{Get the works about sustainability and regime shift}\label{index_autotoc_md5}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from openalex\_analysis.analysis import WorksAnalysis}
+\DoxyCodeLine{}
+\DoxyCodeLine{concept\_regime\_shift\_id = 'C2780893879'}
+\DoxyCodeLine{concept\_sustainability = 'C66204764'}
+\DoxyCodeLine{extra\_filters = \{}
+\DoxyCodeLine{    'concepts':\{'id':[concept\_regime\_shift\_id, concept\_sustainability]\},}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{wplt = WorksAnalysis(extra\_filters = extra\_filters)}
+\DoxyCodeLine{}
+\DoxyCodeLine{my\_dataset = wplt.entities\_df}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md6}{}\doxysubsubsection{Get the works about sustainability from the Stockholm Resilience Centre published in 2020}\label{index_autotoc_md6}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{from openalex\_analysis.analysis import WorksAnalysis}
+\DoxyCodeLine{}
+\DoxyCodeLine{concept\_sustainability = 'C66204764'}
+\DoxyCodeLine{institution\_src\_id = "{}I138595864"{}}
+\DoxyCodeLine{extra\_filters = \{}
+\DoxyCodeLine{    'publication\_year':2020,}
+\DoxyCodeLine{    'authorships':\{'institutions':\{'id':institution\_src\_id\}\},}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{wplt = WorksAnalysis(concept\_sustainability,}
+\DoxyCodeLine{                     extra\_filters = extra\_filters)}
+\DoxyCodeLine{}
+\DoxyCodeLine{my\_dataset = wplt.entities\_df}
+
+\end{DoxyCode}
+\hypertarget{index_autotoc_md7}{}\doxysubsection{Basic analysis}\label{index_autotoc_md7}
 In the example, we create a dataset with the works about sustainability.
 
 This dataset can be used as it, it is stored in a parquet file (more optimized than CSV) on the computer and can be simply imported as a dataframe with Pandas.
@@ -68,7 +121,7 @@ After getting this dataset, we continue by extracting the most cited articles by
 \DoxyCodeLine{https://openalex.org/W2103847341                       203}
 
 \end{DoxyCode}
-\hypertarget{index_autotoc_md4}{}\doxysubsection{Concepts yearly count}\label{index_autotoc_md4}
+\hypertarget{index_autotoc_md8}{}\doxysubsection{Concepts yearly count}\label{index_autotoc_md8}
 In this example, we will create two datasets\+: one with the articles about sustainability of the SRC (Stockholm Resilience Centre) and one with the articles about sustainability of the UTT (University of Technology of Troyes).
 
 We will then plot the yearly usage of the concept sustainability by these institutions (in this case it\textquotesingle{}s equal to the number of articles in the dataset, as the dataset contains only the articles about sustainability).
@@ -109,7 +162,7 @@ We could also plot the yearly usage of other concepts or of the references by ch
 \end{DoxyCode}
 
 
-\hypertarget{index_autotoc_md5}{}\doxysection{Configure the library}\label{index_autotoc_md5}
+\hypertarget{index_autotoc_md9}{}\doxysection{Configure the library}\label{index_autotoc_md9}
 By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case.
 
 Setting up the email address allows you to use the polite pool from Open\+Alex which is faster than the default one.
@@ -125,7 +178,7 @@ Setting up the email address allows you to use the polite pool from Open\+Alex w
 \end{DoxyCode}
 
 
-The notebook \href{https://github.com/romain894/openalex-analysis/blob/main/Setup_example.ipynb}{\texttt{ Setup\+\_\+example.\+ipynb}} contains more setup examples.\hypertarget{index_autotoc_md6}{}\doxysubsection{Default settings}\label{index_autotoc_md6}
+The notebook \href{https://github.com/romain894/openalex-analysis/blob/main/Setup_example.ipynb}{\texttt{ Setup\+\_\+example.\+ipynb}} contains more setup examples.\hypertarget{index_autotoc_md10}{}\doxysubsection{Default settings}\label{index_autotoc_md10}
 
 \begin{DoxyCode}{0}
 \DoxyCodeLine{config.email = None}

@@ -67,8 +67,8 @@ $(function() {
 <div class="title">OpenAlex Analysis </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="md_README"></a> Scientific literature analysis using the OpenAlex API.</p>
-<p>This repo provides classes and methods to extract statistics, plots and graphs, as well as examples in Jupyter Notebooks.</p>
+<div class="textblock"><p><a class="anchor" id="md_README"></a> A python library to extract or analyse articles, institutions, and others entities from the OpenAlex API</p>
+<p>This repo provides classes and methods to extract the data and create statistics, plots and graphs, as well as examples in Jupyter Notebooks.</p>
 <p>Install with: </p><div class="fragment"><div class="line">pip install openalex-analysis</div>
 </div><!-- fragment --><p>A web app based on the library is available <a href="https://github.com/romain894/webapp-openalex-analysis">here</a>.</p>
 <p>Documentation : <a href="https://romain894.github.io/openalex-analysis">https://romain894.github.io/openalex-analysis</a></p>
@@ -78,7 +78,50 @@ $(function() {
 Examples</h1>
 <p>More examples can be found in the notebooks <a href="https://github.com/romain894/openalex-analysis/blob/main/Works_examples.ipynb">Works_examples.ipynb</a> and <a href="https://github.com/romain894/openalex-analysis/blob/main/Concepts_works_analysis.ipynb">Concepts_Works_analysis.ipynb</a></p>
 <h2><a class="anchor" id="autotoc_md3"></a>
-Basic</h2>
+Get a dataset</h2>
+<p>You can use the library simply to get and manage dataset of OpenAlex. The library can download these dataset and cache them on the computer automatically.</p>
+<p>These datasets can then be used in python outside the library as they are just simple dataframe objects.</p>
+<p>Bellow, a few examples:</p>
+<h3><a class="anchor" id="autotoc_md4"></a>
+Get works from a concept</h3>
+<p>Get the works about regime shift:</p>
+<div class="fragment"><div class="line">from openalex_analysis.analysis import WorksAnalysis</div>
+<div class="line"> </div>
+<div class="line">concept_regime_shift_id = &#39;C2780893879&#39;</div>
+<div class="line"> </div>
+<div class="line">wplt = WorksAnalysis(concept_regime_shift_id)</div>
+<div class="line"> </div>
+<div class="line">my_dataset = wplt.entities_df</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md5"></a>
+Get the works about sustainability and regime shift</h3>
+<div class="fragment"><div class="line">from openalex_analysis.analysis import WorksAnalysis</div>
+<div class="line"> </div>
+<div class="line">concept_regime_shift_id = &#39;C2780893879&#39;</div>
+<div class="line">concept_sustainability = &#39;C66204764&#39;</div>
+<div class="line">extra_filters = {</div>
+<div class="line">    &#39;concepts&#39;:{&#39;id&#39;:[concept_regime_shift_id, concept_sustainability]},</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">wplt = WorksAnalysis(extra_filters = extra_filters)</div>
+<div class="line"> </div>
+<div class="line">my_dataset = wplt.entities_df</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md6"></a>
+Get the works about sustainability from the Stockholm Resilience Centre published in 2020</h3>
+<div class="fragment"><div class="line">from openalex_analysis.analysis import WorksAnalysis</div>
+<div class="line"> </div>
+<div class="line">concept_sustainability = &#39;C66204764&#39;</div>
+<div class="line">institution_src_id = &quot;I138595864&quot;</div>
+<div class="line">extra_filters = {</div>
+<div class="line">    &#39;publication_year&#39;:2020,</div>
+<div class="line">    &#39;authorships&#39;:{&#39;institutions&#39;:{&#39;id&#39;:institution_src_id}},</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line">wplt = WorksAnalysis(concept_sustainability,</div>
+<div class="line">                     extra_filters = extra_filters)</div>
+<div class="line"> </div>
+<div class="line">my_dataset = wplt.entities_df</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md7"></a>
+Basic analysis</h2>
 <p>In the example, we create a dataset with the works about sustainability.</p>
 <p>This dataset can be used as it, it is stored in a parquet file (more optimized than CSV) on the computer and can be simply imported as a dataframe with Pandas.</p>
 <p>After getting this dataset, we continue by extracting the most cited articles by the dataset. For that, we extract all the references of the articles present in the dataset and rank these references.</p>
@@ -115,7 +158,7 @@ Basic</h2>
 <div class="line">https://openalex.org/W2026816730                       262</div>
 <div class="line">https://openalex.org/W2096885696                       249</div>
 <div class="line">https://openalex.org/W2103847341                       203</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md4"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md8"></a>
 Concepts yearly count</h2>
 <p>In this example, we will create two datasets: one with the articles about sustainability of the SRC (Stockholm Resilience Centre) and one with the articles about sustainability of the UTT (University of Technology of Troyes).</p>
 <p>We will then plot the yearly usage of the concept sustainability by these institutions (in this case it's equal to the number of articles in the dataset, as the dataset contains only the articles about sustainability).</p>
@@ -149,7 +192,7 @@ Concepts yearly count</h2>
 <div class="line"> </div>
 <div class="line">wplt.get_figure_time_series_element_used_by_entities()</div>
 </div><!-- fragment --><p><img src="https://raw.githubusercontent.com/romain894/openalex-analysis/main/Plot_yearly_usage_sustainability_SRC_UTT.svg" alt="Plot of the yearly usage of sustainability by SRC and UTT" style="pointer-events: none;" class="inline"/></p>
-<h1><a class="anchor" id="autotoc_md5"></a>
+<h1><a class="anchor" id="autotoc_md9"></a>
 Configure the library</h1>
 <p>By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case.</p>
 <p>Setting up the email address allows you to use the polite pool from OpenAlex which is faster than the default one.</p>
@@ -159,7 +202,7 @@ Configure the library</h1>
 <div class="line"> </div>
 <div class="line">InstitutionsPlot()</div>
 </div><!-- fragment --><p>The notebook <a href="https://github.com/romain894/openalex-analysis/blob/main/Setup_example.ipynb">Setup_example.ipynb</a> contains more setup examples.</p>
-<h2><a class="anchor" id="autotoc_md6"></a>
+<h2><a class="anchor" id="autotoc_md10"></a>
 Default settings</h2>
 <div class="fragment"><div class="line">config.email = None</div>
 <div class="line">config.api_key = None</div>
