@@ -561,6 +561,17 @@ def get_name_of_entitie_from_api(entitie):
         print("Getting name of "+entitie+" from the OpenAlex API (cache disabled)...")
         return get_name_of_entitie_from_api_core(entitie)
 
+def extract_authorships_citation_style(authorships):
+    if len(authorships) == 0:
+        res = "Unknown author"
+    if len(authorships) >= 1:
+        res = authorships[0]['author']['display_name']
+    if len(authorships) >= 2:
+        res += ", "+authorships[1]['author']['display_name']
+    if len(authorships) > 1:
+        res += " et al."
+    return res
+
 
 def get_info_about_entitie_from_api_core(entitie, infos = ["display_name"]):
     """!
@@ -574,15 +585,7 @@ def get_info_about_entitie_from_api_core(entitie, infos = ["display_name"]):
     # call the API
     e = get_entitie_type_from_id(entitie)()[entitie]
     if "author_citation_style" in infos:
-        if len(e["authorships"]) == 0:
-            e["author_citation_style"] = "Unknown author"
-        if len(e["authorships"]) >= 1:
-            e["author_citation_style"] = e["authorships"][0]['author']['display_name']
-        if len(e["authorships"]) >= 2:
-            e["author_citation_style"] += ", "+e["authorships"][1]['author']['display_name']
-        if len(e["authorships"]) > 1:
-            e["author_citation_style"] += " et al."
-        #e["author_citation_style"] =
+        e["author_citation_style"] = extract_authorships_citation_style(e["authorships"])
     e = {key: val for key, val in e.items() if key in infos}
     return e
 
@@ -960,6 +963,8 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             print((self.element_count_df.concept_level.iloc[0]))
             self.element_count_df = self.element_count_df.loc[self.element_count_df.concept_level>=min_concept_level]
 
+    def add_authorships_citation_style(self):
+        self.entities_df['author_citation_style'] = self.entities_df['authorships'].apply(extract_authorships_citation_style)
         
 
 
