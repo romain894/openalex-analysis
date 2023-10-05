@@ -12,6 +12,7 @@ import numpy as np
 import country_converter as coco
 from redis import StrictRedis
 from redis_cache import RedisCache
+import requests
 
 # sys.path.append(os.path.abspath('pyalex'))
 from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
@@ -613,6 +614,33 @@ def get_info_about_entitie_from_api(entitie, infos = ["display_name"], return_as
         res = pd.Series(data=data, index=index)
     return res
 
+
+def check_if_entity_exists_core(entitie):
+    """!
+    @brief      Check if the entity exists
+
+    @param      entitie  The entitie id
+
+    @return     The name of entitie (str)
+    """
+    # get the name of the entity
+    api_path = str(entitie).removeprefix("<class 'pyalex.api.").removesuffix("'>").lower()+"s"
+    # call the API
+    response = requests.get("https://api.openalex.org/"+api_path+"/"+entitie)
+    if response.status_code == 404:
+        return False
+    else:
+        return True 
+
+
+def check_if_entity_exists_from_api(entitie):
+    if config.redis_enabled == True:
+        print("Checking if "+entitie+" exists (cache enabled)...")
+        check_if_entity_exists_core_cached = config.redis_cache.cache()(check_if_entity_exists_core)
+        return check_if_entity_exists_core_cached(entitie)
+    else:
+        print("Checking if "+entitie+" exists (cache disabled)...")
+        return check_if_entity_exists_core(entitie)
         
 class WorksAnalysis(EntitiesAnalysis, Works):
     """!

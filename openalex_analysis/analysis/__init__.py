@@ -11,6 +11,7 @@ from openalex_analysis.analysis.entities_analysis import PublishersAnalysis
 from openalex_analysis.analysis.entities_analysis import get_entitie_type_from_id
 from openalex_analysis.analysis.entities_analysis import get_name_of_entitie_from_api
 from openalex_analysis.analysis.entities_analysis import get_info_about_entitie_from_api
+from openalex_analysis.analysis.entities_analysis import check_if_entity_exists_from_api
 
 
 __all__ = [
@@ -25,4 +26,5 @@ __all__ = [
     "get_entitie_type_from_id",
     "get_name_of_entitie_from_api",
     "get_info_about_entitie_from_api",
+    "check_if_entity_exists_from_api",
 ]
