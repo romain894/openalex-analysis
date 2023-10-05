@@ -1,20 +1,11 @@
 # Romain THOMAS 2023
 # Stockholm Resilience Centre, Stockholm University
 
-import os, sys
-from os.path import exists, join # To check if a file exist
-
 import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from jupyter_dash import JupyterDash
-import dash
-import dash_bootstrap_components as dbc # dash app theme
-import plotly.io as pio # plotly theme
 
-# sys.path.append(os.path.abspath('pyalex'))
-from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers
 # config must NOT be imported from pyalex here as it is already imported via entities_analysis
 
 from openalex_analysis.analysis import *
