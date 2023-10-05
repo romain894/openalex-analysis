@@ -963,8 +963,21 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             print((self.element_count_df.concept_level.iloc[0]))
             self.element_count_df = self.element_count_df.loc[self.element_count_df.concept_level>=min_concept_level]
 
+
     def add_authorships_citation_style(self):
         self.entities_df['author_citation_style'] = self.entities_df['authorships'].apply(extract_authorships_citation_style)
+
+
+    def get_authors_count(self, cols = ['author.id', 'count', 'raw_affiliation_string', 'author.display_name', 'author.orcid']):
+        df_authors = pd.json_normalize(self.entities_df['authorships'].explode().to_list())
+        authors_count = pd.DataFrame(df_authors.value_counts('author.id'))
+
+        df_authors = df_authors.drop_duplicates('author.id')
+        df_authors = df_authors.set_index('author.id')
+
+        authors_count = pd.merge(authors_count, df_authors, how='left', left_index=True, right_index=True).reset_index()
+
+        return authors_count[cols]
         
 
 
