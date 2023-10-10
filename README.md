@@ -43,22 +43,6 @@ wplt = WorksAnalysis(concept_regime_shift_id)
 my_dataset = wplt.entities_df
 ```
 
-#### Get the works about sustainability and regime shift
-
-```bash
-from openalex_analysis.analysis import WorksAnalysis
-
-concept_regime_shift_id = 'C2780893879'
-concept_sustainability = 'C66204764'
-extra_filters = {
-    'concepts':{'id':[concept_regime_shift_id, concept_sustainability]},
-}
-
-wplt = WorksAnalysis(extra_filters = extra_filters)
-
-my_dataset = wplt.entities_df
-```
-
 #### Get the works about sustainability from the Stockholm Resilience Centre published in 2020
 
 ```bash
