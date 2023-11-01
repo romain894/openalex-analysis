@@ -980,6 +980,136 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         return authors_count[cols]
         
 
+    def count_yearly_entity_usage(self, entity: str, count_years: list) -> list:
+        """!
+        @brief      Counts the yearly number of time the entity is used.
+
+        @param      entity       The entity to count
+        @param      count_years  The years for which we need to count the entity
+
+        @return     Number of time the entity is used on a yearly basis.
+        """
+        entity_link = "https://openalex.org/"+entity
+        count_res = [None] * len(count_years)
+        for i, year in enumerate(count_years):
+            # get the list of works from the year
+            df = self.entities_df.loc[self.entities_df['publication_year'] == year]
+            if self.get_entitie_type_from_id(entity) == Concepts:
+                # get a dataframe with all the concepts used during the year in the column id
+                df = pd.json_normalize(df['concepts'].explode().to_list())
+            elif self.get_entitie_type_from_id(entity) == Works:
+                # get a dataframe with all the works used during the year in the column id
+                df = pd.DataFrame({'id':df['referenced_works'].explode().dropna()})
+            else:
+                raise ValueError("Entity type not supported")
+            if df.empty:
+                count_res[i] = 0
+            else:
+                # count the concept usage
+                count = pd.DataFrame(df.value_counts('id'))
+                count_res[i] = count['count'].get(entity_link, 0)
+                #count_res[i] = count.loc[concept]['count']
+        return count_res
+
+
+    def count_yearly_works(self, count_years: list) -> list:
+        """!
+        @brief      Return the number of works present per year in entities_df
+        
+        @param      count_years  The years for which we need to count the works
+        
+        @return     Number of yearly works.
+        """
+        count_res = [None] * len(count_years)
+        for i, year in enumerate(count_years):
+            # get the list of works from the year
+            df = self.entities_df.loc[self.entities_df['publication_year'] == year]
+            if df.empty:
+                count_res[i] = 0
+            else:
+                # get the number of rows
+                count_res[i] = len(df.index)
+        return count_res
+
+
+    def get_df_yearly_usage_of_entities(self,
+                                        count_years: list,
+                                        entity_used_ids,
+                                       ) -> pd.DataFrame:
+        """!
+        @brief      Gets the dataframe with the yearly usage by works of
+                    entity_used_ids.
+        
+        @param      count_years      The years for which we need to count the
+                                     entity
+        @param      entity_used_ids  The entity ids to count (str or str[])
+        
+        @return     The df yearly usage by works.
+        """    
+        if not isinstance(entity_used_ids, list):
+            entity_used_ids = [entity_used_ids]
+        df = pd.DataFrame()
+        for entity_used_id in entity_used_ids:
+            print(entity_used_ids)
+            # count
+            usage_count = self.count_yearly_entity_usage(entity_used_id, count_years)
+            works_count = self.count_yearly_works(count_years)
+            entity_used_id_list = [entity_used_id] * len(count_years)
+            entity_from_list = [self.entitie_from_id] * len(count_years)
+            
+            # create the dataframe
+            zipped_data = list(zip(count_years,
+                                   usage_count,
+                                   works_count,
+                                   entity_used_id_list,
+                                   entity_from_list))
+            
+            df_i = pd.DataFrame(zipped_data, columns=['years',
+                                               'usage_count',
+                                               'works_count',
+                                               'entity_used',
+                                               'entity_from',
+                                              ])
+
+            df = pd.concat([df, df_i])
+
+        return df
+
+
+    def get_df_yearly_usage_of_entities_by_multiples_entities(self,
+                                                              count_years: list,
+                                                              entity_used_ids,
+                                                              entity_from_ids = None,
+                                                             ) -> pd.DataFrame:
+        """!
+        @brief      Gets the dataframe with the yearly usage by works of
+                    entity_used_ids, works for multiple entities from.
+        
+        @param      count_years      The years for which we need to count the
+                                     entity
+        @param      entity_used_ids  The entity ids to count (str or str[])
+        @param      entity_from_ids  The entity from identifiers
+         
+        @return     The df yearly usage by works.
+        """
+        if entity_from_ids is None:
+            entity_from_ids = self.entitie_from_id
+
+        if not isinstance(entity_from_ids, list):
+            entity_from_ids = [entity_from_ids]
+
+        df = pd.DataFrame()
+
+        for entity_from_id in entity_from_ids:
+            work_analysis = WorksAnalysis(entity_from_id)
+            df = pd.concat([
+                df,
+                work_analysis.get_df_yearly_usage_of_entities(count_years = count_years,
+                                                              entity_used_ids = entity_used_ids,
+                                                             )
+            ])
+
+        return df
 
 
 class AuthorsAnalysis(EntitiesAnalysis, Authors):

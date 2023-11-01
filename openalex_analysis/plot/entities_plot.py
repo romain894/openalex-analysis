@@ -327,6 +327,77 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
         return fig
 
 
+    def get_figure_entities_yearly_usage(self,
+                                         count_years: list,
+                                         entity_used_ids,
+                                         entity_from_ids = None,
+                                        ):
+        """!
+        @brief      Gets the plot bar figure with the yearly usage of an entity
+                    (concept, work) in the works from another entitiy (institution,
+                    author)
+        
+        @param      count_years     The years to count (list of int)
+        @param      entity_used_ids The entities used (str or str[])
+        @param      entity_from_ids The entities which used the entities to count (str or str[])
+        
+        @return     The figure (fig)
+        """
+
+        df = self.get_df_yearly_usage_of_entities_by_multiples_entities(
+                                                                        count_years = count_years,
+                                                                        entity_used_ids = entity_used_ids,
+                                                                        entity_from_ids = entity_from_ids,
+                                                                       )
+
+        fig = px.bar(df,
+                      x='years',
+                      y='usage_count',
+                      color='entity_from',
+                      pattern_shape='entity_used',
+                      barmode='group',
+                      height=600,
+                     )
+        
+        return fig
+
+
+    def get_figure_entities_yearly_position(self,
+                                            count_years: list,
+                                            entity_used_ids: str,
+                                            entity_from_ids = None,
+                                           ):
+        """!
+        @brief      Gets the plot figure with the yearly usage of an entity (concept,
+                    work) in the works from another entitiy (institution, author)
+        
+        @param      count_years     The years to count (list of int)
+        @param      entity_used_id  The entity used (str)
+        @param      entity_from_ids The entities which used the entities to count (str or str[])
+        
+        @return     The figure (fig)
+        """
+
+        df = self.get_df_yearly_usage_of_entities_by_multiples_entities(
+                                                                        count_years = count_years,
+                                                                        entity_used_ids = entity_used_ids,
+                                                                        entity_from_ids = entity_from_ids,
+                                                                       )
+        
+        fig = px.line(df,
+                      x='works_count',
+                      y='usage_count',
+                      text='years',
+                      color='entity_from',
+                      line_dash='entity_used',
+                      height=600,
+                     )
+        
+        fig.update_traces(textposition="bottom right")
+
+        return fig
+
+
 class AuthorsPlot(EntitiesPlot, AuthorsAnalysis):
     pass
 
