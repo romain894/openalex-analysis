@@ -244,6 +244,9 @@ class EntitiesAnalysis(EntitieNames):
         # # convert to multi index dataframe (we create an index for each 'subcolumn' (=when there is a '.'))
         # tuple_cols = entities_list_df.columns.str.split('.')
         # entities_list_df.columns = pd.MultiIndex.from_tuples(tuple(i) for i in tuple_cols)
+        if not os.path.isdir(config.project_datas_folder_path):
+            print("Creating the directory to store the datas from OpenAlex")
+            os.makedirs(config.project_datas_folder_path)
         print("Checking space left on disk...")
         self.auto_remove_databases_saved()
         # save as compressed parquet file
