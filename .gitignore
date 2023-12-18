@@ -17,3 +17,6 @@ Institution_comparison_report_engineering.ipynb
 
 # Other files
 .~lock*
+
+# IDE files
+.idea
