@@ -4,6 +4,7 @@
 import os, sys
 from os.path import exists, join # To check if a file exist
 import psutil
+import hashlib # to generate file names
 import json
 
 from tqdm import tqdm
@@ -86,6 +87,7 @@ class EntitiesAnalysis(EntitieNames):
                  create_dataframe = True,
                  entitie_name = None,
                  load_only_columns = None,
+                 custom_query = None,
                 ):
         """!
         @param      entitie_from_id           The entitie identifier (eg an
@@ -114,6 +116,7 @@ class EntitiesAnalysis(EntitieNames):
         self.database_file_path = database_file_path
         self.entitie_name = entitie_name
         self.load_only_columns = load_only_columns
+        self.custom_query = custom_query
 
         # dictionary containning for each concept a list of the entities linked to the concept
         # self.entities_concepts = {} # DEPRECATED
@@ -411,7 +414,7 @@ class EntitiesAnalysis(EntitieNames):
         concept_links = ["https://openalex.org/"+item for item in concepts_from]
         self.entities_multi_filtered_df['average_combined_concepts_score'] = [self.get_sum_concept_scores(entitie, concept_links)/len(concepts_from) for index, entitie in self.entities_multi_filtered_df.iterrows()]
     
-    def get_database_file_name(self, entitie_from_id = None, entities_type = None, db_format = "parquet", extra_text = None):
+    def get_database_file_name(self, entitie_from_id = None, entities_type = None, db_format = "parquet"):
         """!
         @brief      Gets the database file name according to the parameters of the
                     ojbect or the arguments given.
@@ -422,8 +425,7 @@ class EntitiesAnalysis(EntitieNames):
         @param      entities_type    The entities type in the database (eg
                                      works) (EntitieOpenAlex)
         @param      db_format        The database file format (str)
-        @param      extra_text       Extra text to add to the file name (str)
-        
+
         @return     The database file name (str)
         """
         if entitie_from_id == None:
@@ -431,22 +433,21 @@ class EntitiesAnalysis(EntitieNames):
         if entities_type == None:
             entities_type = self.EntitieOpenAlex
         file_name = self.get_entitie_string_name(entities_type)+"_"+self.get_entitie_string_name(self.get_entitie_type_from_id(entitie_from_id))[0:-1]+"_"+entitie_from_id
-        # if it's a concept, we add it's name to the file name (we can't do that for the other entitie type as
-        # the names can change. For the concept, all the names are known and saved locally in a csv file)
-        if self.get_entitie_type_from_id(entitie_from_id) == Concepts:
+        # if it's a concept, we add it's name to the file name (we can't do that for the other entities type as
+        # the names can change. For the concept, all the names are known and saved locally in a parquet file)
+        # we don't add the concept name if there is more than one concept in the request (OR query with |)
+        if self.get_entitie_type_from_id(entitie_from_id) == Concepts and entitie_from_id.find('|') == -1:
             file_name += "_"+self.concepts_normalized_names[entitie_from_id].replace(' ', '_')
-        # temporary solution (can be problematic as database number can grow fast)
-        # add the hash value of filters if used
         if self.extra_filters != None:
-            # hash not working accross class instances
-            #file_name += "_"+str(abs(hash(json.dumps(self.extra_filters, sort_keys=True))))
-            # Can be a problem in case of many filters as file names are limited to 255 char
             file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
+        # keep the file name below 120 characters and reserve 22 for the max size + parquet extension (csv extension
+        # is shorter)
+        if len(file_name) > 98:
+            # sha224 length: 56
+            file_name = file_name[:41] + "-" + hashlib.sha224(file_name.encode()).hexdigest()
         file_name += "_max_"+str(config.n_max_entities)
-        if extra_text != None:
-            file_name += "_" + extra_text
+        # add warning for nb max entities to large (>9 999 999 999) because of file name
         return file_name+"."+db_format
-
     def get_entitie_string_name(self, entitie = None):
         """!
         @brief      Gets the entitie type string name.
@@ -663,8 +664,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         """
         # # transform datas
         # # abstract
-        # disabled for now
-        # entitie['extracted_abstract'] = entitie['abstract']
+        entitie['extracted_abstract'] = entitie['abstract']
 
         # delete useless datas
         # for now storing the abstract_inverted_index isn't possible because if expand in the dataframe
