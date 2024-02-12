@@ -1,21 +1,16 @@
-# Romain THOMAS 2023
+# Romain THOMAS 2024
 # Stockholm Resilience Centre, Stockholm University
 
-import os, sys
+import os
 from os.path import exists, join # To check if a file exist
 import psutil
 import hashlib # to generate file names
-import json
 
 from tqdm import tqdm
 import pandas as pd
-import numpy as np
 import country_converter as coco
-from redis import StrictRedis
-from redis_cache import RedisCache
 import requests
 
-# sys.path.append(os.path.abspath('pyalex'))
 from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
 
 from openalex_analysis.names import EntitieNames
@@ -116,7 +111,7 @@ class EntitiesAnalysis(EntitieNames):
         self.database_file_path = database_file_path
         self.entitie_name = entitie_name
         self.load_only_columns = load_only_columns
-#         self.custom_query = custom_query
+        #self.custom_query = custom_query
 
         # dictionary containning for each concept a list of the entities linked to the concept
         # self.entities_concepts = {} # DEPRECATED
