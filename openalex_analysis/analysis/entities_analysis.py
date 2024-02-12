@@ -38,14 +38,6 @@ class AnalysisConfig(dict):
         return super().__getitem__(key)
 
     def __setattr__(self, key, value):
-        # if key == 'redis_parameters':
-        #     print("coucou1")
-        #     if value != None:
-        #         print("coucou2")
-        #         super().__setitem__('redis_client', StrictRedis(value))
-        #         super().__setitem__('cache', RedisCache(redis_client=self.redis_client))
-        #         # redis_client = StrictRedis(**config.redis_parameters)
-        #         # cache = RedisCache(redis_client=redis_client)
         return super().__setitem__(key, value)
 
 
@@ -69,11 +61,8 @@ class EntitiesAnalysis(EntitieNames):
     OpenAlexAnalysis class which contains generic methods to do analysis over OpenAlex entities
     """
 
-    
-
     # to convert country code to country name
     cc = coco.CountryConverter()
-
 
     def __init__(self,
                  entitie_from_id = None,
@@ -111,7 +100,7 @@ class EntitiesAnalysis(EntitieNames):
         self.database_file_path = database_file_path
         self.entitie_name = entitie_name
         self.load_only_columns = load_only_columns
-        #self.custom_query = custom_query
+        # self.custom_query = custom_query
 
         # dictionary containning for each concept a list of the entities linked to the concept
         # self.entities_concepts = {} # DEPRECATED
@@ -239,9 +228,6 @@ class EntitiesAnalysis(EntitieNames):
                 self.entitie_downloading_progress_percentage = i/n_entities_to_download*100
         self.entitie_downloading_progress_percentage = 100
 
-        # sort the list by concept score
-        # Not working + useless?: entities_list = sorted(entities_list, key=lambda d: self.get_concept_score(d, concept), reverse=True)
-        
         # normalize the json format (one column for each field)
         print("Normalizing the json data downloaded...")
         entities_list_df = pd.json_normalize(entities_list)
@@ -314,7 +300,7 @@ class EntitiesAnalysis(EntitieNames):
         @brief      Gets df_filtered which contains the entities of self.entities_df
                     fitting the filters in df_filters
         
-        @param      df_filters  The filters in a dictionnary with for the key
+        @param      df_filters  The filters in a dictionary with for the key
                                 for the data to filter and for the value the
                                 minimum threshold (dict)
         
@@ -324,12 +310,7 @@ class EntitiesAnalysis(EntitieNames):
         entities_df_filtered = self.entities_df
         for key_filter, value_filter in df_filters.items():
             entities_df_filtered = entities_df_filtered.loc[(entities_df_filtered[key_filter] >= value_filter)]
-        # # fitler for cited_by_threshold
-        # if cited_by_threshold != 0:
-        #     entities_df_filtered = entities_df_filtered.loc[(entities_df_filtered['works_cited_by_count_average'] >= cited_by_threshold)]
-        
-        #     if len(display_only_selected_entities):
-        #         entities_df_filtered = entities_df_filtered.loc[(entities_df_filtered[x_datas] >= x_threshold) & (entities_df_filtered[y_datas] >= y_threshold)]
+
         return entities_df_filtered
 
 
@@ -557,14 +538,6 @@ def get_name_of_entitie_from_api_core(entitie):
     e = get_entitie_type_from_id(entitie)()[entitie]
     return e['display_name']
 
-# @config.cache.cache()
-# def get_name_of_entitie_from_api_cache(entitie):
-#     print("Getting name of "+entitie+" from the OpenAlex API (not found in cache)...")
-#     return get_info_about_entitie_from_api_core(entitie)
-
-# def get_name_of_entitie_from_api_no_cache(entitie):
-    # print("Getting name of "+entitie+" from the OpenAlex API (cache disabled)...")
-    # return get_info_about_entitie_from_api_core(entitie)
 
 def get_name_of_entitie_from_api(entitie):
     # if config.redis_parameters != None:
@@ -578,6 +551,7 @@ def get_name_of_entitie_from_api(entitie):
     else:
         print("Getting name of "+entitie+" from the OpenAlex API (cache disabled)...")
         return get_name_of_entitie_from_api_core(entitie)
+
 
 def extract_authorships_citation_style(authorships):
     if len(authorships) == 0:
@@ -607,15 +581,6 @@ def get_info_about_entitie_from_api_core(entitie, infos = ["display_name"]):
     e = {key: val for key, val in e.items() if key in infos}
     return e
 
-
-# @config.cache.cache()
-# def get_info_about_entitie_from_api_cache(entitie, infos = ["display_name"]):
-#     print("Getting information about "+entitie+" from the OpenAlex API (not found in cache)...")
-#     return get_info_about_entitie_from_api_core(entitie, infos = infos)
-
-# def get_info_about_entitie_from_api_no_cache(entitie, infos = ["display_name"]):
-#     print("Getting information about "+entitie+" from the OpenAlex API (cahe disabled)...")
-#     return get_info_about_entitie_from_api_core(entitie, infos = infos)
 
 def get_info_about_entitie_from_api(entitie, infos = ["display_name"], return_as_pd_serie = True):
     # if config.redis_parameters != None:
@@ -662,7 +627,8 @@ def check_if_entity_exists_from_api(entitie):
     else:
         print("Checking if "+entitie+" exists (cache disabled)...")
         return check_if_entity_exists_core(entitie)
-        
+
+
 class WorksAnalysis(EntitiesAnalysis, Works):
     """!
     @brief      This class contains specific methods for Works concepts analysis.
@@ -772,11 +738,6 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
 
     def get_element_count(self, element_type, count_years = []):
-        # entities_to_count_df = None
-        # if count_only_year == None:
-        #     entities_to_count_df = self.entities_df
-        # else:
-        #     entities_to_count_df = self.entities_df[self.entities_df.publication_year == count_only_year]
         match element_type:
             case 'reference':
                 return self.get_works_references_count(count_years = count_years)
@@ -995,7 +956,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         authors_count = pd.merge(authors_count, df_authors, how='left', left_index=True, right_index=True).reset_index()
 
         return authors_count[cols]
-        
+
 
     def count_yearly_entity_usage(self, entity: str, count_years: list) -> list:
         """!
