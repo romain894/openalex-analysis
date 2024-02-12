@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openalex-analysis"
-version = "0.8.2"
+version = "0.9.0"
 description = "A python library to analyse articles, institutions, and others entities from the OpenAlex API"
 readme = "README.md"
 authors = [{ name = "Romain Thomas", email = "romain.thomas@su.se" }]
