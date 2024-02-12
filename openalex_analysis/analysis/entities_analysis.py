@@ -87,19 +87,19 @@ class EntitiesAnalysis(EntitieNames):
                  create_dataframe = True,
                  entitie_name = None,
                  load_only_columns = None,
-                 custom_query = None,
+                 # custom_query = None,
                 ):
         """!
         @param      entitie_from_id           The entitie identifier (eg an
                                               institution id) from which to take
                                               the entities (eg the works) to
                                               analyse (str)
-        @param      filters                   Optional additionnal filters,
+        @param      extra_filters             Optional additional filters,
                                               refer to the documentation of
                                               openalex and pyalex for the format
                                               (dict)
         @param      database_file_path        The database file path to force
-                                              the analyse over datas in a
+                                              the analysis over datas in a
                                               specific file (str)
         @param      create_dataframe          Create the dataframe at the
                                               initialisation (and download the
@@ -116,7 +116,7 @@ class EntitiesAnalysis(EntitieNames):
         self.database_file_path = database_file_path
         self.entitie_name = entitie_name
         self.load_only_columns = load_only_columns
-        self.custom_query = custom_query
+#         self.custom_query = custom_query
 
         # dictionary containning for each concept a list of the entities linked to the concept
         # self.entities_concepts = {} # DEPRECATED
@@ -147,13 +147,13 @@ class EntitiesAnalysis(EntitieNames):
         # self.max_storage_percent = max_storage_percent # it will delete databases if storage usage > max_storage_percent
 
         # initialize the values only if entitie_from_type is known
-        if self.entitie_from_id != None:
-            self.entitie_from_type = self.get_entitie_type_from_id(self.entitie_from_id)
+        if self.entitie_from_id != None or self.extra_filters != None:
+            if self.entitie_from_id != None:
+                self.entitie_from_type = self.get_entitie_type_from_id(self.entitie_from_id)
             if self.database_file_path == None:
                 self.database_file_path = join(config.project_datas_folder_path, self.get_database_file_name())
-
-        if entitie_from_id != None and create_dataframe == True:
-            self.load_entities_dataframe()
+            if create_dataframe == True:
+                self.load_entities_dataframe()
 
     def get_count_entities_matched(self, query_filters):
         """!
@@ -175,16 +175,19 @@ class EntitiesAnalysis(EntitieNames):
 
         @return     The api query (dict)
         """
-        query_filters = {self.get_entitie_string_name(self.entitie_from_type): {"id": self.entitie_from_id}}
-        # special cases:
-        # concept of institution as the query key word is x_concepts instead of concepts
-        if self.get_entitie_type_from_id() == Institutions and self.get_entitie_type_from_id(self.entitie_from_id) == Concepts:
-            query_filters = {'x_concepts': {"id": self.entitie_from_id}}
-        if self.get_entitie_type_from_id(self.entitie_from_id) == Authors:
-            query_filters = {'author': {"id": self.entitie_from_id}}
+        if self.entitie_from_id != None:
+            query_filters = {self.get_entitie_string_name(self.entitie_from_type): {"id": self.entitie_from_id}}
+            # special cases:
+            # concept of institution as the query key word is x_concepts instead of concepts
+            if self.get_entitie_type_from_id() == Institutions and self.get_entitie_type_from_id(self.entitie_from_id) == Concepts:
+                query_filters = {'x_concepts': {"id": self.entitie_from_id}}
+            if self.get_entitie_type_from_id(self.entitie_from_id) == Authors:
+                query_filters = {'author': {"id": self.entitie_from_id}}
+        else:
+            query_filters = {}
         if self.extra_filters != None:
             query_filters = query_filters | self.extra_filters
-            print("query:", query_filters)
+        print("query:", query_filters)
         return query_filters
 
 
@@ -194,7 +197,11 @@ class EntitiesAnalysis(EntitieNames):
                     instance, and store the dataset as a parquet file
                 """
 
-        print("Downloading list of "+self.get_entitie_string_name()+" of the "+self.get_entitie_string_name(self.entitie_from_type)[0:-1]+" "+str(self.entitie_from_id))
+        print("Downloading list of "+self.get_entitie_string_name())
+        if self.entitie_from_id != None:
+             print("of the "+self.get_entitie_string_name(self.entitie_from_type)[0:-1]+" "+str(self.entitie_from_id))
+        if self.extra_filters != None:
+            print("with extra filters: "+str(self.extra_filters))
 
         query = self.get_api_query()
         print("Query to download from the API:", query)
@@ -262,8 +269,11 @@ class EntitiesAnalysis(EntitieNames):
         @brief      Loads an entities dataset from file (or download it if needed and
                     allowed by the instance) to the dataframe of the instance
         """
-        print("Loading dataframe of "+self.get_entitie_string_name()+" of the "+self.get_entitie_string_name(self.entitie_from_type)[0:-1]+" "+self.entitie_from_id)
-        #print("Creating dataframe for entities (concept: "+self.concepts_normalized_names[concept]+")")
+        print("Loading dataframe of "+self.get_entitie_string_name())
+        if self.entitie_from_id != None:
+             print("of the "+self.get_entitie_string_name(self.entitie_from_type)[0:-1]+" "+str(self.entitie_from_id))
+        if self.extra_filters != None:
+            print("with extra filters: "+str(self.extra_filters))
 
         # # check if the database file exists
         if exists(self.database_file_path):
@@ -418,7 +428,7 @@ class EntitiesAnalysis(EntitieNames):
         """!
         @brief      Gets the database file name according to the parameters of the
                     ojbect or the arguments given.
-        
+
         @param      entitie_from_id  The identifier of the entitie (eg a concept
                                      id) which was used to filter the entities
                                      (eg works) in the database (str)
@@ -432,12 +442,14 @@ class EntitiesAnalysis(EntitieNames):
             entitie_from_id = self.entitie_from_id
         if entities_type == None:
             entities_type = self.EntitieOpenAlex
-        file_name = self.get_entitie_string_name(entities_type)+"_"+self.get_entitie_string_name(self.get_entitie_type_from_id(entitie_from_id))[0:-1]+"_"+entitie_from_id
-        # if it's a concept, we add it's name to the file name (we can't do that for the other entities type as
-        # the names can change. For the concept, all the names are known and saved locally in a parquet file)
-        # we don't add the concept name if there is more than one concept in the request (OR query with |)
-        if self.get_entitie_type_from_id(entitie_from_id) == Concepts and entitie_from_id.find('|') == -1:
-            file_name += "_"+self.concepts_normalized_names[entitie_from_id].replace(' ', '_')
+        file_name = self.get_entitie_string_name(entities_type)
+        if entitie_from_id != None:
+            file_name += "_"+self.get_entitie_string_name(self.get_entitie_type_from_id(entitie_from_id))[0:-1]+"_"+entitie_from_id
+            # if it's a concept, we add it's name to the file name (we can't do that for the other entities type as
+            # the names can change. For the concept, all the names are known and saved locally in a parquet file)
+            # we don't add the concept name if there is more than one concept in the request (OR query with |)
+            if self.get_entitie_type_from_id(entitie_from_id) == Concepts and entitie_from_id.find('|') == -1:
+                file_name += "_"+self.concepts_normalized_names[entitie_from_id].replace(' ', '_')
         if self.extra_filters != None:
             file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
         # keep the file name below 120 characters and reserve 22 for the max size + parquet extension (csv extension
@@ -448,6 +460,8 @@ class EntitiesAnalysis(EntitieNames):
         file_name += "_max_"+str(config.n_max_entities)
         # add warning for nb max entities to large (>9 999 999 999) because of file name
         return file_name+"."+db_format
+
+    # TODO: rename function to get_entitie_type_string_name
     def get_entitie_string_name(self, entitie = None):
         """!
         @brief      Gets the entitie type string name.
@@ -486,6 +500,9 @@ class EntitiesAnalysis(EntitieNames):
         """
         if entitie == None:
             entitie = self.entitie_from_id
+            # if entitie is None then we return None
+            if entitie == None:
+                return None
         # if the entitie name asked is the one of the current instance and it was provided in the initialisation
         if entitie == self.entitie_from_id and self.entitie_name != None:
             return self.entitie_name
@@ -498,6 +515,8 @@ class EntitiesAnalysis(EntitieNames):
     def get_info_about_entitie(self, entitie, infos = ["display_name"], return_as_pd_serie = True, allow_download_from_API = True):
         if entitie == None:
             entitie = self.entitie_from_id
+            if entitie == None:
+                raise ValueError("Can't get the entitie info of None")
         if allow_download_from_API:
             return get_info_about_entitie_from_api(entitie, infos = infos, return_as_pd_serie = return_as_pd_serie)
         else:
@@ -721,7 +740,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         
         @return     The works references count (pandas Serie)
         """
-        print("Creating the works references count of "+self.get_entitie_string_name()+" "+self.entitie_from_id+"...")
+        print("Creating the works references count of "+self.get_entitie_string_name()+"...")
         if count_years == []:
             return self.entities_df['referenced_works'].explode().value_counts().convert_dtypes()
         else:
@@ -744,7 +763,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         
         @return     The concept count (pandas Serie)
         """
-        print("Creating the concept count of "+self.get_entitie_string_name()+" "+self.entitie_from_id+"...")
+        print("Creating the concept count of "+self.get_entitie_string_name()+"...")
         if count_years == []:
             return self.entities_df['concepts'].explode().apply(lambda c: c['id'] if type(c) == dict else None).value_counts().convert_dtypes()
         else:
@@ -1038,6 +1057,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
     def get_df_yearly_usage_of_entities(self,
                                         count_years: list,
                                         entity_used_ids,
+                                        entity_from_legend = "Custom dataset"
                                        ) -> pd.DataFrame:
         """!
         @brief      Gets the dataframe with the yearly usage by works of
@@ -1046,20 +1066,23 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         @param      count_years      The years for which we need to count the
                                      entity
         @param      entity_used_ids  The entity ids to count (str or str[])
+
+        @param      entity_from_legend    The legend on the plot for the entity_from dataset
         
         @return     The df yearly usage by works.
         """    
         if not isinstance(entity_used_ids, list):
             entity_used_ids = [entity_used_ids]
+        if entity_from_legend == "Custom dataset" and self.entitie_from_id is not None:
+            entity_from_legend = self.entitie_from_id
         df = pd.DataFrame()
         for entity_used_id in entity_used_ids:
-            print(entity_used_ids)
             # count
             usage_count = self.count_yearly_entity_usage(entity_used_id, count_years)
             works_count = self.count_yearly_works(count_years)
             entity_used_id_list = [entity_used_id] * len(count_years)
-            entity_from_list = [self.entitie_from_id] * len(count_years)
-            
+            entity_from_list = [entity_from_legend] * len(count_years)
+
             # create the dataframe
             zipped_data = list(zip(count_years,
                                    usage_count,
@@ -1097,6 +1120,8 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         """
         if entity_from_ids is None:
             entity_from_ids = self.entitie_from_id
+            if entity_from_ids is None:
+                raise ValueError("entity_from_ids not provided and entities_from_id is None. You must provide either entitie_from_id to the class or entity_from_ids to the function")
 
         if not isinstance(entity_from_ids, list):
             entity_from_ids = [entity_from_ids]
