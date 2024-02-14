@@ -5,6 +5,7 @@ import os
 from os.path import exists, join # To check if a file exist
 import psutil
 import hashlib # to generate file names
+import logging
 
 from tqdm import tqdm
 import pandas as pd
@@ -14,6 +15,11 @@ import requests
 from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
 
 from openalex_analysis.names import EntitieNames
+
+# define a custom logging
+log_oa = logging.getLogger(__name__)
+log_oa.addHandler(logging.StreamHandler())
+log_oa.addHandler(logging.FileHandler(__name__+".log"))
 
 
 class AnalysisConfig(dict):
@@ -33,11 +39,27 @@ class AnalysisConfig(dict):
         @param      parquet_compression       TODO
         @param      max_storage_percent       TODO
         @param      redis_parameters          TODO TO UPDATE DOC
+        @param      log_level                 TODO
     """
     def __getattr__(self, key):
         return super().__getitem__(key)
 
     def __setattr__(self, key, value):
+        if key == "log_level":
+            match value:
+                case 'DEBUG':
+                    log_oa.setLevel(logging.DEBUG)
+                case 'INFO':
+                    log_oa.setLevel(logging.INFO)
+                case 'WARNING':
+                    log_oa.setLevel(logging.WARNING)
+                case 'ERROR':
+                    log_oa.setLevel(logging.ERROR)
+                case 'CRITICAL':
+                    log_oa.setLevel(logging.CRITICAL)
+                case _:
+                    raise ValueError("The log_level must be DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'")
+
         return super().__setitem__(key, value)
 
 
@@ -53,6 +75,7 @@ config = AnalysisConfig(email=None,
                         redis_enabled = False,
                         redis_client = None,
                         redis_cache = None,
+                        log_level = 'WARNING',
                         )
 
 
@@ -171,7 +194,7 @@ class EntitiesAnalysis(EntitieNames):
             query_filters = {}
         if self.extra_filters != None:
             query_filters = query_filters | self.extra_filters
-        print("query:", query_filters)
+        log_oa.info("query:", query_filters)
         return query_filters
 
 
@@ -181,23 +204,25 @@ class EntitiesAnalysis(EntitieNames):
                     instance, and store the dataset as a parquet file
                 """
 
-        print("Downloading list of "+self.get_entitie_string_name())
+        log_oa.info("Downloading list of "+self.get_entitie_string_name())
         if self.entitie_from_id != None:
-             print("of the "+self.get_entitie_string_name(self.entitie_from_type)[0:-1]+" "+str(self.entitie_from_id))
+             log_oa.info("of the "+self.get_entitie_string_name(self.entitie_from_type)[0:-1]+" "+str(self.entitie_from_id))
         if self.extra_filters != None:
-            print("with extra filters: "+str(self.extra_filters))
+            log_oa.info("with extra filters: "+str(self.extra_filters))
 
         query = self.get_api_query()
-        print("Query to download from the API:", query)
+        log_oa.info("Query to download from the API:", query)
 
         count_entities_matched = self.get_count_entities_matched(query)
 
         if config.n_max_entities == None or config.n_max_entities > count_entities_matched:
             n_entities_to_download = count_entities_matched
             print("All the", n_entities_to_download, "entities will be downloaded")
+            log_oa.info("All the", n_entities_to_download, "entities will be downloaded")
         else:
             n_entities_to_download = config.n_max_entities
             print("Only", n_entities_to_download, "entities will be downloaded ( out of", count_entities_matched, ")")
+            log_oa.info("Only", n_entities_to_download, "entities will be downloaded ( out of", count_entities_matched, ")")
 
         # create a list to store the entities
         entities_list = [None] * n_entities_to_download
@@ -205,22 +230,21 @@ class EntitiesAnalysis(EntitieNames):
         # create the pager entitie to iterate over the pages of entities to download
         pager = self.EntitieOpenAlex().filter(**query).paginate(per_page = self.per_page, n_max = n_entities_to_download)
 
-        print("Downloading the list of entities thought the OpenAlex API...")
+        log_oa.info("Downloading the list of entities thought the OpenAlex API...")
         with tqdm(total=n_entities_to_download, disable=config.disable_tqdm_loading_bar) as pbar:
             i = 0
             self.entitie_downloading_progress_percentage = 0
             for page in pager:
                 # add the downloaded entities in the main list
                 for entitie in page:
-                    # print(entitie)
                     self.filter_and_format_entitie_data_from_api_response(entitie)
-                    # print(entitie)
                     # raise ValueError("toto stop")
                     if i < n_entities_to_download:
                         entities_list[i] = entitie
                     else:
+                        # useless ?
                         entities_list.append(entitie)
-                        print("entities_list was too short, appending the entitie")
+                        log_oa.warning("entities_list was too short, appending the entitie")
                     i += 1
                 # update the progress bar
                 pbar.update(self.per_page)
@@ -229,19 +253,19 @@ class EntitiesAnalysis(EntitieNames):
         self.entitie_downloading_progress_percentage = 100
 
         # normalize the json format (one column for each field)
-        print("Normalizing the json data downloaded...")
+        log_oa.info("Normalizing the json data downloaded...")
         entities_list_df = pd.json_normalize(entities_list)
         # We don't use multi index dataframe as plotly and dask doesn't support it and the use case is minor
         # # convert to multi index dataframe (we create an index for each 'subcolumn' (=when there is a '.'))
         # tuple_cols = entities_list_df.columns.str.split('.')
         # entities_list_df.columns = pd.MultiIndex.from_tuples(tuple(i) for i in tuple_cols)
         if not os.path.isdir(config.project_datas_folder_path):
-            print("Creating the directory to store the datas from OpenAlex")
+            log_oa.info("Creating the directory to store the datas from OpenAlex")
             os.makedirs(config.project_datas_folder_path)
-        print("Checking space left on disk...")
+        log_oa.info("Checking space left on disk...")
         self.auto_remove_databases_saved()
         # save as compressed parquet file
-        print("Saving the list of entities as a parquet file...")
+        log_oa.info("Saving the list of entities as a parquet file...")
         entities_list_df.to_parquet(self.database_file_path, compression=config.parquet_compression)
 
 
@@ -250,11 +274,11 @@ class EntitiesAnalysis(EntitieNames):
         @brief      Loads an entities dataset from file (or download it if needed and
                     allowed by the instance) to the dataframe of the instance
         """
-        print("Loading dataframe of "+self.get_entitie_string_name())
+        log_oa.info("Loading dataframe of "+self.get_entitie_string_name())
         if self.entitie_from_id != None:
-             print("of the "+self.get_entitie_string_name(self.entitie_from_type)[0:-1]+" "+str(self.entitie_from_id))
+             log_oa.info("of the "+self.get_entitie_string_name(self.entitie_from_type)[0:-1]+" "+str(self.entitie_from_id))
         if self.extra_filters != None:
-            print("with extra filters: "+str(self.extra_filters))
+            log_oa.info("with extra filters: "+str(self.extra_filters))
 
         # # check if the database file exists
         if exists(self.database_file_path):
@@ -266,7 +290,7 @@ class EntitiesAnalysis(EntitieNames):
             self.download_list_entities()
         else:
             raise ValueError("Couldn't load the database of the entitie because doesn't exist locally and not allowed to download it")
-        print("Loading the list of entities from a parquet file...")
+        log_oa.info("Loading the list of entities from a parquet file...")
         try:
             self.entities_df = pd.read_parquet(self.database_file_path, columns = self.load_only_columns)
         except:
@@ -288,11 +312,11 @@ class EntitiesAnalysis(EntitieNames):
                         first_accessed_file_time = os.stat(join(config.project_datas_folder_path, file)).st_atime
                         first_accessed_file = file
             if first_accessed_file == None:
-                print("No more file to delete.")
-                print("Space used on disk: "+str(psutil.disk_usage(config.project_datas_folder_path).percent)+"%")
+                log_oa.warning("No more file to delete.")
+                log_oa.warning("Space used on disk: "+str(psutil.disk_usage(config.project_datas_folder_path).percent)+"%")
                 break
             os.remove(join(config.project_datas_folder_path, first_accessed_file))
-            print("Removed file "+str(join(config.project_datas_folder_path, first_accessed_file))+"_(last_used:_"+str(first_accessed_file_time)+")")                
+            log_oa.info("Removed file "+str(join(config.project_datas_folder_path, first_accessed_file))+"_(last_used:_"+str(first_accessed_file_time)+")")
 
 
     def get_df_filtered_entities_selection_threshold(self, df_filters):
@@ -372,7 +396,7 @@ class EntitiesAnalysis(EntitieNames):
                 self.entities_multi_filtered_df = self.entities_multi_filtered_df.drop_duplicates(subset=['id'])
             # remove the column with the concept score previously computed when loading the database from file
             self.entities_multi_filtered_df.drop(concept, axis=1, inplace=True)
-            print("number of entities loaded:", len(self.entities_multi_filtered_df.index))
+            log_oa.info("number of entities loaded:", len(self.entities_multi_filtered_df.index))
         # filter the entities/dataframe with the concept filters:
         for concept, threshold in zip(concepts_filters, thresholds):
             # load the dataframe of the concept to filter:
@@ -386,7 +410,7 @@ class EntitiesAnalysis(EntitieNames):
                     self.entities_multi_filtered_df.at[entitie.Index, 'concept_score'] = entitie_instance.entities_df.at[entitie.id, concept]
             # remove row with concept score bellow threshold:
             self.entities_multi_filtered_df = self.entities_multi_filtered_df[self.entities_multi_filtered_df['concept_score'] >= threshold]
-            print("number of entities remaining after filter:", len(self.entities_multi_filtered_df.index))
+            log_oa.info("number of entities remaining after filter:", len(self.entities_multi_filtered_df.index))
 
 
     def add_average_combined_concept_score_to_multi_concept_entitie_df(self, concepts_from):
@@ -545,11 +569,11 @@ def get_name_of_entitie_from_api(entitie):
     # else:
     #     return get_name_of_entitie_from_api_no_cache(entitie)
     if config.redis_enabled == True:
-        print("Getting name of "+entitie+" from the OpenAlex API (cache enabled)...")
+        log_oa.info("Getting name of "+entitie+" from the OpenAlex API (cache enabled)...")
         get_name_of_entitie_from_api_core_cached = config.redis_cache.cache()(get_name_of_entitie_from_api_core)
         return get_name_of_entitie_from_api_core_cached(entitie)
     else:
-        print("Getting name of "+entitie+" from the OpenAlex API (cache disabled)...")
+        log_oa.info("Getting name of "+entitie+" from the OpenAlex API (cache disabled)...")
         return get_name_of_entitie_from_api_core(entitie)
 
 
@@ -588,11 +612,11 @@ def get_info_about_entitie_from_api(entitie, infos = ["display_name"], return_as
     # else:
     #     res = get_info_about_entitie_from_api_no_cache(entitie, infos = infos)
     if config.redis_enabled == True:
-        print("Getting information about "+entitie+" from the OpenAlex API (cache enabled)...")
+        log_oa.info("Getting information about "+entitie+" from the OpenAlex API (cache enabled)...")
         get_info_about_entitie_from_api_core_cached = config.redis_cache.cache()(get_info_about_entitie_from_api_core)
         res = get_info_about_entitie_from_api_core_cached(entitie, infos = infos)
     else:
-        print("Getting information about "+entitie+" from the OpenAlex API (cahe disabled)...")
+        log_oa.info("Getting information about "+entitie+" from the OpenAlex API (cahe disabled)...")
         res = get_info_about_entitie_from_api_core(entitie, infos = infos)
     if return_as_pd_serie:
         data = [val for val in res.values()]
@@ -621,11 +645,11 @@ def check_if_entity_exists_core(entitie):
 
 def check_if_entity_exists_from_api(entitie):
     if config.redis_enabled == True:
-        print("Checking if "+entitie+" exists (cache enabled)...")
+        log_oa.info("Checking if "+entitie+" exists (cache enabled)...")
         check_if_entity_exists_core_cached = config.redis_cache.cache()(check_if_entity_exists_core)
         return check_if_entity_exists_core_cached(entitie)
     else:
-        print("Checking if "+entitie+" exists (cache disabled)...")
+        log_oa.info("Checking if "+entitie+" exists (cache disabled)...")
         return check_if_entity_exists_core(entitie)
 
 
@@ -701,7 +725,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         
         @return     The works references count (pandas Serie)
         """
-        print("Creating the works references count of "+self.get_entitie_string_name()+"...")
+        log_oa.info("Creating the works references count of "+self.get_entitie_string_name()+"...")
         if count_years == []:
             return self.entities_df['referenced_works'].explode().value_counts().convert_dtypes()
         else:
@@ -724,7 +748,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         
         @return     The concept count (pandas Serie)
         """
-        print("Creating the concept count of "+self.get_entitie_string_name()+"...")
+        log_oa.info("Creating the concept count of "+self.get_entitie_string_name()+"...")
         if count_years == []:
             return self.entities_df['concepts'].explode().apply(lambda c: c['id'] if type(c) == dict else None).value_counts().convert_dtypes()
         else:
@@ -825,7 +849,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         self.create_element_count_array_progress_percentage = 100
 
         if save_out_array:
-            print("Saving element_count_df to ", out_file_name)
+            log_oa.info("Saving element_count_df to ", out_file_name)
             self.element_count_df.to_csv(out_file_name)
 
 
@@ -837,7 +861,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         @param      sort_by_ascending  Whenever to sort the dataframe ascending
                                        (bool)
         """
-        print("Sorting by "+sort_by)
+        log_oa.info("Sorting by "+sort_by)
         if self.count_element_years == []:
             # we didn't count per year so we can do a simple sort
             self.element_count_df = self.element_count_df.sort_values(by=sort_by, ascending = sort_by_ascending)
@@ -870,31 +894,31 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         if nb_entities < 1:
             raise ValueError("Need at least 2 entities in the dataframe to compare entities")
         main_entitie_col_id = self.element_count_df.columns.values[0]
-        print("Main entitie:", main_entitie_col_id)
+        log_oa.info("Main entitie:", main_entitie_col_id)
         nb_entities = len(self.element_count_df.columns)
         self.element_count_df.fillna(value=0, inplace=True)
-        print("Computing sum_all_entities...")
+        log_oa.info("Computing sum_all_entities...")
         # self.element_count_df['sum_all_entities'] = self.element_count_df.iloc[:, 1:1+nb_entities].sum(axis=1)
         self.element_count_df['sum_all_entities'] = self.element_count_df.sum(axis=1)
-        print("Computing average_all_entities...")
+        log_oa.info("Computing average_all_entities...")
         self.element_count_df['average_all_entities'] = self.element_count_df['sum_all_entities']/nb_entities
-        # print("Computing nb_cited_sum_other_entities...")
+        # log_oa.info("Computing nb_cited_sum_other_entities...")
         # self.element_count_df['nb_cited_sum_other_entities'] = self.element_count_df['sum_all_entities'] - self.element_count_df[main_entitie_col_id]
-        print("Computing proportion_used_by_main_entitie")
+        log_oa.info("Computing proportion_used_by_main_entitie")
         # use sum other entities (exclude main entitie from the sum)
         # self.element_count_df['proportion_used_by_main_entitie'] = self.element_count_df[main_entitie_col_id] / self.element_count_df['nb_cited_sum_other_entities']
         # use sum all entities (include main entitie in the sum)
-        print("fill with NaN values 0 of sum_all_entities to avoid them to be used when ranking (we wan't to ignore these rows as these references aren't used)")
+        log_oa.info("fill with NaN values 0 of sum_all_entities to avoid them to be used when ranking (we wan't to ignore these rows as these references aren't used)")
         self.element_count_df['sum_all_entities'] = self.element_count_df['sum_all_entities'].replace(0, None)
         self.element_count_df['proportion_used_by_main_entitie'] = self.element_count_df[main_entitie_col_id] / self.element_count_df['sum_all_entities']
         #self.element_count_df['proportion_used_by_main_entitie'] = self.element_count_df[main_entitie_col_id].div(self.element_count_df['sum_all_entities'])
         # # we put -1 inplace of NaN values (it's where the sum_all_entities is 0 so the division failed)
         # self.element_count_df.fillna(value=-1, inplace=True)
-        print("Computing sum_all_entities rank...")
+        log_oa.info("Computing sum_all_entities rank...")
         self.element_count_df['sum_all_entities_rank'] = self.element_count_df['sum_all_entities'].rank(ascending = True, pct = True)#, method = 'dense') # before method = 'average' was used
-        print("Computing proportion_used_by_main_entitie rank...")
+        log_oa.info("Computing proportion_used_by_main_entitie rank...")
         self.element_count_df['proportion_used_by_main_entitie_rank'] = self.element_count_df['proportion_used_by_main_entitie'].rank(ascending = False, pct = True)#, method = 'dense') # before method = 'average' was used
-        print("Computing highly used by all entities and low use by main entitie")
+        log_oa.info("Computing highly used by all entities and low use by main entitie")
         self.element_count_df['h_used_all_l_use_main'] = self.element_count_df['sum_all_entities_rank'] * self.element_count_df['proportion_used_by_main_entitie_rank']
         
         self.sort_count_array(sort_by = sort_by, sort_by_ascending = sort_by_ascending)
@@ -937,8 +961,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         self.element_count_df.insert(loc=1, column='concept_level', value=concept_levels_serie)
 
         if min_concept_level != None:
-            print(type(min_concept_level))
-            print((self.element_count_df.concept_level.iloc[0]))
+            log_oa.info("Removed concepts with level bellow "+str(min_concept_level))
             self.element_count_df = self.element_count_df.loc[self.element_count_df.concept_level>=min_concept_level]
 
 
