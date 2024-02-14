@@ -30,7 +30,7 @@ dependencies = [
     "requests",
     "pyarrow"
 ]
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 
 [tool.setuptools]
 include-package-data = true
