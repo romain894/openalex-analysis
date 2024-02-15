@@ -7,6 +7,7 @@ import psutil
 import hashlib  # to generate file names
 import logging
 
+import pyalex.api
 from tqdm import tqdm
 import pandas as pd
 import country_converter as coco
@@ -29,21 +30,21 @@ class AnalysisConfig(dict):
 
         :param email: Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).
         :type email: string
-        :param api_key: Your OpenAlex API key, if you have one.
+        :param api_key: Your OpenAlex API key, if you have one. The default value is None.
         :type api_key: string
-        :param openalex_url: OpenAlex API URL or your self hosted API URL.
+        :param openalex_url: OpenAlex API URL or your self hosted API URL. The default value is "https://api.openalex.org".
         :type openalex_url: string
-        :param http_retry_times: maximum number of retries when querying the OpenAlex API in HTTP.
+        :param http_retry_times: maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.
         :type http_retry_times: int
-        :param allow_automatic_download: The allow automatic download.
+        :param allow_automatic_download: The allow automatic download. The default value is True.
         :type allow_automatic_download: bool
-        :param disable_tqdm_loading_bar: The disable tqdm loading bar.
+        :param disable_tqdm_loading_bar: To disable the tqdm loading bar. The default is False.
         :type disable_tqdm_loading_bar: bool
         :param n_max_entities: Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.
         :type n_max_entities: int
-        :param project_datas_folder_path: Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is ./data
+        :param project_datas_folder_path: Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "./data".
         :type project_datas_folder_path: string
-        :param parquet_compression: Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is brotli.
+        :param parquet_compression: Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is "brotli".
         :type parquet_compression: string
         :param max_storage_percent: When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.
         :type max_storage_percent: int
@@ -80,6 +81,7 @@ class AnalysisConfig(dict):
 config = AnalysisConfig(email=None,
                         api_key=None,
                         openalex_url="https://api.openalex.org",
+                        http_retry_times = 3,
                         allow_automatic_download=True,
                         disable_tqdm_loading_bar=False,
                         n_max_entities=10000,
@@ -111,17 +113,17 @@ class EntitiesAnalysis(EntitieNames):
         """
 
         :param entitie_from_id: The entity identifier (eg an institution id) from which to take the entities (eg the works of this institution) to analyse. If not provided, the default value is None and the entities will be downloaded bases on the extra_filters value.
-        :type entitie_from_id: string
-        :param extra_filters: Optional filters, refer to the documentation of openalex and pyalex for the format
-        :type extra_filters: dict
-        :param database_file_path: The database file (parquet or csv) path to force the analysis over datas in a specific file. The default is to not provide it to use the data from the OpenAlex API or the cached data.
-        :type database_file_path: string
+        :type entitie_from_id: string | None
+        :param extra_filters: Optional filters, refer to the documentation of openalex and pyalex for the format. The default value is None.
+        :type extra_filters: dict | None
+        :param database_file_path: The database file (parquet or csv) path to force the analysis over datas in a specific file. The default value is None to use the data from the OpenAlex API or the cached data.
+        :type database_file_path: string | None
         :param create_dataframe: Create the dataframe at the initialisation (and download the data if allowed and entitie_from_id or extra_filters is provided). The default value is True.
         :type create_dataframe: bool
         :param entitie_name: To specify the name of the entity to avoid downloading it via the API if needed. For concepts and institutions, the names are already stored in the library so no API calls will be done. The default value is None.
-        :type entitie_name: None
+        :type entitie_name: None | None
         :param load_only_columns: Load only the specified columns from the parquet file. Everything will be downloaded anyway. The default value is None.
-        :type load_only_columns: string
+        :type load_only_columns: string | None
         """
         self.per_page = 200  # maximum allowed by the API
 
@@ -166,11 +168,11 @@ class EntitiesAnalysis(EntitieNames):
 
     def get_count_entities_matched(self, query_filters: dict) -> int:
         """
-        Gets and return the number of entities which match the query fitlers.
+        Gets and return the number of entities which match the query filters.
 
-        :param query_filters: The query filters
+        :param query_filters: The query filters.
         :type query_filters: dict
-        :return: The count entities matched
+        :return: The entities count matched.
         :rtype: int
         """
         results, meta = self.EntitieOpenAlex().filter(**query_filters).get(per_page=1, return_meta=True)
@@ -179,7 +181,7 @@ class EntitiesAnalysis(EntitieNames):
 
     def get_api_query(self) -> dict:
         """
-        Gets the api query from the parameters of the instance
+        Gets the api query from the parameters of the instance.
 
         :return: The api query
         :rtype: dict
@@ -327,9 +329,10 @@ class EntitiesAnalysis(EntitieNames):
     def get_df_filtered_entities_selection_threshold(self, df_filters: dict) -> pd.DataFrame:
         """
         Gets df_filtered which contains the entities of self.entities_df fitting the filters in df_filters
-        :param df_filters: The filters in a dictionary with for the key for the data to filter and for the value the minimum threshold
+
+        :param df_filters: The filters in a dictionary with for the key for the data to filter and for the value the minimum threshold.
         :type df_filters: dict
-        :return: df_filtered, corresponding the entities fitting the thresholds
+        :return: pd.DataFrame with the entities fitting the thresholds.
         :rtype: pd.DataFrame
         """
         entities_df_filtered = self.entities_df
@@ -348,17 +351,17 @@ class EntitiesAnalysis(EntitieNames):
         """
         Gets the number of entities selected on the plot (based on the threshold values provided as parameter).
 
-        :param x_threshold: The x threshold
+        :param x_threshold: The x threshold.
         :type x_threshold: float | int
-        :param y_threshold: The y threshold
+        :param y_threshold: The y threshold.
         :type y_threshold: float | int
-        :param cited_by_threshold: The cited by threshold
+        :param cited_by_threshold: The cited by threshold.
         :type cited_by_threshold: float | int
-        :param x_datas: The x datas key on the dataframe
+        :param x_datas: The x datas key on the dataframe.
         :type x_datas: str
-        :param y_datas: The y datas key on the dataframe
+        :param y_datas: The y datas key on the dataframe.
         :type y_datas: str
-        :return: The number of entities selected
+        :return: The number of entities selected.
         :rtype: int
         """
         n_selected_entities = 0
@@ -384,17 +387,17 @@ class EntitiesAnalysis(EntitieNames):
         """
         Creates the multi concept filters entities dataframe. Combines different datasets and filters them.
 
-        :param concepts_from: The concept datasets to import and on which the filters will be applied
+        :param concepts_from: The concept datasets to import and on which the filters will be applied.
         :type concepts_from: list[str]
-        :param concepts_filters: The concepts which will be used to filter
+        :param concepts_filters: The concepts which will be used to filter.
         :type concepts_filters: list[str]
-        :param thresholds: The thresholds attached to each concepts to filter
+        :param thresholds: The thresholds attached to each concepts to filter.
         :type thresholds: list[float] | list[int]
-        :param x_datas: The dataframe key of the global filter (eg the number of works)
+        :param x_datas: The dataframe key of the global filter (eg the number of works).
         :type x_datas: str
-        :param x_threshold: The threshold for the global filter
+        :param x_threshold: The threshold for the global filter.
         :type x_threshold: float | int
-        :param cited_by_threshold: The cited by threshold (another global filter)
+        :param cited_by_threshold: The cited by threshold (another global filter).
         :type cited_by_threshold: float | int
         """
         self.entities_multi_filtered_df = pd.DataFrame()
@@ -437,7 +440,7 @@ class EntitiesAnalysis(EntitieNames):
         """
         Adds a column with the average combined concept score to the multi concept entities dataframe.
 
-        :param concepts_from: The concepts to use to calculate the combined concept score
+        :param concepts_from: The concepts to use to calculate the combined concept score.
         :type concepts_from: list[str]
         """
         concept_links = ["https://openalex.org/" + item for item in concepts_from]
@@ -445,19 +448,22 @@ class EntitiesAnalysis(EntitieNames):
             self.get_sum_concept_scores(entitie, concept_links) / len(concepts_from) for index, entitie in
             self.entities_multi_filtered_df.iterrows()]
 
-    def get_database_file_name(self, entitie_from_id=None, entities_type=None, db_format="parquet"):
-        """!
-        @brief      Gets the database file name according to the parameters of the
-                    ojbect or the arguments given.
+    def get_database_file_name(self,
+                               entitie_from_id: str | None  = None,
+                               entities_type:  pyalex.api.BaseOpenAlex | None = None,
+                               db_format: str = "parquet"
+                               ) -> str:
+        """
+        Gets the database file name according to the parameters of the object or the arguments given.
 
-        @param      entitie_from_id  The identifier of the entitie (eg a concept
-                                     id) which was used to filter the entities
-                                     (eg works) in the database (str)
-        @param      entities_type    The entities type in the database (eg
-                                     works) (EntitieOpenAlex)
-        @param      db_format        The database file format (str)
-
-        @return     The database file name (str)
+        :param entitie_from_id: The instance entity identifier (eg a concept id) which was used to filter the entities (eg works) in the database. If nothing is provided, the instance entity id will be used. Default is None.
+        :type entitie_from_id: str | None
+        :param entities_type: The entity type in the database (eg works). If nothing is provided, the instance entity id will be used. Default is None.
+        :type entities_type: pyalex.api.BaseOpenAlex | None
+        :param db_format: The database file format. The default is "parquet".
+        :type db_format: str
+        :return: The database file name
+        :rtype: str
         """
         if entitie_from_id == None:
             entitie_from_id = self.entitie_from_id
@@ -484,41 +490,42 @@ class EntitiesAnalysis(EntitieNames):
         return file_name + "." + db_format
 
     # TODO: rename function to get_entitie_type_string_name
-    def get_entitie_string_name(self, entitie=None):
-        """!
-        @brief      Gets the entitie type string name.
-        
-        @param      entitie  The entitie, if not provided, the instance entitie
-                             id will be used (BaseOpenAlex)
-        
-        @return     The entitie type name (str)
+    def get_entitie_string_name(self, entitie: pyalex.api.BaseOpenAlex | None = None) -> str:
+        """
+        Gets the entity type in the format of a string.
+
+        :param entitie: The entity type. If nothing is provided, the instance entity type will be used. Default is None.
+        :type entitie: pyalex.api.BaseOpenAlex | None
+        :return: The entity type name in a string
+        :rtype: str
         """
         if entitie == None:
             entitie = self.EntitieOpenAlex
         return str(entitie).removeprefix("<class 'pyalex.api.").removesuffix("'>").lower()
 
-    def get_entitie_type_from_id(self, entitie=None):
-        """!
-        @brief      Gets the entitie type from the entitie id
+    def get_entitie_type_from_id(self, entitie: str | None = None) -> pyalex.api.BaseOpenAlex:
+        """
+        Gets the entity type from the entity id string.
 
-        @param      entitie  The entitie id (str)
-
-        @return     The entitie type (BaseOpenAlex)
+        :param entitie: The entity id. If nothing is provided, the instance entity id will be used. Default is None.
+        :type entitie: str | None
+        :return: The entity type
+        :rtype: pyalex.api.BaseOpenAlex
         """
         if entitie == None:
             entitie = self.entitie_from_id
         return get_entitie_type_from_id(entitie)
 
-    def get_name_of_entitie(self, entitie=None, allow_download_from_API=True):
-        """!
-        @brief      Gets the name of entitie
-        
-        @param      entitie                  The entitie id, if not provided,
-                                             use the one from the instance (str)
-        @param      allow_download_from_API  Allow to download the entitie name
-                                             from the OpenAlex API (bool)
-        
-        @return     The name of entitie (str)
+    def get_name_of_entitie(self, entitie: str | None = None, allow_download_from_API: bool = True) -> str:
+        """
+        Gets the name of entity from its id.
+
+        :param entitie: The entity id, if not provided, use the one from the instance. Default is None.
+        :type entitie: str | None
+        :param allow_download_from_API: Allow to download the entity name from the OpenAlex API. Default is Ture.
+        :type allow_download_from_API: bool
+        :return: The name of the entity.
+        :rtype: str
         """
         if entitie == None:
             entitie = self.entitie_from_id
@@ -534,8 +541,26 @@ class EntitiesAnalysis(EntitieNames):
             raise ValueError(
                 "Can't get the entitie name because not allowed to download from API and not provided at the initialisation")
 
-    def get_info_about_entitie(self, entitie, infos=["display_name"], return_as_pd_serie=True,
-                               allow_download_from_API=True):
+    def get_info_about_entitie(self,
+                               entitie: str | None = None,
+                               infos: list[str] = ["display_name"],
+                               return_as_pd_serie: bool = True,
+                               allow_download_from_API: bool = True
+                               ) -> dict | pd.Series:
+        """
+        Get information about the entity (eg. name, publication_date...). If no entity is provided, the entitie_from_id will be used.
+
+        :param entitie: The entity id, if not provided, use the one from the instance. Default is None.
+        :type entitie: str | None
+        :param infos: The information fields to get. Default is ["display_name"].
+        :type infos: list[str]
+        :param return_as_pd_serie: True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.
+        :type return_as_pd_serie: bool
+        :param allow_download_from_API: Allow the library to download the information from the API. Default is True.
+        :type allow_download_from_API: bool
+        :return:
+        :rtype:
+        """
         if entitie == None:
             entitie = self.entitie_from_id
             if entitie == None:
@@ -546,13 +571,14 @@ class EntitiesAnalysis(EntitieNames):
             raise ValueError("Can't get the entitie info because not allowed to download from API")
 
 
-def get_entitie_type_from_id(entitie):
-    """!
-    @brief      Gets the entitie type from the entitie id
+def get_entitie_type_from_id(entitie: str) -> pyalex.api.BaseOpenAlex:
+    """
+     Gets the entity type from the entity id string.
 
-    @param      entitie  The entitie id (str)
-
-    @return     The entitie type (BaseOpenAlex)
+    :param entitie: The entity id, if not provided, use the one from the instance. Default is None.
+    :type entitie: str | None
+    :return: The entity type
+    :rtype: pyalex.api.BaseOpenAlex
     """
     match entitie[0]:
         case 'W':
@@ -571,20 +597,30 @@ def get_entitie_type_from_id(entitie):
             raise ValueError("Entitie id " + entitie + " not valid")
 
 
-def get_name_of_entitie_from_api_core(entitie):
-    """!
-    @brief      Gets the name of entitie from api
+def get_name_of_entitie_from_api_core(entitie: str) -> str:
+    """
+    Gets the name of the entity from the api.
 
-    @param      entitie  The entitie id
-
-    @return     The name of entitie (str)
+    :param entitie: The entity id.
+    :type entitie: str
+    :return: The name of the entity.
+    :rtype: str
     """
     # call the API
     e = get_entitie_type_from_id(entitie)()[entitie]
     return e['display_name']
 
 
-def get_name_of_entitie_from_api(entitie):
+def get_name_of_entitie_from_api(entitie: str) -> str:
+    """
+    Gets the name of the entity from the api using the optional redis cache system. If the cache is not enabled, the api
+    will be called directly. You should call this function instead of get_name_of_entitie_from_api_core().
+
+    :param entitie: The entity id.
+    :type entitie: str
+    :return: The name of the entity.
+    :rtype: str
+    """
     if config.redis_enabled == True:
         log_oa.info("Getting name of " + entitie + " from the OpenAlex API (cache enabled)...")
         get_name_of_entitie_from_api_core_cached = config.redis_cache.cache()(get_name_of_entitie_from_api_core)
@@ -594,7 +630,15 @@ def get_name_of_entitie_from_api(entitie):
         return get_name_of_entitie_from_api_core(entitie)
 
 
-def extract_authorships_citation_style(authorships):
+def extract_authorships_citation_style(authorships: dict) -> str:
+    """
+    Create a string to cite the authors from an authorships dictionary.
+
+    :param authorships: The authorships dictionary.
+    :type authorships: dict
+    :return: The citation string.
+    :rtype: str
+    """
     if len(authorships) == 0:
         res = "Unknown author"
     if len(authorships) >= 1:
@@ -606,14 +650,16 @@ def extract_authorships_citation_style(authorships):
     return res
 
 
-def get_info_about_entitie_from_api_core(entitie, infos=["display_name"]):
-    """!
-    @brief      Gets information about entitie from api
-    
-    @param      entitie  The entitie id (str)
-    @param      infos    The infos (str)
-    
-    @return     The name of entitie (str)
+def get_info_about_entitie_from_api_core(entitie: str, infos: list[str] = ["display_name"]) -> dict:
+    """
+    Gets information about the entity from the api.
+
+    :param entitie: The entity id.
+    :type entitie: str
+    :param infos: The information to get (see OpenAlex API documentation). You can also request "author_citation_style" to get a citation string for the authors. The default is ["display_name"].
+    :type infos: list[str]
+    :return: The entity information.
+    :rtype: dict
     """
     # call the API
     e = get_entitie_type_from_id(entitie)()[entitie]
@@ -623,7 +669,18 @@ def get_info_about_entitie_from_api_core(entitie, infos=["display_name"]):
     return e
 
 
-def get_info_about_entitie_from_api(entitie, infos=["display_name"], return_as_pd_serie=True):
+def get_info_about_entitie_from_api(entitie: str, infos: list[str] = ["display_name"], return_as_pd_serie: bool = True) -> str | pd.Series:
+    """
+
+    :param entitie: The entity id.
+    :type entitie: str
+    :param infos: The information to get (see OpenAlex API documentation). You can also request "author_citation_style" to get a citation string for the authors. The default is ["display_name"].
+    :type infos: list[str]
+    :param return_as_pd_serie: True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.
+    :type return_as_pd_serie: bool
+    :return: The entity information.
+    :rtype: str | pd.Series
+    """
     if config.redis_enabled == True:
         log_oa.info("Getting information about " + entitie + " from the OpenAlex API (cache enabled)...")
         get_info_about_entitie_from_api_core_cached = config.redis_cache.cache()(get_info_about_entitie_from_api_core)
@@ -638,13 +695,15 @@ def get_info_about_entitie_from_api(entitie, infos=["display_name"], return_as_p
     return res
 
 
-def check_if_entity_exists_core(entitie):
-    """!
-    @brief      Check if the entity exists
+def check_if_entity_exists_core(entitie: str) -> bool:
+    """
+    Check if the entity exists.
+    TODO: check status code for existence of entity as other errors can occur.
 
-    @param      entitie  The entitie id
-
-    @return     The name of entitie (str)
+    :param entitie: The entity id.
+    :type entitie: str
+    :return: True if the entity exists
+    :rtype: bool
     """
     # get the name of the entity
     api_path = str(entitie).removeprefix("<class 'pyalex.api.").removesuffix("'>").lower() + "s"
@@ -656,7 +715,15 @@ def check_if_entity_exists_core(entitie):
         return True
 
 
-def check_if_entity_exists_from_api(entitie):
+def check_if_entity_exists_from_api(entitie: str) -> bool:
+    """
+    Check if the entity exists.
+
+    :param entitie: The entity id.
+    :type entitie: str
+    :return: True if the entity exists
+    :rtype: bool
+    """
     if config.redis_enabled == True:
         log_oa.info("Checking if " + entitie + " exists (cache enabled)...")
         check_if_entity_exists_core_cached = config.redis_cache.cache()(check_if_entity_exists_core)
@@ -667,18 +734,19 @@ def check_if_entity_exists_from_api(entitie):
 
 
 class WorksAnalysis(EntitiesAnalysis, Works):
-    """!
-    @brief      This class contains specific methods for Works concepts analysis.
+    """
+    This class contains specific methods for Works entity analysis.
     """
     EntitieOpenAlex = Works
 
-    def filter_and_format_entitie_data_from_api_response(self, entitie):
-        """!
-        @brief      Filter and format the works data downloaded from the API
-        
-        @param      entitie  The works data from the API (dict)
-        
-        @return     The works datas (dict)
+    def filter_and_format_entitie_data_from_api_response(self, entitie: dict) -> dict:
+        """
+        Filter and format the works data downloaded from the API.
+
+        :param entitie: The works data from the API.
+        :type entitie: dict
+        :return: The works datas
+        :rtype: dict
         """
         # # transform datas
         # # abstract
@@ -706,13 +774,14 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         # institution_name
         entitie['institution_name'] = self.get_institution_name(entitie)
 
-    def get_country_code(self, entitie):
-        """!
-        @brief      Gets the country code from an entitie
+    def get_country_code(self, entitie: dict) -> str:
+        """
+        Get the country code from an entity.
 
-        @param      entitie  The entitie (dict)
-
-        @return     The country code (str)
+        :param entitie: The entity
+        :type entitie: dict
+        :return: The country code
+        :rtype: str
         """
         if entitie['authorships'] != [] and entitie['authorships'][0]['institutions'] != [] and 'country_code' in \
                 entitie['authorships'][0]['institutions'][0]:
@@ -720,13 +789,14 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         else:
             return None
 
-    def get_institution_name(self, entitie):
-        """!
-        @brief      Gets the institution name from an entitie
+    def get_institution_name(self, entitie: dict) -> str:
+        """
+        Get the institution name from an entity.
 
-        @param      entitie  The entitie (dict)
-
-        @return     The institution name (str)
+        :param entitie: The entity.
+        :type entitie: dict
+        :return: The institution name.
+        :rtype: str
         """
         if entitie['authorships'] != [] and entitie['authorships'][0]['institutions'] != [] and 'display_name' in \
                 entitie['authorships'][0]['institutions'][0]:
@@ -734,11 +804,14 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         else:
             return None
 
-    def get_works_references_count(self, count_years=[]):
-        """!
-        @brief      Gets the works references count of the works list of the instance
-        
-        @return     The works references count (pandas Serie)
+    def get_works_references_count(self, count_years: list[int] = []) -> pd.Series:
+        """
+        Get the works references count of the works list of the instance.
+
+        :param count_years: List of years to count the references. The default value is [] to not count by years.
+        :type count_years: list[int]
+        :return: The works references count.
+        :rtype: pd.Series
         """
         log_oa.info("Creating the works references count of " + self.get_entitie_string_name() + "...")
         if count_years == []:
@@ -753,15 +826,14 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             entities_count.name = 'count'
             return entities_count
 
-    def get_works_concepts_count(self, count_years=[]):
-        """!
-        @brief      Gets the concepts count of the works list of the instance
-        
-        @param      count_only_year  If different than None, count only the
-                                     concepts of the works of the given year
-                                     (int)
-        
-        @return     The concept count (pandas Serie)
+    def get_works_concepts_count(self, count_years: list[int] = []) -> pd.Series:
+        """
+        Get the concepts count of the works list of the instance.
+
+        :param count_years: List of years to count the concepts. The default value is [] to not count by years.
+        :type count_years: list[int]
+        :return: The concept count
+        :rtype: pd.Series
         """
         log_oa.info("Creating the concept count of " + self.get_entitie_string_name() + "...")
         if count_years == []:
@@ -778,7 +850,17 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             entities_count.name = 'count'
             return entities_count
 
-    def get_element_count(self, element_type, count_years=[]):
+    def get_element_count(self, element_type: str, count_years: list[int] = []) -> pd.Series:
+        """
+        Get the count of elements (for now references or concepts) by year (optional) used by the entity.
+
+        :param element_type: 'reference' or 'concept'
+        :type element_type: str
+        :param count_years: List of years to count the concepts. The default value is [] to not count by years.
+        :type count_years: list[int]
+        :return: The element count
+        :rtype: pd.Series
+        """
         match element_type:
             case 'reference':
                 return self.get_works_references_count(count_years=count_years)
@@ -787,7 +869,11 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             case _:
                 raise ValueError("Can only count for 'references' or 'concept'")
 
-    def create_element_used_count_array(self, element_type, entities_from=[], out_file_name=None, save_out_array=False,
+    def create_element_used_count_array(self,
+                                        element_type,
+                                        entities_from=[],
+                                        out_file_name=None,
+                                        save_out_array=False,
                                         count_years=[]):
         """!
         @brief      Creates the element used count array. Count the number of times each
