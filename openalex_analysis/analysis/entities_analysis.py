@@ -702,7 +702,7 @@ def check_if_entity_exists_core(entitie: str) -> bool:
 
     :param entitie: The entity id.
     :type entitie: str
-    :return: True if the entity exists
+    :return: True if the entity exists.
     :rtype: bool
     """
     # get the name of the entity
@@ -716,12 +716,12 @@ def check_if_entity_exists_core(entitie: str) -> bool:
 
 
 def check_if_entity_exists_from_api(entitie: str) -> bool:
-    """
+    """3
     Check if the entity exists.
 
     :param entitie: The entity id.
     :type entitie: str
-    :return: True if the entity exists
+    :return: True if the entity exists.
     :rtype: bool
     """
     if config.redis_enabled == True:
@@ -745,7 +745,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
         :param entitie: The works data from the API.
         :type entitie: dict
-        :return: The works datas
+        :return: The works datas.
         :rtype: dict
         """
         # # transform datas
@@ -778,9 +778,9 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         """
         Get the country code from an entity.
 
-        :param entitie: The entity
+        :param entitie: The entity.
         :type entitie: dict
-        :return: The country code
+        :return: The country code.
         :rtype: str
         """
         if entitie['authorships'] != [] and entitie['authorships'][0]['institutions'] != [] and 'country_code' in \
@@ -832,7 +832,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
         :param count_years: List of years to count the concepts. The default value is [] to not count by years.
         :type count_years: list[int]
-        :return: The concept count
+        :return: The concept count.
         :rtype: pd.Series
         """
         log_oa.info("Creating the concept count of " + self.get_entitie_string_name() + "...")
@@ -854,11 +854,11 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         """
         Get the count of elements (for now references or concepts) by year (optional) used by the entity.
 
-        :param element_type: 'reference' or 'concept'
+        :param element_type: The element type ('reference' or 'concept').
         :type element_type: str
         :param count_years: List of years to count the concepts. The default value is [] to not count by years.
         :type count_years: list[int]
-        :return: The element count
+        :return: The element count.
         :rtype: pd.Series
         """
         match element_type:
@@ -870,24 +870,26 @@ class WorksAnalysis(EntitiesAnalysis, Works):
                 raise ValueError("Can only count for 'references' or 'concept'")
 
     def create_element_used_count_array(self,
-                                        element_type,
-                                        entities_from=[],
-                                        out_file_name=None,
-                                        save_out_array=False,
-                                        count_years=[]):
-        """!
-        @brief      Creates the element used count array. Count the number of times each
-                    element (eg reference, concept..) is used and save the array as CSV
-                    (optional)
-        
-        @param      element_type    The element type
-        @param      entities_from   The extra entities to which to count the
-                                    concepts (list of str)
-        @param      out_file_name   The out CSV file name, if not provided, an
-                                    appropriate name is generated (str)
-        @param      save_out_array  Save out array (bool)
-        @param      count_years     If given, it will compute the count for each
-                                    year (list[int])
+                                        element_type: str,
+                                        entities_from: list[str] = [],
+                                        out_file_name: str | None = None,
+                                        save_out_array: bool = False,
+                                        count_years: list[int] = []
+                                        ):
+        """
+        Creates the element used count array. Count the number of times each element (eg reference, concept..) is used
+        and save the array as CSV (optional).
+
+        :param element_type: The element type ('reference' or 'concept').
+        :type element_type: str
+        :param entities_from: The extra entities to which to count the concepts.
+        :type entities_from: list[str]
+        :param out_file_name: The out CSV file name, if not provided, an appropriate name is generated. The default value is None.
+        :type out_file_name: str
+        :param save_out_array: True to save the out array. The default value is False
+        :type save_out_array: bool
+        :param count_years: If given, it will compute the count for each year separately
+        :type count_years: list[int]
         """
         self.count_element_type = element_type
         self.count_element_years = count_years
@@ -961,13 +963,17 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             log_oa.info("Saving element_count_df to ", out_file_name)
             self.element_count_df.to_csv(out_file_name)
 
-    def sort_count_array(self, sort_by='h_used_all_l_use_main', sort_by_ascending=False):
-        """!
-        @brief      Sort the dataframe with the count array (element_count_df)
-        
-        @param      sort_by            The key to sort the dataframe (str)
-        @param      sort_by_ascending  Whenever to sort the dataframe ascending
-                                       (bool)
+    def sort_count_array(self,
+                         sort_by: str = 'h_used_all_l_use_main',
+                         sort_by_ascending: bool = False
+                         ):
+        """
+        Sort the dataframe with the count array (element_count_df).
+
+        :param sort_by: The key to sort the dataframe. The default value is 'h_used_all_l_use_main'.
+        :type sort_by: str
+        :param sort_by_ascending: Whenever to sort the dataframe ascending. The default value is False.
+        :type sort_by_ascending: bool
         """
         log_oa.info("Sorting by " + sort_by)
         if self.count_element_years == []:
@@ -977,20 +983,21 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             sorted_sums = self.element_count_df[sort_by].groupby(level=0).sum().sort_values(ascending=sort_by_ascending)
             self.element_count_df = self.element_count_df.reindex(sorted_sums.index, level=0)
 
-    def add_statistics_to_element_count_array(self, sort_by='h_used_all_l_use_main', sort_by_ascending=False,
-                                              min_concept_level=None):
-        """!
-        @brief      Adds a statistics to the element count array (statistics between the
-                    main entitie to compare (second column in the dataframe) and the sum
-                    of the other entities)
-        
-        @param      sort_by            The key to sort the dataframe (str)
-        @param      sort_by_ascending  Whenever to sort the dataframe ascending
-                                       (bool)
-        @param      min_concept_level  In case the element is a concept, this is
-                                       the minimum level of the concepts we will
-                                       keep (aka remove the lower (= more
-                                       global) concepts)
+    def add_statistics_to_element_count_array(self,
+                                              sort_by: str = 'h_used_all_l_use_main',
+                                              sort_by_ascending: bool = False,
+                                              min_concept_level: int | None = None
+                                              ):
+        """
+        Adds a statistics to the element count array (statistics between the main entity to compare (second column in
+        the dataframe) and the sum of the other entities).
+
+        :param sort_by: The key to sort the dataframe. The default value is 'h_used_all_l_use_main'.
+        :type sort_by: str
+        :param sort_by_ascending: Whenever to sort the dataframe ascending. The default value is False.
+        :type sort_by_ascending: bool
+        :param min_concept_level: In case the element is a concept, this is the minimum level of the concepts we will keep (aka remove the lower (= more global) concepts). The default value is None to not remove concept.
+        :type min_concept_level: int | None
         """
         if not self.count_element_type in ['reference', 'concept']:
             raise ValueError("Can only count for 'references' or 'concept'")
@@ -1044,18 +1051,18 @@ class WorksAnalysis(EntitiesAnalysis, Works):
                 self.add_statistics_to_concept_count_array(min_concept_level=min_concept_level)
 
     def add_statistics_to_references_works_count_array(self):
-        """!
-        @brief      Adds a statistics to the references works count array (statistics
-                    between the main entitie to compare (second column in the dataframe)
-                    and the sum of the other entities)
+        """
+        Adds a statistics to the references works count array (statistics between the main entity to compare (second
+        column in the dataframe) and the sum of the other entities). Specific method for the works (currently not used).
         """
         pass
 
-    def add_statistics_to_concept_count_array(self, min_concept_level=None):
-        """!
-        @brief      Adds a statistics to the concepts count array (statistics
-                    between the main entitie to compare (second column in the dataframe)
-                    and the sum of the other entities)
+    def add_statistics_to_concept_count_array(self, min_concept_level: int | None = None):
+        """
+        Adds a statistics to the concepts count array (statistics between the main entity to compare (second column in
+        the dataframe) and the sum of the other entities). Specific method for the concepts.
+        :param min_concept_level: The minimum level of the concepts we will keep (aka remove the lower (= more global) concepts). The default value is None to not remove concept.
+        :type min_concept_level: int | None
         """
         # add concept names and levels
         element_count_concepts_serie = self.element_count_df.index.to_series()
@@ -1081,11 +1088,23 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             self.element_count_df = self.element_count_df.loc[self.element_count_df.concept_level >= min_concept_level]
 
     def add_authorships_citation_style(self):
+        """
+        Add the author_citation_style column to the DataFrame entities_df
+        """
         self.entities_df['author_citation_style'] = self.entities_df['authorships'].apply(
             extract_authorships_citation_style)
 
     def get_authors_count(self,
-                          cols=['author.id', 'count', 'raw_affiliation_string', 'author.display_name', 'author.orcid']):
+                          cols=['author.id', 'count', 'raw_affiliation_string', 'author.display_name', 'author.orcid']
+                          ) -> pd.DataFrame:
+        """
+        Count the number of times each author appears in entities_df and return the result as a pd.DataFrame.
+
+        :param cols: Columns to return in the DataFrame. Must be existing columns names of authorships. The default value is ['author.id', 'count', 'raw_affiliation_string', 'author.display_name', 'author.orcid'].
+        :type cols: list[str]
+        :return: The authors count.
+        :rtype: pd.DataFrame
+        """
         df_authors = pd.json_normalize(self.entities_df['authorships'].explode().to_list())
         authors_count = pd.DataFrame(df_authors.value_counts('author.id'))
 
@@ -1096,14 +1115,16 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
         return authors_count[cols]
 
-    def count_yearly_entity_usage(self, entity: str, count_years: list) -> list:
-        """!
-        @brief      Counts the yearly number of time the entity is used.
+    def count_yearly_entity_usage(self, entity: str, count_years: list[int]) -> list[int]:
+        """
+        Counts the yearly number of time the entity is used.
 
-        @param      entity       The entity to count
-        @param      count_years  The years for which we need to count the entity
-
-        @return     Number of time the entity is used on a yearly basis.
+        :param entity: The entity (id) to count.
+        :type entity: str
+        :param count_years: The years for which we need to count the entity.
+        :type count_years: list[int]
+        :return: The number of time the entity is used on a yearly basis.
+        :rtype: list[int]
         """
         entity_link = "https://openalex.org/" + entity
         count_res = [None] * len(count_years)
@@ -1127,13 +1148,14 @@ class WorksAnalysis(EntitiesAnalysis, Works):
                 # count_res[i] = count.loc[concept]['count']
         return count_res
 
-    def count_yearly_works(self, count_years: list) -> list:
-        """!
-        @brief      Return the number of works present per year in entities_df
-        
-        @param      count_years  The years for which we need to count the works
-        
-        @return     Number of yearly works.
+    def count_yearly_works(self, count_years: list[int]) -> list[int]:
+        """
+        Return the number of works present per year in entities_df.
+
+        :param count_years: The years for which we need to count the works
+        :type count_years: list[int]
+        :return: Number of works per year.
+        :rtype: list[int]
         """
         count_res = [None] * len(count_years)
         for i, year in enumerate(count_years):
@@ -1147,21 +1169,21 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         return count_res
 
     def get_df_yearly_usage_of_entities(self,
-                                        count_years: list,
-                                        entity_used_ids,
-                                        entity_from_legend="Custom dataset"
+                                        count_years: list[int],
+                                        entity_used_ids: str | list[str],
+                                        entity_from_legend: str = "Custom dataset"
                                         ) -> pd.DataFrame:
-        """!
-        @brief      Gets the dataframe with the yearly usage by works of
-                    entity_used_ids.
-        
-        @param      count_years      The years for which we need to count the
-                                     entity
-        @param      entity_used_ids  The entity ids to count (str or str[])
+        """
+        Gets the dataframe with the yearly usage by works of entity_used_ids.
 
-        @param      entity_from_legend    The legend on the plot for the entity_from dataset
-        
-        @return     The df yearly usage by works.
+        :param count_years: The years for which we need to count the entity.
+        :type count_years: list[int]
+        :param entity_used_ids: The entity ids to count.
+        :type entity_used_ids: str | list[str]
+        :param entity_from_legend: The legend on the plot for the entity_from dataset. The default value is "Custom dataset". If the default value is unchanged and entitie_from_id was specified, entitie_from_id will be used.
+        :type entity_from_legend: str
+        :return: The df yearly usage by works.
+        :rtype: pd.DataFrame
         """
         if not isinstance(entity_used_ids, list):
             entity_used_ids = [entity_used_ids]
@@ -1194,20 +1216,21 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         return df
 
     def get_df_yearly_usage_of_entities_by_multiples_entities(self,
-                                                              count_years: list,
-                                                              entity_used_ids,
-                                                              entity_from_ids=None,
+                                                              count_years: list[int],
+                                                              entity_used_ids: str | list[str],
+                                                              entity_from_ids: str | list[str] | None = None,
                                                               ) -> pd.DataFrame:
-        """!
-        @brief      Gets the dataframe with the yearly usage by works of
-                    entity_used_ids, works for multiple entities from.
-        
-        @param      count_years      The years for which we need to count the
-                                     entity
-        @param      entity_used_ids  The entity ids to count (str or str[])
-        @param      entity_from_ids  The entity from identifiers
-         
-        @return     The df yearly usage by works.
+        """
+        Gets the dataframe with the yearly usage by works of entity_used_ids, works for multiple entities from.
+
+        :param count_years: The years for which we need to count the entities.
+        :type count_years: list[int]
+        :param entity_used_ids: The entity ids to count.
+        :type entity_used_ids: str | list[str]
+        :param entity_from_ids: The entity from identifiers, aka the entities dataset in which we need to count the entity_used_ids. When the default value None is used, the entitie_from_id will be used.
+        :type entity_from_ids: str | list[str] | None
+        :return: The DataFrame of the yearly usage of entity_used_ids by entity_from_ids
+        :rtype: pd.DataFrame
         """
         if entity_from_ids is None:
             entity_from_ids = self.entitie_from_id
@@ -1233,26 +1256,33 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
 
 class AuthorsAnalysis(EntitiesAnalysis, Authors):
+    """
+    This class contains specific methods for Authors entities analysis. Not used for now.
+    """
     EntitieOpenAlex = Authors
 
 
 class SourcesAnalysis(EntitiesAnalysis, Sources):
+    """
+    This class contains specific methods for Sources entities analysis. Not used for now.
+    """
     EntitieOpenAlex = Sources
 
 
 class InstitutionsAnalysis(EntitiesAnalysis, Institutions):
-    """!
-    @brief      This class contains specific methods for Institutions concepts analysis.
+    """
+    This class contains specific methods for Institutions entities analysis.
     """
     EntitieOpenAlex = Institutions
 
-    def filter_and_format_entitie_data_from_api_response(self, entitie):
-        """!
-        @brief      Filter and format the institutions data downloaded from the API
-        
-        @param      entitie  The institutions data from the API (dict)
-        
-        @return     The institutions datas (dict)
+    def filter_and_format_entitie_data_from_api_response(self, entitie: dict) -> dict:
+        """
+        Filter and format the institutions data downloaded from the OpenAlex API.
+
+        :param entitie: The institutions data from the API.
+        :type entitie: dict
+        :return: The institutions data filtered and formatted.
+        :rtype: dict
         """
         # delete useless datas
         del entitie['international']
@@ -1295,24 +1325,30 @@ class InstitutionsAnalysis(EntitiesAnalysis, Institutions):
             # self.entitie_from_id is equal to the concept
             entitie[self.entitie_from_id] = next((item['score'] for item in entitie['x_concepts'] if
                                                   item['id'] == "https://openalex.org/" + self.entitie_from_id), 0)
-            # entitie[concept] = next((item['score'] for key, item in entitie['x_concepts'].items() if item['id'] == "https://openalex.org/"+concept), 0)
 
-    def get_sum_concept_scores(self, institutions, concept_links):
-        """!
-        @brief      Gets the sum of the concept scores of the concepts in the list
-                    concepts
-        
-        @param      Institutions   The institution (list of dict)
-        @param      concept_links  The concept links
-        
-        @return     The sum of the concept scores
+    def get_sum_concept_scores(self, institutions: list[dict], concept_links: list[str]) -> list[float]:
+        """
+        Gets the sum of the concept scores of the concepts in the list concepts.
+
+        :param institutions: The institution .
+        :type institutions: list[dict]
+        :param concept_links: The concept links.
+        :type concept_links: list[str]
+        :return: The sum of the concept scores for each institution.
+        :rtype: list[float]
         """
         return sum([item['score'] for item in institutions['x_concepts'] if item['id'] in concept_links])
 
 
 class ConceptsAnalysis(EntitiesAnalysis, Concepts):
+    """
+    This class contains specific methods for Concepts entities analysis. Not used for now.
+    """
     EntitieOpenAlex = Concepts
 
 
 class PublishersAnalysis(EntitiesAnalysis, Publishers):
+    """
+    This class contains specific methods for Publishers entities analysis. Not used for now.
+    """
     EntitieOpenAlex = Publishers
