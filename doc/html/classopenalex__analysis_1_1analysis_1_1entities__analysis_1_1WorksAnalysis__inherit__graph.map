@@ -1,7 +1,0 @@
-<map id="openalex_analysis.analysis.entities_analysis.WorksAnalysis" name="openalex_analysis.analysis.entities_analysis.WorksAnalysis">
-<area shape="rect" id="node1" title="This class contains specific methods for Works concepts analysis." alt="" coords="96,169,351,211"/>
-<area shape="rect" id="node5" href="$classopenalex__analysis_1_1plot_1_1entities__plot_1_1WorksPlot.html" title="This class contains specific methods for Works concepts plot." alt="" coords="111,259,336,300"/>
-<area shape="rect" id="node2" href="$classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis.html" title="OpenAlexAnalysis class which contains generic methods to do analysis over OpenAlex entities." alt="" coords="5,80,260,121"/>
-<area shape="rect" id="node3" title=" " alt="" coords="77,5,188,32"/>
-<area shape="rect" id="node4" title=" " alt="" coords="284,87,347,114"/>
-</map>

@@ -379,7 +379,7 @@ class EntitiesAnalysis(EntitieNames):
     def create_multi_concept_filters_entities_dataframe(self,
                                                         concepts_from: list[str],
                                                         concepts_filters: list[str],
-                                                        thresholds: list[float] | list[int],
+                                                        thresholds: list[float | int],
                                                         x_datas: str,
                                                         x_threshold: float | int,
                                                         cited_by_threshold: float | int
@@ -392,7 +392,7 @@ class EntitiesAnalysis(EntitieNames):
         :param concepts_filters: The concepts which will be used to filter.
         :type concepts_filters: list[str]
         :param thresholds: The thresholds attached to each concepts to filter.
-        :type thresholds: list[float] | list[int]
+        :type thresholds: list[float | int]
         :param x_datas: The dataframe key of the global filter (eg the number of works).
         :type x_datas: str
         :param x_threshold: The threshold for the global filter.

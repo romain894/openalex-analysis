@@ -1,0 +1,1324 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Reference &mdash; OpenAlex Analysis 0.9.1 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=9dc39874"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Usage" href="usage.html" />
+    <link rel="prev" title="Welcome to OpenAlex Analysis’s documentation!" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            OpenAlex Analysis
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#module-analysis.entities_analysis">Analysis</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.AnalysisConfig"><code class="docutils literal notranslate"><span class="pre">AnalysisConfig</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.AuthorsAnalysis"><code class="docutils literal notranslate"><span class="pre">AuthorsAnalysis</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.AuthorsAnalysis.EntitieOpenAlex"><code class="docutils literal notranslate"><span class="pre">AuthorsAnalysis.EntitieOpenAlex</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.ConceptsAnalysis"><code class="docutils literal notranslate"><span class="pre">ConceptsAnalysis</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.ConceptsAnalysis.EntitieOpenAlex"><code class="docutils literal notranslate"><span class="pre">ConceptsAnalysis.EntitieOpenAlex</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.add_average_combined_concept_score_to_multi_concept_entitie_df"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.add_average_combined_concept_score_to_multi_concept_entitie_df()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.auto_remove_databases_saved"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.auto_remove_databases_saved()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.create_multi_concept_filters_entities_dataframe"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.create_multi_concept_filters_entities_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.download_list_entities"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.download_list_entities()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_api_query"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_api_query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_count_entities_matched"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_count_entities_matched()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_database_file_name"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_database_file_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_df_filtered_entities_selection_threshold"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_df_filtered_entities_selection_threshold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_entitie_string_name"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_entitie_string_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_entitie_type_from_id"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_entitie_type_from_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_info_about_entitie"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_info_about_entitie()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_name_of_entitie"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_name_of_entitie()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_number_of_entities_selected"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_number_of_entities_selected()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.load_entities_dataframe"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.load_entities_dataframe()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.InstitutionsAnalysis"><code class="docutils literal notranslate"><span class="pre">InstitutionsAnalysis</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.InstitutionsAnalysis.EntitieOpenAlex"><code class="docutils literal notranslate"><span class="pre">InstitutionsAnalysis.EntitieOpenAlex</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.InstitutionsAnalysis.filter_and_format_entitie_data_from_api_response"><code class="docutils literal notranslate"><span class="pre">InstitutionsAnalysis.filter_and_format_entitie_data_from_api_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.InstitutionsAnalysis.get_sum_concept_scores"><code class="docutils literal notranslate"><span class="pre">InstitutionsAnalysis.get_sum_concept_scores()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.PublishersAnalysis"><code class="docutils literal notranslate"><span class="pre">PublishersAnalysis</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.PublishersAnalysis.EntitieOpenAlex"><code class="docutils literal notranslate"><span class="pre">PublishersAnalysis.EntitieOpenAlex</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.SourcesAnalysis"><code class="docutils literal notranslate"><span class="pre">SourcesAnalysis</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.SourcesAnalysis.EntitieOpenAlex"><code class="docutils literal notranslate"><span class="pre">SourcesAnalysis.EntitieOpenAlex</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.EntitieOpenAlex"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.EntitieOpenAlex</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.add_authorships_citation_style"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.add_authorships_citation_style()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.add_statistics_to_concept_count_array"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.add_statistics_to_concept_count_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.add_statistics_to_element_count_array"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.add_statistics_to_element_count_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.add_statistics_to_references_works_count_array"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.add_statistics_to_references_works_count_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.count_yearly_entity_usage"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.count_yearly_entity_usage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.count_yearly_works"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.count_yearly_works()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.create_element_used_count_array"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.create_element_used_count_array()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.filter_and_format_entitie_data_from_api_response"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.filter_and_format_entitie_data_from_api_response()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.get_authors_count"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.get_authors_count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.get_country_code"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.get_country_code()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.get_df_yearly_usage_of_entities"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.get_df_yearly_usage_of_entities()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.get_df_yearly_usage_of_entities_by_multiples_entities"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.get_df_yearly_usage_of_entities_by_multiples_entities()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.get_element_count"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.get_element_count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.get_institution_name"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.get_institution_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.get_works_concepts_count"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.get_works_concepts_count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.get_works_references_count"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.get_works_references_count()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.sort_count_array"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.sort_count_array()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.check_if_entity_exists_core"><code class="docutils literal notranslate"><span class="pre">check_if_entity_exists_core()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.check_if_entity_exists_from_api"><code class="docutils literal notranslate"><span class="pre">check_if_entity_exists_from_api()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.extract_authorships_citation_style"><code class="docutils literal notranslate"><span class="pre">extract_authorships_citation_style()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.get_entitie_type_from_id"><code class="docutils literal notranslate"><span class="pre">get_entitie_type_from_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.get_info_about_entitie_from_api"><code class="docutils literal notranslate"><span class="pre">get_info_about_entitie_from_api()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.get_info_about_entitie_from_api_core"><code class="docutils literal notranslate"><span class="pre">get_info_about_entitie_from_api_core()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.get_name_of_entitie_from_api"><code class="docutils literal notranslate"><span class="pre">get_name_of_entitie_from_api()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.get_name_of_entitie_from_api_core"><code class="docutils literal notranslate"><span class="pre">get_name_of_entitie_from_api_core()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-plot.entities_plot">Plot</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.AuthorsPlot"><code class="docutils literal notranslate"><span class="pre">AuthorsPlot</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.ConceptsPlot"><code class="docutils literal notranslate"><span class="pre">ConceptsPlot</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.EntitiesPlot"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.EntitiesPlot.get_figure_entities_of_a_concept_color_country"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot.get_figure_entities_of_a_concept_color_country()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.EntitiesPlot.get_figure_entities_selection_threshold"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot.get_figure_entities_selection_threshold()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.EntitiesPlot.get_figure_time_series_element_used_by_entities"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot.get_figure_time_series_element_used_by_entities()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.InstitutionsPlot"><code class="docutils literal notranslate"><span class="pre">InstitutionsPlot</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.InstitutionsPlot.getCustomData"><code class="docutils literal notranslate"><span class="pre">InstitutionsPlot.getCustomData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.InstitutionsPlot.getHoverTemplate"><code class="docutils literal notranslate"><span class="pre">InstitutionsPlot.getHoverTemplate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.InstitutionsPlot.get_figure_institutions_multi_concepts_filtered"><code class="docutils literal notranslate"><span class="pre">InstitutionsPlot.get_figure_institutions_multi_concepts_filtered()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.PublishersPlot"><code class="docutils literal notranslate"><span class="pre">PublishersPlot</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.SourcesPlot"><code class="docutils literal notranslate"><span class="pre">SourcesPlot</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.WorksPlot"><code class="docutils literal notranslate"><span class="pre">WorksPlot</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.WorksPlot.getCustomData"><code class="docutils literal notranslate"><span class="pre">WorksPlot.getCustomData()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.WorksPlot.getHoverTemplate"><code class="docutils literal notranslate"><span class="pre">WorksPlot.getHoverTemplate()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.WorksPlot.get_figure_entities_yearly_position"><code class="docutils literal notranslate"><span class="pre">WorksPlot.get_figure_entities_yearly_position()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.WorksPlot.get_figure_entities_yearly_usage"><code class="docutils literal notranslate"><span class="pre">WorksPlot.get_figure_entities_yearly_usage()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.WorksPlot.get_figure_nb_time_referenced"><code class="docutils literal notranslate"><span class="pre">WorksPlot.get_figure_nb_time_referenced()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">OpenAlex Analysis</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Reference</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/reference.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="reference">
+<h1>Reference<a class="headerlink" href="#reference" title="Link to this heading"></a></h1>
+<section id="module-analysis.entities_analysis">
+<span id="analysis"></span><h2>Analysis<a class="headerlink" href="#module-analysis.entities_analysis" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis.entities_analysis.AnalysisConfig">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">AnalysisConfig</span></span><a class="headerlink" href="#analysis.entities_analysis.AnalysisConfig" title="Link to this definition"></a></dt>
+<dd><p>OpenAlex Analysis configuration class. This class contains the settings used by openalex-analysis (some settings
+are passed to pyalex)</p>
+<blockquote>
+<div><dl class="field-list simple">
+<dt class="field-odd">param email<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).</p>
+</dd>
+<dt class="field-even">type email<span class="colon">:</span></dt>
+<dd class="field-even"><p>string</p>
+</dd>
+<dt class="field-odd">param api_key<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Your OpenAlex API key, if you have one. The default value is None.</p>
+</dd>
+<dt class="field-even">type api_key<span class="colon">:</span></dt>
+<dd class="field-even"><p>string</p>
+</dd>
+<dt class="field-odd">param openalex_url<span class="colon">:</span></dt>
+<dd class="field-odd"><p>OpenAlex API URL or your self hosted API URL. The default value is “<a class="reference external" href="https://api.openalex.org">https://api.openalex.org</a>”.</p>
+</dd>
+<dt class="field-even">type openalex_url<span class="colon">:</span></dt>
+<dd class="field-even"><p>string</p>
+</dd>
+<dt class="field-odd">param http_retry_times<span class="colon">:</span></dt>
+<dd class="field-odd"><p>maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.</p>
+</dd>
+<dt class="field-even">type http_retry_times<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">param allow_automatic_download<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The allow automatic download. The default value is True.</p>
+</dd>
+<dt class="field-even">type allow_automatic_download<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">param disable_tqdm_loading_bar<span class="colon">:</span></dt>
+<dd class="field-odd"><p>To disable the tqdm loading bar. The default is False.</p>
+</dd>
+<dt class="field-even">type disable_tqdm_loading_bar<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">param n_max_entities<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.</p>
+</dd>
+<dt class="field-even">type n_max_entities<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">param project_datas_folder_path<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is “./data”.</p>
+</dd>
+<dt class="field-even">type project_datas_folder_path<span class="colon">:</span></dt>
+<dd class="field-even"><p>string</p>
+</dd>
+<dt class="field-odd">param parquet_compression<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is “brotli”.</p>
+</dd>
+<dt class="field-even">type parquet_compression<span class="colon">:</span></dt>
+<dd class="field-even"><p>string</p>
+</dd>
+<dt class="field-odd">param max_storage_percent<span class="colon">:</span></dt>
+<dd class="field-odd"><p>When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.</p>
+</dd>
+<dt class="field-even">type max_storage_percent<span class="colon">:</span></dt>
+<dd class="field-even"><p>int</p>
+</dd>
+<dt class="field-odd">param redis_enabled<span class="colon">:</span></dt>
+<dd class="field-odd"><p>True if you want to enable the Redis cache. You need a working Redis instance and provide redis_cache. The default is False.</p>
+</dd>
+<dt class="field-even">type redis_enabled<span class="colon">:</span></dt>
+<dd class="field-even"><p>bool</p>
+</dd>
+<dt class="field-odd">param redis_cache<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The Redis cache to use (see the examples in the documentation). The default value is None.</p>
+</dd>
+<dt class="field-even">type redis_cache<span class="colon">:</span></dt>
+<dd class="field-even"><p>RedisCache</p>
+</dd>
+<dt class="field-odd">param log_level<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The log detail level for openalex-analysis (library specific). The log_level must be ‘DEBUG’, ‘INFO’, ‘WARNING’, ‘ERROR’ or ‘CRITICAL’. The default value ‘WARNING’.</p>
+</dd>
+<dt class="field-even">type log_level<span class="colon">:</span></dt>
+<dd class="field-even"><p>string</p>
+</dd>
+</dl>
+</div></blockquote>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis.entities_analysis.AuthorsAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">AuthorsAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.AuthorsAnalysis" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Authors entities analysis. Not used for now.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis.entities_analysis.AuthorsAnalysis.EntitieOpenAlex">
+<span class="sig-name descname"><span class="pre">EntitieOpenAlex</span></span><a class="headerlink" href="#analysis.entities_analysis.AuthorsAnalysis.EntitieOpenAlex" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Authors</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis.entities_analysis.ConceptsAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">ConceptsAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.ConceptsAnalysis" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Concepts entities analysis. Not used for now.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis.entities_analysis.ConceptsAnalysis.EntitieOpenAlex">
+<span class="sig-name descname"><span class="pre">EntitieOpenAlex</span></span><a class="headerlink" href="#analysis.entities_analysis.ConceptsAnalysis.EntitieOpenAlex" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Concepts</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">EntitiesAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis" title="Link to this definition"></a></dt>
+<dd><p>openalex-analysis analysis class which contains generic methods to download and do analysis over OpenAlex entities</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.add_average_combined_concept_score_to_multi_concept_entitie_df">
+<span class="sig-name descname"><span class="pre">add_average_combined_concept_score_to_multi_concept_entitie_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">concepts_from</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.add_average_combined_concept_score_to_multi_concept_entitie_df" title="Link to this definition"></a></dt>
+<dd><p>Adds a column with the average combined concept score to the multi concept entities dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>concepts_from</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The concepts to use to calculate the combined concept score.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.auto_remove_databases_saved">
+<span class="sig-name descname"><span class="pre">auto_remove_databases_saved</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.auto_remove_databases_saved" title="Link to this definition"></a></dt>
+<dd><p>Remove databases files (the data downloaded from OpenAlex) if the storage is full. It keeps the last accessed
+files.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.create_multi_concept_filters_entities_dataframe">
+<span class="sig-name descname"><span class="pre">create_multi_concept_filters_entities_dataframe</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">concepts_from</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concepts_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_datas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cited_by_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.create_multi_concept_filters_entities_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Creates the multi concept filters entities dataframe. Combines different datasets and filters them.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>concepts_from</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The concept datasets to import and on which the filters will be applied.</p></li>
+<li><p><strong>concepts_filters</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The concepts which will be used to filter.</p></li>
+<li><p><strong>thresholds</strong> (<em>list</em><em>[</em><em>float</em><em> | </em><em>int</em><em>]</em>) – The thresholds attached to each concepts to filter.</p></li>
+<li><p><strong>x_datas</strong> (<em>str</em>) – The dataframe key of the global filter (eg the number of works).</p></li>
+<li><p><strong>x_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The threshold for the global filter.</p></li>
+<li><p><strong>cited_by_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The cited by threshold (another global filter).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.download_list_entities">
+<span class="sig-name descname"><span class="pre">download_list_entities</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.download_list_entities" title="Link to this definition"></a></dt>
+<dd><p>Downloads the entities which match the parameters of the instance, and store the dataset as a parquet file .</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_api_query">
+<span class="sig-name descname"><span class="pre">get_api_query</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_api_query" title="Link to this definition"></a></dt>
+<dd><p>Gets the api query from the parameters of the instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The api query</p>
+</dd>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_count_entities_matched">
+<span class="sig-name descname"><span class="pre">get_count_entities_matched</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_count_entities_matched" title="Link to this definition"></a></dt>
+<dd><p>Gets and return the number of entities which match the query filters.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>query_filters</strong> (<em>dict</em>) – The query filters.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The entities count matched.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_database_file_name">
+<span class="sig-name descname"><span class="pre">get_database_file_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entities_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseOpenAlex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">db_format</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'parquet'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_database_file_name" title="Link to this definition"></a></dt>
+<dd><p>Gets the database file name according to the parameters of the object or the arguments given.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entitie_from_id</strong> (<em>str</em><em> | </em><em>None</em>) – The instance entity identifier (eg a concept id) which was used to filter the entities (eg works) in the database. If nothing is provided, the instance entity id will be used. Default is None.</p></li>
+<li><p><strong>entities_type</strong> (<em>pyalex.api.BaseOpenAlex</em><em> | </em><em>None</em>) – The entity type in the database (eg works). If nothing is provided, the instance entity id will be used. Default is None.</p></li>
+<li><p><strong>db_format</strong> (<em>str</em>) – The database file format. The default is “parquet”.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The database file name</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_df_filtered_entities_selection_threshold">
+<span class="sig-name descname"><span class="pre">get_df_filtered_entities_selection_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_df_filtered_entities_selection_threshold" title="Link to this definition"></a></dt>
+<dd><p>Gets df_filtered which contains the entities of self.entities_df fitting the filters in df_filters</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>df_filters</strong> (<em>dict</em>) – The filters in a dictionary with for the key for the data to filter and for the value the minimum threshold.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame with the entities fitting the thresholds.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_entitie_string_name">
+<span class="sig-name descname"><span class="pre">get_entitie_string_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseOpenAlex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_entitie_string_name" title="Link to this definition"></a></dt>
+<dd><p>Gets the entity type in the format of a string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>pyalex.api.BaseOpenAlex</em><em> | </em><em>None</em>) – The entity type. If nothing is provided, the instance entity type will be used. Default is None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The entity type name in a string</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_entitie_type_from_id">
+<span class="sig-name descname"><span class="pre">get_entitie_type_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseOpenAlex</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_entitie_type_from_id" title="Link to this definition"></a></dt>
+<dd><p>Gets the entity type from the entity id string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>str</em><em> | </em><em>None</em>) – The entity id. If nothing is provided, the instance entity id will be used. Default is None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The entity type</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pyalex.api.BaseOpenAlex</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_info_about_entitie">
+<span class="sig-name descname"><span class="pre">get_info_about_entitie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['display_name']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_as_pd_serie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_download_from_API</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_info_about_entitie" title="Link to this definition"></a></dt>
+<dd><p>Get information about the entity (eg. name, publication_date…). If no entity is provided, the entitie_from_id will be used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entitie</strong> (<em>str</em><em> | </em><em>None</em>) – The entity id, if not provided, use the one from the instance. Default is None.</p></li>
+<li><p><strong>infos</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The information fields to get. Default is [“display_name”].</p></li>
+<li><p><strong>return_as_pd_serie</strong> (<em>bool</em>) – True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.</p></li>
+<li><p><strong>allow_download_from_API</strong> (<em>bool</em>) – Allow the library to download the information from the API. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p></p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_name_of_entitie">
+<span class="sig-name descname"><span class="pre">get_name_of_entitie</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">allow_download_from_API</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_name_of_entitie" title="Link to this definition"></a></dt>
+<dd><p>Gets the name of entity from its id.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entitie</strong> (<em>str</em><em> | </em><em>None</em>) – The entity id, if not provided, use the one from the instance. Default is None.</p></li>
+<li><p><strong>allow_download_from_API</strong> (<em>bool</em>) – Allow to download the entity name from the OpenAlex API. Default is Ture.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The name of the entity.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_number_of_entities_selected">
+<span class="sig-name descname"><span class="pre">get_number_of_entities_selected</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">x_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cited_by_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_datas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_datas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_number_of_entities_selected" title="Link to this definition"></a></dt>
+<dd><p>Gets the number of entities selected on the plot (based on the threshold values provided as parameter).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>x_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The x threshold.</p></li>
+<li><p><strong>y_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The y threshold.</p></li>
+<li><p><strong>cited_by_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The cited by threshold.</p></li>
+<li><p><strong>x_datas</strong> (<em>str</em>) – The x datas key on the dataframe.</p></li>
+<li><p><strong>y_datas</strong> (<em>str</em>) – The y datas key on the dataframe.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of entities selected.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.load_entities_dataframe">
+<span class="sig-name descname"><span class="pre">load_entities_dataframe</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.load_entities_dataframe" title="Link to this definition"></a></dt>
+<dd><p>Loads an entities dataset from file (or download it if needed and allowed by the instance) to the dataframe of
+the instance.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis.entities_analysis.InstitutionsAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">InstitutionsAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.InstitutionsAnalysis" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Institutions entities analysis.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis.entities_analysis.InstitutionsAnalysis.EntitieOpenAlex">
+<span class="sig-name descname"><span class="pre">EntitieOpenAlex</span></span><a class="headerlink" href="#analysis.entities_analysis.InstitutionsAnalysis.EntitieOpenAlex" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Institutions</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.InstitutionsAnalysis.filter_and_format_entitie_data_from_api_response">
+<span class="sig-name descname"><span class="pre">filter_and_format_entitie_data_from_api_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#analysis.entities_analysis.InstitutionsAnalysis.filter_and_format_entitie_data_from_api_response" title="Link to this definition"></a></dt>
+<dd><p>Filter and format the institutions data downloaded from the OpenAlex API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>dict</em>) – The institutions data from the API.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The institutions data filtered and formatted.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.InstitutionsAnalysis.get_sum_concept_scores">
+<span class="sig-name descname"><span class="pre">get_sum_concept_scores</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">institutions</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concept_links</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#analysis.entities_analysis.InstitutionsAnalysis.get_sum_concept_scores" title="Link to this definition"></a></dt>
+<dd><p>Gets the sum of the concept scores of the concepts in the list concepts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>institutions</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – The institution .</p></li>
+<li><p><strong>concept_links</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The concept links.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The sum of the concept scores for each institution.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[float]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis.entities_analysis.PublishersAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">PublishersAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.PublishersAnalysis" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Publishers entities analysis. Not used for now.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis.entities_analysis.PublishersAnalysis.EntitieOpenAlex">
+<span class="sig-name descname"><span class="pre">EntitieOpenAlex</span></span><a class="headerlink" href="#analysis.entities_analysis.PublishersAnalysis.EntitieOpenAlex" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Publishers</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis.entities_analysis.SourcesAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">SourcesAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.SourcesAnalysis" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Sources entities analysis. Not used for now.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis.entities_analysis.SourcesAnalysis.EntitieOpenAlex">
+<span class="sig-name descname"><span class="pre">EntitieOpenAlex</span></span><a class="headerlink" href="#analysis.entities_analysis.SourcesAnalysis.EntitieOpenAlex" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Sources</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">WorksAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Works entity analysis.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.EntitieOpenAlex">
+<span class="sig-name descname"><span class="pre">EntitieOpenAlex</span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.EntitieOpenAlex" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Works</span></code></p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.add_authorships_citation_style">
+<span class="sig-name descname"><span class="pre">add_authorships_citation_style</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.add_authorships_citation_style" title="Link to this definition"></a></dt>
+<dd><p>Add the author_citation_style column to the DataFrame entities_df</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.add_statistics_to_concept_count_array">
+<span class="sig-name descname"><span class="pre">add_statistics_to_concept_count_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">min_concept_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.add_statistics_to_concept_count_array" title="Link to this definition"></a></dt>
+<dd><p>Adds a statistics to the concepts count array (statistics between the main entity to compare (second column in
+the dataframe) and the sum of the other entities). Specific method for the concepts.
+:param min_concept_level: The minimum level of the concepts we will keep (aka remove the lower (= more global) concepts). The default value is None to not remove concept.
+:type min_concept_level: int | None</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.add_statistics_to_element_count_array">
+<span class="sig-name descname"><span class="pre">add_statistics_to_element_count_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sort_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'h_used_all_l_use_main'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_by_ascending</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_concept_level</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.add_statistics_to_element_count_array" title="Link to this definition"></a></dt>
+<dd><p>Adds a statistics to the element count array (statistics between the main entity to compare (second column in
+the dataframe) and the sum of the other entities).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sort_by</strong> (<em>str</em>) – The key to sort the dataframe. The default value is ‘h_used_all_l_use_main’.</p></li>
+<li><p><strong>sort_by_ascending</strong> (<em>bool</em>) – Whenever to sort the dataframe ascending. The default value is False.</p></li>
+<li><p><strong>min_concept_level</strong> (<em>int</em><em> | </em><em>None</em>) – In case the element is a concept, this is the minimum level of the concepts we will keep (aka remove the lower (= more global) concepts). The default value is None to not remove concept.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.add_statistics_to_references_works_count_array">
+<span class="sig-name descname"><span class="pre">add_statistics_to_references_works_count_array</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.add_statistics_to_references_works_count_array" title="Link to this definition"></a></dt>
+<dd><p>Adds a statistics to the references works count array (statistics between the main entity to compare (second
+column in the dataframe) and the sum of the other entities). Specific method for the works (currently not used).</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.count_yearly_entity_usage">
+<span class="sig-name descname"><span class="pre">count_yearly_entity_usage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.count_yearly_entity_usage" title="Link to this definition"></a></dt>
+<dd><p>Counts the yearly number of time the entity is used.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entity</strong> (<em>str</em>) – The entity (id) to count.</p></li>
+<li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The years for which we need to count the entity.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of time the entity is used on a yearly basis.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.count_yearly_works">
+<span class="sig-name descname"><span class="pre">count_yearly_works</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.count_yearly_works" title="Link to this definition"></a></dt>
+<dd><p>Return the number of works present per year in entities_df.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The years for which we need to count the works</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Number of works per year.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.create_element_used_count_array">
+<span class="sig-name descname"><span class="pre">create_element_used_count_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entities_from</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">save_out_array</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.create_element_used_count_array" title="Link to this definition"></a></dt>
+<dd><p>Creates the element used count array. Count the number of times each element (eg reference, concept..) is used
+and save the array as CSV (optional).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>element_type</strong> (<em>str</em>) – The element type (‘reference’ or ‘concept’).</p></li>
+<li><p><strong>entities_from</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The extra entities to which to count the concepts.</p></li>
+<li><p><strong>out_file_name</strong> (<em>str</em>) – The out CSV file name, if not provided, an appropriate name is generated. The default value is None.</p></li>
+<li><p><strong>save_out_array</strong> (<em>bool</em>) – True to save the out array. The default value is False</p></li>
+<li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – If given, it will compute the count for each year separately</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.filter_and_format_entitie_data_from_api_response">
+<span class="sig-name descname"><span class="pre">filter_and_format_entitie_data_from_api_response</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.filter_and_format_entitie_data_from_api_response" title="Link to this definition"></a></dt>
+<dd><p>Filter and format the works data downloaded from the API.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>dict</em>) – The works data from the API.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The works datas.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.get_authors_count">
+<span class="sig-name descname"><span class="pre">get_authors_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">cols</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">['author.id',</span> <span class="pre">'count',</span> <span class="pre">'raw_affiliation_string',</span> <span class="pre">'author.display_name',</span> <span class="pre">'author.orcid']</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.get_authors_count" title="Link to this definition"></a></dt>
+<dd><p>Count the number of times each author appears in entities_df and return the result as a pd.DataFrame.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>cols</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Columns to return in the DataFrame. Must be existing columns names of authorships. The default value is [‘author.id’, ‘count’, ‘raw_affiliation_string’, ‘author.display_name’, ‘author.orcid’].</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The authors count.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.get_country_code">
+<span class="sig-name descname"><span class="pre">get_country_code</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.get_country_code" title="Link to this definition"></a></dt>
+<dd><p>Get the country code from an entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>dict</em>) – The entity.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The country code.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.get_df_yearly_usage_of_entities">
+<span class="sig-name descname"><span class="pre">get_df_yearly_usage_of_entities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_used_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_from_legend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Custom</span> <span class="pre">dataset'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.get_df_yearly_usage_of_entities" title="Link to this definition"></a></dt>
+<dd><p>Gets the dataframe with the yearly usage by works of entity_used_ids.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The years for which we need to count the entity.</p></li>
+<li><p><strong>entity_used_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em>) – The entity ids to count.</p></li>
+<li><p><strong>entity_from_legend</strong> (<em>str</em>) – The legend on the plot for the entity_from dataset. The default value is “Custom dataset”. If the default value is unchanged and entitie_from_id was specified, entitie_from_id will be used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The df yearly usage by works.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.get_df_yearly_usage_of_entities_by_multiples_entities">
+<span class="sig-name descname"><span class="pre">get_df_yearly_usage_of_entities_by_multiples_entities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_used_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_from_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.get_df_yearly_usage_of_entities_by_multiples_entities" title="Link to this definition"></a></dt>
+<dd><p>Gets the dataframe with the yearly usage by works of entity_used_ids, works for multiple entities from.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The years for which we need to count the entities.</p></li>
+<li><p><strong>entity_used_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em>) – The entity ids to count.</p></li>
+<li><p><strong>entity_from_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The entity from identifiers, aka the entities dataset in which we need to count the entity_used_ids. When the default value None is used, the entitie_from_id will be used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The DataFrame of the yearly usage of entity_used_ids by entity_from_ids</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.get_element_count">
+<span class="sig-name descname"><span class="pre">get_element_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.get_element_count" title="Link to this definition"></a></dt>
+<dd><p>Get the count of elements (for now references or concepts) by year (optional) used by the entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>element_type</strong> (<em>str</em>) – The element type (‘reference’ or ‘concept’).</p></li>
+<li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of years to count the concepts. The default value is [] to not count by years.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The element count.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.get_institution_name">
+<span class="sig-name descname"><span class="pre">get_institution_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.get_institution_name" title="Link to this definition"></a></dt>
+<dd><p>Get the institution name from an entity.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>dict</em>) – The entity.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The institution name.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.get_works_concepts_count">
+<span class="sig-name descname"><span class="pre">get_works_concepts_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.get_works_concepts_count" title="Link to this definition"></a></dt>
+<dd><p>Get the concepts count of the works list of the instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of years to count the concepts. The default value is [] to not count by years.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The concept count.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.get_works_references_count">
+<span class="sig-name descname"><span class="pre">get_works_references_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">[]</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Series</span></span></span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.get_works_references_count" title="Link to this definition"></a></dt>
+<dd><p>Get the works references count of the works list of the instance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – List of years to count the references. The default value is [] to not count by years.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The works references count.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.sort_count_array">
+<span class="sig-name descname"><span class="pre">sort_count_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sort_by</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'h_used_all_l_use_main'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sort_by_ascending</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.sort_count_array" title="Link to this definition"></a></dt>
+<dd><p>Sort the dataframe with the count array (element_count_df).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sort_by</strong> (<em>str</em>) – The key to sort the dataframe. The default value is ‘h_used_all_l_use_main’.</p></li>
+<li><p><strong>sort_by_ascending</strong> (<em>bool</em>) – Whenever to sort the dataframe ascending. The default value is False.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.entities_analysis.check_if_entity_exists_core">
+<span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">check_if_entity_exists_core</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#analysis.entities_analysis.check_if_entity_exists_core" title="Link to this definition"></a></dt>
+<dd><p>Check if the entity exists.
+TODO: check status code for existence of entity as other errors can occur.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>str</em>) – The entity id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the entity exists.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.entities_analysis.check_if_entity_exists_from_api">
+<span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">check_if_entity_exists_from_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">bool</span></span></span><a class="headerlink" href="#analysis.entities_analysis.check_if_entity_exists_from_api" title="Link to this definition"></a></dt>
+<dd><p>3
+Check if the entity exists.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>str</em>) – The entity id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>True if the entity exists.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>bool</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.entities_analysis.extract_authorships_citation_style">
+<span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">extract_authorships_citation_style</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">authorships</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#analysis.entities_analysis.extract_authorships_citation_style" title="Link to this definition"></a></dt>
+<dd><p>Create a string to cite the authors from an authorships dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>authorships</strong> (<em>dict</em>) – The authorships dictionary.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The citation string.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.entities_analysis.get_entitie_type_from_id">
+<span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">get_entitie_type_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseOpenAlex</span></span></span><a class="headerlink" href="#analysis.entities_analysis.get_entitie_type_from_id" title="Link to this definition"></a></dt>
+<dd><blockquote>
+<div><p>Gets the entity type from the entity id string.</p>
+</div></blockquote>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>str</em><em> | </em><em>None</em>) – The entity id, if not provided, use the one from the instance. Default is None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The entity type</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pyalex.api.BaseOpenAlex</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.entities_analysis.get_info_about_entitie_from_api">
+<span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">get_info_about_entitie_from_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['display_name']</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_as_pd_serie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span></span></span><a class="headerlink" href="#analysis.entities_analysis.get_info_about_entitie_from_api" title="Link to this definition"></a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entitie</strong> (<em>str</em>) – The entity id.</p></li>
+<li><p><strong>infos</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The information to get (see OpenAlex API documentation). You can also request “author_citation_style” to get a citation string for the authors. The default is [“display_name”].</p></li>
+<li><p><strong>return_as_pd_serie</strong> (<em>bool</em>) – True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The entity information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str | pd.Series</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.entities_analysis.get_info_about_entitie_from_api_core">
+<span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">get_info_about_entitie_from_api_core</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">['display_name']</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span></span></span><a class="headerlink" href="#analysis.entities_analysis.get_info_about_entitie_from_api_core" title="Link to this definition"></a></dt>
+<dd><p>Gets information about the entity from the api.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entitie</strong> (<em>str</em>) – The entity id.</p></li>
+<li><p><strong>infos</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The information to get (see OpenAlex API documentation). You can also request “author_citation_style” to get a citation string for the authors. The default is [“display_name”].</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The entity information.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>dict</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.entities_analysis.get_name_of_entitie_from_api">
+<span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">get_name_of_entitie_from_api</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#analysis.entities_analysis.get_name_of_entitie_from_api" title="Link to this definition"></a></dt>
+<dd><p>Gets the name of the entity from the api using the optional redis cache system. If the cache is not enabled, the api
+will be called directly. You should call this function instead of get_name_of_entitie_from_api_core().</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>str</em>) – The entity id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The name of the entity.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="analysis.entities_analysis.get_name_of_entitie_from_api_core">
+<span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">get_name_of_entitie_from_api_core</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#analysis.entities_analysis.get_name_of_entitie_from_api_core" title="Link to this definition"></a></dt>
+<dd><p>Gets the name of the entity from the api.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entitie</strong> (<em>str</em>) – The entity id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The name of the entity.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-plot.entities_plot">
+<span id="plot"></span><h2>Plot<a class="headerlink" href="#module-plot.entities_plot" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="plot.entities_plot.AuthorsPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plot.entities_plot.</span></span><span class="sig-name descname"><span class="pre">AuthorsPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.entities_plot.AuthorsPlot" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Authors plot. Not used for now.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="plot.entities_plot.ConceptsPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plot.entities_plot.</span></span><span class="sig-name descname"><span class="pre">ConceptsPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.entities_plot.ConceptsPlot" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Concepts plot. Not used for now.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="plot.entities_plot.EntitiesPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plot.entities_plot.</span></span><span class="sig-name descname"><span class="pre">EntitiesPlot</span></span><a class="headerlink" href="#plot.entities_plot.EntitiesPlot" title="Link to this definition"></a></dt>
+<dd><p>EntitiesPlot class which contains generic methods to do plots of OpenAlex entities.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.EntitiesPlot.get_figure_entities_of_a_concept_color_country">
+<span class="sig-name descname"><span class="pre">get_figure_entities_of_a_concept_color_country</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">concept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#plot.entities_plot.EntitiesPlot.get_figure_entities_of_a_concept_color_country" title="Link to this definition"></a></dt>
+<dd><p>Gets the figure with the entities of a concept, and with the country as color.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>concept</strong> (<em>str</em>) – The concept id.</p></li>
+<li><p><strong>plot_parameters</strong> (<em>dict</em><em> | </em><em>None</em>) – The plot parameters.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The figure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>go.Figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.EntitiesPlot.get_figure_entities_selection_threshold">
+<span class="sig-name descname"><span class="pre">get_figure_entities_selection_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">concept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cited_by_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_only_selected_entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_threshold_lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_to_highlight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#plot.entities_plot.EntitiesPlot.get_figure_entities_selection_threshold" title="Link to this definition"></a></dt>
+<dd><p>Get the figure with the entities of a concept and the selection threshold lines (optional).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>concept</strong> (<em>str</em>) – The concept id.</p></li>
+<li><p><strong>plot_parameters</strong> (<em>dict</em>) – The plot parameters.</p></li>
+<li><p><strong>x_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The x threshold.</p></li>
+<li><p><strong>y_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The y threshold.</p></li>
+<li><p><strong>cited_by_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The cited by threshold.</p></li>
+<li><p><strong>display_only_selected_entities</strong> (<em>list</em><em> | </em><em>None</em>) – The display only selected entities. TODO: change type</p></li>
+<li><p><strong>display_threshold_lines</strong> (<em>list</em><em> | </em><em>None</em>) – The display threshold lines. TODO: change type</p></li>
+<li><p><strong>entity_to_highlight</strong> (<em>str</em><em> | </em><em>None</em>) – The entity to highlight on the plot.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The figure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>go.Figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.EntitiesPlot.get_figure_time_series_element_used_by_entities">
+<span class="sig-name descname"><span class="pre">get_figure_time_series_element_used_by_entities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_datas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'year'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_legend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Year'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_datas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_legend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Entities'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#plot.entities_plot.EntitiesPlot.get_figure_time_series_element_used_by_entities" title="Link to this definition"></a></dt>
+<dd><p>Get the figure with the time series usage of a element (eg. reference, concept) by entities.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>element</strong> (<em>str</em><em> | </em><em>None</em>) – The element id. The default value is None. When the element is None, the first element id in the element_count_df is selected.</p></li>
+<li><p><strong>plot_title</strong> (<em>str</em><em> | </em><em>None</em>) – The plot title. The default value is None to generate an appropriate title.</p></li>
+<li><p><strong>x_datas</strong> (<em>str</em>) – The x datas. The default value is ‘year’.</p></li>
+<li><p><strong>x_legend</strong> (<em>str</em>) – The x legend. The default value is “Year”.</p></li>
+<li><p><strong>y_datas</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The y datas (the entities to plot). The default value is None to use all the entities in the dataframe.</p></li>
+<li><p><strong>color_legend</strong> (<em>str</em>) – The color legend. TODO: delete because unused?</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The figure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>go.Figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="plot.entities_plot.InstitutionsPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plot.entities_plot.</span></span><span class="sig-name descname"><span class="pre">InstitutionsPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.entities_plot.InstitutionsPlot" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Institutions plot.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.InstitutionsPlot.getCustomData">
+<span class="sig-name descname"><span class="pre">getCustomData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">concept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plot.entities_plot.InstitutionsPlot.getCustomData" title="Link to this definition"></a></dt>
+<dd><p>Get the custom data for the plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>concept</strong> (<em>str</em>) – The concept id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of custom data for Institutions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.InstitutionsPlot.getHoverTemplate">
+<span class="sig-name descname"><span class="pre">getHoverTemplate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">concept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plot.entities_plot.InstitutionsPlot.getHoverTemplate" title="Link to this definition"></a></dt>
+<dd><p>Get the hover template for the plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>concept</strong> (<em>str</em>) – The concept id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The hover template.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.InstitutionsPlot.get_figure_institutions_multi_concepts_filtered">
+<span class="sig-name descname"><span class="pre">get_figure_institutions_multi_concepts_filtered</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plot_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concepts_from</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">concepts_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">thresholds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cited_by_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">institution_to_highlight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#plot.entities_plot.InstitutionsPlot.get_figure_institutions_multi_concepts_filtered" title="Link to this definition"></a></dt>
+<dd><p>Gets the figure with the institutions of multiple concepts and filtered.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plot_parameters</strong> (<em>dict</em>) – The plot parameters.</p></li>
+<li><p><strong>concepts_from</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The concepts to import to create the dataset.</p></li>
+<li><p><strong>concepts_filters</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The concepts to use to filter the institutions.</p></li>
+<li><p><strong>thresholds</strong> (<em>list</em><em>[</em><em>int</em><em> | </em><em>float</em><em>]</em>) – The thresholds for each concept filter.</p></li>
+<li><p><strong>x_threshold</strong> (<em>int</em><em> | </em><em>float</em>) – The global threshold (eg. nb of works), usually corresponding to the x data (float or int).</p></li>
+<li><p><strong>cited_by_threshold</strong> (<em>int</em><em> | </em><em>float</em>) – The cited by threshold (float or int).</p></li>
+<li><p><strong>institution_to_highlight</strong> (<em>str</em>) – The institution to highlight on the plot (str).</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The figure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>go.Figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="plot.entities_plot.PublishersPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plot.entities_plot.</span></span><span class="sig-name descname"><span class="pre">PublishersPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.entities_plot.PublishersPlot" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Publishers plot. Not used for now.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="plot.entities_plot.SourcesPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plot.entities_plot.</span></span><span class="sig-name descname"><span class="pre">SourcesPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.entities_plot.SourcesPlot" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Sources plot. Not used for now.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="plot.entities_plot.WorksPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plot.entities_plot.</span></span><span class="sig-name descname"><span class="pre">WorksPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entitie_from_id</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extra_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">database_file_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">create_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entitie_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">load_only_columns</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.entities_plot.WorksPlot" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Works plot.</p>
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.WorksPlot.getCustomData">
+<span class="sig-name descname"><span class="pre">getCustomData</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">concept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plot.entities_plot.WorksPlot.getCustomData" title="Link to this definition"></a></dt>
+<dd><p>Get the custom data for the plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>concept</strong> (<em>str</em>) – The concept id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The list of custom data for Works.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.WorksPlot.getHoverTemplate">
+<span class="sig-name descname"><span class="pre">getHoverTemplate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">concept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#plot.entities_plot.WorksPlot.getHoverTemplate" title="Link to this definition"></a></dt>
+<dd><p>Get the hover template for the plot.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>concept</strong> (<em>str</em>) – The concept id.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The hover template.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>list[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.WorksPlot.get_figure_entities_yearly_position">
+<span class="sig-name descname"><span class="pre">get_figure_entities_yearly_position</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_used_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_from_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#plot.entities_plot.WorksPlot.get_figure_entities_yearly_position" title="Link to this definition"></a></dt>
+<dd><p>Get the plot figure with the yearly usage of an entity (concept, work) in the works from another entity
+(institution, author).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The years to count.</p></li>
+<li><p><strong>entity_used_ids</strong> (<em>str</em>) – The entity used.</p></li>
+<li><p><strong>entity_from_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The entities which used the entities to count. The default value is None. If None, the entitie_from_id is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The figure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>go.Figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.WorksPlot.get_figure_entities_yearly_usage">
+<span class="sig-name descname"><span class="pre">get_figure_entities_yearly_usage</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_used_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_from_ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#plot.entities_plot.WorksPlot.get_figure_entities_yearly_usage" title="Link to this definition"></a></dt>
+<dd><p>Get the plot bar figure with the yearly usage of an entity (concept, work) in the works from another entity
+(institution, author).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The years to count.</p></li>
+<li><p><strong>entity_used_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em>) – The entities used.</p></li>
+<li><p><strong>entity_from_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The entities which used the entities to count. The default value is None. If None, the entitie_from_id is used.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>THe figure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>go.Figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="plot.entities_plot.WorksPlot.get_figure_nb_time_referenced">
+<span class="sig-name descname"><span class="pre">get_figure_nb_time_referenced</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#plot.entities_plot.WorksPlot.get_figure_nb_time_referenced" title="Link to this definition"></a></dt>
+<dd><p>Gets the figure with the number of time each reference is used in a list of works. Also work with concepts.
+TODO: change function name to be more inclusive?</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>element_type</strong> (<em>str</em>) – The element type (‘reference’ or ‘concept’).</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The figure.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>go.Figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to OpenAlex Analysis’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Romain THOMAS.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

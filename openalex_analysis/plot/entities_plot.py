@@ -14,19 +14,23 @@ from openalex_analysis.analysis import *
 figure_height = 800
 
 class EntitiesPlot():
-    """!
-    EntitiesPlot class which contains generic methods to do plots of OpenAlex entities
+    """
+    EntitiesPlot class which contains generic methods to do plots of OpenAlex entities.
     """
     
-    def get_figure_entities_of_a_concept_color_country(self, concept, plot_parameters = None):
-        """!
-        @brief      Gets the figure with the entities of a concept, and with the country
-                    as color
-        
-        @param      concept          The concept (str)
-        @param      plot_parameters  The plot parameters (dict)
-        
-        @return     The figure (fig)
+    def get_figure_entities_of_a_concept_color_country(self,
+                                                       concept: str,
+                                                       plot_parameters: dict | None = None
+                                                       ) -> go.Figure:
+        """
+        Gets the figure with the entities of a concept, and with the country as color.
+
+        :param concept: The concept id.
+        :type concept: str
+        :param plot_parameters: The plot parameters.
+        :type plot_parameters: dict | None
+        :return: The figure.
+        :rtype: go.Figure
         """
         if plot_parameters == None:
             plot_parameters = {
@@ -79,30 +83,38 @@ class EntitiesPlot():
     # (only two colors for the works on the plot) SOLVED?
     
     def get_figure_entities_selection_threshold(self,
-                                                concept,
-                                                plot_parameters,
-                                                x_threshold = 0,
-                                                y_threshold = 0,
-                                                cited_by_threshold = 0,
-                                                display_only_selected_entities = None,
-                                                display_threshold_lines = None,
-                                                entity_to_highlight = None):
-        """!
-        @brief      Gets the figure with the entities of a concept and the selection threshold lines (optional)
-
-        @param      concept                         The concept (str)
-        @param      plot_parameters                 The plot parameters (dict)
-        @param      x_threshold                     The x threshold (float or int)
-        @param      y_threshold                     The y threshold (float or int)
-        @param      cited_by_threshold              The cited by threshold (float or int)
-        @param      display_only_selected_entities  The display only selected entities (bool)
-        @param      display_threshold_lines         The display threshold lines (bool)
-        @param      entity_to_highlight             The entity to highlight on the plot (str)
-
-        @return     The figure (fig)
+                                                concept: str,
+                                                plot_parameters: dict,
+                                                x_threshold: float | int = 0,
+                                                y_threshold: float | int = 0,
+                                                cited_by_threshold: float | int = 0,
+                                                display_only_selected_entities: list | None = None,
+                                                display_threshold_lines: list | None = None,
+                                                entity_to_highlight: str | None = None
+                                                ) -> go.Figure:
         """
+        Get the figure with the entities of a concept and the selection threshold lines (optional).
 
-        # extract the dictionnary plot_parameters:
+        :param concept: The concept id.
+        :type concept: str
+        :param plot_parameters: The plot parameters.
+        :type plot_parameters:  dict
+        :param x_threshold: The x threshold.
+        :type x_threshold: float | int
+        :param y_threshold: The y threshold.
+        :type y_threshold: float | int
+        :param cited_by_threshold: The cited by threshold.
+        :type cited_by_threshold: float | int
+        :param display_only_selected_entities: The display only selected entities. TODO: change type
+        :type display_only_selected_entities: list | None
+        :param display_threshold_lines: The display threshold lines. TODO: change type
+        :type display_threshold_lines: list | None
+        :param entity_to_highlight: The entity to highlight on the plot.
+        :type entity_to_highlight: str | None
+        :return: The figure.
+        :rtype: go.Figure
+        """
+        # extract the dictionary plot_parameters:
         plot_title = plot_parameters['plot_title']
         x_datas = plot_parameters['x_datas']
         x_legend = plot_parameters['x_legend']
@@ -142,8 +154,13 @@ class EntitiesPlot():
         # Entity to highlight on the plot:
         if entity_to_highlight != None:
             fig1.add_traces(
-                px.scatter(entities_df_filtered.loc[entities_df_filtered['id'] == entity_to_highlight], x=x_datas, y=y_datas, custom_data=self.getCustomData(concept)
-                          ).update_traces(marker_size=20, marker={'size':20, 'symbol':'y-up', 'line':{'width':3, 'color':'black'}}).data
+                px.scatter(entities_df_filtered.loc[entities_df_filtered['id'] == entity_to_highlight],
+                           x=x_datas,
+                           y=y_datas,
+                           custom_data=self.getCustomData(concept)
+                          ).update_traces(marker_size=20,
+                                          marker={'size':20, 'symbol':'y-up', 'line':{'width':3, 'color':'black'}}
+                                          ).data
             )
 
         fig1.update_traces(hovertemplate="<br>".join(self.getHoverTemplate(concept)))
@@ -205,27 +222,31 @@ class EntitiesPlot():
 
 
     def get_figure_time_series_element_used_by_entities(self,
-                                                        element = None,
-                                                        plot_title = None,
-                                                        x_datas = 'year',
-                                                        x_legend = "Year",
-                                                        y_datas = None,
-                                                        color_legend = "Entities"):
-        """!
-        @brief      Gets the figure with the time series usage of a element (eg
-                    reference, concept) by entities
-        
-        @param      element       The element (default first in the dataframe) (str)
-        @param      plot_title    The plot title (str)
-        @param      x_datas       The x datas (default: year) (str)
-        @param      x_legend      The x legend (str)
-        @param      y_datas       The y datas (the entities to plot, the default
-                                  is all entities in the dataframe) (list[str])
-        @param      color_legend  The color legend (str)
-        
-        @return     The figure (fig)
+                                                        element: str | None = None,
+                                                        plot_title: str | None = None,
+                                                        x_datas: str = 'year',
+                                                        x_legend: str = "Year",
+                                                        y_datas: list[str] | None = None,
+                                                        color_legend: str = "Entities"
+                                                        ) -> go.Figure:
         """
-        
+        Get the figure with the time series usage of a element (eg. reference, concept) by entities.
+
+        :param element: The element id. The default value is None. When the element is None, the first element id in the element_count_df is selected.
+        :type element: str | None
+        :param plot_title: The plot title. The default value is None to generate an appropriate title.
+        :type plot_title: str | None
+        :param x_datas: The x datas. The default value is 'year'.
+        :type x_datas: str
+        :param x_legend: The x legend. The default value is "Year".
+        :type x_legend: str
+        :param y_datas: The y datas (the entities to plot). The default value is None to use all the entities in the dataframe.
+        :type y_datas: list[str] | None
+        :param color_legend: The color legend. TODO: delete because unused?
+        :type color_legend: str
+        :return: The figure.
+        :rtype: go.Figure
+        """
         df = self.element_count_df
 
         if element == None:
@@ -265,28 +286,30 @@ class EntitiesPlot():
 
 
 class WorksPlot(EntitiesPlot, WorksAnalysis):
-    """!
-    @brief      This class contains specific methods for Works concepts plot.
+    """
+    This class contains specific methods for Works plot.
     """
 
-    def getCustomData(self, concept):
-        """!
-        @brief      Gets the custom data for the plot
+    def getCustomData(self, concept: str) -> list[str]:
+        """
+        Get the custom data for the plot.
 
-        @param      concept  The concept (str)
-
-        @return     The custom data (list of str)
+        :param concept: The concept id.
+        :type concept: str
+        :return: The list of custom data for Works.
+        :rtype: list[str]
         """
         return ['display_name', 'country_name', 'institution_name', 'publication_year', 'cited_by_count', concept]
 
 
-    def getHoverTemplate(self, concept):#, x_datas = None, x_legend = None, y_datas = None, y_legend = None, color_data = None, color_legend = None):
-        """!
-        @brief      Gets the hover template for the plot
+    def getHoverTemplate(self, concept: str) -> list[str]:
+        """
+        Get the hover template for the plot.
 
-        @param      concept  The concept (str)
-
-        @return     The hover template (list of str)
+        :param concept: The concept id.
+        :type concept: str
+        :return: The hover template.
+        :rtype: list[str]
         """
         hover_template = [
                 "%{customdata[0]}",
@@ -296,23 +319,18 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
                 "Cited by count: %{customdata[4]}",
                 "Concept score ("+self.concepts_names[concept]+"): %{customdata[5]}",
         ]
-        # if x_datas != None and x_legend != None and x_datas not in self.getCustomData(concept):
-        #     hover_template.append(x_legend+": %{x}")
-        # if y_datas != None and y_legend != None and y_datas not in self.getCustomData(concept):
-        #     hover_template.append(y_legend+": %{y}")
-        # if color_data != None and color_legend != None and color_data not in self.getCustomData(concept):
-        #     hover_template.append(color_legend+": %{marker.color}")
         return hover_template
 
 
-    def get_figure_nb_time_referenced(self, element_type):
-        """!
-        @brief      Gets the figure with the number of time each reference is used in a
-                    list of works.
-        
-        @param      element_type  The element type
-        
-        @return     The figure works number of time referenced (fig)
+    def get_figure_nb_time_referenced(self, element_type: str) -> go.Figure:
+        """
+        Gets the figure with the number of time each reference is used in a list of works. Also work with concepts.
+        TODO: change function name to be more inclusive?
+
+        :param element_type: The element type ('reference' or 'concept').
+        :type element_type: str
+        :return: The figure.
+        :rtype: go.Figure
         """
         n_x = 2000 # x resolution of the plot
         references_works_count = self.get_element_count(element_type = element_type)
@@ -328,28 +346,28 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
 
 
     def get_figure_entities_yearly_usage(self,
-                                         count_years: list,
-                                         entity_used_ids,
-                                         entity_from_ids = None,
-                                        ):
-        """!
-        @brief      Gets the plot bar figure with the yearly usage of an entity
-                    (concept, work) in the works from another entitiy (institution,
-                    author)
-        
-        @param      count_years     The years to count (list of int)
-        @param      entity_used_ids The entities used (str or str[])
-        @param      entity_from_ids The entities which used the entities to count (str or str[])
-        
-        @return     The figure (fig)
+                                         count_years: list[int],
+                                         entity_used_ids: str | list[str],
+                                         entity_from_ids: str | list[str] | None = None,
+                                        ) -> go.Figure:
         """
+        Get the plot bar figure with the yearly usage of an entity (concept, work) in the works from another entity
+        (institution, author).
 
+        :param count_years: The years to count.
+        :type count_years: list[int]
+        :param entity_used_ids: The entities used.
+        :type entity_used_ids: str | list[str]
+        :param entity_from_ids: The entities which used the entities to count. The default value is None. If None, the entitie_from_id is used.
+        :type entity_from_ids: str | list[str] | None
+        :return: THe figure.
+        :rtype: go.Figure
+        """
         df = self.get_df_yearly_usage_of_entities_by_multiples_entities(
                                                                         count_years = count_years,
                                                                         entity_used_ids = entity_used_ids,
                                                                         entity_from_ids = entity_from_ids,
                                                                        )
-
         fig = px.bar(df,
                       x='years',
                       y='usage_count',
@@ -358,32 +376,32 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
                       barmode='group',
                       height=600,
                      )
-        
         return fig
 
 
     def get_figure_entities_yearly_position(self,
-                                            count_years: list,
+                                            count_years: list[int],
                                             entity_used_ids: str,
-                                            entity_from_ids = None,
-                                           ):
-        """!
-        @brief      Gets the plot figure with the yearly usage of an entity (concept,
-                    work) in the works from another entitiy (institution, author)
-        
-        @param      count_years     The years to count (list of int)
-        @param      entity_used_id  The entity used (str)
-        @param      entity_from_ids The entities which used the entities to count (str or str[])
-        
-        @return     The figure (fig)
+                                            entity_from_ids: str | list[str] | None = None,
+                                           ) -> go.Figure:
         """
+        Get the plot figure with the yearly usage of an entity (concept, work) in the works from another entity
+        (institution, author).
 
+        :param count_years: The years to count.
+        :type count_years: list[int]
+        :param entity_used_ids: The entity used.
+        :type entity_used_ids: str
+        :param entity_from_ids: The entities which used the entities to count. The default value is None. If None, the entitie_from_id is used.
+        :type entity_from_ids: str | list[str] | None
+        :return: The figure.
+        :rtype: go.Figure
+        """
         df = self.get_df_yearly_usage_of_entities_by_multiples_entities(
                                                                         count_years = count_years,
                                                                         entity_used_ids = entity_used_ids,
                                                                         entity_from_ids = entity_from_ids,
                                                                        )
-        
         fig = px.line(df,
                       x='works_count',
                       y='usage_count',
@@ -392,43 +410,49 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
                       line_dash='entity_used',
                       height=600,
                      )
-        
         fig.update_traces(textposition="bottom right")
-
         return fig
 
 
 class AuthorsPlot(EntitiesPlot, AuthorsAnalysis):
+    """
+    This class contains specific methods for Authors plot. Not used for now.
+    """
     pass
 
 
 class SourcesPlot(EntitiesPlot, SourcesAnalysis):
+    """
+    This class contains specific methods for Sources plot. Not used for now.
+    """
     pass
 
 
 class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
-    """!
-    @brief      This class contains specific methods for Institutions concepts plot.
+    """
+    This class contains specific methods for Institutions plot.
     """
 
-    def getCustomData(self, concept):
-        """!
-        @brief      Gets the custom data for the plot
+    def getCustomData(self, concept: str) -> list[str]:
+        """
+        Get the custom data for the plot.
 
-        @param      concept  The concept (str)
-
-        @return     The custom data (list of str)
+        :param concept: The concept id.
+        :type concept: str
+        :return: The list of custom data for Institutions.
+        :rtype: list[str]
         """
         return ['display_name', 'geo.country', 'cited_by_count', 'works_cited_by_count_average', concept]
 
 
-    def getHoverTemplate(self, concept):
-        """!
-        @brief      Gets the hover template for the plot
+    def getHoverTemplate(self, concept: str) -> list[str]:
+        """
+        Get the hover template for the plot.
 
-        @param      concept  The concept (str)
-
-        @return     The hover template (list of str)
+        :param concept: The concept id.
+        :type concept: str
+        :return: The hover template.
+        :rtype: list[str]
         """
         hover_template = [
             "%{customdata[0]}",
@@ -441,29 +465,35 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
         return hover_template
 
 
-    def get_figure_institutions_multi_concepts_filtered(self, plot_parameters, concepts_from, concepts_filters, thresholds, x_threshold, cited_by_threshold, institution_to_highlight):
-        """!
-        @brief      Gets the figure with the institutions of multiple concepts and
-                    filtered
-        
-        @param      plot_parameters           The plot parameters (dict)
-        @param      concepts_from             The concepts to import to create
-                                              the dataset (list of str)
-        @param      concepts_filters          The concepts to use to filter the
-                                              institutions (list of str)
-        @param      thresholds                The thresholds for each concept
-                                              filter (list of float or int)
-        @param      x_threshold               The global threshold (eg nb of
-                                              works), usually corresponding to
-                                              the x data (float or int)
-        @param      cited_by_threshold        The cited by threshold (float or
-                                              int)
-        @param      institution_to_highlight  The institution to highlight on
-                                              the plot (str)
-        
-        @return     The figure (fig)
+    def get_figure_institutions_multi_concepts_filtered(self,
+                                                        plot_parameters: dict,
+                                                        concepts_from: list[str],
+                                                        concepts_filters: list[str],
+                                                        thresholds: list[int | float],
+                                                        x_threshold: int | float,
+                                                        cited_by_threshold: float | int,
+                                                        institution_to_highlight: str
+                                                        ) -> go.Figure:
         """
+        Gets the figure with the institutions of multiple concepts and filtered.
 
+        :param plot_parameters: The plot parameters.
+        :type plot_parameters: dict
+        :param concepts_from: The concepts to import to create the dataset.
+        :type concepts_from: list[str]
+        :param concepts_filters: The concepts to use to filter the institutions.
+        :type concepts_filters: list[str]
+        :param thresholds: The thresholds for each concept filter.
+        :type thresholds: list[int | float]
+        :param x_threshold: The global threshold (eg. nb of works), usually corresponding to the x data (float or int).
+        :type x_threshold: int | float
+        :param cited_by_threshold: The cited by threshold (float or int).
+        :type cited_by_threshold: int | float
+        :param institution_to_highlight: The institution to highlight on the plot (str).
+        :type institution_to_highlight: str
+        :return: The figure.
+        :rtype: go.Figure
+        """
         # extract the dictionnary plot_parameters:
         plot_title = plot_parameters['plot_title']
         x_datas = plot_parameters['x_datas']
@@ -530,8 +560,14 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
 
 
 class ConceptsPlot(EntitiesPlot, ConceptsAnalysis):
+    """
+    This class contains specific methods for Concepts plot. Not used for now.
+    """
     pass
 
 
 class PublishersPlot(EntitiesPlot, PublishersAnalysis):
+    """
+    This class contains specific methods for Publishers plot. Not used for now.
+    """
     pass

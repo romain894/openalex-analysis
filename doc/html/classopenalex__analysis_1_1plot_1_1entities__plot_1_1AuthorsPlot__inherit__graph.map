@@ -1,8 +1,0 @@
-<map id="openalex_analysis.plot.entities_plot.AuthorsPlot" name="openalex_analysis.plot.entities_plot.AuthorsPlot">
-<area shape="rect" id="node1" title=" " alt="" coords="769,39,995,80"/>
-<area shape="rect" id="node2" href="$classopenalex__analysis_1_1plot_1_1entities__plot_1_1EntitiesPlot.html" title="EntitiesPlot class which contains generic methods to do plots of OpenAlex entities." alt="" coords="481,5,707,47"/>
-<area shape="rect" id="node3" href="$classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1AuthorsAnalysis.html" title=" " alt="" coords="467,71,721,112"/>
-<area shape="rect" id="node4" href="$classopenalex__analysis_1_1analysis_1_1entities__analysis_1_1EntitiesAnalysis.html" title="OpenAlexAnalysis class which contains generic methods to do analysis over OpenAlex entities." alt="" coords="164,41,419,83"/>
-<area shape="rect" id="node5" title=" " alt="" coords="5,49,116,75"/>
-<area shape="rect" id="node6" title=" " alt="" coords="255,107,327,134"/>
-</map>
