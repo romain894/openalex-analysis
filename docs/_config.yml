@@ -1,0 +1,7 @@
+lsi: false
+safe: true
+source: https://github.com/romain894/openalex-analysis/tree/main/docs/html
+incremental: false
+include: [_sources, _static]
+
+
