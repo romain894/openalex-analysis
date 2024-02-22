@@ -26,34 +26,29 @@ log_oa.addHandler(logging.FileHandler(__name__ + ".log"))
 class AnalysisConfig(dict):
     """
     OpenAlex Analysis configuration class. This class contains the settings used by openalex-analysis (some settings
-    are passed to pyalex)
+    are passed to pyalex).
 
-        :param email: Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).
-        :type email: string
-        :param api_key: Your OpenAlex API key, if you have one. The default value is None.
-        :type api_key: string
-        :param openalex_url: OpenAlex API URL or your self hosted API URL. The default value is "https://api.openalex.org".
-        :type openalex_url: string
-        :param http_retry_times: maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.
-        :type http_retry_times: int
-        :param allow_automatic_download: The allow automatic download. The default value is True.
-        :type allow_automatic_download: bool
-        :param disable_tqdm_loading_bar: To disable the tqdm loading bar. The default is False.
-        :type disable_tqdm_loading_bar: bool
-        :param n_max_entities: Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.
-        :type n_max_entities: int
-        :param project_datas_folder_path: Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "./data".
-        :type project_datas_folder_path: string
-        :param parquet_compression: Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is "brotli".
-        :type parquet_compression: string
-        :param max_storage_percent: When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.
-        :type max_storage_percent: int
-        :param redis_enabled: True if you want to enable the Redis cache. You need a working Redis instance and provide redis_cache. The default is False.
-        :type redis_enabled: bool
-        :param redis_cache: The Redis cache to use (see the examples in the documentation). The default value is None.
-        :type redis_cache: RedisCache
-        :param log_level: The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
-        :type log_level: string
+    Tu use it, import the class and set the parameters as follows:
+    
+    .. code-block:: python
+
+        from openalex_analysis.plot import config
+
+        config.n_max_entities = 10000
+
+    * **email** (*string*) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).
+    * **api_key** (*string*) - Your OpenAlex API key, if you have one. The default value is None.
+    * **openalex_url** (*string*) - OpenAlex API URL or your self-hosted API URL. The default value is "https://api.openalex.org".
+    * **http_retry_times** (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.
+    * **allow_automatic_download** (*bool*) - The allow automatic download. The default value is True.
+    * **disable_tqdm_loading_bar** (*bool*) - To disable the tqdm loading bar. The default is False.
+    * **n_max_entities** (*int*) - Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.
+    * **project_datas_folder_path** (*string*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "./data".
+    * **parquet_compression** (*string*) - Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is "brotli".
+    * **max_storage_percent** (*int*) - When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.
+    * **redis_enabled** (*bool*) - True if you want to enable the Redis cache. You need a working Redis instance and provide redis_cache. The default is False.
+    * **redis_cache** (*RedisCache*) - The Redis cache to use (see the examples in the documentation). The default value is None.
+    * **log_level** (*string*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
     """
 
     def __getattr__(self, key):

@@ -182,89 +182,28 @@
 <dt class="sig sig-object py" id="analysis.entities_analysis.AnalysisConfig">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">AnalysisConfig</span></span><a class="headerlink" href="#analysis.entities_analysis.AnalysisConfig" title="Link to this definition"></a></dt>
 <dd><p>OpenAlex Analysis configuration class. This class contains the settings used by openalex-analysis (some settings
-are passed to pyalex)</p>
-<blockquote>
-<div><dl class="field-list simple">
-<dt class="field-odd">param email<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).</p>
-</dd>
-<dt class="field-even">type email<span class="colon">:</span></dt>
-<dd class="field-even"><p>string</p>
-</dd>
-<dt class="field-odd">param api_key<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Your OpenAlex API key, if you have one. The default value is None.</p>
-</dd>
-<dt class="field-even">type api_key<span class="colon">:</span></dt>
-<dd class="field-even"><p>string</p>
-</dd>
-<dt class="field-odd">param openalex_url<span class="colon">:</span></dt>
-<dd class="field-odd"><p>OpenAlex API URL or your self hosted API URL. The default value is “<a class="reference external" href="https://api.openalex.org">https://api.openalex.org</a>”.</p>
-</dd>
-<dt class="field-even">type openalex_url<span class="colon">:</span></dt>
-<dd class="field-even"><p>string</p>
-</dd>
-<dt class="field-odd">param http_retry_times<span class="colon">:</span></dt>
-<dd class="field-odd"><p>maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.</p>
-</dd>
-<dt class="field-even">type http_retry_times<span class="colon">:</span></dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">param allow_automatic_download<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The allow automatic download. The default value is True.</p>
-</dd>
-<dt class="field-even">type allow_automatic_download<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-<dt class="field-odd">param disable_tqdm_loading_bar<span class="colon">:</span></dt>
-<dd class="field-odd"><p>To disable the tqdm loading bar. The default is False.</p>
-</dd>
-<dt class="field-even">type disable_tqdm_loading_bar<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-<dt class="field-odd">param n_max_entities<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.</p>
-</dd>
-<dt class="field-even">type n_max_entities<span class="colon">:</span></dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">param project_datas_folder_path<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is “./data”.</p>
-</dd>
-<dt class="field-even">type project_datas_folder_path<span class="colon">:</span></dt>
-<dd class="field-even"><p>string</p>
-</dd>
-<dt class="field-odd">param parquet_compression<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is “brotli”.</p>
-</dd>
-<dt class="field-even">type parquet_compression<span class="colon">:</span></dt>
-<dd class="field-even"><p>string</p>
-</dd>
-<dt class="field-odd">param max_storage_percent<span class="colon">:</span></dt>
-<dd class="field-odd"><p>When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.</p>
-</dd>
-<dt class="field-even">type max_storage_percent<span class="colon">:</span></dt>
-<dd class="field-even"><p>int</p>
-</dd>
-<dt class="field-odd">param redis_enabled<span class="colon">:</span></dt>
-<dd class="field-odd"><p>True if you want to enable the Redis cache. You need a working Redis instance and provide redis_cache. The default is False.</p>
-</dd>
-<dt class="field-even">type redis_enabled<span class="colon">:</span></dt>
-<dd class="field-even"><p>bool</p>
-</dd>
-<dt class="field-odd">param redis_cache<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The Redis cache to use (see the examples in the documentation). The default value is None.</p>
-</dd>
-<dt class="field-even">type redis_cache<span class="colon">:</span></dt>
-<dd class="field-even"><p>RedisCache</p>
-</dd>
-<dt class="field-odd">param log_level<span class="colon">:</span></dt>
-<dd class="field-odd"><p>The log detail level for openalex-analysis (library specific). The log_level must be ‘DEBUG’, ‘INFO’, ‘WARNING’, ‘ERROR’ or ‘CRITICAL’. The default value ‘WARNING’.</p>
-</dd>
-<dt class="field-even">type log_level<span class="colon">:</span></dt>
-<dd class="field-even"><p>string</p>
-</dd>
-</dl>
-</div></blockquote>
+are passed to pyalex).</p>
+<p>Tu use it, import the class and set the parameters as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openalex_analysis.plot</span> <span class="kn">import</span> <span class="n">config</span>
+
+<span class="n">config</span><span class="o">.</span><span class="n">n_max_entities</span> <span class="o">=</span> <span class="mi">10000</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>email</strong> (<em>string</em>) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).</p></li>
+<li><p><strong>api_key</strong> (<em>string</em>) - Your OpenAlex API key, if you have one. The default value is None.</p></li>
+<li><p><strong>openalex_url</strong> (<em>string</em>) - OpenAlex API URL or your self-hosted API URL. The default value is “<a class="reference external" href="https://api.openalex.org">https://api.openalex.org</a>”.</p></li>
+<li><p><strong>http_retry_times</strong> (<em>int</em>) - maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.</p></li>
+<li><p><strong>allow_automatic_download</strong> (<em>bool</em>) - The allow automatic download. The default value is True.</p></li>
+<li><p><strong>disable_tqdm_loading_bar</strong> (<em>bool</em>) - To disable the tqdm loading bar. The default is False.</p></li>
+<li><p><strong>n_max_entities</strong> (<em>int</em>) - Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.</p></li>
+<li><p><strong>project_datas_folder_path</strong> (<em>string</em>) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is “./data”.</p></li>
+<li><p><strong>parquet_compression</strong> (<em>string</em>) - Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is “brotli”.</p></li>
+<li><p><strong>max_storage_percent</strong> (<em>int</em>) - When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.</p></li>
+<li><p><strong>redis_enabled</strong> (<em>bool</em>) - True if you want to enable the Redis cache. You need a working Redis instance and provide redis_cache. The default is False.</p></li>
+<li><p><strong>redis_cache</strong> (<em>RedisCache</em>) - The Redis cache to use (see the examples in the documentation). The default value is None.</p></li>
+<li><p><strong>log_level</strong> (<em>string</em>) - The log detail level for openalex-analysis (library specific). The log_level must be ‘DEBUG’, ‘INFO’, ‘WARNING’, ‘ERROR’ or ‘CRITICAL’. The default value ‘WARNING’.</p></li>
+</ul>
 </dd></dl>
 
 <dl class="py class">
