@@ -8,9 +8,9 @@ from openalex_analysis.analysis.entities_analysis import InstitutionsAnalysis
 from openalex_analysis.analysis.entities_analysis import ConceptsAnalysis
 from openalex_analysis.analysis.entities_analysis import PublishersAnalysis
 
-from openalex_analysis.analysis.entities_analysis import get_entitie_type_from_id
-from openalex_analysis.analysis.entities_analysis import get_name_of_entitie_from_api
-from openalex_analysis.analysis.entities_analysis import get_info_about_entitie_from_api
+from openalex_analysis.analysis.entities_analysis import get_entity_type_from_id
+from openalex_analysis.analysis.entities_analysis import get_name_of_entity_from_api
+from openalex_analysis.analysis.entities_analysis import get_info_about_entity_from_api
 from openalex_analysis.analysis.entities_analysis import check_if_entity_exists_from_api
 
 
@@ -23,8 +23,8 @@ __all__ = [
     "InstitutionsAnalysis",
     "ConceptsAnalysis",
     "PublishersAnalysis",
-    "get_entitie_type_from_id",
-    "get_name_of_entitie_from_api",
-    "get_info_about_entitie_from_api",
+    "get_entity_type_from_id",
+    "get_name_of_entity_from_api",
+    "get_info_about_entity_from_api",
     "check_if_entity_exists_from_api",
 ]

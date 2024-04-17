@@ -13,11 +13,12 @@ from openalex_analysis.analysis import *
 
 figure_height = 800
 
+
 class EntitiesPlot():
     """
     EntitiesPlot class which contains generic methods to do plots of OpenAlex entities.
     """
-    
+
     def get_figure_entities_of_a_concept_color_country(self,
                                                        concept: str,
                                                        plot_parameters: dict | None = None
@@ -76,12 +77,10 @@ class EntitiesPlot():
 
         return fig
 
-
     # TODO: redo filters
     # TODO: keep for work? useless for now because color_data = x_datas + bug in numpy:
     # fix or remove casting='unsafe', which apparently create problem with conversion
     # (only two colors for the works on the plot) SOLVED?
-    
     def get_figure_entities_selection_threshold(self,
                                                 concept: str,
                                                 plot_parameters: dict,
@@ -165,7 +164,7 @@ class EntitiesPlot():
 
         fig1.update_traces(hovertemplate="<br>".join(self.getHoverTemplate(concept)))
 
-        # figure with containning all subfigures
+        # figure with containing all sub figures
         fig0 = None
 
         if display_threshold_lines:
@@ -217,7 +216,7 @@ class EntitiesPlot():
             xaxis_title=x_legend,
             yaxis_title=y_legend
         )
-        
+
         return fig0
 
 
@@ -340,7 +339,7 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
                       y=y_references_works_count,
                       log_x=True,
                       labels={'x':'Element rank', 'y':'Number of time used'},
-                      title="Number of time the same element is used by the works in "+self.get_name_of_entitie(),
+                      title="Number of time the same element is used by the works in "+self.get_name_of_entity(),
                       line_shape='hv')
         return fig
 
@@ -505,7 +504,7 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
 
 
         self.create_multi_concept_filters_entities_dataframe(concepts_from, concepts_filters, thresholds, x_datas, x_threshold, cited_by_threshold)
-        self.add_average_combined_concept_score_to_multi_concept_entitie_df(concepts_from)
+        self.add_average_combined_concept_score_to_multi_concept_entity_df(concepts_from)
 
         # create the figure with the scatter plot of institutions        
         fig1 = px.scatter(self.entities_multi_filtered_df,
@@ -518,7 +517,7 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
                          category_orders={color_data: np.sort(self.entities_multi_filtered_df[color_data].unique()[self.entities_multi_filtered_df[color_data].unique() != None])},
                          labels={x_datas:x_legend, y_datas:y_legend})
 
-        
+
         # Highlight SRC institution on the plot:
         fig1.add_traces(
             px.scatter(self.entities_multi_filtered_df.loc[self.entities_multi_filtered_df['id'] == institution_to_highlight], x=x_datas, y=y_datas, custom_data=['display_name', color_data, 'cited_by_count', 'works_cited_by_count_average']
@@ -534,7 +533,7 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
                 "Cited by average: %{customdata[3]}",
         ]))
 
-        # figure with containning all subfigures
+        # figure with containing all sub figures
         fig0 = None
 
         # create the main figure
@@ -555,7 +554,7 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
             xaxis_title=x_legend,
             yaxis_title=y_legend
         )
-        
+
         return fig0
 
 
