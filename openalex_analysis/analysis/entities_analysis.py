@@ -116,12 +116,7 @@ class EntitiesAnalysis:
         self.extra_filters = extra_filters
         self.database_file_path = database_file_path
         self.load_only_columns = load_only_columns
-        # self.custom_query = custom_query
 
-        # dictionary containing for each concept a list of the entities linked to the concept
-        # self.entities_concepts = {} # DEPRECATED
-        # same than self.entities_concepts formated as a dataframe with extra information
-        # self.entities_concepts_df = {} # DEPRECATED
         # a dataframe containing entities related to the instance
         self.entities_df = None
 
@@ -159,7 +154,6 @@ class EntitiesAnalysis:
         :rtype: int
         """
         results, meta = self.EntityOpenAlex().filter(**query_filters).get(per_page=1, return_meta=True)
-        # results, meta = type(self.EntityOpenAlex).__new__().filter(**query_filters).get(per_page = 1, return_meta=True)
         return meta['count']
 
     def get_api_query(self) -> dict:
@@ -242,10 +236,6 @@ class EntitiesAnalysis:
         # normalize the json format (one column for each field)
         log_oa.info("Normalizing the json data downloaded...")
         entities_list_df = pd.json_normalize(entities_list)
-        # We don't use multi index dataframe as plotly and dask doesn't support it and the use case is minor
-        # # convert to multi index dataframe (we create an index for each 'sub column' (=when there is a '.'))
-        # tuple_cols = entities_list_df.columns.str.split('.')
-        # entities_list_df.columns = pd.MultiIndex.from_tuples(tuple(i) for i in tuple_cols)
         if not os.path.isdir(config.project_datas_folder_path):
             log_oa.info("Creating the directory to store the datas from OpenAlex")
             os.makedirs(config.project_datas_folder_path)
@@ -274,6 +264,7 @@ class EntitiesAnalysis:
         try:
             self.entities_df = pd.read_parquet(self.database_file_path, columns=self.load_only_columns)
         except:
+            # TODO: better manage the exception
             # couldn't load the parquet file (eg no row in parquet file so error because can't find columns to load)
             self.entities_df = pd.DataFrame()
 
@@ -449,11 +440,6 @@ class EntitiesAnalysis:
         if entity_from_id is not None:
             file_name += "_" + self.get_entity_string_name(self.get_entitie_type_from_id(entity_from_id))[
                                0:-1] + "_" + entity_from_id
-            # # if it's a concept, we add its name to the file name (we can't do that for the other entities type as
-            # # the names can change. For the concept, all the names are known and saved locally in a parquet file)
-            # # we don't add the concept name if there is more than one concept in the request (OR query with |)
-            # if self.get_entitie_type_from_id(entity_from_id) == Concepts and entity_from_id.find('|') == -1:
-            #     file_name += "_" + self.concepts_normalized_names[entity_from_id].replace(' ', '_')
         if self.extra_filters is not None:
             file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
         # keep the file name below 120 characters and reserve 22 for the max size + parquet extension (csv extension
@@ -924,11 +910,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         self.element_count_df['sum_all_entities'] = self.element_count_df.sum(axis=1)
         log_oa.info("Computing average_all_entities...")
         self.element_count_df['average_all_entities'] = self.element_count_df['sum_all_entities'] / nb_entities
-        # log_oa.info("Computing nb_cited_sum_other_entities...")
-        # self.element_count_df['nb_cited_sum_other_entities'] = self.element_count_df['sum_all_entities'] - self.element_count_df[main_entity_col_id]
         log_oa.info("Computing proportion_used_by_main_entity")
-        # use sum other entities (exclude main entity from the sum)
-        # self.element_count_df['proportion_used_by_main_entity'] = self.element_count_df[main_entity_col_id] / self.element_count_df['nb_cited_sum_other_entities']
         # use sum all entities (include main entity in the sum)
         log_oa.info(
             "fill with NaN values 0 of sum_all_entities to avoid them to be used when ranking (we wan't to ignore these rows as these references aren't used)")
@@ -1212,20 +1194,6 @@ class InstitutionsAnalysis(EntitiesAnalysis, Institutions):
         else:
             entity['display_name_alternative'] = None
         del entity['display_name_alternatives']
-
-        # # convert the list into dictionary to allow panda to normalize the data
-        # # counts_by_year
-        # new_dict = {}
-        # for item in entity['counts_by_year']:
-        #    key = item.pop('year')
-        #    new_dict[key] = item
-        # entity['counts_by_year'] = new_dict
-        # # x_concepts
-        # new_dict = {}
-        # for i, item in enumerate(entity['x_concepts']):
-        #    key = str(i)
-        #    new_dict[key] = item
-        # entity['x_concepts'] = new_dict
 
         # add computed datas:
         # works_cited_by_count_average
