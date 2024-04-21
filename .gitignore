@@ -24,3 +24,7 @@ Institution_comparison_report_engineering.ipynb
 
 # IDE files
 .idea
+
+# tests
+tests/data
+tests/*.log
