@@ -38,7 +38,6 @@ class AnalysisConfig(dict):
     * **api_key** (*string*) - Your OpenAlex API key, if you have one. The default value is None.
     * **openalex_url** (*string*) - OpenAlex API URL or your self-hosted API URL. The default value is "https://api.openalex.org".
     * **http_retry_times** (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.
-    * **allow_automatic_download** (*bool*) - The allow automatic download. The default value is True.
     * **disable_tqdm_loading_bar** (*bool*) - To disable the tqdm loading bar. The default is False.
     * **n_max_entities** (*int*) - Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.
     * **project_datas_folder_path** (*string*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "./data".
@@ -73,7 +72,6 @@ config = AnalysisConfig(email=None,
                         api_key=None,
                         openalex_url="https://api.openalex.org",
                         http_retry_times=3,
-                        allow_automatic_download=True,
                         disable_tqdm_loading_bar=False,
                         n_max_entities=10000,
                         project_datas_folder_path="data",
@@ -270,16 +268,8 @@ class EntitiesAnalysis:
             log_oa.info("with extra filters: " + str(self.extra_filters))
 
         # # check if the database file exists
-        if exists(self.database_file_path):
-            # the database exists, we can load it
-            pass
-        elif config.allow_automatic_download == True:
-            # the database doesn't exist and we can download the datas
-            # we create the database and then load it
+        if not exists(self.database_file_path):
             self.download_list_entities()
-        else:
-            raise ValueError(
-                "Couldn't load the database of the entitie because doesn't exist locally and not allowed to download it")
         log_oa.info("Loading the list of entities from a parquet file...")
         try:
             self.entities_df = pd.read_parquet(self.database_file_path, columns=self.load_only_columns)
