@@ -6,17 +6,16 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
-from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers
+from pyalex import Concepts
 
 # config must NOT be imported from pyalex here as it is already imported via entities_analysis
 
 from openalex_analysis.analysis import *
 
-
 figure_height = 800
 
 
-class EntitiesPlot():
+class EntitiesPlot:
     """
     EntitiesPlot class which contains generic methods to do plots of OpenAlex entities.
     """
@@ -35,13 +34,13 @@ class EntitiesPlot():
         :return: The figure.
         :rtype: go.Figure
         """
-        if plot_parameters == None:
+        if plot_parameters is None:
             plot_parameters = {
-                'plot_title': "Plot of the entities related to "+Concepts()[concept]['display_name']+" studies",
+                'plot_title': "Plot of the entities related to " + Concepts()[concept]['display_name'] + " studies",
                 'x_datas': 'works_count',
                 'x_legend': "Number of works",
                 'y_datas': concept,
-                'y_legend': "Concept score ("+Concepts()[concept]['display_name']+")",
+                'y_legend': "Concept score (" + Concepts()[concept]['display_name'] + ")",
             }
         plot_title = plot_parameters['plot_title']
         x_datas = plot_parameters['x_datas']
@@ -60,8 +59,9 @@ class EntitiesPlot():
                          custom_data=self.getCustomData(concept),
                          color=color_data,
                          # sort the elements and push the None elements at the end
-                         category_orders={color_data: sorted(self.entities_df[color_data], key=lambda x: (x is None, x))},
-                         labels={x_datas:x_legend, y_datas:y_legend, color_data:color_legend},
+                         category_orders={
+                             color_data: sorted(self.entities_df[color_data], key=lambda x: (x is None, x))},
+                         labels={x_datas: x_legend, y_datas: y_legend, color_data: color_legend},
                          height=800)
 
         fig.update_traces(hovertemplate="<br>".join(self.getHoverTemplate(concept)))
@@ -71,7 +71,7 @@ class EntitiesPlot():
         fig.update_layout(
             title={
                 'text': plot_title,
-                'x':0.5,
+                'x': 0.5,
                 'xanchor': 'center',
                 'yanchor': 'top'
             },
@@ -127,14 +127,14 @@ class EntitiesPlot():
         df_filters = {}
         if cited_by_threshold > 0:
             df_filters['works_cited_by_count_average'] = cited_by_threshold
-        if display_only_selected_entities != None and len(display_only_selected_entities):
+        if display_only_selected_entities is not None and len(display_only_selected_entities):
             df_filters[x_datas] = x_threshold
             df_filters[y_datas] = y_threshold
 
         entities_df_filtered = self.get_df_filtered_entities_selection_threshold(df_filters)
 
         # convert the input list from the GUI to a boolean
-        if display_threshold_lines != None:
+        if display_threshold_lines is not None:
             if len(display_threshold_lines):
                 display_threshold_lines = True
             else:
@@ -142,26 +142,28 @@ class EntitiesPlot():
 
         # create the figure with the scatter plot of entities        
         fig1 = px.scatter(entities_df_filtered,
-                         x=x_datas,
-                         y=y_datas,
-                         #custom_data=np.stack((entities_df_filtered['display_name'], entities_df_filtered['type'])),
-                         custom_data=self.getCustomData(concept),
-                         # log10 scale for the color and fill 0 when value = 0 (can't compute log(0))
-                         color=np.log10(entities_df_filtered[color_data].to_numpy(dtype=float), where=entities_df_filtered[color_data]!=0, out=np.zeros_like(entities_df_filtered[color_data], dtype=float)),
-                         #color=np.log10(entities_df_filtered[color_data].values, where=entities_df_filtered[color_data]!=0, out=np.zeros_like(entities_df_filtered[color_data]),  casting='unsafe'),
-                         #color=entities_df_filtered[color_data],
-                         labels={x_datas:x_legend, y_datas:y_legend})
+                          x=x_datas,
+                          y=y_datas,
+                          #custom_data=np.stack((entities_df_filtered['display_name'], entities_df_filtered['type'])),
+                          custom_data=self.getCustomData(concept),
+                          # log10 scale for the color and fill 0 when value = 0 (can't compute log(0))
+                          color=np.log10(entities_df_filtered[color_data].to_numpy(dtype=float),
+                                         where=entities_df_filtered[color_data] != 0,
+                                         out=np.zeros_like(entities_df_filtered[color_data], dtype=float)),
+                          #color=np.log10(entities_df_filtered[color_data].values, where=entities_df_filtered[color_data]!=0, out=np.zeros_like(entities_df_filtered[color_data]),  casting='unsafe'),
+                          #color=entities_df_filtered[color_data],
+                          labels={x_datas: x_legend, y_datas: y_legend})
 
         # Entity to highlight on the plot:
-        if entity_to_highlight != None:
+        if entity_to_highlight is not None:
             fig1.add_traces(
                 px.scatter(entities_df_filtered.loc[entities_df_filtered['id'] == entity_to_highlight],
                            x=x_datas,
                            y=y_datas,
                            custom_data=self.getCustomData(concept)
-                          ).update_traces(marker_size=20,
-                                          marker={'size':20, 'symbol':'y-up', 'line':{'width':3, 'color':'black'}}
-                                          ).data
+                           ).update_traces(marker_size=20,
+                                           marker={'size': 20, 'symbol': 'y-up', 'line': {'width': 3, 'color': 'black'}}
+                                           ).data
             )
 
         fig1.update_traces(hovertemplate="<br>".join(self.getHoverTemplate(concept)))
@@ -187,11 +189,11 @@ class EntitiesPlot():
 
             # create the main figure
             fig0 = go.Figure(data=fig1.data + fig2.data + fig3.data,
-                             layout={'height':figure_height})
+                             layout={'height': figure_height})
         else:
             # create the main figure
             fig0 = go.Figure(data=fig1.data,
-                             layout={'height':figure_height})
+                             layout={'height': figure_height})
 
         fig0.update_xaxes(type="log")
 
@@ -208,10 +210,10 @@ class EntitiesPlot():
                 tickvals=color_vals,
                 ticktext=color_names
             ),
-            coloraxis = {'colorscale':'rainbow'},
+            coloraxis={'colorscale': 'rainbow'},
             title={
                 'text': plot_title,
-                'x':0.5,
+                'x': 0.5,
                 'xanchor': 'center',
                 'yanchor': 'top'
             },
@@ -220,7 +222,6 @@ class EntitiesPlot():
         )
 
         return fig0
-
 
     def get_figure_time_series_element_used_by_entities(self,
                                                         element: str | None = None,
@@ -250,18 +251,18 @@ class EntitiesPlot():
         """
         df = self.element_count_df
 
-        if element == None:
+        if element is None:
             # take the first element to plot
             element = df.index[0][0]
         element_id = element.strip("https://openalex.org/")
         # if y_legend == None:
         #     y_legend = self.get_name_of_entitie(element.strip("https://openalex.org/"))
-        if plot_title == None:
+        if plot_title is None:
             element_name = self.get_name_of_entitie(element_id)
             if len(element_name) > 70:
-                element_name = element_name[0:70]+"..."
-            plot_title = "Plot of the yearly usage of "+element_id+" ("+element_name+") by the entities"
-        if y_datas == None:
+                element_name = element_name[0:70] + "..."
+            plot_title = "Plot of the yearly usage of " + element_id + " (" + element_name + ") by the entities"
+        if y_datas is None:
             y_datas = self.count_entities_cols
 
         df = df[y_datas].loc[element].reset_index()
@@ -272,12 +273,12 @@ class EntitiesPlot():
                       x=x_datas,
                       y='nb_used',
                       color='entitie',
-                      labels={x_datas:x_legend})
+                      labels={x_datas: x_legend})
 
         fig.update_layout(
             title={
                 'text': plot_title,
-                'x':0.5,
+                'x': 0.5,
                 'xanchor': 'center',
                 'yanchor': 'top'
             },
@@ -302,7 +303,6 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
         """
         return ['display_name', 'country_name', 'institution_name', 'publication_year', 'cited_by_count', concept]
 
-
     def getHoverTemplate(self, concept: str) -> list[str]:
         """
         Get the hover template for the plot.
@@ -313,15 +313,14 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
         :rtype: list[str]
         """
         hover_template = [
-                "%{customdata[0]}",
-                "Country name: %{customdata[1]}",
-                "Institution: %{customdata[2]}",
-                "Publication year: %{customdata[3]}",
-                "Cited by count: %{customdata[4]}",
-                "Concept score ("+Concepts()[concept]['display_name']+"): %{customdata[5]}",
+            "%{customdata[0]}",
+            "Country name: %{customdata[1]}",
+            "Institution: %{customdata[2]}",
+            "Publication year: %{customdata[3]}",
+            "Cited by count: %{customdata[4]}",
+            "Concept score (" + Concepts()[concept]['display_name'] + "): %{customdata[5]}",
         ]
         return hover_template
-
 
     def get_figure_nb_time_referenced(self, element_type: str) -> go.Figure:
         """
@@ -333,24 +332,23 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
         :return: The figure.
         :rtype: go.Figure
         """
-        n_x = 2000 # x resolution of the plot
-        references_works_count = self.get_element_count(element_type = element_type)
+        n_x = 2000  # x resolution of the plot
+        references_works_count = self.get_element_count(element_type=element_type)
         x_references_works_count = np.geomspace(1, len(references_works_count), num=n_x, dtype=int)
-        y_references_works_count = [references_works_count[x-1] for x in x_references_works_count]
+        y_references_works_count = [references_works_count[x - 1] for x in x_references_works_count]
         fig = px.line(x=x_references_works_count,
                       y=y_references_works_count,
                       log_x=True,
-                      labels={'x':'Element rank', 'y':'Number of time used'},
-                      title="Number of time the same element is used by the works in "+self.get_name_of_entity(),
+                      labels={'x': 'Element rank', 'y': 'Number of time used'},
+                      title="Number of time the same element is used by the works in " + self.get_name_of_entity(),
                       line_shape='hv')
         return fig
-
 
     def get_figure_entities_yearly_usage(self,
                                          count_years: list[int],
                                          entity_used_ids: str | list[str],
                                          entity_from_ids: str | list[str] | None = None,
-                                        ) -> go.Figure:
+                                         ) -> go.Figure:
         """
         Get the plot bar figure with the yearly usage of an entity (concept, work) in the works from another entity
         (institution, author).
@@ -365,26 +363,25 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
         :rtype: go.Figure
         """
         df = self.get_df_yearly_usage_of_entities_by_multiples_entities(
-                                                                        count_years = count_years,
-                                                                        entity_used_ids = entity_used_ids,
-                                                                        entity_from_ids = entity_from_ids,
-                                                                       )
+            count_years=count_years,
+            entity_used_ids=entity_used_ids,
+            entity_from_ids=entity_from_ids,
+        )
         fig = px.bar(df,
-                      x='years',
-                      y='usage_count',
-                      color='entity_from',
-                      pattern_shape='entity_used',
-                      barmode='group',
-                      height=600,
+                     x='years',
+                     y='usage_count',
+                     color='entity_from',
+                     pattern_shape='entity_used',
+                     barmode='group',
+                     height=600,
                      )
         return fig
-
 
     def get_figure_entities_yearly_position(self,
                                             count_years: list[int],
                                             entity_used_ids: str,
                                             entity_from_ids: str | list[str] | None = None,
-                                           ) -> go.Figure:
+                                            ) -> go.Figure:
         """
         Get the plot figure with the yearly usage of an entity (concept, work) in the works from another entity
         (institution, author).
@@ -399,10 +396,10 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
         :rtype: go.Figure
         """
         df = self.get_df_yearly_usage_of_entities_by_multiples_entities(
-                                                                        count_years = count_years,
-                                                                        entity_used_ids = entity_used_ids,
-                                                                        entity_from_ids = entity_from_ids,
-                                                                       )
+            count_years=count_years,
+            entity_used_ids=entity_used_ids,
+            entity_from_ids=entity_from_ids,
+        )
         fig = px.line(df,
                       x='works_count',
                       y='usage_count',
@@ -410,7 +407,7 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
                       color='entity_from',
                       line_dash='entity_used',
                       height=600,
-                     )
+                      )
         fig.update_traces(textposition="bottom right")
         return fig
 
@@ -445,7 +442,6 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
         """
         return ['display_name', 'geo.country', 'cited_by_count', 'works_cited_by_count_average', concept]
 
-
     def getHoverTemplate(self, concept: str) -> list[str]:
         """
         Get the hover template for the plot.
@@ -459,12 +455,11 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
             "%{customdata[0]}",
             "Country name: %{customdata[1]}",
             #y_legend+": %{y}",
-            "Concept score ("+Concepts()[concept]['display_name']+"): %{customdata[4]}",
+            "Concept score (" + Concepts()[concept]['display_name'] + "): %{customdata[4]}",
             "Cited by count: %{customdata[2]}",
             "Cited by average: %{customdata[3]}"
         ]
         return hover_template
-
 
     def get_figure_institutions_multi_concepts_filtered(self,
                                                         plot_parameters: dict,
@@ -504,35 +499,40 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
         color_data = plot_parameters['color_data']
         color_legend = plot_parameters['color_legend']
 
-
-        self.create_multi_concept_filters_entities_dataframe(concepts_from, concepts_filters, thresholds, x_datas, x_threshold, cited_by_threshold)
+        self.create_multi_concept_filters_entities_dataframe(concepts_from, concepts_filters, thresholds, x_datas,
+                                                             x_threshold, cited_by_threshold)
         self.add_average_combined_concept_score_to_multi_concept_entity_df(concepts_from)
 
         # create the figure with the scatter plot of institutions        
         fig1 = px.scatter(self.entities_multi_filtered_df,
-                         x=x_datas,
-                         y=y_datas,
-                         #custom_data=np.stack((entities_df_filtered['display_name'], entities_df_filtered['type'])),
-                         # change color_data by 'country_name' or update the hover if color_data changes
-                         custom_data=['display_name', color_data, 'cited_by_count', 'works_cited_by_count_average'],
-                         color=color_data,
-                         category_orders={color_data: np.sort(self.entities_multi_filtered_df[color_data].unique()[self.entities_multi_filtered_df[color_data].unique() != None])},
-                         labels={x_datas:x_legend, y_datas:y_legend})
-
+                          x=x_datas,
+                          y=y_datas,
+                          #custom_data=np.stack((entities_df_filtered['display_name'], entities_df_filtered['type'])),
+                          # change color_data by 'country_name' or update the hover if color_data changes
+                          custom_data=['display_name', color_data, 'cited_by_count', 'works_cited_by_count_average'],
+                          color=color_data,
+                          category_orders={color_data: np.sort(self.entities_multi_filtered_df[color_data].unique()[
+                                                                   self.entities_multi_filtered_df[
+                                                                       color_data].unique() != None])},
+                          labels={x_datas: x_legend, y_datas: y_legend})
 
         # Highlight SRC institution on the plot:
         fig1.add_traces(
-            px.scatter(self.entities_multi_filtered_df.loc[self.entities_multi_filtered_df['id'] == institution_to_highlight], x=x_datas, y=y_datas, custom_data=['display_name', color_data, 'cited_by_count', 'works_cited_by_count_average']
-                      ).update_traces(marker_size=20, marker={'size':20, 'symbol':'y-up', 'line':{'width':3, 'color':'black'}}).data
+            px.scatter(
+                self.entities_multi_filtered_df.loc[self.entities_multi_filtered_df['id'] == institution_to_highlight],
+                x=x_datas, y=y_datas,
+                custom_data=['display_name', color_data, 'cited_by_count', 'works_cited_by_count_average']
+            ).update_traces(marker_size=20,
+                            marker={'size': 20, 'symbol': 'y-up', 'line': {'width': 3, 'color': 'black'}}).data
         )
 
         fig1.update_traces(hovertemplate="<br>".join([
-                "%{customdata[0]}",
-                #color_legend+": %{customdata[1]}",# already displayed on the plot
-                x_legend+": %{x}",
-                y_legend+": %{y}",
-                "Cited by count: %{customdata[2]}",
-                "Cited by average: %{customdata[3]}",
+            "%{customdata[0]}",
+            #color_legend+": %{customdata[1]}",# already displayed on the plot
+            x_legend + ": %{x}",
+            y_legend + ": %{y}",
+            "Cited by count: %{customdata[2]}",
+            "Cited by average: %{customdata[3]}",
         ]))
 
         # figure with containing all sub figures
@@ -540,16 +540,15 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
 
         # create the main figure
         fig0 = go.Figure(data=fig1.data,
-                         layout={'height':figure_height})
-
+                         layout={'height': figure_height})
 
         fig0.update_xaxes(type="log")
 
         fig0.update_layout(
-            coloraxis = {'colorscale':'rainbow'},
+            coloraxis={'colorscale': 'rainbow'},
             title={
                 'text': plot_title,
-                'x':0.5,
+                'x': 0.5,
                 'xanchor': 'center',
                 'yanchor': 'top'
             },

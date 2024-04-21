@@ -74,7 +74,7 @@ class AnalysisConfig(dict):
 config = AnalysisConfig(email=None,
                         api_key=None,
                         openalex_url="https://api.openalex.org",
-                        http_retry_times = 3,
+                        http_retry_times=3,
                         allow_automatic_download=True,
                         disable_tqdm_loading_bar=False,
                         n_max_entities=10000,
@@ -87,7 +87,7 @@ config = AnalysisConfig(email=None,
                         )
 
 
-class EntitiesAnalysis():
+class EntitiesAnalysis:
     """
     openalex-analysis analysis class which contains generic methods to download and do analysis over OpenAlex entities
     """
@@ -151,12 +151,12 @@ class EntitiesAnalysis():
         self.count_entities_cols = []
 
         # initialize the values only if entity_from_type is known
-        if self.entity_from_id != None or self.extra_filters != None:
-            if self.entity_from_id != None:
+        if self.entity_from_id is not None or self.extra_filters is not None:
+            if self.entity_from_id is not None:
                 self.entity_from_type = self.get_entitie_type_from_id(self.entity_from_id)
-            if self.database_file_path == None:
+            if self.database_file_path is None:
                 self.database_file_path = join(config.project_datas_folder_path, self.get_database_file_name())
-            if create_dataframe == True:
+            if create_dataframe:
                 self.load_entities_dataframe()
 
     def get_count_entities_matched(self, query_filters: dict) -> int:
@@ -179,7 +179,7 @@ class EntitiesAnalysis():
         :return: The api query
         :rtype: dict
         """
-        if self.entity_from_id != None:
+        if self.entity_from_id is not None:
             query_filters = {self.get_entity_string_name(self.entity_from_type): {"id": self.entity_from_id}}
             # special cases:
             # concept of institution as the query key word is x_concepts instead of concepts
@@ -190,7 +190,7 @@ class EntitiesAnalysis():
                 query_filters = {'author': {"id": self.entity_from_id}}
         else:
             query_filters = {}
-        if self.extra_filters != None:
+        if self.extra_filters is not None:
             query_filters = query_filters | self.extra_filters
         log_oa.info("query:", query_filters)
         return query_filters
@@ -200,10 +200,10 @@ class EntitiesAnalysis():
         Downloads the entities which match the parameters of the instance, and store the dataset as a parquet file .
         """
         log_oa.info("Downloading list of " + self.get_entity_string_name())
-        if self.entity_from_id != None:
+        if self.entity_from_id is not None:
             log_oa.info("of the " + self.get_entity_string_name(self.entity_from_type)[0:-1] + " " + str(
                 self.entity_from_id))
-        if self.extra_filters != None:
+        if self.extra_filters is not None:
             log_oa.info("with extra filters: " + str(self.extra_filters))
 
         query = self.get_api_query()
@@ -211,7 +211,7 @@ class EntitiesAnalysis():
 
         count_entities_matched = self.get_count_entities_matched(query)
 
-        if config.n_max_entities == None or config.n_max_entities > count_entities_matched:
+        if config.n_max_entities is None or config.n_max_entities > count_entities_matched:
             n_entities_to_download = count_entities_matched
             print("All the", n_entities_to_download, "entities will be downloaded")
             log_oa.info("All the", n_entities_to_download, "entities will be downloaded")
@@ -271,10 +271,10 @@ class EntitiesAnalysis():
         the instance.
         """
         log_oa.info("Loading dataframe of " + self.get_entity_string_name())
-        if self.entity_from_id != None:
+        if self.entity_from_id is not None:
             log_oa.info("of the " + self.get_entity_string_name(self.entity_from_type)[0:-1] + " " + str(
                 self.entity_from_id))
-        if self.extra_filters != None:
+        if self.extra_filters is not None:
             log_oa.info("with extra filters: " + str(self.extra_filters))
 
         # # check if the database file exists
@@ -309,7 +309,7 @@ class EntitiesAnalysis():
                                     file)).st_atime < first_accessed_file_time or first_accessed_file_time == 0:
                         first_accessed_file_time = os.stat(join(config.project_datas_folder_path, file)).st_atime
                         first_accessed_file = file
-            if first_accessed_file == None:
+            if first_accessed_file is None:
                 log_oa.warning("No more file to delete.")
                 log_oa.warning(
                     "Space used on disk: " + str(psutil.disk_usage(config.project_datas_folder_path).percent) + "%")
@@ -361,7 +361,7 @@ class EntitiesAnalysis():
         if cited_by_threshold > 0:
             for index, row in self.entities_df.iterrows():
                 if row[x_datas] >= x_threshold and row[y_datas] >= y_threshold and row[
-                    'works_cited_by_count_average'] >= cited_by_threshold:
+                        'works_cited_by_count_average'] >= cited_by_threshold:
                     n_selected_entities += 1
         else:
             for index, row in self.entities_df.iterrows():
@@ -419,7 +419,8 @@ class EntitiesAnalysis():
             entity_instance.entities_df = entity_instance.entities_df.set_index('id')
             # add a column to add the concept score in it
             self.entities_multi_filtered_df['concept_score'] = 0
-            # for each entity in self.entities_multi_filtered_df, add the concept score if entity found in entity_instance (otherwise let 0)
+            # for each entity in self.entities_multi_filtered_df, add the concept score if entity found in
+            # entity_instance (otherwise let 0)
             for entity in self.entities_multi_filtered_df.itertuples():
                 if entity.id in entity_instance.entities_df.index:
                     self.entities_multi_filtered_df.at[entity.Index, 'concept_score'] = \
@@ -442,7 +443,7 @@ class EntitiesAnalysis():
             self.entities_multi_filtered_df.iterrows()]
 
     def get_database_file_name(self,
-                               entity_from_id: str | None  = None,
+                               entity_from_id: str | None = None,
                                entity_type: pyalex.api.BaseOpenAlex | None = None,
                                db_format: str = "parquet"
                                ) -> str:
@@ -458,20 +459,20 @@ class EntitiesAnalysis():
         :return: The database file name
         :rtype: str
         """
-        if entity_from_id == None:
+        if entity_from_id is None:
             entity_from_id = self.entity_from_id
-        if entity_type == None:
+        if entity_type is None:
             entity_type = self.EntityOpenAlex
         file_name = self.get_entity_string_name(entity_type)
-        if entity_from_id != None:
+        if entity_from_id is not None:
             file_name += "_" + self.get_entity_string_name(self.get_entitie_type_from_id(entity_from_id))[
                                0:-1] + "_" + entity_from_id
-            # if it's a concept, we add it's name to the file name (we can't do that for the other entities type as
-            # the names can change. For the concept, all the names are known and saved locally in a parquet file)
-            # we don't add the concept name if there is more than one concept in the request (OR query with |)
-            if self.get_entitie_type_from_id(entity_from_id) == Concepts and entity_from_id.find('|') == -1:
-                file_name += "_" + self.concepts_normalized_names[entity_from_id].replace(' ', '_')
-        if self.extra_filters != None:
+            # # if it's a concept, we add its name to the file name (we can't do that for the other entities type as
+            # # the names can change. For the concept, all the names are known and saved locally in a parquet file)
+            # # we don't add the concept name if there is more than one concept in the request (OR query with |)
+            # if self.get_entitie_type_from_id(entity_from_id) == Concepts and entity_from_id.find('|') == -1:
+            #     file_name += "_" + self.concepts_normalized_names[entity_from_id].replace(' ', '_')
+        if self.extra_filters is not None:
             file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
         # keep the file name below 120 characters and reserve 22 for the max size + parquet extension (csv extension
         # is shorter)
@@ -492,7 +493,7 @@ class EntitiesAnalysis():
         :return: The entity type name in a string
         :rtype: str
         """
-        if entity == None:
+        if entity is None:
             entity = self.EntityOpenAlex
         return str(entity).removeprefix("<class 'pyalex.api.").removesuffix("'>").lower()
 
@@ -505,63 +506,66 @@ class EntitiesAnalysis():
         :return: The entity type
         :rtype: pyalex.api.BaseOpenAlex
         """
-        if entity == None:
+        if entity is None:
             entity = self.entity_from_id
         return get_entity_type_from_id(entity)
 
-    def get_name_of_entity(self, entity: str | None = None, allow_download_from_API: bool = True) -> str:
+    def get_name_of_entity(self, entity: str | None = None, allow_download_from_api: bool = True) -> str | None:
         """
         Gets the name of entity from its id.
 
         :param entity: The entity id, if not provided, use the one from the instance. Default is None.
         :type entity: str | None
-        :param allow_download_from_API: Allow to download the entity name from the OpenAlex API. Default is Ture.
-        :type allow_download_from_API: bool
+        :param allow_download_from_api: Allow to download the entity name from the OpenAlex API. Default is Ture.
+        :type allow_download_from_api: bool
         :return: The name of the entity.
         :rtype: str
         """
-        if entity == None:
+        if entity is None:
             entity = self.entity_from_id
             # if entity is None then we return None
-            if entity == None:
+            if entity is None:
                 return None
         # if the entity name asked is the one of the current instance and it was provided in the initialisation
-        if entity == self.entity_from_id and self.entity_name != None:
+        if entity == self.entity_from_id and self.entity_name is not None:
             return self.entity_name
-        elif allow_download_from_API:
+        elif allow_download_from_api:
             return get_name_of_entity_from_api(entity)
         else:
             raise ValueError(
-                "Can't get the entity name because not allowed to download from API and not provided at the initialisation")
+                "Can't get the entity name because not allowed to download from API and not provided at the "
+                "initialisation")
 
     def get_info_about_entity(self,
                               entity: str | None = None,
-                              infos: list[str] = ["display_name"],
+                              infos: list[str] | None = None,
                               return_as_pd_series: bool = True,
-                              allow_download_from_API: bool = True
+                              allow_download_from_api: bool = True
                               ) -> dict | pd.Series:
         """
         Get information about the entity (eg. name, publication_date...). If no entity is provided, the entity_from_id will be used.
 
         :param entity: The entity id, if not provided, use the one from the instance. Default is None.
         :type entity: str | None
-        :param infos: The information fields to get. Default is ["display_name"].
-        :type infos: list[str]
+        :param infos: The information fields to get. Default is None, which will get ["display_name"].
+        :type infos: list[str] | None
         :param return_as_pd_series: True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.
         :type return_as_pd_series: bool
-        :param allow_download_from_API: Allow the library to download the information from the API. Default is True.
-        :type allow_download_from_API: bool
+        :param allow_download_from_api: Allow the library to download the information from the API. Default is True.
+        :type allow_download_from_api: bool
         :return:
         :rtype:
         """
-        if entity == None:
+        if infos is None:
+            infos = ["display_name"]
+        if entity is None:
             entity = self.entity_from_id
-            if entity == None:
-                raise ValueError("Can't get the entitie info of None")
-        if allow_download_from_API:
+            if entity is None:
+                raise ValueError("Can't get the entity info of None")
+        if allow_download_from_api:
             return get_info_about_entity_from_api(entity, infos=infos, return_as_pd_series=return_as_pd_series)
         else:
-            raise ValueError("Can't get the entitie info because not allowed to download from API")
+            raise ValueError("Can't get the entity info because not allowed to download from API")
 
 
 def get_entity_type_from_id(entity: str) -> pyalex.api.BaseOpenAlex:
@@ -587,7 +591,7 @@ def get_entity_type_from_id(entity: str) -> pyalex.api.BaseOpenAlex:
         case 'P':
             return Publishers
         case _:
-            raise ValueError("Entitie id " + entity + " not valid")
+            raise ValueError("Entity id " + entity + " not valid")
 
 
 def get_name_of_entity_from_api_core(entity: str) -> str:
@@ -614,10 +618,10 @@ def get_name_of_entity_from_api(entity: str) -> str:
     :return: The name of the entity.
     :rtype: str
     """
-    if config.redis_enabled == True:
+    if config.redis_enabled:
         log_oa.info("Getting name of " + entity + " from the OpenAlex API (cache enabled)...")
-        get_name_of_entitie_from_api_core_cached = config.redis_cache.cache()(get_name_of_entity_from_api_core)
-        return get_name_of_entitie_from_api_core_cached(entity)
+        get_name_of_entity_from_api_core_cached = config.redis_cache.cache()(get_name_of_entity_from_api_core)
+        return get_name_of_entity_from_api_core_cached(entity)
     else:
         log_oa.info("Getting name of " + entity + " from the OpenAlex API (cache disabled)...")
         return get_name_of_entity_from_api_core(entity)
@@ -634,27 +638,29 @@ def extract_authorships_citation_style(authorships: dict) -> str:
     """
     if len(authorships) == 0:
         res = "Unknown author"
-    if len(authorships) >= 1:
+    else:
         res = authorships[0]['author']['display_name']
     if len(authorships) >= 2:
         res += ", " + authorships[1]['author']['display_name']
-    if len(authorships) > 1:
+    if len(authorships) > 2:
         res += " et al."
     return res
 
 
-def get_info_about_entity_from_api_core(entity: str, infos: list[str] = ["display_name"]) -> dict:
+def get_info_about_entity_from_api_core(entity: str, infos: list[str] | None = None) -> dict:
     """
     Gets information about the entity from the api.
 
     :param entity: The entity id.
     :type entity: str
-    :param infos: The information to get (see OpenAlex API documentation). You can also request "author_citation_style" to get a citation string for the authors. The default is ["display_name"].
-    :type infos: list[str]
+    :param infos: The information to get (see OpenAlex API documentation). You can also request "author_citation_style" to get a citation string for the authors. The default is None, which will get ["display_name"].
+    :type infos: list[str] | None
     :return: The entity information.
     :rtype: dict
     """
     # call the API
+    if infos is None:
+        infos = ["display_name"]
     e = get_entity_type_from_id(entity)()[entity]
     if "author_citation_style" in infos:
         e["author_citation_style"] = extract_authorships_citation_style(e["authorships"])
@@ -662,18 +668,21 @@ def get_info_about_entity_from_api_core(entity: str, infos: list[str] = ["displa
     return e
 
 
-def get_info_about_entity_from_api(entity: str, infos: list[str] = ["display_name"], return_as_pd_series: bool = True) -> str | pd.Series:
+def get_info_about_entity_from_api(entity: str, infos: list[str] | None = None,
+                                   return_as_pd_series: bool = True) -> str | pd.Series:
     """
 
     :param entity: The entity id.
     :type entity: str
-    :param infos: The information to get (see OpenAlex API documentation). You can also request "author_citation_style" to get a citation string for the authors. The default is ["display_name"].
-    :type infos: list[str]
+    :param infos: The information to get (see OpenAlex API documentation). You can also request "author_citation_style" to get a citation string for the authors. The default is None, which will get ["display_name"].
+    :type infos: list[str] | None
     :param return_as_pd_series: True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.
     :type return_as_pd_series: bool
     :return: The entity information.
     :rtype: str | pd.Series
     """
+    if infos is None:
+        infos = ["display_name"]
     if config.redis_enabled == True:
         log_oa.info("Getting information about " + entity + " from the OpenAlex API (cache enabled)...")
         get_info_about_entity_from_api_core_cached = config.redis_cache.cache()(get_info_about_entity_from_api_core)
@@ -753,21 +762,20 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         # add computed datas:
         # concept_score if the downloading list comes from a concept
         if self.entity_from_type == Concepts:
-            # self.entitie_from_id is equal to the concept
+            # self.entity_from_id is equal to the concept
             entity[self.entity_from_id] = float(next((item['score'] for item in entity['concepts'] if
                                                       item['id'] == "https://openalex.org/" + self.entity_from_id),
                                                      0))
-            # entity[concept] = next((item['score'] for key, item in entity['x_concepts'].items() if item['id'] == "https://openalex.org/"+concept), 0)
         # country_name
         country_code = self.get_country_code(entity)
-        if country_code != None:
+        if country_code is not None:
             entity['country_name'] = self.cc.convert(names=[self.get_country_code(entity)], to='name_short')
         else:
             entity['country_name'] = None
         # institution_name
         entity['institution_name'] = self.get_institution_name(entity)
 
-    def get_country_code(self, entity: dict) -> str:
+    def get_country_code(self, entity: dict) -> str | None:
         """
         Get the country code from an entity.
 
@@ -782,7 +790,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         else:
             return None
 
-    def get_institution_name(self, entity: dict) -> str:
+    def get_institution_name(self, entity: dict) -> str | None:
         """
         Get the institution name from an entity.
 
@@ -797,17 +805,17 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         else:
             return None
 
-    def get_works_references_count(self, count_years: list[int] = []) -> pd.Series:
+    def get_works_references_count(self, count_years: list[int] | None = None) -> pd.Series:
         """
         Get the works references count of the works list of the instance.
 
-        :param count_years: List of years to count the references. The default value is [] to not count by years.
+        :param count_years: List of years to count the references. The default value is None to not count by years.
         :type count_years: list[int]
         :return: The works references count.
         :rtype: pd.Series
         """
         log_oa.info("Creating the works references count of " + self.get_entity_string_name() + "...")
-        if count_years == []:
+        if count_years is None:
             return self.entities_df['referenced_works'].explode().value_counts().convert_dtypes()
         else:
             counts_df_list = [None] * len(count_years)
@@ -819,17 +827,17 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             entities_count.name = 'count'
             return entities_count
 
-    def get_works_concepts_count(self, count_years: list[int] = []) -> pd.Series:
+    def get_works_concepts_count(self, count_years: list[int] | None = None) -> pd.Series:
         """
         Get the concepts count of the works list of the instance.
 
-        :param count_years: List of years to count the concepts. The default value is [] to not count by years.
+        :param count_years: List of years to count the concepts. The default value is None to not count by years.
         :type count_years: list[int]
         :return: The concept count.
         :rtype: pd.Series
         """
         log_oa.info("Creating the concept count of " + self.get_entity_string_name() + "...")
-        if count_years == []:
+        if count_years is None:
             return self.entities_df['concepts'].explode().apply(
                 lambda c: c['id'] if type(c) == dict else None).value_counts().convert_dtypes()
         else:
@@ -843,13 +851,13 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             entities_count.name = 'count'
             return entities_count
 
-    def get_element_count(self, element_type: str, count_years: list[int] = []) -> pd.Series:
+    def get_element_count(self, element_type: str, count_years: list[int] | None = None) -> pd.Series:
         """
         Get the count of elements (for now references or concepts) by year (optional) used by the entity.
 
         :param element_type: The element type ('reference' or 'concept').
         :type element_type: str
-        :param count_years: List of years to count the concepts. The default value is [] to not count by years.
+        :param count_years: List of years to count the concepts. The default value is None to not count by years.
         :type count_years: list[int]
         :return: The element count.
         :rtype: pd.Series
@@ -864,10 +872,10 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
     def create_element_used_count_array(self,
                                         element_type: str,
-                                        entities_from: list[str] = [],
+                                        entities_from: list[str] | None = None,
                                         out_file_name: str | None = None,
                                         save_out_array: bool = False,
-                                        count_years: list[int] = []
+                                        count_years: list[int] | None = None
                                         ):
         """
         Creates the element used count array. Count the number of times each element (eg reference, concept..) is used
@@ -896,12 +904,13 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             case _:
                 raise ValueError("Can only count for 'references' or 'concept'")
 
-        if self.entity_from_id == None and entities_from == []:
+        if self.entity_from_id is None and entities_from == []:
             raise ValueError(
-                "You need either to instancy the object with an entitie_from_id or to provide entities_from to create_element_used_count_array()")
+                "You need either to instance the object with an entity_from_id or to provide entities_from to "
+                "create_element_used_count_array()")
         # TODO: add parameter to drop references not in the entity to compare from : useless as we can not import it
-        if out_file_name == None:
-            if self.entity_from_id == None:
+        if out_file_name is None:
+            if self.entity_from_id is None:
                 out_file_name = self.count_element_type + "s_" + self.get_entity_string_name() + "_of_diverse_entities"
             else:
                 out_file_name = self.count_element_type + "s_" + self.get_entity_string_name() + "_of_" + self.get_entity_string_name(
@@ -918,7 +927,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         self.create_element_count_array_progress_text = "Creating the " + self.count_element_type + "s array..."
 
         # Create the count array for the first/main entity if previously added to object
-        if self.entity_from_id != None:
+        if self.entity_from_id is not None:
             col_name = self.entity_from_id + " " + self.get_name_of_entity()
             self.count_entities_cols.append(col_name)
             if len(self.entities_df.index) == 0:
@@ -929,22 +938,21 @@ class WorksAnalysis(EntitiesAnalysis, Works):
                     axis=1)
                 self.element_count_df = self.element_count_df.rename(columns={'count': col_name})
 
-        for i, entity in enumerate(entities_from):
-            self.create_element_count_array_progress_percentage = int(i / len(entities_from) * 100)
-            # initialise the WorksAnalysis instance
-            works = WorksAnalysis(**entity, load_only_columns=cols_to_load)
-            col_name = works.entity_from_id + " " + works.get_name_of_entity()
-            self.count_entities_cols.append(col_name)
-            # if there is no data in the dataframe, we add a blank column
-            if len(works.entities_df.index) == 0:
-                self.element_count_df[col_name] = pd.Series().convert_dtypes()
-            else:
-                self.element_count_df = pd.concat(
-                    [self.element_count_df, works.get_element_count(self.count_element_type, count_years=count_years)],
-                    axis=1)
-                self.element_count_df = self.element_count_df.rename(columns={'count': col_name})
-
-        if count_years != []:
+        if count_years is not None:
+            for i, entity in enumerate(entities_from):
+                self.create_element_count_array_progress_percentage = int(i / len(entities_from) * 100)
+                # initialise the WorksAnalysis instance
+                works = WorksAnalysis(**entity, load_only_columns=cols_to_load)
+                col_name = works.entity_from_id + " " + works.get_name_of_entity()
+                self.count_entities_cols.append(col_name)
+                # if there is no data in the dataframe, we add a blank column
+                if len(works.entities_df.index) == 0:
+                    self.element_count_df[col_name] = pd.Series().convert_dtypes()
+                else:
+                    self.element_count_df = pd.concat(
+                        [self.element_count_df, works.get_element_count(self.count_element_type, count_years=count_years)],
+                        axis=1)
+                    self.element_count_df = self.element_count_df.rename(columns={'count': col_name})
             self.element_count_df.index = self.element_count_df.index.set_names('element', level=0)
             self.element_count_df.index = self.element_count_df.index.set_names('year', level=1)
         else:
@@ -969,7 +977,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :type sort_by_ascending: bool
         """
         log_oa.info("Sorting by " + sort_by)
-        if self.count_element_years == []:
+        if not self.count_element_years:
             # we didn't count per year so we can do a simple sort
             self.element_count_df = self.element_count_df.sort_values(by=sort_by, ascending=sort_by_ascending)
         else:
@@ -1020,7 +1028,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             "fill with NaN values 0 of sum_all_entities to avoid them to be used when ranking (we wan't to ignore these rows as these references aren't used)")
         self.element_count_df['sum_all_entities'] = self.element_count_df['sum_all_entities'].replace(0, None)
         self.element_count_df['proportion_used_by_main_entity'] = self.element_count_df[main_entity_col_id] / \
-                                                                   self.element_count_df['sum_all_entities']
+                                                                  self.element_count_df['sum_all_entities']
         # self.element_count_df['proportion_used_by_main_entitie'] = self.element_count_df[main_entity_col_id].div(self.element_count_df['sum_all_entities'])
         # # we put -1 inplace of NaN values (it's where the sum_all_entities is 0 so the division failed)
         # self.element_count_df.fillna(value=-1, inplace=True)
@@ -1030,7 +1038,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         log_oa.info("Computing proportion_used_by_main_entity rank...")
         self.element_count_df['proportion_used_by_main_entity_rank'] = self.element_count_df[
             'proportion_used_by_main_entity'].rank(ascending=False,
-                                                    pct=True)  # , method = 'dense') # before method = 'average' was used
+                                                   pct=True)  # , method = 'dense') # before method = 'average' was used
         log_oa.info("Computing highly used by all entities and low use by main entity")
         self.element_count_df['h_used_all_l_use_main'] = self.element_count_df['sum_all_entities_rank'] * \
                                                          self.element_count_df['proportion_used_by_main_entity_rank']
@@ -1076,7 +1084,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         self.element_count_df.insert(loc=0, column='concept_name', value=concept_names_series)
         self.element_count_df.insert(loc=1, column='concept_level', value=concept_levels_serie)
 
-        if min_concept_level != None:
+        if min_concept_level is not None:
             log_oa.info("Removed concepts with level bellow " + str(min_concept_level))
             self.element_count_df = self.element_count_df.loc[self.element_count_df.concept_level >= min_concept_level]
 
@@ -1088,16 +1096,18 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             extract_authorships_citation_style)
 
     def get_authors_count(self,
-                          cols=['author.id', 'count', 'raw_affiliation_string', 'author.display_name', 'author.orcid']
+                          cols: list[str] | None
                           ) -> pd.DataFrame:
         """
         Count the number of times each author appears in entities_df and return the result as a pd.DataFrame.
 
-        :param cols: Columns to return in the DataFrame. Must be existing columns names of authorships. The default value is ['author.id', 'count', 'raw_affiliation_string', 'author.display_name', 'author.orcid'].
+        :param cols: Columns to return in the DataFrame. Must be existing columns names of authorships. The default value is None which correspond to ['author.id', 'count', 'raw_affiliation_string', 'author.display_name', 'author.orcid'].
         :type cols: list[str]
         :return: The authors count.
         :rtype: pd.DataFrame
         """
+        if cols is None:
+            cols = ['author.id', 'count', 'raw_affiliation_string', 'author.display_name', 'author.orcid']
         df_authors = pd.json_normalize(self.entities_df['authorships'].explode().to_list())
         authors_count = pd.DataFrame(df_authors.value_counts('author.id'))
 
@@ -1120,7 +1130,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :rtype: list[int]
         """
         entity_link = "https://openalex.org/" + entity
-        count_res = [None] * len(count_years)
+        count_res = [0] * len(count_years)
         for i, year in enumerate(count_years):
             # get the list of works from the year
             df = self.entities_df.loc[self.entities_df['publication_year'] == year]
@@ -1150,7 +1160,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :return: Number of works per year.
         :rtype: list[int]
         """
-        count_res = [None] * len(count_years)
+        count_res = [0] * len(count_years)
         for i, year in enumerate(count_years):
             # get the list of works from the year
             df = self.entities_df.loc[self.entities_df['publication_year'] == year]
@@ -1229,7 +1239,8 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             entity_from_ids = self.entity_from_id
             if entity_from_ids is None:
                 raise ValueError(
-                    "entity_from_ids not provided and entities_from_id is None. You must provide either entitie_from_id to the class or entity_from_ids to the function")
+                    "entity_from_ids not provided and entities_from_id is None. You must provide either "
+                    "entity_from_id to the class or entity_from_ids to the function")
 
         if not isinstance(entity_from_ids, list):
             entity_from_ids = [entity_from_ids]
@@ -1282,7 +1293,7 @@ class InstitutionsAnalysis(EntitiesAnalysis, Institutions):
         del entity['repositories']
         del entity['country_code']  # already in geo.country_code
 
-        # keep only the first element in the list of theses data
+        # keep only the first element in the list of those data
         # display_name_acronym
         if entity['display_name_acronyms']:
             entity['display_name_acronym'] = entity['display_name_acronyms'][0]
@@ -1319,11 +1330,11 @@ class InstitutionsAnalysis(EntitiesAnalysis, Institutions):
             entity[self.entity_from_id] = next((item['score'] for item in entity['x_concepts'] if
                                                 item['id'] == "https://openalex.org/" + self.entity_from_id), 0)
 
-    def get_sum_concept_scores(self, institutions: list[dict], concept_links: list[str]) -> list[float]:
+    def get_sum_concept_scores(self, institutions: list[dict], concept_links: list[str]) -> int:
         """
         Gets the sum of the concept scores of the concepts in the list concepts.
 
-        :param institutions: The institution .
+        :param institutions: The institution.
         :type institutions: list[dict]
         :param concept_links: The concept links.
         :type concept_links: list[str]
