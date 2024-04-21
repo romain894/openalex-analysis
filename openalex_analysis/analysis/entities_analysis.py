@@ -44,8 +44,6 @@ class AnalysisConfig(dict):
     * **project_datas_folder_path** (*string*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "./data".
     * **parquet_compression** (*string*) - Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is "brotli".
     * **max_storage_percent** (*int*) - When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.
-    * **redis_enabled** (*bool*) - True if you want to enable the Redis cache. You need a working Redis instance and provide redis_cache. The default is False.
-    * **redis_cache** (*RedisCache*) - The Redis cache to use (see the examples in the documentation). The default value is None.
     * **log_level** (*string*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
     """
 
@@ -81,8 +79,6 @@ config = AnalysisConfig(email=None,
                         project_datas_folder_path="data",
                         parquet_compression="brotli",
                         max_storage_percent=95,
-                        redis_enabled=False,
-                        redis_cache=None,
                         log_level='WARNING',
                         )
 
@@ -99,7 +95,6 @@ class EntitiesAnalysis:
                  extra_filters: dict | None = None,
                  database_file_path: dict | None = None,
                  create_dataframe: bool = True,
-                 entity_name: str | None = None,
                  load_only_columns: list[str] | None = None,
                  # custom_query: str| None = None,
                  ):
@@ -113,8 +108,6 @@ class EntitiesAnalysis:
         :type database_file_path: string | None
         :param create_dataframe: Create the dataframe at the initialisation (and download the data if allowed and entitie_from_id or extra_filters is provided). The default value is True.
         :type create_dataframe: bool
-        :param entity_name: To specify the name of the entity to avoid downloading it via the API if needed. For concepts and institutions, the names are already stored in the library so no API calls will be done. The default value is None.
-        :type entity_name: None | None
         :param load_only_columns: Load only the specified columns from the parquet file. Everything will be downloaded anyway. The default value is None.
         :type load_only_columns: string | None
         """
@@ -124,7 +117,6 @@ class EntitiesAnalysis:
         self.entity_from_type = None
         self.extra_filters = extra_filters
         self.database_file_path = database_file_path
-        self.entity_name = entity_name
         self.load_only_columns = load_only_columns
         # self.custom_query = custom_query
 
@@ -361,7 +353,7 @@ class EntitiesAnalysis:
         if cited_by_threshold > 0:
             for index, row in self.entities_df.iterrows():
                 if row[x_datas] >= x_threshold and row[y_datas] >= y_threshold and row[
-                        'works_cited_by_count_average'] >= cited_by_threshold:
+                    'works_cited_by_count_average'] >= cited_by_threshold:
                     n_selected_entities += 1
         else:
             for index, row in self.entities_df.iterrows():
@@ -510,31 +502,20 @@ class EntitiesAnalysis:
             entity = self.entity_from_id
         return get_entity_type_from_id(entity)
 
-    def get_name_of_entity(self, entity: str | None = None, allow_download_from_api: bool = True) -> str | None:
+    def get_name_of_entity(self, entity: str | None = None) -> str:
         """
         Gets the name of entity from its id.
 
         :param entity: The entity id, if not provided, use the one from the instance. Default is None.
-        :type entity: str | None
-        :param allow_download_from_api: Allow to download the entity name from the OpenAlex API. Default is Ture.
-        :type allow_download_from_api: bool
+        :type entity: str
         :return: The name of the entity.
         :rtype: str
         """
         if entity is None:
             entity = self.entity_from_id
-            # if entity is None then we return None
             if entity is None:
-                return None
-        # if the entity name asked is the one of the current instance and it was provided in the initialisation
-        if entity == self.entity_from_id and self.entity_name is not None:
-            return self.entity_name
-        elif allow_download_from_api:
-            return get_name_of_entity_from_api(entity)
-        else:
-            raise ValueError(
-                "Can't get the entity name because not allowed to download from API and not provided at the "
-                "initialisation")
+                raise ValueError("No entity id provided, can't get the name of the entity")
+        return get_name_of_entity(entity)
 
     def get_info_about_entity(self,
                               entity: str | None = None,
@@ -556,16 +537,11 @@ class EntitiesAnalysis:
         :return:
         :rtype:
         """
-        if infos is None:
-            infos = ["display_name"]
         if entity is None:
             entity = self.entity_from_id
             if entity is None:
                 raise ValueError("Can't get the entity info of None")
-        if allow_download_from_api:
-            return get_info_about_entity_from_api(entity, infos=infos, return_as_pd_series=return_as_pd_series)
-        else:
-            raise ValueError("Can't get the entity info because not allowed to download from API")
+        return get_info_about_entity(entity, infos=infos, return_as_pd_series=return_as_pd_series)
 
 
 def get_entity_type_from_id(entity: str) -> pyalex.api.BaseOpenAlex:
@@ -594,7 +570,7 @@ def get_entity_type_from_id(entity: str) -> pyalex.api.BaseOpenAlex:
             raise ValueError("Entity id " + entity + " not valid")
 
 
-def get_name_of_entity_from_api_core(entity: str) -> str:
+def get_name_of_entity(entity: str) -> str:
     """
     Gets the name of the entity from the api.
 
@@ -606,25 +582,6 @@ def get_name_of_entity_from_api_core(entity: str) -> str:
     # call the API
     e = get_entity_type_from_id(entity)()[entity]
     return e['display_name']
-
-
-def get_name_of_entity_from_api(entity: str) -> str:
-    """
-    Gets the name of the entity from the api using the optional redis cache system. If the cache is not enabled, the api
-    will be called directly. You should call this function instead of get_name_of_entity_from_api_core().
-
-    :param entity: The entity id.
-    :type entity: str
-    :return: The name of the entity.
-    :rtype: str
-    """
-    if config.redis_enabled:
-        log_oa.info("Getting name of " + entity + " from the OpenAlex API (cache enabled)...")
-        get_name_of_entity_from_api_core_cached = config.redis_cache.cache()(get_name_of_entity_from_api_core)
-        return get_name_of_entity_from_api_core_cached(entity)
-    else:
-        log_oa.info("Getting name of " + entity + " from the OpenAlex API (cache disabled)...")
-        return get_name_of_entity_from_api_core(entity)
 
 
 def extract_authorships_citation_style(authorships: dict) -> str:
@@ -647,29 +604,8 @@ def extract_authorships_citation_style(authorships: dict) -> str:
     return res
 
 
-def get_info_about_entity_from_api_core(entity: str, infos: list[str] | None = None) -> dict:
-    """
-    Gets information about the entity from the api.
-
-    :param entity: The entity id.
-    :type entity: str
-    :param infos: The information to get (see OpenAlex API documentation). You can also request "author_citation_style" to get a citation string for the authors. The default is None, which will get ["display_name"].
-    :type infos: list[str] | None
-    :return: The entity information.
-    :rtype: dict
-    """
-    # call the API
-    if infos is None:
-        infos = ["display_name"]
-    e = get_entity_type_from_id(entity)()[entity]
-    if "author_citation_style" in infos:
-        e["author_citation_style"] = extract_authorships_citation_style(e["authorships"])
-    e = {key: val for key, val in e.items() if key in infos}
-    return e
-
-
-def get_info_about_entity_from_api(entity: str, infos: list[str] | None = None,
-                                   return_as_pd_series: bool = True) -> str | pd.Series:
+def get_info_about_entity(entity: str, infos: list[str] | None = None,
+                          return_as_pd_series: bool = True) -> str | pd.Series:
     """
 
     :param entity: The entity id.
@@ -683,13 +619,10 @@ def get_info_about_entity_from_api(entity: str, infos: list[str] | None = None,
     """
     if infos is None:
         infos = ["display_name"]
-    if config.redis_enabled == True:
-        log_oa.info("Getting information about " + entity + " from the OpenAlex API (cache enabled)...")
-        get_info_about_entity_from_api_core_cached = config.redis_cache.cache()(get_info_about_entity_from_api_core)
-        res = get_info_about_entity_from_api_core_cached(entity, infos=infos)
-    else:
-        log_oa.info("Getting information about " + entity + " from the OpenAlex API (cache disabled)...")
-        res = get_info_about_entity_from_api_core(entity, infos=infos)
+    e = get_entity_type_from_id(entity)()[entity]
+    if "author_citation_style" in infos:
+        e["author_citation_style"] = extract_authorships_citation_style(e["authorships"])
+    res = {key: val for key, val in e.items() if key in infos}
     if return_as_pd_series:
         data = [val for val in res.values()]
         index = [key for key in res]
@@ -697,7 +630,7 @@ def get_info_about_entity_from_api(entity: str, infos: list[str] | None = None,
     return res
 
 
-def check_if_entity_exists_core(entity: str) -> bool:
+def check_if_entity_exists(entity: str) -> bool:
     """
     Check if the entity exists.
     TODO: check status code for existence of entity as other errors can occur.
@@ -715,24 +648,6 @@ def check_if_entity_exists_core(entity: str) -> bool:
         return False
     else:
         return True
-
-
-def check_if_entity_exists_from_api(entity: str) -> bool:
-    """3
-    Check if the entity exists.
-
-    :param entity: The entity id.
-    :type entity: str
-    :return: True if the entity exists.
-    :rtype: bool
-    """
-    if config.redis_enabled == True:
-        log_oa.info("Checking if " + entity + " exists (cache enabled)...")
-        check_if_entity_exists_core_cached = config.redis_cache.cache()(check_if_entity_exists_core)
-        return check_if_entity_exists_core_cached(entity)
-    else:
-        log_oa.info("Checking if " + entity + " exists (cache disabled)...")
-        return check_if_entity_exists_core(entity)
 
 
 class WorksAnalysis(EntitiesAnalysis, Works):
@@ -950,7 +865,8 @@ class WorksAnalysis(EntitiesAnalysis, Works):
                     self.element_count_df[col_name] = pd.Series().convert_dtypes()
                 else:
                     self.element_count_df = pd.concat(
-                        [self.element_count_df, works.get_element_count(self.count_element_type, count_years=count_years)],
+                        [self.element_count_df,
+                         works.get_element_count(self.count_element_type, count_years=count_years)],
                         axis=1)
                     self.element_count_df = self.element_count_df.rename(columns={'count': col_name})
             self.element_count_df.index = self.element_count_df.index.set_names('element', level=0)
