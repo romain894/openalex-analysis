@@ -15,8 +15,6 @@ import requests
 
 from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
 
-from openalex_analysis.names import EntitieNames
-
 # define a custom logging
 log_oa = logging.getLogger(__name__)
 log_oa.addHandler(logging.StreamHandler())
@@ -89,7 +87,7 @@ config = AnalysisConfig(email=None,
                         )
 
 
-class EntitiesAnalysis(EntitieNames):
+class EntitiesAnalysis():
     """
     openalex-analysis analysis class which contains generic methods to download and do analysis over OpenAlex entities
     """
@@ -1065,15 +1063,15 @@ class WorksAnalysis(EntitiesAnalysis, Works):
             # Classic pandas index
             element_count_concepts_series = element_count_concepts_series.str.strip("https://openalex.org/")
             concept_names_series = element_count_concepts_series.apply(
-                lambda c: EntitieNames.concepts_names[c]).convert_dtypes()
+                lambda c: Concepts()[c]['display_name']).convert_dtypes()
             concept_levels_serie = element_count_concepts_series.apply(
-                lambda c: EntitieNames.concepts_levels[c]).convert_dtypes()
+                lambda c: Concepts()[c]['level']).convert_dtypes()
         else:
             # pandas multi index
             concept_names_series = element_count_concepts_series.apply(
-                lambda c: EntitieNames.concepts_names[c[0].strip("https://openalex.org/")]).convert_dtypes()
+                lambda c: Concepts()[c[0].strip("https://openalex.org/")]['display_name']).convert_dtypes()
             concept_levels_serie = element_count_concepts_series.apply(
-                lambda c: EntitieNames.concepts_levels[c[0].strip("https://openalex.org/")]).convert_dtypes()
+                lambda c: Concepts()[c[0].strip("https://openalex.org/")]['level']).convert_dtypes()
 
         self.element_count_df.insert(loc=0, column='concept_name', value=concept_names_series)
         self.element_count_df.insert(loc=1, column='concept_level', value=concept_levels_serie)

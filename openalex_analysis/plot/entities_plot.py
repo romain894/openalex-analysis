@@ -6,6 +6,8 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
+from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers
+
 # config must NOT be imported from pyalex here as it is already imported via entities_analysis
 
 from openalex_analysis.analysis import *
@@ -35,11 +37,11 @@ class EntitiesPlot():
         """
         if plot_parameters == None:
             plot_parameters = {
-                'plot_title': "Plot of the entities related to "+self.concepts_names[concept]+" studies",
+                'plot_title': "Plot of the entities related to "+Concepts()[concept]['display_name']+" studies",
                 'x_datas': 'works_count',
                 'x_legend': "Number of works",
                 'y_datas': concept,
-                'y_legend': "Concept score ("+self.concepts_names[concept]+")",
+                'y_legend': "Concept score ("+Concepts()[concept]['display_name']+")",
             }
         plot_title = plot_parameters['plot_title']
         x_datas = plot_parameters['x_datas']
@@ -316,7 +318,7 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
                 "Institution: %{customdata[2]}",
                 "Publication year: %{customdata[3]}",
                 "Cited by count: %{customdata[4]}",
-                "Concept score ("+self.concepts_names[concept]+"): %{customdata[5]}",
+                "Concept score ("+Concepts()[concept]['display_name']+"): %{customdata[5]}",
         ]
         return hover_template
 
@@ -457,7 +459,7 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
             "%{customdata[0]}",
             "Country name: %{customdata[1]}",
             #y_legend+": %{y}",
-            "Concept score ("+self.concepts_names[concept]+"): %{customdata[4]}",
+            "Concept score ("+Concepts()[concept]['display_name']+"): %{customdata[4]}",
             "Cited by count: %{customdata[2]}",
             "Cited by average: %{customdata[3]}"
         ]
