@@ -9,11 +9,7 @@ Install with:
 pip install openalex-analysis
 ```
 
-A web app based on the library is available [here](https://github.com/romain894/webapp-openalex-analysis).
-
 Documentation : [https://romain894.github.io/openalex-analysis](https://romain894.github.io/openalex-analysis)
-
-[OpenAlex documentation](https://docs.openalex.org/) [Explore OpenAlex in a GUI](https://explore.openalex.org/)
 
 Licence: GPL V3
 
@@ -200,5 +196,14 @@ In the directory `sphinx-doc/` run:
 make html
 ```
 
+## Other ressources
+
+Web app based on the library is available [here](https://github.com/romain894/webapp-openalex-analysis) (this project is not currently maintained but an update is planned in the coming months).
+
+[OpenAlex documentation](https://docs.openalex.org/)
+
+[Explore OpenAlex online](https://explore.openalex.org/)
+
+[PyAlex](https://github.com/J535D165/pyalex) (Python library for OpenAlex)
 
 Romain Thomas 2024
