@@ -195,6 +195,12 @@ config.max_storage_percent = 95
 
 - `max_storage_percent` Maximum storage usage percentage on the disk before starting to delete data stored in project_datas_folder_path. The parquet file with the oldest last read data will be deleted first.
 
+## Build the documentation
+
+In the directory `sphinx-doc/` run:
+```bash
+make html
+```
 
 
 Romain Thomas 2024
