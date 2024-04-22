@@ -1,0 +1,5 @@
+lsi: false
+safe: true
+source: https://github.com/romain894/openalex-analysis/
+incremental: false
+include: [_sources, _static]
