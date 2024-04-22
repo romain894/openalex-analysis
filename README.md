@@ -9,13 +9,13 @@ Install with:
 pip install openalex-analysis
 ```
 
-Documentation : [https://romain894.github.io/openalex-analysis](https://romain894.github.io/openalex-analysis)
+Documentation: [https://romain894.github.io/openalex-analysis](https://romain894.github.io/openalex-analysis)
 
 Licence: GPL V3
 
 ## Examples
 
-More examples can be found in the notebooks [Works_examples.ipynb](https://github.com/romain894/openalex-analysis/blob/main/Works_examples.ipynb) and [Concepts_Works_analysis.ipynb](https://github.com/romain894/openalex-analysis/blob/main/Concepts_works_analysis.ipynb)
+Examples in the documentation: [https://romain894.github.io/openalex-analysis/html/example_works_concepts.html](https://romain894.github.io/openalex-analysis/html/example_works_concepts.html)
 
 ### Get a dataset
 
@@ -29,7 +29,7 @@ Bellow, a few examples:
 
 Get the works about regime shift:
 
-```bash
+```python
 from openalex_analysis.analysis import WorksAnalysis
 
 concept_regime_shift_id = 'C2780893879'
@@ -41,7 +41,7 @@ my_dataset = wplt.entities_df
 
 #### Get the works about sustainability from the Stockholm Resilience Centre published in 2020
 
-```bash
+```python
 from openalex_analysis.analysis import WorksAnalysis
 
 concept_sustainability = 'C66204764'
@@ -196,7 +196,7 @@ In the directory `sphinx-doc/` run:
 make html
 ```
 
-## Other ressources
+## Other resources
 
 Web app based on the library is available [here](https://github.com/romain894/webapp-openalex-analysis) (this project is not currently maintained but an update is planned in the coming months).
 
