@@ -9,4 +9,6 @@ Welcome to OpenAlex Analysis's documentation!
 .. toctree::
    reference
    usage
+   setup_and_settings
+   example_works_concepts
 

@@ -258,7 +258,7 @@ class EntitiesPlot:
         # if y_legend == None:
         #     y_legend = self.get_name_of_entitie(element.strip("https://openalex.org/"))
         if plot_title is None:
-            element_name = self.get_name_of_entitie(element_id)
+            element_name = self.get_name_of_entity(element_id)
             if len(element_name) > 70:
                 element_name = element_name[0:70] + "..."
             plot_title = "Plot of the yearly usage of " + element_id + " (" + element_name + ") by the entities"
@@ -461,102 +461,102 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
         ]
         return hover_template
 
-    def get_figure_institutions_multi_concepts_filtered(self,
-                                                        plot_parameters: dict,
-                                                        concepts_from: list[str],
-                                                        concepts_filters: list[str],
-                                                        thresholds: list[int | float],
-                                                        x_threshold: int | float,
-                                                        cited_by_threshold: float | int,
-                                                        institution_to_highlight: str
-                                                        ) -> go.Figure:
-        """
-        Gets the figure with the institutions of multiple concepts and filtered.
-
-        :param plot_parameters: The plot parameters.
-        :type plot_parameters: dict
-        :param concepts_from: The concepts to import to create the dataset.
-        :type concepts_from: list[str]
-        :param concepts_filters: The concepts to use to filter the institutions.
-        :type concepts_filters: list[str]
-        :param thresholds: The thresholds for each concept filter.
-        :type thresholds: list[int | float]
-        :param x_threshold: The global threshold (eg. nb of works), usually corresponding to the x data (float or int).
-        :type x_threshold: int | float
-        :param cited_by_threshold: The cited by threshold (float or int).
-        :type cited_by_threshold: int | float
-        :param institution_to_highlight: The institution to highlight on the plot (str).
-        :type institution_to_highlight: str
-        :return: The figure.
-        :rtype: go.Figure
-        """
-        # extract the dictionnary plot_parameters:
-        plot_title = plot_parameters['plot_title']
-        x_datas = plot_parameters['x_datas']
-        x_legend = plot_parameters['x_legend']
-        y_datas = plot_parameters['y_datas']
-        y_legend = plot_parameters['y_legend']
-        color_data = plot_parameters['color_data']
-        color_legend = plot_parameters['color_legend']
-
-        self.create_multi_concept_filters_entities_dataframe(concepts_from, concepts_filters, thresholds, x_datas,
-                                                             x_threshold, cited_by_threshold)
-        self.add_average_combined_concept_score_to_multi_concept_entity_df(concepts_from)
-
-        # create the figure with the scatter plot of institutions        
-        fig1 = px.scatter(self.entities_multi_filtered_df,
-                          x=x_datas,
-                          y=y_datas,
-                          #custom_data=np.stack((entities_df_filtered['display_name'], entities_df_filtered['type'])),
-                          # change color_data by 'country_name' or update the hover if color_data changes
-                          custom_data=['display_name', color_data, 'cited_by_count', 'works_cited_by_count_average'],
-                          color=color_data,
-                          category_orders={color_data: np.sort(self.entities_multi_filtered_df[color_data].unique()[
-                                                                   self.entities_multi_filtered_df[
-                                                                       color_data].unique() != None])},
-                          labels={x_datas: x_legend, y_datas: y_legend})
-
-        # Highlight SRC institution on the plot:
-        fig1.add_traces(
-            px.scatter(
-                self.entities_multi_filtered_df.loc[self.entities_multi_filtered_df['id'] == institution_to_highlight],
-                x=x_datas, y=y_datas,
-                custom_data=['display_name', color_data, 'cited_by_count', 'works_cited_by_count_average']
-            ).update_traces(marker_size=20,
-                            marker={'size': 20, 'symbol': 'y-up', 'line': {'width': 3, 'color': 'black'}}).data
-        )
-
-        fig1.update_traces(hovertemplate="<br>".join([
-            "%{customdata[0]}",
-            #color_legend+": %{customdata[1]}",# already displayed on the plot
-            x_legend + ": %{x}",
-            y_legend + ": %{y}",
-            "Cited by count: %{customdata[2]}",
-            "Cited by average: %{customdata[3]}",
-        ]))
-
-        # figure with containing all sub figures
-        fig0 = None
-
-        # create the main figure
-        fig0 = go.Figure(data=fig1.data,
-                         layout={'height': figure_height})
-
-        fig0.update_xaxes(type="log")
-
-        fig0.update_layout(
-            coloraxis={'colorscale': 'rainbow'},
-            title={
-                'text': plot_title,
-                'x': 0.5,
-                'xanchor': 'center',
-                'yanchor': 'top'
-            },
-            xaxis_title=x_legend,
-            yaxis_title=y_legend
-        )
-
-        return fig0
+    # def get_figure_institutions_multi_concepts_filtered(self,
+    #                                                     plot_parameters: dict,
+    #                                                     concepts_from: list[str],
+    #                                                     concepts_filters: list[str],
+    #                                                     thresholds: list[int | float],
+    #                                                     x_threshold: int | float,
+    #                                                     cited_by_threshold: float | int,
+    #                                                     institution_to_highlight: str
+    #                                                     ) -> go.Figure:
+    #     """
+    #     Gets the figure with the institutions of multiple concepts and filtered.
+    #
+    #     :param plot_parameters: The plot parameters.
+    #     :type plot_parameters: dict
+    #     :param concepts_from: The concepts to import to create the dataset.
+    #     :type concepts_from: list[str]
+    #     :param concepts_filters: The concepts to use to filter the institutions.
+    #     :type concepts_filters: list[str]
+    #     :param thresholds: The thresholds for each concept filter.
+    #     :type thresholds: list[int | float]
+    #     :param x_threshold: The global threshold (eg. nb of works), usually corresponding to the x data (float or int).
+    #     :type x_threshold: int | float
+    #     :param cited_by_threshold: The cited by threshold (float or int).
+    #     :type cited_by_threshold: int | float
+    #     :param institution_to_highlight: The institution to highlight on the plot (str).
+    #     :type institution_to_highlight: str
+    #     :return: The figure.
+    #     :rtype: go.Figure
+    #     """
+    #     # extract the dictionnary plot_parameters:
+    #     plot_title = plot_parameters['plot_title']
+    #     x_datas = plot_parameters['x_datas']
+    #     x_legend = plot_parameters['x_legend']
+    #     y_datas = plot_parameters['y_datas']
+    #     y_legend = plot_parameters['y_legend']
+    #     color_data = plot_parameters['color_data']
+    #     color_legend = plot_parameters['color_legend']
+    #
+    #     self.create_multi_concept_filters_entities_dataframe(concepts_from, concepts_filters, thresholds, x_datas,
+    #                                                          x_threshold, cited_by_threshold)
+    #     self.add_average_combined_concept_score_to_multi_concept_entity_df(concepts_from)
+    #
+    #     # create the figure with the scatter plot of institutions
+    #     fig1 = px.scatter(self.entities_multi_filtered_df,
+    #                       x=x_datas,
+    #                       y=y_datas,
+    #                       #custom_data=np.stack((entities_df_filtered['display_name'], entities_df_filtered['type'])),
+    #                       # change color_data by 'country_name' or update the hover if color_data changes
+    #                       custom_data=['display_name', color_data, 'cited_by_count', 'works_cited_by_count_average'],
+    #                       color=color_data,
+    #                       category_orders={color_data: np.sort(self.entities_multi_filtered_df[color_data].unique()[
+    #                                                                self.entities_multi_filtered_df[
+    #                                                                    color_data].unique() != None])},
+    #                       labels={x_datas: x_legend, y_datas: y_legend})
+    #
+    #     # Highlight SRC institution on the plot:
+    #     fig1.add_traces(
+    #         px.scatter(
+    #             self.entities_multi_filtered_df.loc[self.entities_multi_filtered_df['id'] == institution_to_highlight],
+    #             x=x_datas, y=y_datas,
+    #             custom_data=['display_name', color_data, 'cited_by_count', 'works_cited_by_count_average']
+    #         ).update_traces(marker_size=20,
+    #                         marker={'size': 20, 'symbol': 'y-up', 'line': {'width': 3, 'color': 'black'}}).data
+    #     )
+    #
+    #     fig1.update_traces(hovertemplate="<br>".join([
+    #         "%{customdata[0]}",
+    #         #color_legend+": %{customdata[1]}",# already displayed on the plot
+    #         x_legend + ": %{x}",
+    #         y_legend + ": %{y}",
+    #         "Cited by count: %{customdata[2]}",
+    #         "Cited by average: %{customdata[3]}",
+    #     ]))
+    #
+    #     # figure with containing all sub figures
+    #     fig0 = None
+    #
+    #     # create the main figure
+    #     fig0 = go.Figure(data=fig1.data,
+    #                      layout={'height': figure_height})
+    #
+    #     fig0.update_xaxes(type="log")
+    #
+    #     fig0.update_layout(
+    #         coloraxis={'colorscale': 'rainbow'},
+    #         title={
+    #             'text': plot_title,
+    #             'x': 0.5,
+    #             'xanchor': 'center',
+    #             'yanchor': 'top'
+    #         },
+    #         xaxis_title=x_legend,
+    #         yaxis_title=y_legend
+    #     )
+    #
+    #     return fig0
 
 
 class ConceptsPlot(EntitiesPlot, ConceptsAnalysis):

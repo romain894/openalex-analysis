@@ -132,17 +132,15 @@ institution_names_list = ["Stockholm Resilience Centre", "University of Technolo
 # create a list of dictionaries with each dictionary containing the ID, name and filter for each institution
 entities_ref_to_count = [None] * len(institution_ids_list)
 for i in range(len(institution_ids_list)):
-    entities_ref_to_count[i] = {'entitie_from_id': institution_ids_list[i],
-                                'extra_filters': sustainability_concept_filter,
-                                'entitie_name': institution_names_list[i]}
-
+    entities_ref_to_count[i] = {'entity_from_id': institution_ids_list[i],
+                                'extra_filters': sustainability_concept_filter}
 
 wplt = WorksPlot()
 wplt.create_element_used_count_array('concept', entities_ref_to_count, count_years = count_years)
 
 wplt.add_statistics_to_element_count_array(sort_by = 'sum_all_entities', min_concept_level = 2)
-
-wplt.get_figure_time_series_element_used_by_entities().write_image("Plot_yearly_usage_sustainability_SRC_UTT.svg", width=1200)
+9
+wplt.get_figure_time_series_element_used_by_entities().write_image("Plot_yearly_usage_sustainability_SRC_UTT.svg", width=900, height=350)
 
 wplt.get_figure_time_series_element_used_by_entities()
 ```

@@ -18,7 +18,7 @@ from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, 
 # define a custom logging
 log_oa = logging.getLogger(__name__)
 log_oa.addHandler(logging.StreamHandler())
-log_oa.addHandler(logging.FileHandler(__name__ + ".log"))
+# log_oa.addHandler(logging.FileHandler(__name__ + ".log"))
 
 
 class AnalysisConfig(dict):
@@ -120,8 +120,8 @@ class EntitiesAnalysis:
         # a dataframe containing entities related to the instance
         self.entities_df = None
 
-        # Dataframe with the entities filtered with multi concepts
-        self.entities_multi_filtered_df = None
+        # # Dataframe with the entities filtered with multi concepts
+        # self.entities_multi_filtered_df = None
 
         # Dataframe with all the element (count_element_type) of the entity(ies) and their count + the count for other
         # entities (optional). The creation needs to be manually started.
@@ -230,7 +230,7 @@ class EntitiesAnalysis:
                 # update the progress bar
                 pbar.update(self.per_page)
                 # update the progress percentage variable
-                self.entity_downloading_progress_percentage = i / n_entities_to_download * 100
+                self.entity_downloading_progress_percentage = i / n_entities_to_download * 100 if i else 0
         self.entity_downloading_progress_percentage = 100
 
         # normalize the json format (one column for each field)
@@ -307,113 +307,113 @@ class EntitiesAnalysis:
 
         return entities_df_filtered
 
-    def get_number_of_entities_selected(self,
-                                        x_threshold: float | int,
-                                        y_threshold: float | int,
-                                        cited_by_threshold: float | int,
-                                        x_datas: str,
-                                        y_datas: str
-                                        ) -> int:
-        """
-        Gets the number of entities selected on the plot (based on the threshold values provided as parameter).
+    # def get_number_of_entities_selected(self,
+    #                                     x_threshold: float | int,
+    #                                     y_threshold: float | int,
+    #                                     cited_by_threshold: float | int,
+    #                                     x_datas: str,
+    #                                     y_datas: str
+    #                                     ) -> int:
+    #     """
+    #     Gets the number of entities selected on the plot (based on the threshold values provided as parameter).
+    #
+    #     :param x_threshold: The x threshold.
+    #     :type x_threshold: float | int
+    #     :param y_threshold: The y threshold.
+    #     :type y_threshold: float | int
+    #     :param cited_by_threshold: The cited by threshold.
+    #     :type cited_by_threshold: float | int
+    #     :param x_datas: The x datas key on the dataframe.
+    #     :type x_datas: str
+    #     :param y_datas: The y datas key on the dataframe.
+    #     :type y_datas: str
+    #     :return: The number of entities selected.
+    #     :rtype: int
+    #     """
+    #     n_selected_entities = 0
+    #     if cited_by_threshold > 0:
+    #         for index, row in self.entities_df.iterrows():
+    #             if row[x_datas] >= x_threshold and row[y_datas] >= y_threshold and row[
+    #                 'works_cited_by_count_average'] >= cited_by_threshold:
+    #                 n_selected_entities += 1
+    #     else:
+    #         for index, row in self.entities_df.iterrows():
+    #             if row[x_datas] >= x_threshold and row[y_datas] >= y_threshold:
+    #                 n_selected_entities += 1
+    #     return n_selected_entities
 
-        :param x_threshold: The x threshold.
-        :type x_threshold: float | int
-        :param y_threshold: The y threshold.
-        :type y_threshold: float | int
-        :param cited_by_threshold: The cited by threshold.
-        :type cited_by_threshold: float | int
-        :param x_datas: The x datas key on the dataframe.
-        :type x_datas: str
-        :param y_datas: The y datas key on the dataframe.
-        :type y_datas: str
-        :return: The number of entities selected.
-        :rtype: int
-        """
-        n_selected_entities = 0
-        if cited_by_threshold > 0:
-            for index, row in self.entities_df.iterrows():
-                if row[x_datas] >= x_threshold and row[y_datas] >= y_threshold and row[
-                    'works_cited_by_count_average'] >= cited_by_threshold:
-                    n_selected_entities += 1
-        else:
-            for index, row in self.entities_df.iterrows():
-                if row[x_datas] >= x_threshold and row[y_datas] >= y_threshold:
-                    n_selected_entities += 1
-        return n_selected_entities
-
-    def create_multi_concept_filters_entities_dataframe(self,
-                                                        concepts_from: list[str],
-                                                        concepts_filters: list[str],
-                                                        thresholds: list[float | int],
-                                                        x_datas: str,
-                                                        x_threshold: float | int,
-                                                        cited_by_threshold: float | int
-                                                        ):
-        """
-        Creates the multi concept filters entities dataframe. Combines different datasets and filters them.
-
-        :param concepts_from: The concept datasets to import and on which the filters will be applied.
-        :type concepts_from: list[str]
-        :param concepts_filters: The concepts which will be used to filter.
-        :type concepts_filters: list[str]
-        :param thresholds: The thresholds attached to each concepts to filter.
-        :type thresholds: list[float | int]
-        :param x_datas: The dataframe key of the global filter (eg the number of works).
-        :type x_datas: str
-        :param x_threshold: The threshold for the global filter.
-        :type x_threshold: float | int
-        :param cited_by_threshold: The cited by threshold (another global filter).
-        :type cited_by_threshold: float | int
-        """
-        self.entities_multi_filtered_df = pd.DataFrame()
-        # We add the concepts from where to select the entities to the dataframe
-        for concept in concepts_from:
-            # import the dataframe (create a new instance of the same class which will load the dataframe)
-            entity_instance = type(self)(entity_from_id=concept)
-            entities_df_filtered = entity_instance.entities_df
-            # filter the entities/dataframe with the global filters
-            entities_df_filtered = entities_df_filtered.loc[((entities_df_filtered[x_datas] >= x_threshold) & (
-                    entities_df_filtered['works_cited_by_count_average'] >= cited_by_threshold))]
-            # merge with the main dataframe
-            if len(self.entities_multi_filtered_df.index) == 0:
-                self.entities_multi_filtered_df = entities_df_filtered.copy(deep=False)
-            else:
-                self.entities_multi_filtered_df = pd.concat([self.entities_multi_filtered_df, entities_df_filtered],
-                                                            ignore_index=True)
-                self.entities_multi_filtered_df = self.entities_multi_filtered_df.drop_duplicates(subset=['id'])
-            # remove the column with the concept score previously computed when loading the database from file
-            self.entities_multi_filtered_df.drop(concept, axis=1, inplace=True)
-            log_oa.info("number of entities loaded:", len(self.entities_multi_filtered_df.index))
-        # filter the entities/dataframe with the concept filters:
-        for concept, threshold in zip(concepts_filters, thresholds):
-            # load the dataframe of the concept to filter:
-            entity_instance = type(self)(entity_from_id=concept)
-            entity_instance.entities_df = entity_instance.entities_df.set_index('id')
-            # add a column to add the concept score in it
-            self.entities_multi_filtered_df['concept_score'] = 0
-            # for each entity in self.entities_multi_filtered_df, add the concept score if entity found in
-            # entity_instance (otherwise let 0)
-            for entity in self.entities_multi_filtered_df.itertuples():
-                if entity.id in entity_instance.entities_df.index:
-                    self.entities_multi_filtered_df.at[entity.Index, 'concept_score'] = \
-                        entity_instance.entities_df.at[entity.id, concept]
-            # remove row with concept score bellow threshold:
-            self.entities_multi_filtered_df = self.entities_multi_filtered_df[
-                self.entities_multi_filtered_df['concept_score'] >= threshold]
-            log_oa.info("number of entities remaining after filter:", len(self.entities_multi_filtered_df.index))
-
-    def add_average_combined_concept_score_to_multi_concept_entity_df(self, concepts_from: list[str]):
-        """
-        Adds a column with the average combined concept score to the multi concept entities dataframe.
-
-        :param concepts_from: The concepts to use to calculate the combined concept score.
-        :type concepts_from: list[str]
-        """
-        concept_links = ["https://openalex.org/" + item for item in concepts_from]
-        self.entities_multi_filtered_df['average_combined_concepts_score'] = [
-            self.get_sum_concept_scores(entity, concept_links) / len(concepts_from) for index, entity in
-            self.entities_multi_filtered_df.iterrows()]
+    # def create_multi_concept_filters_entities_dataframe(self,
+    #                                                     concepts_from: list[str],
+    #                                                     concepts_filters: list[str],
+    #                                                     thresholds: list[float | int],
+    #                                                     x_datas: str,
+    #                                                     x_threshold: float | int,
+    #                                                     cited_by_threshold: float | int
+    #                                                     ):
+    #     """
+    #     Creates the multi concept filters entities dataframe. Combines different datasets and filters them.
+    #
+    #     :param concepts_from: The concept datasets to import and on which the filters will be applied.
+    #     :type concepts_from: list[str]
+    #     :param concepts_filters: The concepts which will be used to filter.
+    #     :type concepts_filters: list[str]
+    #     :param thresholds: The thresholds attached to each concepts to filter.
+    #     :type thresholds: list[float | int]
+    #     :param x_datas: The dataframe key of the global filter (eg the number of works).
+    #     :type x_datas: str
+    #     :param x_threshold: The threshold for the global filter.
+    #     :type x_threshold: float | int
+    #     :param cited_by_threshold: The cited by threshold (another global filter).
+    #     :type cited_by_threshold: float | int
+    #     """
+    #     self.entities_multi_filtered_df = pd.DataFrame()
+    #     # We add the concepts from where to select the entities to the dataframe
+    #     for concept in concepts_from:
+    #         # import the dataframe (create a new instance of the same class which will load the dataframe)
+    #         entity_instance = type(self)(entity_from_id=concept)
+    #         entities_df_filtered = entity_instance.entities_df
+    #         # filter the entities/dataframe with the global filters
+    #         entities_df_filtered = entities_df_filtered.loc[((entities_df_filtered[x_datas] >= x_threshold) & (
+    #                 entities_df_filtered['works_cited_by_count_average'] >= cited_by_threshold))]
+    #         # merge with the main dataframe
+    #         if len(self.entities_multi_filtered_df.index) == 0:
+    #             self.entities_multi_filtered_df = entities_df_filtered.copy(deep=False)
+    #         else:
+    #             self.entities_multi_filtered_df = pd.concat([self.entities_multi_filtered_df, entities_df_filtered],
+    #                                                         ignore_index=True)
+    #             self.entities_multi_filtered_df = self.entities_multi_filtered_df.drop_duplicates(subset=['id'])
+    #         # remove the column with the concept score previously computed when loading the database from file
+    #         self.entities_multi_filtered_df.drop(concept, axis=1, inplace=True)
+    #         log_oa.info("number of entities loaded:", len(self.entities_multi_filtered_df.index))
+    #     # filter the entities/dataframe with the concept filters:
+    #     for concept, threshold in zip(concepts_filters, thresholds):
+    #         # load the dataframe of the concept to filter:
+    #         entity_instance = type(self)(entity_from_id=concept)
+    #         entity_instance.entities_df = entity_instance.entities_df.set_index('id')
+    #         # add a column to add the concept score in it
+    #         self.entities_multi_filtered_df['concept_score'] = 0
+    #         # for each entity in self.entities_multi_filtered_df, add the concept score if entity found in
+    #         # entity_instance (otherwise let 0)
+    #         for entity in self.entities_multi_filtered_df.itertuples():
+    #             if entity.id in entity_instance.entities_df.index:
+    #                 self.entities_multi_filtered_df.at[entity.Index, 'concept_score'] = \
+    #                     entity_instance.entities_df.at[entity.id, concept]
+    #         # remove row with concept score bellow threshold:
+    #         self.entities_multi_filtered_df = self.entities_multi_filtered_df[
+    #             self.entities_multi_filtered_df['concept_score'] >= threshold]
+    #         log_oa.info("number of entities remaining after filter:", len(self.entities_multi_filtered_df.index))
+    #
+    # def add_average_combined_concept_score_to_multi_concept_entity_df(self, concepts_from: list[str]):
+    #     """
+    #     Adds a column with the average combined concept score to the multi concept entities dataframe.
+    #
+    #     :param concepts_from: The concepts to use to calculate the combined concept score.
+    #     :type concepts_from: list[str]
+    #     """
+    #     concept_links = ["https://openalex.org/" + item for item in concepts_from]
+    #     self.entities_multi_filtered_df['average_combined_concepts_score'] = [
+    #         self.get_sum_concept_scores(entity, concept_links) / len(concepts_from) for index, entity in
+    #         self.entities_multi_filtered_df.iterrows()]
 
     def get_database_file_name(self,
                                entity_from_id: str | None = None,
@@ -698,7 +698,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
     def get_works_references_count(self, count_years: list[int] | None = None) -> pd.Series:
         """
-        Get the works references count of the works list of the instance.
+        Count the number of times each referenced work is used.
 
         :param count_years: List of years to count the references. The default value is None to not count by years.
         :type count_years: list[int]
@@ -720,7 +720,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
     def get_works_concepts_count(self, count_years: list[int] | None = None) -> pd.Series:
         """
-        Get the concepts count of the works list of the instance.
+        Count the number of times each concept is used.
 
         :param count_years: List of years to count the concepts. The default value is None to not count by years.
         :type count_years: list[int]
@@ -744,7 +744,8 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
     def get_element_count(self, element_type: str, count_years: list[int] | None = None) -> pd.Series:
         """
-        Get the count of elements (for now references or concepts) by year (optional) used by the entity.
+        Count the number of times each element (for now references or concepts) is used by year (optional) by the
+        entity.
 
         :param element_type: The element type ('reference' or 'concept').
         :type element_type: str
@@ -765,12 +766,12 @@ class WorksAnalysis(EntitiesAnalysis, Works):
                                         element_type: str,
                                         entities_from: list[str] | None = None,
                                         out_file_name: str | None = None,
-                                        save_out_array: bool = False,
+                                        # save_out_array: bool = False,
                                         count_years: list[int] | None = None
                                         ):
         """
-        Creates the element used count array. Count the number of times each element (eg reference, concept..) is used
-        and save the array as CSV (optional).
+        Creates the element used count array. Count the number of times each element (eg references, concepts...) are
+        used and save the array as CSV (optional).
 
         :param element_type: The element type ('reference' or 'concept').
         :type element_type: str
@@ -786,7 +787,6 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         self.count_element_type = element_type
         self.count_element_years = count_years
         self.count_entities_cols = []
-        cols_to_load = None
         match self.count_element_type:
             case 'reference':
                 cols_to_load = ['id', 'referenced_works', 'publication_year']
@@ -800,16 +800,14 @@ class WorksAnalysis(EntitiesAnalysis, Works):
                 "You need either to instance the object with an entity_from_id or to provide entities_from to "
                 "create_element_used_count_array()")
         # TODO: add parameter to drop references not in the entity to compare from : useless as we can not import it
-        if out_file_name is None:
-            if self.entity_from_id is None:
-                out_file_name = self.count_element_type + "s_" + self.get_entity_string_name() + "_of_diverse_entities"
-            else:
-                out_file_name = self.count_element_type + "s_" + self.get_entity_string_name() + "_of_" + self.get_entity_string_name(
-                    self.get_entitie_type_from_id(self.entity_from_id))[0:-1] + "_" + self.entity_from_id
-                if self.get_entitie_type_from_id(self.entity_from_id) == Concepts:
-                    out_file_name += "_(" + self.concepts_normalized_names[self.entity_from_id].replace(' ', '_') + ")"
-            out_file_name += ".csv"
-            out_file_name = join(config.project_datas_folder_path, out_file_name)
+        # if out_file_name is None:
+        #     if self.entity_from_id is None:
+        #         out_file_name = self.count_element_type + "s_" + self.get_entity_string_name() + "_of_diverse_entities"
+        #     else:
+        #         out_file_name = self.count_element_type + "s_" + self.get_entity_string_name() + "_of_" + self.get_entity_string_name(
+        #             self.get_entitie_type_from_id(self.entity_from_id))[0:-1] + "_" + self.entity_from_id
+        #     out_file_name += ".csv"
+        #     out_file_name = join(config.project_datas_folder_path, out_file_name)
 
         self.element_count_df = pd.DataFrame()
         self.element_count_df.index.name = self.count_element_type + "s"
@@ -852,9 +850,9 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
         self.create_element_count_array_progress_percentage = 100
 
-        if save_out_array:
-            log_oa.info("Saving element_count_df to ", out_file_name)
-            self.element_count_df.to_csv(out_file_name)
+        # if save_out_array:
+        #     log_oa.info("Saving element_count_df to ", out_file_name)
+        #     self.element_count_df.to_csv(out_file_name)
 
     def sort_count_array(self,
                          sort_by: str = 'h_used_all_l_use_main',
@@ -902,7 +900,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         if nb_entities < 1:
             raise ValueError("Need at least 2 entities in the dataframe to compare entities")
         main_entity_col_id = self.element_count_df.columns.values[0]
-        log_oa.info("Main entity:", main_entity_col_id)
+        log_oa.info("Main entity:" + str(main_entity_col_id))
         nb_entities = len(self.element_count_df.columns)
         self.element_count_df.fillna(value=0, inplace=True)
         log_oa.info("Computing sum_all_entities...")
@@ -933,48 +931,48 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
         self.sort_count_array(sort_by=sort_by, sort_by_ascending=sort_by_ascending)
 
-        match self.count_element_type:
-            case 'reference':
-                self.add_statistics_to_references_works_count_array()
-            case 'concept':
-                self.add_statistics_to_concept_count_array(min_concept_level=min_concept_level)
-
-    def add_statistics_to_references_works_count_array(self):
-        """
-        Adds a statistics to the references works count array (statistics between the main entity to compare (second
-        column in the dataframe) and the sum of the other entities). Specific method for the works (currently not used).
-        """
-        pass
-
-    def add_statistics_to_concept_count_array(self, min_concept_level: int | None = None):
-        """
-        Adds a statistics to the concepts count array (statistics between the main entity to compare (second column in
-        the dataframe) and the sum of the other entities). Specific method for the concepts.
-        :param min_concept_level: The minimum level of the concepts we will keep (aka remove the lower (= more global) concepts). The default value is None to not remove concept.
-        :type min_concept_level: int | None
-        """
-        # add concept names and levels
-        element_count_concepts_series = self.element_count_df.index.to_series()
-        if type(self.element_count_df.index) == pd.Index:
-            # Classic pandas index
-            element_count_concepts_series = element_count_concepts_series.str.strip("https://openalex.org/")
-            concept_names_series = element_count_concepts_series.apply(
-                lambda c: Concepts()[c]['display_name']).convert_dtypes()
-            concept_levels_serie = element_count_concepts_series.apply(
-                lambda c: Concepts()[c]['level']).convert_dtypes()
-        else:
-            # pandas multi index
-            concept_names_series = element_count_concepts_series.apply(
-                lambda c: Concepts()[c[0].strip("https://openalex.org/")]['display_name']).convert_dtypes()
-            concept_levels_serie = element_count_concepts_series.apply(
-                lambda c: Concepts()[c[0].strip("https://openalex.org/")]['level']).convert_dtypes()
-
-        self.element_count_df.insert(loc=0, column='concept_name', value=concept_names_series)
-        self.element_count_df.insert(loc=1, column='concept_level', value=concept_levels_serie)
-
-        if min_concept_level is not None:
-            log_oa.info("Removed concepts with level bellow " + str(min_concept_level))
-            self.element_count_df = self.element_count_df.loc[self.element_count_df.concept_level >= min_concept_level]
+    #     match self.count_element_type:
+    #         case 'reference':
+    #             self.add_statistics_to_references_works_count_array()
+    #         case 'concept':
+    #             self.add_statistics_to_concept_count_array(min_concept_level=min_concept_level)
+    #
+    # def add_statistics_to_references_works_count_array(self):
+    #     """
+    #     Adds a statistics to the references works count array (statistics between the main entity to compare (second
+    #     column in the dataframe) and the sum of the other entities). Specific method for the works (currently not used).
+    #     """
+    #     pass
+    #
+    # def add_statistics_to_concept_count_array(self, min_concept_level: int | None = None):
+    #     """
+    #     Adds a statistics to the concepts count array (statistics between the main entity to compare (second column in
+    #     the dataframe) and the sum of the other entities). Specific method for the concepts.
+    #     :param min_concept_level: The minimum level of the concepts we will keep (aka remove the lower (= more global) concepts). The default value is None to not remove concept.
+    #     :type min_concept_level: int | None
+    #     """
+    #     # add concept names and levels
+    #     element_count_concepts_series = self.element_count_df.index.to_series()
+    #     if type(self.element_count_df.index) == pd.Index:
+    #         # Classic pandas index
+    #         element_count_concepts_series = element_count_concepts_series.str.strip("https://openalex.org/")
+    #         concept_names_series = element_count_concepts_series.apply(
+    #             lambda c: Concepts()[c]['display_name']).convert_dtypes()
+    #         concept_levels_serie = element_count_concepts_series.apply(
+    #             lambda c: Concepts()[c]['level']).convert_dtypes()
+    #     else:
+    #         # pandas multi index
+    #         concept_names_series = element_count_concepts_series.apply(
+    #             lambda c: Concepts()[c[0].strip("https://openalex.org/")]['display_name']).convert_dtypes()
+    #         concept_levels_serie = element_count_concepts_series.apply(
+    #             lambda c: Concepts()[c[0].strip("https://openalex.org/")]['level']).convert_dtypes()
+    #
+    #     self.element_count_df.insert(loc=0, column='concept_name', value=concept_names_series)
+    #     self.element_count_df.insert(loc=1, column='concept_level', value=concept_levels_serie)
+    #
+    #     if min_concept_level is not None:
+    #         log_oa.info("Removed concepts with level bellow " + str(min_concept_level))
+    #         self.element_count_df = self.element_count_df.loc[self.element_count_df.concept_level >= min_concept_level]
 
     def add_authorships_citation_style(self):
         """
