@@ -20,4 +20,5 @@ dist/
 
 # tests
 tests/data
-tests/*.log
+
+.log
