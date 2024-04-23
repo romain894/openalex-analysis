@@ -1,0 +1,1 @@
+# Folder for static assets of the documentation

@@ -22,8 +22,7 @@
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Usage" href="usage.html" />
-    <link rel="prev" title="Welcome to OpenAlex Analysis’s documentation!" href="index.html" /> 
+    <link rel="prev" title="Works analysis and plot with concepts 2" href="notebooks/Works_analysis_and_plot_of_concepts_usage.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -46,6 +45,9 @@
 </div>
         </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
               <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/setup_and_settings.html">Setup and settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="example_works_concepts.html">Examples</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Reference</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#module-analysis.entities_analysis">Analysis</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.AnalysisConfig"><code class="docutils literal notranslate"><span class="pre">AnalysisConfig</span></code></a></li>
@@ -64,9 +66,8 @@
 <li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_api_query"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_api_query()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_count_entities_matched"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_count_entities_matched()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_database_file_name"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_database_file_name()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_df_filtered_entities_selection_threshold"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_df_filtered_entities_selection_threshold()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_entitie_type_from_id"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_entitie_type_from_id()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_entity_string_name"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_entity_string_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_entity_type_from_id"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_entity_type_from_id()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_info_about_entity"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_info_about_entity()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.get_name_of_entity"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_name_of_entity()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.EntitiesAnalysis.load_entities_dataframe"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.load_entities_dataframe()</span></code></a></li>
@@ -117,7 +118,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.ConceptsPlot"><code class="docutils literal notranslate"><span class="pre">ConceptsPlot</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.EntitiesPlot"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.EntitiesPlot.get_figure_entities_of_a_concept_color_country"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot.get_figure_entities_of_a_concept_color_country()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.EntitiesPlot.get_figure_entities_selection_threshold"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot.get_figure_entities_selection_threshold()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.EntitiesPlot.get_figure_time_series_element_used_by_entities"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot.get_figure_time_series_element_used_by_entities()</span></code></a></li>
 </ul>
 </li>
@@ -140,9 +140,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
-<li class="toctree-l1"><a class="reference internal" href="notebooks/setup_and_settings.html">Setup and settings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example_works_concepts.html">Examples</a></li>
 </ul>
 
         </div>
@@ -308,40 +305,6 @@ files.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_df_filtered_entities_selection_threshold">
-<span class="sig-name descname"><span class="pre">get_df_filtered_entities_selection_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">df_filters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_df_filtered_entities_selection_threshold" title="Link to this definition"></a></dt>
-<dd><p>Gets df_filtered which contains the entities of self.entities_df fitting the filters in df_filters</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>df_filters</strong> (<em>dict</em>) – The filters in a dictionary with for the key for the data to filter and for the value the minimum threshold.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>pd.DataFrame with the entities fitting the thresholds.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_entitie_type_from_id">
-<span class="sig-name descname"><span class="pre">get_entitie_type_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseOpenAlex</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_entitie_type_from_id" title="Link to this definition"></a></dt>
-<dd><p>Gets the entity type from the entity id string.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>entity</strong> (<em>str</em><em> | </em><em>None</em>) – The entity id. If nothing is provided, the instance entity id will be used. Default is None.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The entity type</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pyalex.api.BaseOpenAlex</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_entity_string_name">
 <span class="sig-name descname"><span class="pre">get_entity_string_name</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">BaseOpenAlex</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_entity_string_name" title="Link to this definition"></a></dt>
 <dd><p>Gets the entity type in the format of a string.</p>
@@ -354,6 +317,23 @@ files.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="analysis.entities_analysis.EntitiesAnalysis.get_entity_type_from_id">
+<span class="sig-name descname"><span class="pre">get_entity_type_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">BaseOpenAlex</span></span></span><a class="headerlink" href="#analysis.entities_analysis.EntitiesAnalysis.get_entity_type_from_id" title="Link to this definition"></a></dt>
+<dd><p>Gets the entity type from the entity id string.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>entity</strong> (<em>str</em><em> | </em><em>None</em>) – The entity id. If nothing is provided, the instance entity id will be used. Default is None.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The entity type</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pyalex.api.BaseOpenAlex</p>
 </dd>
 </dl>
 </dd></dl>
@@ -878,32 +858,6 @@ TODO: check status code for existence of entity as other errors can occur.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="plot.entities_plot.EntitiesPlot.get_figure_entities_selection_threshold">
-<span class="sig-name descname"><span class="pre">get_figure_entities_selection_threshold</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">concept</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_parameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cited_by_threshold</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_only_selected_entities</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">display_threshold_lines</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entity_to_highlight</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#plot.entities_plot.EntitiesPlot.get_figure_entities_selection_threshold" title="Link to this definition"></a></dt>
-<dd><p>Get the figure with the entities of a concept and the selection threshold lines (optional).</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>concept</strong> (<em>str</em>) – The concept id.</p></li>
-<li><p><strong>plot_parameters</strong> (<em>dict</em>) – The plot parameters.</p></li>
-<li><p><strong>x_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The x threshold.</p></li>
-<li><p><strong>y_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The y threshold.</p></li>
-<li><p><strong>cited_by_threshold</strong> (<em>float</em><em> | </em><em>int</em>) – The cited by threshold.</p></li>
-<li><p><strong>display_only_selected_entities</strong> (<em>list</em><em> | </em><em>None</em>) – The display only selected entities. TODO: change type</p></li>
-<li><p><strong>display_threshold_lines</strong> (<em>list</em><em> | </em><em>None</em>) – The display threshold lines. TODO: change type</p></li>
-<li><p><strong>entity_to_highlight</strong> (<em>str</em><em> | </em><em>None</em>) – The entity to highlight on the plot.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The figure.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>go.Figure</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="plot.entities_plot.EntitiesPlot.get_figure_time_series_element_used_by_entities">
 <span class="sig-name descname"><span class="pre">get_figure_time_series_element_used_by_entities</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">plot_title</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_datas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'year'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">x_legend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Year'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_datas</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">color_legend</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'Entities'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Figure</span></span></span><a class="headerlink" href="#plot.entities_plot.EntitiesPlot.get_figure_time_series_element_used_by_entities" title="Link to this definition"></a></dt>
 <dd><p>Get the figure with the time series usage of a element (eg. reference, concept) by entities.</p>
@@ -1090,8 +1044,7 @@ TODO: change function name to be more inclusive?</p>
            </div>
           </div>
           <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to OpenAlex Analysis’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="usage.html" class="btn btn-neutral float-right" title="Usage" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+        <a href="notebooks/Works_analysis_and_plot_of_concepts_usage.html" class="btn btn-neutral float-left" title="Works analysis and plot with concepts 2" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
     </div>
 
   <hr/>
