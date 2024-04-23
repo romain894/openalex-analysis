@@ -138,7 +138,7 @@ class EntitiesAnalysis:
         # initialize the values only if entity_from_type is known
         if self.entity_from_id is not None or self.extra_filters is not None:
             if self.entity_from_id is not None:
-                self.entity_from_type = self.get_entitie_type_from_id(self.entity_from_id)
+                self.entity_from_type = self.get_entity_type_from_id(self.entity_from_id)
             if self.database_file_path is None:
                 self.database_file_path = join(config.project_datas_folder_path, self.get_database_file_name())
             if create_dataframe:
@@ -167,10 +167,10 @@ class EntitiesAnalysis:
             query_filters = {self.get_entity_string_name(self.entity_from_type): {"id": self.entity_from_id}}
             # special cases:
             # concept of institution as the query key word is x_concepts instead of concepts
-            if self.get_entitie_type_from_id() == Institutions and self.get_entitie_type_from_id(
+            if self.get_entity_type_from_id() == Institutions and self.get_entity_type_from_id(
                     self.entity_from_id) == Concepts:
                 query_filters = {'x_concepts': {"id": self.entity_from_id}}
-            if self.get_entitie_type_from_id(self.entity_from_id) == Authors:
+            if self.get_entity_type_from_id(self.entity_from_id) == Authors:
                 query_filters = {'author': {"id": self.entity_from_id}}
         else:
             query_filters = {}
@@ -438,7 +438,7 @@ class EntitiesAnalysis:
             entity_type = self.EntityOpenAlex
         file_name = self.get_entity_string_name(entity_type)
         if entity_from_id is not None:
-            file_name += "_" + self.get_entity_string_name(self.get_entitie_type_from_id(entity_from_id))[
+            file_name += "_" + self.get_entity_string_name(self.get_entity_type_from_id(entity_from_id))[
                                0:-1] + "_" + entity_from_id
         if self.extra_filters is not None:
             file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
@@ -465,7 +465,7 @@ class EntitiesAnalysis:
             entity = self.EntityOpenAlex
         return str(entity).removeprefix("<class 'pyalex.api.").removesuffix("'>").lower()
 
-    def get_entitie_type_from_id(self, entity: str | None = None) -> pyalex.api.BaseOpenAlex:
+    def get_entity_type_from_id(self, entity: str | None = None) -> pyalex.api.BaseOpenAlex:
         """
         Gets the entity type from the entity id string.
 
@@ -805,7 +805,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         #         out_file_name = self.count_element_type + "s_" + self.get_entity_string_name() + "_of_diverse_entities"
         #     else:
         #         out_file_name = self.count_element_type + "s_" + self.get_entity_string_name() + "_of_" + self.get_entity_string_name(
-        #             self.get_entitie_type_from_id(self.entity_from_id))[0:-1] + "_" + self.entity_from_id
+        #             self.get_entity_type_from_id(self.entity_from_id))[0:-1] + "_" + self.entity_from_id
         #     out_file_name += ".csv"
         #     out_file_name = join(config.project_datas_folder_path, out_file_name)
 
@@ -1020,10 +1020,10 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         for i, year in enumerate(count_years):
             # get the list of works from the year
             df = self.entities_df.loc[self.entities_df['publication_year'] == year]
-            if self.get_entitie_type_from_id(entity) == Concepts:
+            if self.get_entity_type_from_id(entity) == Concepts:
                 # get a dataframe with all the concepts used during the year in the column id
                 df = pd.json_normalize(df['concepts'].explode().to_list())
-            elif self.get_entitie_type_from_id(entity) == Works:
+            elif self.get_entity_type_from_id(entity) == Works:
                 # get a dataframe with all the works used during the year in the column id
                 df = pd.DataFrame({'id': df['referenced_works'].explode().dropna()})
             else:
