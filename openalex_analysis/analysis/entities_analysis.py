@@ -292,20 +292,20 @@ class EntitiesAnalysis:
                 join(config.project_datas_folder_path, first_accessed_file)) + "_(last_used:_" + str(
                 first_accessed_file_time) + ")")
 
-    def get_df_filtered_entities_selection_threshold(self, df_filters: dict) -> pd.DataFrame:
-        """
-        Gets df_filtered which contains the entities of self.entities_df fitting the filters in df_filters
-
-        :param df_filters: The filters in a dictionary with for the key for the data to filter and for the value the minimum threshold.
-        :type df_filters: dict
-        :return: pd.DataFrame with the entities fitting the thresholds.
-        :rtype: pd.DataFrame
-        """
-        entities_df_filtered = self.entities_df
-        for key_filter, value_filter in df_filters.items():
-            entities_df_filtered = entities_df_filtered.loc[(entities_df_filtered[key_filter] >= value_filter)]
-
-        return entities_df_filtered
+    # def get_df_filtered_entities_selection_threshold(self, df_filters: dict) -> pd.DataFrame:
+    #     """
+    #     Gets df_filtered which contains the entities of self.entities_df fitting the filters in df_filters
+    #
+    #     :param df_filters: The filters in a dictionary with for the key for the data to filter and for the value the minimum threshold.
+    #     :type df_filters: dict
+    #     :return: pd.DataFrame with the entities fitting the thresholds.
+    #     :rtype: pd.DataFrame
+    #     """
+    #     entities_df_filtered = self.entities_df
+    #     for key_filter, value_filter in df_filters.items():
+    #         entities_df_filtered = entities_df_filtered.loc[(entities_df_filtered[key_filter] >= value_filter)]
+    #
+    #     return entities_df_filtered
 
     # def get_number_of_entities_selected(self,
     #                                     x_threshold: float | int,

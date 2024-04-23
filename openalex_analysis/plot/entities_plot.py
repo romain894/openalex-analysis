@@ -79,149 +79,149 @@ class EntitiesPlot:
 
         return fig
 
-    # TODO: redo filters
-    # TODO: keep for work? useless for now because color_data = x_datas + bug in numpy:
-    # fix or remove casting='unsafe', which apparently create problem with conversion
-    # (only two colors for the works on the plot) SOLVED?
-    def get_figure_entities_selection_threshold(self,
-                                                concept: str,
-                                                plot_parameters: dict,
-                                                x_threshold: float | int = 0,
-                                                y_threshold: float | int = 0,
-                                                cited_by_threshold: float | int = 0,
-                                                display_only_selected_entities: list | None = None,
-                                                display_threshold_lines: list | None = None,
-                                                entity_to_highlight: str | None = None
-                                                ) -> go.Figure:
-        """
-        Get the figure with the entities of a concept and the selection threshold lines (optional).
-
-        :param concept: The concept id.
-        :type concept: str
-        :param plot_parameters: The plot parameters.
-        :type plot_parameters:  dict
-        :param x_threshold: The x threshold.
-        :type x_threshold: float | int
-        :param y_threshold: The y threshold.
-        :type y_threshold: float | int
-        :param cited_by_threshold: The cited by threshold.
-        :type cited_by_threshold: float | int
-        :param display_only_selected_entities: The display only selected entities. TODO: change type
-        :type display_only_selected_entities: list | None
-        :param display_threshold_lines: The display threshold lines. TODO: change type
-        :type display_threshold_lines: list | None
-        :param entity_to_highlight: The entity to highlight on the plot.
-        :type entity_to_highlight: str | None
-        :return: The figure.
-        :rtype: go.Figure
-        """
-        # extract the dictionary plot_parameters:
-        plot_title = plot_parameters['plot_title']
-        x_datas = plot_parameters['x_datas']
-        x_legend = plot_parameters['x_legend']
-        y_datas = plot_parameters['y_datas']
-        y_legend = plot_parameters['y_legend']
-        color_data = plot_parameters['color_data']
-        color_legend = plot_parameters['color_legend']
-
-        df_filters = {}
-        if cited_by_threshold > 0:
-            df_filters['works_cited_by_count_average'] = cited_by_threshold
-        if display_only_selected_entities is not None and len(display_only_selected_entities):
-            df_filters[x_datas] = x_threshold
-            df_filters[y_datas] = y_threshold
-
-        entities_df_filtered = self.get_df_filtered_entities_selection_threshold(df_filters)
-
-        # convert the input list from the GUI to a boolean
-        if display_threshold_lines is not None:
-            if len(display_threshold_lines):
-                display_threshold_lines = True
-            else:
-                display_threshold_lines = False
-
-        # create the figure with the scatter plot of entities        
-        fig1 = px.scatter(entities_df_filtered,
-                          x=x_datas,
-                          y=y_datas,
-                          #custom_data=np.stack((entities_df_filtered['display_name'], entities_df_filtered['type'])),
-                          custom_data=self.getCustomData(concept),
-                          # log10 scale for the color and fill 0 when value = 0 (can't compute log(0))
-                          color=np.log10(entities_df_filtered[color_data].to_numpy(dtype=float),
-                                         where=entities_df_filtered[color_data] != 0,
-                                         out=np.zeros_like(entities_df_filtered[color_data], dtype=float)),
-                          #color=np.log10(entities_df_filtered[color_data].values, where=entities_df_filtered[color_data]!=0, out=np.zeros_like(entities_df_filtered[color_data]),  casting='unsafe'),
-                          #color=entities_df_filtered[color_data],
-                          labels={x_datas: x_legend, y_datas: y_legend})
-
-        # Entity to highlight on the plot:
-        if entity_to_highlight is not None:
-            fig1.add_traces(
-                px.scatter(entities_df_filtered.loc[entities_df_filtered['id'] == entity_to_highlight],
-                           x=x_datas,
-                           y=y_datas,
-                           custom_data=self.getCustomData(concept)
-                           ).update_traces(marker_size=20,
-                                           marker={'size': 20, 'symbol': 'y-up', 'line': {'width': 3, 'color': 'black'}}
-                                           ).data
-            )
-
-        fig1.update_traces(hovertemplate="<br>".join(self.getHoverTemplate(concept)))
-
-        # figure with containing all sub figures
-        fig0 = None
-
-        if display_threshold_lines:
-            # create the figures with the threshold lines
-            if len(entities_df_filtered.index) > 0:
-                x_min = int(np.amin(entities_df_filtered[x_datas]))
-                x_max = int(np.amax(entities_df_filtered[x_datas]))
-                y_min = int(np.amin(entities_df_filtered[y_datas]))
-                y_max = int(np.amax(entities_df_filtered[y_datas]))
-            else:
-                # the dataframe is empty
-                x_min = 0
-                x_max = 1
-                y_min = 0
-                y_max = 1
-            fig2 = px.line(x=[x_threshold, x_threshold], y=[min(y_min, y_threshold), y_max])
-            fig3 = px.line(x=[min(x_min, x_threshold), x_max], y=[y_threshold, y_threshold])
-
-            # create the main figure
-            fig0 = go.Figure(data=fig1.data + fig2.data + fig3.data,
-                             layout={'height': figure_height})
-        else:
-            # create the main figure
-            fig0 = go.Figure(data=fig1.data,
-                             layout={'height': figure_height})
-
-        fig0.update_xaxes(type="log")
-
-        # change the tick values in the legend as the value used to plot is log10(val)
-        #color_vals = np.linspace(0, int(np.amax(np.log10(entities_df_filtered['cited_by_count']))), num=7)
-        color_vals = [-2, -1, 0, 1, 2, 3, 4]
-        #color_names = color_vals ** 10 #np.logspace(0, int(np.amax(entities_df_filtered['cited_by_count'])), num=7)
-        color_names = ['0.01', '0.1', '1', '10', '100', '1k', '10k']
-
-        fig0.update_layout(
-            coloraxis_colorbar=dict(
-                title=color_legend,
-                tickmode='array',
-                tickvals=color_vals,
-                ticktext=color_names
-            ),
-            coloraxis={'colorscale': 'rainbow'},
-            title={
-                'text': plot_title,
-                'x': 0.5,
-                'xanchor': 'center',
-                'yanchor': 'top'
-            },
-            xaxis_title=x_legend,
-            yaxis_title=y_legend
-        )
-
-        return fig0
+    # # TODO: redo filters
+    # # TODO: keep for work? useless for now because color_data = x_datas + bug in numpy:
+    # # fix or remove casting='unsafe', which apparently create problem with conversion
+    # # (only two colors for the works on the plot) SOLVED?
+    # def get_figure_entities_selection_threshold(self,
+    #                                             concept: str,
+    #                                             plot_parameters: dict,
+    #                                             x_threshold: float | int = 0,
+    #                                             y_threshold: float | int = 0,
+    #                                             cited_by_threshold: float | int = 0,
+    #                                             display_only_selected_entities: list | None = None,
+    #                                             display_threshold_lines: list | None = None,
+    #                                             entity_to_highlight: str | None = None
+    #                                             ) -> go.Figure:
+    #     """
+    #     Get the figure with the entities of a concept and the selection threshold lines (optional).
+    #
+    #     :param concept: The concept id.
+    #     :type concept: str
+    #     :param plot_parameters: The plot parameters.
+    #     :type plot_parameters:  dict
+    #     :param x_threshold: The x threshold.
+    #     :type x_threshold: float | int
+    #     :param y_threshold: The y threshold.
+    #     :type y_threshold: float | int
+    #     :param cited_by_threshold: The cited by threshold.
+    #     :type cited_by_threshold: float | int
+    #     :param display_only_selected_entities: The display only selected entities. TODO: change type
+    #     :type display_only_selected_entities: list | None
+    #     :param display_threshold_lines: The display threshold lines. TODO: change type
+    #     :type display_threshold_lines: list | None
+    #     :param entity_to_highlight: The entity to highlight on the plot.
+    #     :type entity_to_highlight: str | None
+    #     :return: The figure.
+    #     :rtype: go.Figure
+    #     """
+    #     # extract the dictionary plot_parameters:
+    #     plot_title = plot_parameters['plot_title']
+    #     x_datas = plot_parameters['x_datas']
+    #     x_legend = plot_parameters['x_legend']
+    #     y_datas = plot_parameters['y_datas']
+    #     y_legend = plot_parameters['y_legend']
+    #     color_data = plot_parameters['color_data']
+    #     color_legend = plot_parameters['color_legend']
+    #
+    #     df_filters = {}
+    #     if cited_by_threshold > 0:
+    #         df_filters['works_cited_by_count_average'] = cited_by_threshold
+    #     if display_only_selected_entities is not None and len(display_only_selected_entities):
+    #         df_filters[x_datas] = x_threshold
+    #         df_filters[y_datas] = y_threshold
+    #
+    #     entities_df_filtered = self.get_df_filtered_entities_selection_threshold(df_filters)
+    #
+    #     # convert the input list from the GUI to a boolean
+    #     if display_threshold_lines is not None:
+    #         if len(display_threshold_lines):
+    #             display_threshold_lines = True
+    #         else:
+    #             display_threshold_lines = False
+    #
+    #     # create the figure with the scatter plot of entities
+    #     fig1 = px.scatter(entities_df_filtered,
+    #                       x=x_datas,
+    #                       y=y_datas,
+    #                       #custom_data=np.stack((entities_df_filtered['display_name'], entities_df_filtered['type'])),
+    #                       custom_data=self.getCustomData(concept),
+    #                       # log10 scale for the color and fill 0 when value = 0 (can't compute log(0))
+    #                       color=np.log10(entities_df_filtered[color_data].to_numpy(dtype=float),
+    #                                      where=entities_df_filtered[color_data] != 0,
+    #                                      out=np.zeros_like(entities_df_filtered[color_data], dtype=float)),
+    #                       #color=np.log10(entities_df_filtered[color_data].values, where=entities_df_filtered[color_data]!=0, out=np.zeros_like(entities_df_filtered[color_data]),  casting='unsafe'),
+    #                       #color=entities_df_filtered[color_data],
+    #                       labels={x_datas: x_legend, y_datas: y_legend})
+    #
+    #     # Entity to highlight on the plot:
+    #     if entity_to_highlight is not None:
+    #         fig1.add_traces(
+    #             px.scatter(entities_df_filtered.loc[entities_df_filtered['id'] == entity_to_highlight],
+    #                        x=x_datas,
+    #                        y=y_datas,
+    #                        custom_data=self.getCustomData(concept)
+    #                        ).update_traces(marker_size=20,
+    #                                        marker={'size': 20, 'symbol': 'y-up', 'line': {'width': 3, 'color': 'black'}}
+    #                                        ).data
+    #         )
+    #
+    #     fig1.update_traces(hovertemplate="<br>".join(self.getHoverTemplate(concept)))
+    #
+    #     # figure with containing all sub figures
+    #     fig0 = None
+    #
+    #     if display_threshold_lines:
+    #         # create the figures with the threshold lines
+    #         if len(entities_df_filtered.index) > 0:
+    #             x_min = int(np.amin(entities_df_filtered[x_datas]))
+    #             x_max = int(np.amax(entities_df_filtered[x_datas]))
+    #             y_min = int(np.amin(entities_df_filtered[y_datas]))
+    #             y_max = int(np.amax(entities_df_filtered[y_datas]))
+    #         else:
+    #             # the dataframe is empty
+    #             x_min = 0
+    #             x_max = 1
+    #             y_min = 0
+    #             y_max = 1
+    #         fig2 = px.line(x=[x_threshold, x_threshold], y=[min(y_min, y_threshold), y_max])
+    #         fig3 = px.line(x=[min(x_min, x_threshold), x_max], y=[y_threshold, y_threshold])
+    #
+    #         # create the main figure
+    #         fig0 = go.Figure(data=fig1.data + fig2.data + fig3.data,
+    #                          layout={'height': figure_height})
+    #     else:
+    #         # create the main figure
+    #         fig0 = go.Figure(data=fig1.data,
+    #                          layout={'height': figure_height})
+    #
+    #     fig0.update_xaxes(type="log")
+    #
+    #     # change the tick values in the legend as the value used to plot is log10(val)
+    #     #color_vals = np.linspace(0, int(np.amax(np.log10(entities_df_filtered['cited_by_count']))), num=7)
+    #     color_vals = [-2, -1, 0, 1, 2, 3, 4]
+    #     #color_names = color_vals ** 10 #np.logspace(0, int(np.amax(entities_df_filtered['cited_by_count'])), num=7)
+    #     color_names = ['0.01', '0.1', '1', '10', '100', '1k', '10k']
+    #
+    #     fig0.update_layout(
+    #         coloraxis_colorbar=dict(
+    #             title=color_legend,
+    #             tickmode='array',
+    #             tickvals=color_vals,
+    #             ticktext=color_names
+    #         ),
+    #         coloraxis={'colorscale': 'rainbow'},
+    #         title={
+    #             'text': plot_title,
+    #             'x': 0.5,
+    #             'xanchor': 'center',
+    #             'yanchor': 'top'
+    #         },
+    #         xaxis_title=x_legend,
+    #         yaxis_title=y_legend
+    #     )
+    #
+    #     return fig0
 
     def get_figure_time_series_element_used_by_entities(self,
                                                         element: str | None = None,
