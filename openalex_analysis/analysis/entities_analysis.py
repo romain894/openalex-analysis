@@ -164,7 +164,7 @@ class EntitiesAnalysis:
         :rtype: dict
         """
         if self.entity_from_id is not None:
-            query_filters = {self.get_entity_string_name(self.entity_from_type): {"id": self.entity_from_id}}
+            query_filters = {self.get_entity_type_as_string(self.entity_from_type): {"id": self.entity_from_id}}
             # special cases:
             # concept of institution as the query key word is x_concepts instead of concepts
             if self.get_entity_type_from_id() == Institutions and self.get_entity_type_from_id(
@@ -183,9 +183,9 @@ class EntitiesAnalysis:
         """
         Downloads the entities which match the parameters of the instance, and store the dataset as a parquet file .
         """
-        log_oa.info("Downloading list of " + self.get_entity_string_name())
+        log_oa.info("Downloading list of " + self.get_entity_type_as_string())
         if self.entity_from_id is not None:
-            log_oa.info("of the " + self.get_entity_string_name(self.entity_from_type)[0:-1] + " " + str(
+            log_oa.info("of the " + self.get_entity_type_as_string(self.entity_from_type)[0:-1] + " " + str(
                 self.entity_from_id))
         if self.extra_filters is not None:
             log_oa.info("with extra filters: " + str(self.extra_filters))
@@ -250,9 +250,9 @@ class EntitiesAnalysis:
         Loads an entities dataset from file (or download it if needed and allowed by the instance) to the dataframe of
         the instance.
         """
-        log_oa.info("Loading dataframe of " + self.get_entity_string_name())
+        log_oa.info("Loading dataframe of " + self.get_entity_type_as_string())
         if self.entity_from_id is not None:
-            log_oa.info("of the " + self.get_entity_string_name(self.entity_from_type)[0:-1] + " " + str(
+            log_oa.info("of the " + self.get_entity_type_as_string(self.entity_from_type)[0:-1] + " " + str(
                 self.entity_from_id))
         if self.extra_filters is not None:
             log_oa.info("with extra filters: " + str(self.extra_filters))
@@ -436,23 +436,22 @@ class EntitiesAnalysis:
             entity_from_id = self.entity_from_id
         if entity_type is None:
             entity_type = self.EntityOpenAlex
-        file_name = self.get_entity_string_name(entity_type)
+        file_name = self.get_entity_type_as_string(entity_type)
         if entity_from_id is not None:
-            file_name += "_" + self.get_entity_string_name(self.get_entity_type_from_id(entity_from_id))[
-                               0:-1] + "_" + entity_from_id
+            file_name += "_from_" + entity_from_id
         if self.extra_filters is not None:
             file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
         # keep the file name below 120 characters and reserve 22 for the max size + parquet extension (csv extension
         # is shorter)
-        if len(file_name) > 98:
+        if len(file_name) > 96:
             # sha224 length: 56
-            file_name = file_name[:41] + "-" + hashlib.sha224(file_name.encode()).hexdigest()
+            file_name = file_name[:39] + "-" + hashlib.sha224(file_name.encode()).hexdigest()
         file_name += "_max_" + str(config.n_max_entities)
-        # add warning for nb max entities to large (>9 999 999 999) because of file name
+        # add warning for nb max entities to large (>999 999 999 999) because of file name
         return file_name + "." + db_format
 
     # TODO: rename function to get_entitie_type_string_name
-    def get_entity_string_name(self, entity: pyalex.api.BaseOpenAlex | None = None) -> str:
+    def get_entity_type_as_string(self, entity: pyalex.api.BaseOpenAlex | None = None) -> str:
         """
         Gets the entity type in the format of a string.
 
@@ -497,7 +496,6 @@ class EntitiesAnalysis:
                               entity: str | None = None,
                               infos: list[str] | None = None,
                               return_as_pd_series: bool = True,
-                              allow_download_from_api: bool = True
                               ) -> dict | pd.Series:
         """
         Get information about the entity (eg. name, publication_date...). If no entity is provided, the entity_from_id will be used.
@@ -508,8 +506,6 @@ class EntitiesAnalysis:
         :type infos: list[str] | None
         :param return_as_pd_series: True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.
         :type return_as_pd_series: bool
-        :param allow_download_from_api: Allow the library to download the information from the API. Default is True.
-        :type allow_download_from_api: bool
         :return:
         :rtype:
         """
@@ -626,6 +622,44 @@ def check_if_entity_exists(entity: str) -> bool:
         return True
 
 
+def get_multiple_entities_from_id(ids: list[str]) -> list:
+    """
+    Get multiple entities from their OpenAlex IDs by querying them to the OpenAlex API 100 by 100.
+
+    :param ids: the list of OpenAlex IDs to query
+    :type ids: list[str]
+    :return: the list of entities as pyalex objects (dictionaries)
+    :rtype: list[]
+    """
+    res = [None] * len(ids)
+    i = 0
+    # reduce 100 if too big for OpenAlex
+    while i + 100 < len(ids):
+        res[i:i+100] = Works().filter(ids={'openalex': '|'.join(ids[i:i+100])}).get(per_page=100)
+        i += 100
+    res[i:] = Works().filter(ids={'openalex': '|'.join(ids[i:])}).get(per_page=100)
+    return res
+
+
+def get_multiple_entities_from_doi(dois: list[str]) -> list:
+    """
+    Get multiple entities from their DOI by querying them to the OpenAlex API 60 by 60.
+
+    :param dois: the list of DOIs to query
+    :type dois: list[str]
+    :return: the list of entities as pyalex objects (dictionaries)
+    :rtype: list[]
+    """
+    res = [None] * len(dois)
+    i = 0
+    # querying more than 60 DOIs causes the HTTP query size being larger than what OpenALex allow
+    while i + 60 < len(dois):
+        res[i:i+60] = Works().filter(doi='|'.join(dois[i:i+60])).get(per_page=60)
+        i += 60
+    res[i:] = Works().filter(doi='|'.join(dois[i:])).get(per_page=60)
+    return res
+
+
 class WorksAnalysis(EntitiesAnalysis, Works):
     """
     This class contains specific methods for Works entity analysis.
@@ -705,7 +739,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :return: The works references count.
         :rtype: pd.Series
         """
-        log_oa.info("Creating the works references count of " + self.get_entity_string_name() + "...")
+        log_oa.info("Creating the works references count of " + self.get_entity_type_as_string() + "...")
         if count_years is None:
             return self.entities_df['referenced_works'].explode().value_counts().convert_dtypes()
         else:
@@ -727,7 +761,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :return: The concept count.
         :rtype: pd.Series
         """
-        log_oa.info("Creating the concept count of " + self.get_entity_string_name() + "...")
+        log_oa.info("Creating the concept count of " + self.get_entity_type_as_string() + "...")
         if count_years is None:
             return self.entities_df['concepts'].explode().apply(
                 lambda c: c['id'] if type(c) == dict else None).value_counts().convert_dtypes()
