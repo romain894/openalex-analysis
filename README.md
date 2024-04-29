@@ -1,8 +1,6 @@
 # OpenAlex Analysis
 
-A python library to extract or analyse articles, institutions, and others entities from the OpenAlex API
-
-This repo provides classes and methods to extract the data and create statistics, plots and graphs, as well as examples in Jupyter Notebooks.
+A python library to download, analyse or plot articles, institutions, and other entities from the OpenAlex API
 
 Install with:
 ```
@@ -19,15 +17,17 @@ Examples in the documentation: [https://romain894.github.io/openalex-analysis/ht
 
 ### Get a dataset
 
-You can use the library simply to get and manage dataset of OpenAlex. The library can download these dataset and cache them on the computer automatically.
+You can use the library simply to download and work with datasets from OpenAlex. The library can download these datasets and cache them on the computer automatically.
 
-These datasets can then be used in python outside the library as they are just simple dataframe objects.
+These datasets can then be used in python outside the library, as they are pandas DataFrame objects.
+
+It is possible to save the datasets as a CSV file with the pandas function `df.to_csv("my_dataset.csv")`.
 
 Bellow, a few examples:
 
 #### Get works from a concept
 
-Get the works about regime shift:
+Get the works about regime shift and save them in a CSV file:
 
 ```python
 from openalex_analysis.analysis import WorksAnalysis
@@ -37,6 +37,8 @@ concept_regime_shift_id = 'C2780893879'
 wplt = WorksAnalysis(concept_regime_shift_id)
 
 my_dataset = wplt.entities_df
+
+my_dataset.to_csv("dataset_regime_shift_works.csv")
 ```
 
 #### Get the works about sustainability from the Stockholm Resilience Centre published in 2020
@@ -113,7 +115,7 @@ We will then plot the yearly usage of the concept sustainability by these instit
 We could also plot the yearly usage of other concepts or of the references by changing the parameters of the functions `create_element_used_count_array()` and `get_figure_time_series_element_used_by_entities()`.
 
 ```python
-from openalex_analysis.plot import InstitutionsPlot, WorksPlot
+from openalex_analysis.plot import WorksPlot
 
 concept_sustainability_id = 'C66204764'
 # create the filter for the API to get only the articles about sustainability
@@ -134,8 +136,8 @@ for i in range(len(institution_ids_list)):
 wplt = WorksPlot()
 wplt.create_element_used_count_array('concept', entities_ref_to_count, count_years = count_years)
 
-wplt.add_statistics_to_element_count_array(sort_by = 'sum_all_entities', min_concept_level = 2)
-9
+wplt.add_statistics_to_element_count_array(sort_by = 'sum_all_entities')
+
 wplt.get_figure_time_series_element_used_by_entities().write_image("Plot_yearly_usage_sustainability_SRC_UTT.svg", width=900, height=350)
 
 wplt.get_figure_time_series_element_used_by_entities()
@@ -188,6 +190,15 @@ config.max_storage_percent = 95
 - `parquet_compression` By default, the parquet files are compressed. The compression can be disabled by setting with parquet_compression = None. For other parquet compression algorithms, see the pandas documentation. Compressing reduces by 2 to 10 the file size while needing a negligeable time to compress or decompress. Disabling the compression is usefull if you want to read the parquet files with an external software.
 
 - `max_storage_percent` Maximum storage usage percentage on the disk before starting to delete data stored in project_datas_folder_path. The parquet file with the oldest last read data will be deleted first.
+
+## Tests
+
+To run the tests:
+```bash
+cd tests
+pytest tests.py
+```
+
 
 ## Build the documentation
 
