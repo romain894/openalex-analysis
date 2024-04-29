@@ -193,9 +193,8 @@ config.max_storage_percent = 95
 
 ## Tests
 
-To run the tests:
+In the directory `tests/` run:
 ```bash
-cd tests
 pytest tests.py
 ```
 
