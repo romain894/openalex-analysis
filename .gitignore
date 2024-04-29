@@ -20,5 +20,6 @@ dist/
 
 # tests
 tests/data
+tests/*.svg
 
 .log

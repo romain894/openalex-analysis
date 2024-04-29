@@ -5,6 +5,7 @@ sys.path.append("..")
 
 import numpy as np
 from openalex_analysis.analysis import config, WorksAnalysis
+from openalex_analysis.plot import WorksPlot
 from openalex_analysis.analysis import get_multiple_entities_from_doi, get_multiple_entities_from_id
 
 config.n_max_entities = 200
@@ -80,3 +81,28 @@ def test_get_multiple_entities_from_doi():
     for i in range(len(article_dois)):
         assert article_names[i] == res[i]["display_name"]
     # TODO: add a test with more than 60 articles
+
+
+def test_concept_yearly_count():
+    concept_sustainability_id = 'C66204764'
+    # create the filter for the API to get only the articles about sustainability
+    sustainability_concept_filter = {"concepts": {"id": concept_sustainability_id}}
+
+    # set the years we want to count
+    count_years = list(range(2004, 2024))
+
+    institution_ids_list = ["I138595864", "I140494188"]
+    institution_names_list = ["Stockholm Resilience Centre", "University of Technology of Troyes"]
+
+    # create a list of dictionaries with each dictionary containing the ID, name and filter for each institution
+    entities_ref_to_count = [None] * len(institution_ids_list)
+    for i in range(len(institution_ids_list)):
+        entities_ref_to_count[i] = {'entity_from_id': institution_ids_list[i],
+                                    'extra_filters': sustainability_concept_filter}
+
+    wplt = WorksPlot()
+    wplt.create_element_used_count_array('concept', entities_ref_to_count, count_years = count_years)
+
+    wplt.add_statistics_to_element_count_array(sort_by = 'sum_all_entities')
+
+    wplt.get_figure_time_series_element_used_by_entities().write_image("Plot_yearly_usage_sustainability_SRC_UTT.svg", width=900, height=350)
