@@ -1,2 +1,3 @@
-include openalex_analysis/names/list_all_concepts.parquet
-include openalex_analysis/names/list_all_institutions.parquet
+# # previous data files to include in the source distribution
+# include openalex_analysis/names/list_all_concepts.parquet
+# include openalex_analysis/names/list_all_institutions.parquet
