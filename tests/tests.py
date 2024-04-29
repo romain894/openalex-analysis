@@ -1,4 +1,5 @@
 import sys
+from os.path import isdir
 import shutil
 sys.path.append("..")
 
@@ -10,8 +11,11 @@ config.n_max_entities = 200
 
 institution_src_id = "I138595864"
 
+data_path = "./data"
+
 # remove data that may have been downloaded in the previous test
-shutil.rmtree("./data")
+if isdir(data_path):
+    shutil.rmtree(data_path)
 
 
 def test_download_dataset_1():
