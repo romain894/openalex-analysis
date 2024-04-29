@@ -789,7 +789,6 @@ class WorksAnalysis(EntitiesAnalysis, Works):
     def add_statistics_to_element_count_array(self,
                                               sort_by: str = 'h_used_all_l_use_main',
                                               sort_by_ascending: bool = False,
-                                              min_concept_level: int | None = None
                                               ):
         """
         Adds a statistics to the element count array (statistics between the main entity to compare (second column in
@@ -799,8 +798,6 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :type sort_by: str
         :param sort_by_ascending: Whenever to sort the dataframe ascending. The default value is False.
         :type sort_by_ascending: bool
-        :param min_concept_level: In case the element is a concept, this is the minimum level of the concepts we will keep (aka remove the lower (= more global) concepts). The default value is None to not remove concept.
-        :type min_concept_level: int | None
         """
         if not self.count_element_type in ['reference', 'concept']:
             raise ValueError("Can only count for 'references' or 'concept'")
