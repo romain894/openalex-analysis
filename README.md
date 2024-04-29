@@ -209,12 +209,9 @@ make html
 
 ## Other resources
 
-Web app based on the library is available [here](https://github.com/romain894/webapp-openalex-analysis) (this project is not currently maintained but an update is planned in the coming months).
-
-[OpenAlex documentation](https://docs.openalex.org/)
-
-[Explore OpenAlex online](https://explore.openalex.org/)
-
-[PyAlex](https://github.com/J535D165/pyalex) (Python library for OpenAlex)
+  - Web app based on the library is available [here](https://github.com/romain894/webapp-openalex-analysis) (this project is not currently maintained but an update is planned in the coming months).
+  - [OpenAlex documentation](https://docs.openalex.org/)
+  - [Explore OpenAlex online](https://explore.openalex.org/)
+  - [PyAlex](https://github.com/J535D165/pyalex) (Python library for OpenAlex)
 
 Romain Thomas 2024
