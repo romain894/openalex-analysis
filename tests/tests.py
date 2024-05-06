@@ -4,9 +4,9 @@ import shutil
 sys.path.append("..")
 
 import numpy as np
-from openalex_analysis.analysis import config, WorksAnalysis
+from openalex_analysis.analysis import config, WorksAnalysis, InstitutionsAnalysis
 from openalex_analysis.plot import WorksPlot
-from openalex_analysis.analysis import get_multiple_entities_from_doi, get_multiple_entities_from_id
+from openalex_analysis.analysis import get_multiple_works_from_doi
 
 config.n_max_entities = 200
 
@@ -48,24 +48,46 @@ def test_analysis_1():
     assert isinstance(wa.element_count_df.iloc[0, 0], np.int64)
 
 
-def test_get_multiple_entities_from_id():
+def test_get_multiple_entities_from_id_works():
     # test with a list of 3 articles
-    article_ids = [
-        "W2096885696",
+    entities_ids = [
         "W1999167944",
+        "W2096885696",
         "W2126902408",
     ]
-    article_names = [
-        "A safe operating space for humanity",
+    entities_names = [
         "Planetary boundaries: Guiding human development on a changing planet",
+        "A safe operating space for humanity",
         "Solutions for a cultivated planet",
     ]
-    res = get_multiple_entities_from_id(article_ids)
-    for i in range(len(article_ids)):
-        assert article_names[i] == res[i]["display_name"]
-    # TODO: add a test with more than 100 articles
+    res = WorksAnalysis().get_multiple_entities_from_id(entities_ids)
+    for i in range(len(entities_names)):
+        assert entities_names[i] == res[i]["display_name"]
+    # TODO: add a test with more than 100 works
 
-def test_get_multiple_entities_from_doi():
+
+def test_get_multiple_entities_from_id_institutions():
+    # test with a list of 3 articles
+    entities_ids = [
+        "I138595864",
+        "I140494188",
+        "I000000000"
+    ]
+    entities_names = [
+        "Stockholm Resilience Centre",
+        "University of Technology of Troyes",
+        None
+    ]
+    res = InstitutionsAnalysis().get_multiple_entities_from_id(entities_ids)
+    for i in range(len(entities_names)):
+        if entities_ids[i] == "I000000000":
+            assert res[i] is None
+        else:
+            assert entities_names[i] == res[i]["display_name"]
+    # TODO: add a test with more than 100 institutions
+
+
+def test_get_multiple_works_from_doi():
     # test with a list of 3 articles
     article_dois = [
         "https://doi.org/10.1038/461472a",
@@ -77,10 +99,10 @@ def test_get_multiple_entities_from_doi():
         "Planetary boundaries: Guiding human development on a changing planet",
         "Solutions for a cultivated planet",
     ]
-    res = get_multiple_entities_from_doi(article_dois)
+    res = get_multiple_works_from_doi(article_dois)
     for i in range(len(article_dois)):
         assert article_names[i] == res[i]["display_name"]
-    # TODO: add a test with more than 60 articles
+    # TODO: add a test with more than 60 works
 
 
 def test_concept_yearly_count():

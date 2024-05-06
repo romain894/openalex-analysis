@@ -394,6 +394,36 @@ class EntitiesAnalysis:
         return get_info_about_entity(entity, infos=infos, return_as_pd_series=return_as_pd_series)
 
 
+    def get_multiple_entities_from_id(self, ids: list[str], ordered: bool = True) -> list:
+        """
+        Get multiple entities from their OpenAlex IDs by querying them to the OpenAlex API 100 by 100.
+
+        :param ids: the list of OpenAlex IDs to query
+        :type ids: list[str]
+        :param ordered: keep the order of the input list in the output list. Default is True.
+        :type ordered: bool
+        :return: the list of entities as pyalex objects (dictionaries)
+        :rtype: list[]
+        """
+        res = [None] * len(ids)
+        i = 0
+        # reduce 100 if too big for OpenAlex
+        while i + 100 < len(ids):
+            res[i:i+100] = self.EntityOpenAlex().filter(ids={'openalex': '|'.join(ids[i:i+100])}).get(per_page=100)
+            i += 100
+        res[i:] = self.EntityOpenAlex().filter(ids={'openalex': '|'.join(ids[i:])}).get(per_page=100)
+
+        if not ordered:
+            return res
+        else:
+            # sort the res list with the order provided in the list ids
+            # create a dictionary with each id as key and the index in the res list as value
+            res_ids_index = {entity['id'][21:]: i for i, entity in enumerate(res) if entity is not None}
+            # sort based on the index
+            res = [res[res_ids_index[entity_id]] if res_ids_index.get(entity_id) is not None else None for entity_id in ids]
+            return res
+
+
 def get_entity_type_from_id(entity: str) -> pyalex.api.BaseOpenAlex:
     """
      Gets the entity type from the entity id string.
@@ -500,42 +530,34 @@ def check_if_entity_exists(entity: str) -> bool:
         return True
 
 
-def get_multiple_entities_from_id(ids: list[str]) -> list:
+def get_multiple_works_from_doi(dois: list[str], ordered: bool = True) -> list:
     """
-    Get multiple entities from their OpenAlex IDs by querying them to the OpenAlex API 100 by 100.
-
-    :param ids: the list of OpenAlex IDs to query
-    :type ids: list[str]
-    :return: the list of entities as pyalex objects (dictionaries)
-    :rtype: list[]
-    """
-    res = [None] * len(ids)
-    i = 0
-    # reduce 100 if too big for OpenAlex
-    while i + 100 < len(ids):
-        res[i:i+100] = Works().filter(ids={'openalex': '|'.join(ids[i:i+100])}).get(per_page=100)
-        i += 100
-    res[i:] = Works().filter(ids={'openalex': '|'.join(ids[i:])}).get(per_page=100)
-    return res
-
-
-def get_multiple_entities_from_doi(dois: list[str]) -> list:
-    """
-    Get multiple entities from their DOI by querying them to the OpenAlex API 60 by 60.
+    Get multiple works from their DOI by querying them to the OpenAlex API 60 by 60.
 
     :param dois: the list of DOIs to query
     :type dois: list[str]
-    :return: the list of entities as pyalex objects (dictionaries)
+    :param ordered: keep the order of the input list in the output list. Default is True.
+    :type ordered: bool
+    :return: the list of works as pyalex objects (dictionaries)
     :rtype: list[]
     """
     res = [None] * len(dois)
     i = 0
-    # querying more than 60 DOIs causes the HTTP query size being larger than what OpenALex allow
+    # querying more than 60 DOIs causes the HTTP query size being larger than what OpenAlex allows
     while i + 60 < len(dois):
         res[i:i+60] = Works().filter(doi='|'.join(dois[i:i+60])).get(per_page=60)
         i += 60
     res[i:] = Works().filter(doi='|'.join(dois[i:])).get(per_page=60)
-    return res
+
+    if not ordered:
+        return res
+    else:
+        # sort the res list with the order provided in the list dois
+        # create a dictionary with each doi as key and the index in the res list as value
+        res_dois_index = {entity['doi']: i for i, entity in enumerate(res) if entity is not None}
+        # sort based on the index
+        res = [res[res_dois_index[entity_doi]] if res_dois_index.get(entity_doi) is not None else None for entity_doi in dois]
+        return res
 
 
 class WorksAnalysis(EntitiesAnalysis, Works):
