@@ -91,7 +91,8 @@ def test_get_multiple_works_from_doi():
     # test with a list of 3 articles
     article_dois = [
         "https://doi.org/10.1038/461472a",
-        "https://doi.org/10.1126/science.1259855",
+        # add upper case to check that the ordering is working with uppercases:
+        "https://doi.org/10.1126/SCIENCE.1259855",
         "https://doi.org/10.1038/nature10452",
     ]
     article_names = [

@@ -407,11 +407,14 @@ class EntitiesAnalysis:
         """
         res = [None] * len(ids)
         i = 0
-        # reduce 100 if too big for OpenAlex
-        while i + 100 < len(ids):
-            res[i:i+100] = self.EntityOpenAlex().filter(ids={'openalex': '|'.join(ids[i:i+100])}).get(per_page=100)
-            i += 100
-        res[i:] = self.EntityOpenAlex().filter(ids={'openalex': '|'.join(ids[i:])}).get(per_page=100)
+        with tqdm(total=len(ids), disable=config.disable_tqdm_loading_bar) as pbar:
+            # reduce 100 if too big for OpenAlex
+            while i + 100 < len(ids):
+                res[i:i+100] = self.EntityOpenAlex().filter(ids={'openalex': '|'.join(ids[i:i+100])}).get(per_page=100)
+                i += 100
+                pbar.update(100)
+            res[i:] = self.EntityOpenAlex().filter(ids={'openalex': '|'.join(ids[i:])}).get(per_page=100)
+            pbar.update(len(ids) % 100)
 
         if not ordered:
             return res
@@ -543,20 +546,24 @@ def get_multiple_works_from_doi(dois: list[str], ordered: bool = True) -> list:
     """
     res = [None] * len(dois)
     i = 0
-    # querying more than 60 DOIs causes the HTTP query size being larger than what OpenAlex allows
-    while i + 60 < len(dois):
-        res[i:i+60] = Works().filter(doi='|'.join(dois[i:i+60])).get(per_page=60)
-        i += 60
-    res[i:] = Works().filter(doi='|'.join(dois[i:])).get(per_page=60)
+    with tqdm(total=len(dois), disable=config.disable_tqdm_loading_bar) as pbar:
+        # querying more than 60 DOIs causes the HTTP query size being larger than what OpenAlex allows
+        while i + 60 < len(dois):
+            res[i:i+60] = Works().filter(doi='|'.join(dois[i:i+60])).get(per_page=60)
+            i += 60
+            pbar.update(60)
+        res[i:] = Works().filter(doi='|'.join(dois[i:])).get(per_page=60)
+        pbar.update(len(dois) % 60)
 
     if not ordered:
         return res
     else:
         # sort the res list with the order provided in the list dois
         # create a dictionary with each doi as key and the index in the res list as value
-        res_dois_index = {entity['doi']: i for i, entity in enumerate(res) if entity is not None}
+        # we use lower as the doi can be valid with either lower or upper cases
+        res_dois_index = {entity['doi'].lower(): i for i, entity in enumerate(res) if entity is not None}
         # sort based on the index
-        res = [res[res_dois_index[entity_doi]] if res_dois_index.get(entity_doi) is not None else None for entity_doi in dois]
+        res = [res[res_dois_index[entity_doi.lower()]] if res_dois_index.get(entity_doi.lower()) is not None else None for entity_doi in dois]
         return res
 
 
