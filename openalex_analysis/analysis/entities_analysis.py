@@ -81,9 +81,9 @@ config = AnalysisConfig(email=None,
                         )
 
 
-class EntitiesAnalysis:
+class EntitiesData:
     """
-    openalex-analysis analysis class which contains generic methods to download and do analysis over OpenAlex entities
+    This class contains methods to download data from the OpenAlex API and manage + cache those datasets locally
     """
     # to convert country code to country name
     cc = coco.CountryConverter()
@@ -94,7 +94,6 @@ class EntitiesAnalysis:
                  database_file_path: dict | None = None,
                  create_dataframe: bool = True,
                  load_only_columns: list[str] | None = None,
-                 # custom_query: str| None = None,
                  ):
         """
 
@@ -565,6 +564,12 @@ def get_multiple_works_from_doi(dois: list[str], ordered: bool = True) -> list:
         # sort based on the index
         res = [res[res_dois_index[entity_doi.lower()]] if res_dois_index.get(entity_doi.lower()) is not None else None for entity_doi in dois]
         return res
+
+
+class EntitiesAnalysis(EntitiesData):
+    """
+    This class contains generic methods to analyse entities.
+    """
 
 
 class WorksAnalysis(EntitiesAnalysis, Works):
