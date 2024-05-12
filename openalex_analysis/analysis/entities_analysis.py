@@ -589,7 +589,7 @@ class EntitiesAnalysis(EntitiesData):
         """
         Create the collaborations_with_institutions_df DataFrame.
 
-        :param entities_from: The list of entities to use to count the collaborations. If None, the entity_from_id is used
+        :param entities_from: The list of entities to use to count the collaborations. If None, the entity_from_id is used.
         :type entities_from: list[str]
         :param institutions_to_exclude: For each entities_from (key), the list of institutions (value) to exclude when counting the collaborations. For example, it is usefull to exclude the parent institution.
         :type institutions_to_exclude: dict[str, list[str]]
@@ -597,7 +597,7 @@ class EntitiesAnalysis(EntitiesData):
         :type year: int | str | None
         :param extra_filters_for_entities_from: Filters to be used when downloading the datasets of works to extract the collaboration. If you want to use {'publication_year':2023}, you should use the year parameter and not provide extra_filters_for_entities_from. The extra filter won't be used to generate the links on the plot to check the collaboration works
         :type extra_filters_for_entities_from: dict | None
-        :return The collaborations_with_institutions_df DataFrame
+        :return: The collaborations_with_institutions_df DataFrame
         :rtype: pd.DataFrame
         """
         if entities_from is None:

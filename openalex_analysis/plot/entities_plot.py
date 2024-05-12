@@ -155,7 +155,8 @@ class EntitiesPlot:
         :type plot_title: str | None
         :param markers_size_scale: The size scale of the markers. The default value is 0.3.
         :type markers_size_scale: float
-        :return:
+        :return: The figure
+        :rtype: go.Figure
         """
         self.collaborations_with_institutions_df['marker_size'] = self.collaborations_with_institutions_df['count'] * markers_size_scale
         if plot_title is None:
