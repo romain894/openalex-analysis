@@ -22,4 +22,6 @@ dist/
 tests/data
 tests/*.svg
 
+/sphinx-doc/notebooks/data
+
 .log

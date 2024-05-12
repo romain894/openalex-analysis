@@ -5,7 +5,7 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Welcome to OpenAlex Analysis’s documentation! &mdash; OpenAlex Analysis 0.9.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=92fd9be5" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
   
@@ -16,9 +16,11 @@
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=9dc39874"></script>
-        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -47,7 +49,7 @@
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="usage.html">Usage</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/setup_and_settings.html">Setup and settings</a></li>
-<li class="toctree-l1"><a class="reference internal" href="example_works_concepts.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a></li>
 </ul>
 
@@ -92,7 +94,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="example_works_concepts.html">Examples</a><ul>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/Works_examples.html">Works analysis and plot with concepts 1</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/Works_examples.html#Import-the-library">Import the library</a></li>
 <li class="toctree-l3"><a class="reference internal" href="notebooks/Works_examples.html#Basic-case">Basic case</a><ul>
@@ -127,6 +129,12 @@
 </li>
 </ul>
 </li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/eut%2B_universities_collaborations.html">Plot the collaborations on articles of the EUt+ universities</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/eut%2B_universities_collaborations.html#Import-the-library">Import the library</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/eut%2B_universities_collaborations.html#Create-the-collaborations-DataFrame">Create the collaborations DataFrame</a></li>
+<li class="toctree-l3"><a class="reference internal" href="notebooks/eut%2B_universities_collaborations.html#Plot">Plot</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="reference.html">Reference</a><ul>
@@ -142,16 +150,22 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.__init__"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.__init__()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.auto_remove_databases_saved"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.auto_remove_databases_saved()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.download_list_entities"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.download_list_entities()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.get_api_query"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_api_query()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.get_count_entities_matched"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_count_entities_matched()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.get_database_file_name"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_database_file_name()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.get_entity_type_as_string"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_entity_type_as_string()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.get_entity_type_from_id"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_entity_type_from_id()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.get_info_about_entity"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_info_about_entity()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.get_name_of_entity"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_name_of_entity()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.load_entities_dataframe"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.load_entities_dataframe()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesAnalysis.get_collaborations_with_institutions"><code class="docutils literal notranslate"><span class="pre">EntitiesAnalysis.get_collaborations_with_institutions()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData"><code class="docutils literal notranslate"><span class="pre">EntitiesData</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.__init__"><code class="docutils literal notranslate"><span class="pre">EntitiesData.__init__()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.auto_remove_databases_saved"><code class="docutils literal notranslate"><span class="pre">EntitiesData.auto_remove_databases_saved()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.download_list_entities"><code class="docutils literal notranslate"><span class="pre">EntitiesData.download_list_entities()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.get_api_query"><code class="docutils literal notranslate"><span class="pre">EntitiesData.get_api_query()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.get_count_entities_matched"><code class="docutils literal notranslate"><span class="pre">EntitiesData.get_count_entities_matched()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.get_database_file_name"><code class="docutils literal notranslate"><span class="pre">EntitiesData.get_database_file_name()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.get_entity_type_as_string"><code class="docutils literal notranslate"><span class="pre">EntitiesData.get_entity_type_as_string()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.get_entity_type_from_id"><code class="docutils literal notranslate"><span class="pre">EntitiesData.get_entity_type_from_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.get_info_about_entity"><code class="docutils literal notranslate"><span class="pre">EntitiesData.get_info_about_entity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.get_multiple_entities_from_id"><code class="docutils literal notranslate"><span class="pre">EntitiesData.get_multiple_entities_from_id()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.get_name_of_entity"><code class="docutils literal notranslate"><span class="pre">EntitiesData.get_name_of_entity()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#analysis.entities_analysis.EntitiesData.load_entities_dataframe"><code class="docutils literal notranslate"><span class="pre">EntitiesData.load_entities_dataframe()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="reference.html#analysis.entities_analysis.InstitutionsAnalysis"><code class="docutils literal notranslate"><span class="pre">InstitutionsAnalysis</span></code></a><ul>
@@ -191,8 +205,7 @@
 <li class="toctree-l3"><a class="reference internal" href="reference.html#analysis.entities_analysis.extract_authorships_citation_style"><code class="docutils literal notranslate"><span class="pre">extract_authorships_citation_style()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference.html#analysis.entities_analysis.get_entity_type_from_id"><code class="docutils literal notranslate"><span class="pre">get_entity_type_from_id()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference.html#analysis.entities_analysis.get_info_about_entity"><code class="docutils literal notranslate"><span class="pre">get_info_about_entity()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference.html#analysis.entities_analysis.get_multiple_entities_from_doi"><code class="docutils literal notranslate"><span class="pre">get_multiple_entities_from_doi()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="reference.html#analysis.entities_analysis.get_multiple_entities_from_id"><code class="docutils literal notranslate"><span class="pre">get_multiple_entities_from_id()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="reference.html#analysis.entities_analysis.get_multiple_works_from_doi"><code class="docutils literal notranslate"><span class="pre">get_multiple_works_from_doi()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference.html#analysis.entities_analysis.get_name_of_entity"><code class="docutils literal notranslate"><span class="pre">get_name_of_entity()</span></code></a></li>
 </ul>
 </li>
@@ -200,6 +213,7 @@
 <li class="toctree-l3"><a class="reference internal" href="reference.html#plot.entities_plot.AuthorsPlot"><code class="docutils literal notranslate"><span class="pre">AuthorsPlot</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference.html#plot.entities_plot.ConceptsPlot"><code class="docutils literal notranslate"><span class="pre">ConceptsPlot</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="reference.html#plot.entities_plot.EntitiesPlot"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="reference.html#plot.entities_plot.EntitiesPlot.get_figure_collaborations_with_institutions"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot.get_figure_collaborations_with_institutions()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference.html#plot.entities_plot.EntitiesPlot.get_figure_entities_of_a_concept_color_country"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot.get_figure_entities_of_a_concept_color_country()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="reference.html#plot.entities_plot.EntitiesPlot.get_figure_time_series_element_used_by_entities"><code class="docutils literal notranslate"><span class="pre">EntitiesPlot.get_figure_time_series_element_used_by_entities()</span></code></a></li>
 </ul>

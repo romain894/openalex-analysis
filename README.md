@@ -59,6 +59,45 @@ wplt = WorksAnalysis(concept_sustainability,
 my_dataset = wplt.entities_df
 ```
 
+### Institutions collaborations plot
+
+```python
+from openalex_analysis.plot import InstitutionsPlot
+
+year = "2023"
+
+entities_from = [
+                     "I163151358",  # Cyprus University of Technology
+                     "I107257983",  # Darmstadt University of Applied Sciences
+                     "I201787326",  # Riga Technical University
+                     "I4210144925", # Technological University Dublin
+                     "I31151848",   # Technical University of Sofia
+                     "I3123212020", # Universidad Politécnica de Cartagena
+                     "I140494188",  # University of Technology of Troyes
+                     "I158333966",  # Technical University of Cluj-Napoca
+                     "I186995768",  # University of Cassino and Southern Lazio
+                     ]
+
+iplt = InstitutionsPlot()
+
+# generate the DataFrame
+iplt.get_collaborations_with_institutions(entities_from = entities_from,
+                                          year = year,
+                                         )
+
+# generate the plot
+fig = iplt.get_figure_collaborations_with_institutions()
+
+fig.write_image("plot_collaborations_eut+_2023.svg")
+fig.write_image("plot_collaborations_eut+_2023.png", scale=2)
+fig.write_html("plot_collaborations_eut+_2023.html")
+ 
+fig.show()
+```
+
+[![Plot of the collaborations of the EUt+ universities in 2023](https://raw.githubusercontent.com/romain894/openalex-analysis/main/plot_collaborations_eut%2B_2023.svg)](https://romain894.github.io/openalex-analysis/html/notebooks/eut%2B_universities_collaborations.html)
+Click on the plot to go to notebook with the interactive view.
+
 ### Basic analysis
 
 In the example, we create a dataset with the works about sustainability.
@@ -160,7 +199,7 @@ config.email = "email@example.com"
 InstitutionsPlot()
 ```
 
-The notebook [Setup_example.ipynb](https://github.com/romain894/openalex-analysis/blob/main/Setup_example.ipynb) contains more setup examples.
+The documentation or this notebook [setup_and_settings.ipynb](https://github.com/romain894/openalex-analysis/blob/main/sphinx-doc/notebooks/setup_and_settings.ipynb) contains more setup examples.
 
 ### Default settings
 
