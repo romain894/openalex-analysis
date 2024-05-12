@@ -6,7 +6,7 @@ import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 
-from pyalex import Concepts
+from pyalex import Concepts, Institutions
 
 # config must NOT be imported from pyalex here as it is already imported via entities_analysis
 
@@ -141,6 +141,71 @@ class EntitiesPlot:
             },
         )
 
+        return fig
+
+
+    def get_figure_collaborations_with_institutions(self,
+                                                    plot_title: str | None = None,
+                                                    markers_size_scale = 0.3
+                                                    ) -> go.Figure:
+        self.collaborations_with_institutions_df['marker_size'] = self.collaborations_with_institutions_df['count'] * markers_size_scale
+        if plot_title is None:
+            plot_title = "Collaborations through journal articles"
+            if self.collaborations_with_institutions_year is not None:
+                plot_title += " in "+str(self.collaborations_with_institutions_year)
+            plot_title += '<br><sup>Data from OpenAlex. Made with Openalex Analysis (<a href="https://github.com/romain894/openalex-analysis">https://github.com/romain894/openalex-analysis</a>)</sup>'
+        fig = px.scatter_geo(self.collaborations_with_institutions_df,
+                             lat='lat',
+                             lon='lon',
+                             size='count',
+                             custom_data=['name', 'country', 'count', 'link_to_works'],
+                             width=1600, height=800,
+                             color='name_from',
+                             labels={"name_from": "Entities"},
+                             title=plot_title
+                             )
+        # add the hover
+        hover_template = [
+                "%{customdata[0]}",
+                "%{customdata[1]}",
+                "<a href=\"%{customdata[3]}\">Click to view collaboration paper(s)</a>",
+                "%{customdata[2]} co-authored paper(s)",
+        ]
+        fig.update_traces(
+            hovertemplate="<br>".join(hover_template),
+            marker=dict(
+                opacity=1,
+                sizemode='area',
+                sizeref=markers_size_scale,
+                line=dict(
+                    color="blue",
+                    width=0
+                )
+            ),
+        )
+        fig.update_layout(title_x=0.5, spikedistance=40)
+        fig.update_geos(
+            visible=False,
+            showcountries=True,
+            showland=True,
+        )
+        # add a marker for each institution in the list of entities_from
+        for i, entity in enumerate(self.collaborations_with_institutions_df.id_from.unique()):
+            if get_entity_type_from_id(entity) == Institutions:
+                fig.add_scattergeo(mode="markers",
+                                   lat=[self.collaborations_with_institutions_entities_from_metadata.at[entity, 'lat']],
+                                   lon=[self.collaborations_with_institutions_entities_from_metadata.at[entity, 'lon']],
+                                   visible = True,
+                                   marker=dict(
+                                               color=fig.data[i].marker.color,
+                                               opacity=1,
+                                               size=15,
+                                               line=dict(width=2, color="DarkSlateGrey"),
+                                               symbol="diamond"),
+                                   hovertemplate=[self.collaborations_with_institutions_entities_from_metadata.at[entity, 'name']],
+                                   name="",
+                                   showlegend=False
+                                   )
         return fig
 
 

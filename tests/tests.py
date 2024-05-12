@@ -129,3 +129,11 @@ def test_concept_yearly_count():
     wplt.add_statistics_to_element_count_array(sort_by = 'sum_all_entities')
 
     wplt.get_figure_time_series_element_used_by_entities().write_image("Plot_yearly_usage_sustainability_SRC_UTT.svg", width=900, height=350)
+
+
+def test_generating_collaboration_map():
+    wplt = WorksPlot("I138595864")
+
+    wplt.get_collaborations_with_institutions()
+
+    wplt.get_figure_collaborations_with_institutions()

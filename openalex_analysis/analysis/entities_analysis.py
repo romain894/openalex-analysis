@@ -6,6 +6,7 @@ from os.path import exists, join  # To check if a file exist
 import psutil
 import hashlib  # to generate file names
 import logging
+from collections import Counter
 
 import pyalex.api
 from tqdm import tqdm
@@ -570,6 +571,137 @@ class EntitiesAnalysis(EntitiesData):
     """
     This class contains generic methods to analyse entities.
     """
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        # variables for the collaborations with institutions dataframe:
+        self.collaborations_with_institutions_entities_from_metadata = pd.DataFrame() # ids and metadata of the entities
+        # for which to look for their collaborations
+        self.collaborations_with_institutions_df = pd.DataFrame() # list of the collaborations
+        self.collaborations_with_institutions_year = None # years used to calculate the collaborations
+
+    def get_collaborations_with_institutions(self,
+                                             entities_from: list[str] | None = None,
+                                             institutions_to_exclude: dict[str, list[str]] | None = None,
+                                             year: int | str | None = None,
+                                             extra_filters_for_entities_from: dict | None = None
+                                             ) -> pd.DataFrame:
+        """
+        Create the collaborations_with_institutions_df DataFrame.
+
+        :param entities_from: The list of entities to use to count the collaborations. If None, the entity_from_id is used
+        :type entities_from: list[str]
+        :param institutions_to_exclude: For each entities_from (key), the list of institutions (value) to exclude when counting the collaborations. For example, it is usefull to exclude the parent institution.
+        :type institutions_to_exclude: dict[str, list[str]]
+        :param year: The years for which to look for the collaborations. Can be an integer or a string. You can provide a range of years as a string (e.g. "2020-2023")
+        :type year: int | str | None
+        :param extra_filters_for_entities_from: Filters to be used when downloading the datasets of works to extract the collaboration. If you want to use {'publication_year':2023}, you should use the year parameter and not provide extra_filters_for_entities_from. The extra filter won't be used to generate the links on the plot to check the collaboration works
+        :type extra_filters_for_entities_from: dict | None
+        :return The collaborations_with_institutions_df DataFrame
+        :rtype: pd.DataFrame
+        """
+        if entities_from is None:
+            if self.entity_from_id is None:
+                raise ValueError("You must either provide the entities_from or the entity_from_id when instantiating the object.")
+            entities_from = [self.entity_from_id]
+        if institutions_to_exclude is None:
+            institutions_to_exclude = {}
+        if extra_filters_for_entities_from is None:
+            extra_filters_for_entities_from = {}
+        if year is not None:
+            extra_filters_for_entities_from['publication_year'] = year
+        self.collaborations_with_institutions_year = year
+
+        # get entities_from metadata
+        self.collaborations_with_institutions_entities_from_metadata = [pd.DataFrame()] * len(entities_from)
+        for i, entity_id in tqdm(enumerate(entities_from),
+                                      total=len(self.collaborations_with_institutions_entities_from_metadata),
+                                      desc="Getting entities_from metadata"):
+            if get_entity_type_from_id(entity_id) == Institutions:
+                inst_obj = Institutions()[entity_id]
+                self.collaborations_with_institutions_entities_from_metadata[i] = {'id': inst_obj['id'][21:],
+                                                'name': inst_obj['display_name'],
+                                                'lat': inst_obj['geo']['latitude'],
+                                                'lon': inst_obj['geo']['longitude'],
+                                                'country': inst_obj['geo']['country'],
+                                                }
+            elif get_entity_type_from_id(entity_id) == Authors:
+                inst_obj = Authors()[entity_id]
+                self.collaborations_with_institutions_entities_from_metadata[i] = {'id': inst_obj['id'][21:],
+                                                'name': inst_obj['display_name'],
+                                                }
+            else:
+                raise ValueError("The entity type provided is not valid (only Institutions and Authors are supported).")
+        self.collaborations_with_institutions_entities_from_metadata = pd.DataFrame(self.collaborations_with_institutions_entities_from_metadata).set_index('id')
+
+        self.collaborations_with_institutions_df = [pd.DataFrame()] * len(entities_from)
+        for i, institution_from in enumerate(entities_from):
+            log_oa.info(f"Processing {institution_from} ({self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']})...")
+            # get the institutions to exclude for this institution
+            institutions_to_exclude_i = institutions_to_exclude.get(institution_from)
+            # if there is no institution to exclude, we only exclude the institution_from
+            if institutions_to_exclude_i is None:
+                institutions_to_exclude_i = [institution_from]
+            else:
+                institutions_to_exclude_i.append(institution_from)
+            log_oa.info(f"Excluding {len(institutions_to_exclude_i)} institution: {institutions_to_exclude_i}")
+            # add the https://openalex.org/ at the beggining of each id
+            institutions_to_exclude_i = ["https://openalex.org/" + institution for institution in institutions_to_exclude_i]
+
+            if extra_filters_for_entities_from != {}:
+                works = WorksAnalysis(institution_from, extra_filters = extra_filters_for_entities_from)
+            else:
+                works = WorksAnalysis(institution_from)
+            # get the list of institutions who collaborated per work:
+            collaborations_per_work = [list(set([institution['id'] for author in work for institution in author['institutions']])) for work in works.entities_df['authorships'].to_list()]
+            # list of the institutions we collaborated with
+            institutions_collaborations = set(list([institution for institutions in collaborations_per_work for institution in institutions if institution not in institutions_to_exclude_i]))
+            log_oa.info(f"{len(institutions_collaborations)} unique institutions with which {self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']} collaborated")
+            # remove the https://openalex.org/ at the beginning
+            institutions_collaborations = [institution_id[21:] for institution_id in institutions_collaborations]
+            # count the number of collaboration per institutions:
+            # collaborations_per_work contains the institutions we collaborated per work, so we
+            # can count on how many works we collaborated with each institution
+            institutions_count_dict = Counter(list([institution for institutions in collaborations_per_work for institution in institutions if institution not in institutions_to_exclude_i]))
+
+            # create dictionaries with the institution id as key and lon, lat and name as item
+            institutions_name = [None] * len(institutions_collaborations)
+            institutions_id = [None] * len(institutions_collaborations)
+            institutions_lat = [None] * len(institutions_collaborations)
+            institutions_lon = [None] * len(institutions_collaborations)
+            institutions_country = [None] * len(institutions_collaborations)
+            institutions_count = [None] * len(institutions_collaborations)
+            institutions = InstitutionsAnalysis().get_multiple_entities_from_id(institutions_collaborations)
+            for j, institution in enumerate(institutions):
+                institutions_name[j] = institution['display_name']
+                institutions_id[j] = institution['id'][21:] # remove https://openalex.org/
+                institutions_lat[j] = institution['geo']['latitude']
+                institutions_lon[j] = institution['geo']['longitude']
+                institutions_country[j] = institution['geo']['country']
+                institutions_count[j] = institutions_count_dict[institution['id']]
+
+            # store in a dataframe
+            self.collaborations_with_institutions_df[i] = pd.DataFrame(list(zip(institutions_name,
+                                                         institutions_id,
+                                                         institutions_lat,
+                                                         institutions_lon,
+                                                         institutions_country,
+                                                         [institution_from] * len(institutions_collaborations),
+                                                         [self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']] * len(institutions_collaborations),
+                                                         institutions_count
+                                                        )), columns = ['name', 'id', 'lat', 'lon', 'country', 'id_from', 'name_from', 'count'])
+
+            self.collaborations_with_institutions_df[i] = self.collaborations_with_institutions_df[i].sort_values('count', ascending=False)
+
+        self.collaborations_with_institutions_df = pd.concat(self.collaborations_with_institutions_df, ignore_index=True)
+
+        # add the link to consult the collaborations works
+        if year is not None:
+            self.collaborations_with_institutions_df['link_to_works'] = "https://explore.openalex.org/works?filter=authorships.institutions.lineage:"+self.collaborations_with_institutions_df.id+",authorships.institutions.lineage:"+self.collaborations_with_institutions_df.id_from+",publication_year:"+year
+        else:
+            self.collaborations_with_institutions_df['link_to_works'] = "https://explore.openalex.org/works?filter=authorships.institutions.lineage:"+self.collaborations_with_institutions_df.id+",authorships.institutions.lineage:"+self.collaborations_with_institutions_df.id_from
+
+        return self.collaborations_with_institutions_df
 
 
 class WorksAnalysis(EntitiesAnalysis, Works):
