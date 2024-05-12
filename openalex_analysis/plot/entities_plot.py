@@ -62,7 +62,7 @@ class EntitiesPlot:
                          category_orders={
                              color_data: sorted(self.entities_df[color_data], key=lambda x: (x is None, x))},
                          labels={x_datas: x_legend, y_datas: y_legend, color_data: color_legend},
-                         height=800)
+                         height=figure_height)
 
         fig.update_traces(hovertemplate="<br>".join(self.getHoverTemplate(concept)))
 
@@ -146,8 +146,17 @@ class EntitiesPlot:
 
     def get_figure_collaborations_with_institutions(self,
                                                     plot_title: str | None = None,
-                                                    markers_size_scale = 0.3
+                                                    markers_size_scale: float = 0.3
                                                     ) -> go.Figure:
+        """
+        Get the figure with the collaborations with institutions.
+
+        :param plot_title: The plot title. The default value is None to generate an appropriate title.
+        :type plot_title: str | None
+        :param markers_size_scale: The size scale of the markers. The default value is 0.3.
+        :type markers_size_scale: float
+        :return:
+        """
         self.collaborations_with_institutions_df['marker_size'] = self.collaborations_with_institutions_df['count'] * markers_size_scale
         if plot_title is None:
             plot_title = "Collaborations through journal articles"
@@ -159,7 +168,7 @@ class EntitiesPlot:
                              lon='lon',
                              size='count',
                              custom_data=['name', 'country', 'count', 'link_to_works'],
-                             width=1600, height=800,
+                             width=1600, height=figure_height,
                              color='name_from',
                              labels={"name_from": "Entities"},
                              title=plot_title
