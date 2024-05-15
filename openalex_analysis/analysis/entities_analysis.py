@@ -14,7 +14,7 @@ import pandas as pd
 import country_converter as coco
 import requests
 
-from pyalex import Works, Authors, Sources, Institutions, Concepts, Publishers, config
+from pyalex import Works, Authors, Sources, Institutions, Topics, Concepts, Publishers, config
 
 # define a custom logging
 log_oa = logging.getLogger(__name__)
@@ -445,6 +445,8 @@ def get_entity_type_from_id(entity: str) -> pyalex.api.BaseOpenAlex:
             return Sources
         case 'I':
             return Institutions
+        case 'T':
+            return Topics
         case 'C':
             return Concepts
         case 'P':
@@ -842,7 +844,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
 
     def create_element_used_count_array(self,
                                         element_type: str,
-                                        entities_from: list[str] | None = None,
+                                        entities_from: list[dict] | None = None,
                                         out_file_name: str | None = None,
                                         # save_out_array: bool = False,
                                         count_years: list[int] | None = None
@@ -854,7 +856,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :param element_type: The element type ('reference' or 'concept').
         :type element_type: str
         :param entities_from: The extra entities to which to count the concepts.
-        :type entities_from: list[str]
+        :type entities_from: list[dict]
         :param out_file_name: The out CSV file name, if not provided, an appropriate name is generated. The default value is None.
         :type out_file_name: str
         :param save_out_array: True to save the out array. The default value is False
@@ -1254,6 +1256,13 @@ class ConceptsAnalysis(EntitiesAnalysis, Concepts):
     This class contains specific methods for Concepts entities analysis. Not used for now.
     """
     EntityOpenAlex = Concepts
+
+
+class TopicsAnalysis(EntitiesAnalysis, Topics):
+    """
+    This class contains specific methods for Concepts entities analysis. Not used for now.
+    """
+    EntityOpenAlex = Topics
 
 
 class PublishersAnalysis(EntitiesAnalysis, Publishers):

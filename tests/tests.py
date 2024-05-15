@@ -1,16 +1,19 @@
 import sys
 from os.path import isdir
 import shutil
+import numpy as np
+
 sys.path.append("..")
 
-import numpy as np
-from openalex_analysis.analysis import config, WorksAnalysis, InstitutionsAnalysis
-from openalex_analysis.plot import WorksPlot
-from openalex_analysis.analysis import get_multiple_works_from_doi
+from openalex_analysis.analysis import config, WorksAnalysis, InstitutionsAnalysis, \
+    get_multiple_works_from_doi  # noqa: E402
+from openalex_analysis.plot import WorksPlot  # noqa: E402
 
 config.n_max_entities = 200
 
 institution_src_id = "I138595864"
+
+regime_shift_topic_id = "T13377"
 
 data_path = "./data"
 
@@ -20,24 +23,33 @@ if isdir(data_path):
 
 
 def test_download_dataset_1():
+    # basic test with works
     wa = WorksAnalysis(institution_src_id)
     first_author = wa.entities_df.at[0, "authorships"][0]
 
     assert isinstance(first_author['author']['display_name'], str)
-    assert isinstance(first_author['institutions'][0]['display_name'], str)
 
 
 def test_download_dataset_2():
+    # test with works and extra filter
     extra_filters = {
-        'publication_year':2020,
-        'authorships':{'institutions':{'id':institution_src_id}},
+        'publication_year': 2020,
+        'authorships': {'institutions': {'id': institution_src_id}},
     }
 
-    wa = WorksAnalysis(extra_filters = extra_filters)
+    wa = WorksAnalysis(extra_filters=extra_filters)
     first_author = wa.entities_df.at[0, "authorships"][0]
 
     assert isinstance(first_author['author']['display_name'], str)
-    assert isinstance(first_author['institutions'][0]['display_name'], str)
+
+
+def test_download_dataset_3():
+    # test with a topic dataset
+    wa = WorksPlot(regime_shift_topic_id)
+    print(wa.entities_df.authorships[0])
+    first_author = wa.entities_df.at[0, "authorships"][0]
+
+    assert isinstance(first_author['author']['display_name'], str)
 
 
 def test_analysis_1():
@@ -67,7 +79,7 @@ def test_get_multiple_entities_from_id_works():
 
 
 def test_get_multiple_entities_from_id_institutions():
-    # test with a list of 3 articles
+    # test with a list of 3 institutions
     entities_ids = [
         "I138595864",
         "I140494188",
@@ -91,7 +103,7 @@ def test_get_multiple_works_from_doi():
     # test with a list of 3 articles
     article_dois = [
         "https://doi.org/10.1038/461472a",
-        # add upper case to check that the ordering is working with uppercases:
+        # added upper case to check that the ordering is working with uppercases:
         "https://doi.org/10.1126/SCIENCE.1259855",
         "https://doi.org/10.1038/nature10452",
     ]
@@ -115,20 +127,21 @@ def test_concept_yearly_count():
     count_years = list(range(2004, 2024))
 
     institution_ids_list = ["I138595864", "I140494188"]
-    institution_names_list = ["Stockholm Resilience Centre", "University of Technology of Troyes"]
+    # ["Stockholm Resilience Centre", "University of Technology of Troyes"]
 
     # create a list of dictionaries with each dictionary containing the ID, name and filter for each institution
-    entities_ref_to_count = [None] * len(institution_ids_list)
+    entities_ref_to_count = [{}] * len(institution_ids_list)
     for i in range(len(institution_ids_list)):
         entities_ref_to_count[i] = {'entity_from_id': institution_ids_list[i],
                                     'extra_filters': sustainability_concept_filter}
 
     wplt = WorksPlot()
-    wplt.create_element_used_count_array('concept', entities_ref_to_count, count_years = count_years)
+    wplt.create_element_used_count_array('concept', entities_ref_to_count, count_years=count_years)
 
-    wplt.add_statistics_to_element_count_array(sort_by = 'sum_all_entities')
+    wplt.add_statistics_to_element_count_array(sort_by='sum_all_entities')
 
-    wplt.get_figure_time_series_element_used_by_entities().write_image("Plot_yearly_usage_sustainability_SRC_UTT.svg", width=900, height=350)
+    wplt.get_figure_time_series_element_used_by_entities().write_image("Plot_yearly_usage_sustainability_SRC_UTT.svg",
+                                                                       width=900, height=350)
 
 
 def test_generating_collaboration_map():

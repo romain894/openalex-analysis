@@ -5,6 +5,7 @@ from openalex_analysis.analysis.entities_analysis import WorksAnalysis
 from openalex_analysis.analysis.entities_analysis import AuthorsAnalysis
 from openalex_analysis.analysis.entities_analysis import SourcesAnalysis
 from openalex_analysis.analysis.entities_analysis import InstitutionsAnalysis
+from openalex_analysis.analysis.entities_analysis import TopicsAnalysis
 from openalex_analysis.analysis.entities_analysis import ConceptsAnalysis
 from openalex_analysis.analysis.entities_analysis import PublishersAnalysis
 
@@ -22,6 +23,7 @@ __all__ = [
     "AuthorsAnalysis",
     "SourcesAnalysis",
     "InstitutionsAnalysis",
+    "TopicsAnalysis",
     "ConceptsAnalysis",
     "PublishersAnalysis",
     "get_entity_type_from_id",

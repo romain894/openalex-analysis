@@ -5,6 +5,7 @@ from openalex_analysis.plot.entities_plot import WorksPlot
 from openalex_analysis.plot.entities_plot import AuthorsPlot
 from openalex_analysis.plot.entities_plot import SourcesPlot
 from openalex_analysis.plot.entities_plot import InstitutionsPlot
+from openalex_analysis.plot.entities_plot import TopicsPlot
 from openalex_analysis.plot.entities_plot import ConceptsPlot
 from openalex_analysis.plot.entities_plot import PublishersPlot
 
@@ -21,6 +22,7 @@ __all__ = [
     "AuthorsPlot",
     "SourcesPlot",
     "InstitutionsPlot",
+    "TopicsPlot",
     "ConceptsPlot",
     "PublishersPlot",
     "get_entity_type_from_id",

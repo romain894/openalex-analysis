@@ -401,6 +401,13 @@ class ConceptsPlot(EntitiesPlot, ConceptsAnalysis):
     pass
 
 
+class TopicsPlot(EntitiesPlot, TopicsAnalysis):
+    """
+    This class contains specific methods for Concepts plot. Not used for now.
+    """
+    pass
+
+
 class PublishersPlot(EntitiesPlot, PublishersAnalysis):
     """
     This class contains specific methods for Publishers plot. Not used for now.
