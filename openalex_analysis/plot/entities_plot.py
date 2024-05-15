@@ -403,7 +403,7 @@ class ConceptsPlot(EntitiesPlot, ConceptsAnalysis):
 
 class TopicsPlot(EntitiesPlot, TopicsAnalysis):
     """
-    This class contains specific methods for Concepts plot. Not used for now.
+    This class contains specific methods for Topics plot. Not used for now.
     """
     pass
 

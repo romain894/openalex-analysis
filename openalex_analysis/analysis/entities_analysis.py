@@ -1260,7 +1260,7 @@ class ConceptsAnalysis(EntitiesAnalysis, Concepts):
 
 class TopicsAnalysis(EntitiesAnalysis, Topics):
     """
-    This class contains specific methods for Concepts entities analysis. Not used for now.
+    This class contains specific methods for Topics entities analysis. Not used for now.
     """
     EntityOpenAlex = Topics
 
