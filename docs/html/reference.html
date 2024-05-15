@@ -93,6 +93,10 @@
 <li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.SourcesAnalysis.EntityOpenAlex"><code class="docutils literal notranslate"><span class="pre">SourcesAnalysis.EntityOpenAlex</span></code></a></li>
 </ul>
 </li>
+<li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.TopicsAnalysis"><code class="docutils literal notranslate"><span class="pre">TopicsAnalysis</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.TopicsAnalysis.EntityOpenAlex"><code class="docutils literal notranslate"><span class="pre">TopicsAnalysis.EntityOpenAlex</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.EntityOpenAlex"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.EntityOpenAlex</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#analysis.entities_analysis.WorksAnalysis.add_authorships_citation_style"><code class="docutils literal notranslate"><span class="pre">WorksAnalysis.add_authorships_citation_style()</span></code></a></li>
@@ -136,6 +140,7 @@
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.PublishersPlot"><code class="docutils literal notranslate"><span class="pre">PublishersPlot</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.SourcesPlot"><code class="docutils literal notranslate"><span class="pre">SourcesPlot</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.TopicsPlot"><code class="docutils literal notranslate"><span class="pre">TopicsPlot</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="#plot.entities_plot.WorksPlot"><code class="docutils literal notranslate"><span class="pre">WorksPlot</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.WorksPlot.getCustomData"><code class="docutils literal notranslate"><span class="pre">WorksPlot.getCustomData()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#plot.entities_plot.WorksPlot.getHoverTemplate"><code class="docutils literal notranslate"><span class="pre">WorksPlot.getHoverTemplate()</span></code></a></li>
@@ -531,6 +536,18 @@ the instance.</p>
 </dd></dl>
 
 <dl class="py class">
+<dt class="sig sig-object py" id="analysis.entities_analysis.TopicsAnalysis">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">TopicsAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.TopicsAnalysis" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Topics entities analysis. Not used for now.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="analysis.entities_analysis.TopicsAnalysis.EntityOpenAlex">
+<span class="sig-name descname"><span class="pre">EntityOpenAlex</span></span><a class="headerlink" href="#analysis.entities_analysis.TopicsAnalysis.EntityOpenAlex" title="Link to this definition"></a></dt>
+<dd><p>alias of <code class="xref py py-class docutils literal notranslate"><span class="pre">Topics</span></code></p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">analysis.entities_analysis.</span></span><span class="sig-name descname"><span class="pre">WorksAnalysis</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis" title="Link to this definition"></a></dt>
 <dd><p>This class contains specific methods for Works entity analysis.</p>
@@ -600,14 +617,14 @@ the dataframe) and the sum of the other entities).</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="analysis.entities_analysis.WorksAnalysis.create_element_used_count_array">
-<span class="sig-name descname"><span class="pre">create_element_used_count_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entities_from</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.create_element_used_count_array" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">create_element_used_count_array</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">element_type</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">entities_from</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">dict</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_file_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">count_years</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#analysis.entities_analysis.WorksAnalysis.create_element_used_count_array" title="Link to this definition"></a></dt>
 <dd><p>Creates the element used count array. Count the number of times each element (eg references, concepts…) are
 used and save the array as CSV (optional).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>element_type</strong> (<em>str</em>) – The element type (‘reference’ or ‘concept’).</p></li>
-<li><p><strong>entities_from</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The extra entities to which to count the concepts.</p></li>
+<li><p><strong>entities_from</strong> (<em>list</em><em>[</em><em>dict</em><em>]</em>) – The extra entities to which to count the concepts.</p></li>
 <li><p><strong>out_file_name</strong> (<em>str</em>) – The out CSV file name, if not provided, an appropriate name is generated. The default value is None.</p></li>
 <li><p><strong>save_out_array</strong> (<em>bool</em>) – True to save the out array. The default value is False</p></li>
 <li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – If given, it will compute the count for each year separately</p></li>
@@ -1043,6 +1060,12 @@ TODO: check status code for existence of entity as other errors can occur.</p>
 <dt class="sig sig-object py" id="plot.entities_plot.SourcesPlot">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plot.entities_plot.</span></span><span class="sig-name descname"><span class="pre">SourcesPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.entities_plot.SourcesPlot" title="Link to this definition"></a></dt>
 <dd><p>This class contains specific methods for Sources plot. Not used for now.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="plot.entities_plot.TopicsPlot">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">plot.entities_plot.</span></span><span class="sig-name descname"><span class="pre">TopicsPlot</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">*</span></span><span class="n"><span class="pre">args</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#plot.entities_plot.TopicsPlot" title="Link to this definition"></a></dt>
+<dd><p>This class contains specific methods for Topics plot. Not used for now.</p>
 </dd></dl>
 
 <dl class="py class">
