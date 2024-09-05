@@ -172,38 +172,47 @@ class EntitiesData:
                 query_filters = {'x_concepts': {"id": self.entity_from_id}}
             if self.get_entity_type_from_id(self.entity_from_id) == Authors:
                 query_filters = {'author': {"id": self.entity_from_id}}
+            # when querying authors from an institution, we use the attribute affiliations.institution.id because at the
+            # time of the implementation (05/09/2024), the API filter last_known_institutions.id was not working
+            if self.EntityOpenAlex == Authors and self.get_entity_type_from_id() == Institutions:
+                query_filters = {'affiliations': {'institution': {"id": self.entity_from_id}}}
         else:
             query_filters = {}
         if self.extra_filters is not None:
             query_filters = query_filters | self.extra_filters
-        log_oa.info("query:", query_filters)
+        log_oa.info(f"query: {query_filters}")
         return query_filters
+
+    def filter_and_format_entity_data_from_api_response(self, entity: dict):
+        """
+        Filter and format the data downloaded from the API.
+        This is a placeholder as not all entity types have this function defined.
+        """
+
 
     def download_list_entities(self):
         """
         Downloads the entities which match the parameters of the instance, and store the dataset as a parquet file .
         """
-        log_oa.info("Downloading list of " + self.get_entity_type_as_string())
+        log_oa.info(f"Downloading list of {self.get_entity_type_as_string()}")
         if self.entity_from_id is not None:
-            log_oa.info("of the " + self.get_entity_type_as_string(self.entity_from_type)[0:-1] + " " + str(
-                self.entity_from_id))
+            log_oa.info(f"of the {self.get_entity_type_as_string(self.entity_from_type)[0:-1]} {self.entity_from_id}")
         if self.extra_filters is not None:
-            log_oa.info("with extra filters: " + str(self.extra_filters))
+            log_oa.info(f"with extra filters: {self.extra_filters}")
 
         query = self.get_api_query()
-        log_oa.info("Query to download from the API:", query)
+        log_oa.info(f"Query to download from the API: {query}")
 
         count_entities_matched = self.get_count_entities_matched(query)
 
         if config.n_max_entities is None or config.n_max_entities > count_entities_matched:
             n_entities_to_download = count_entities_matched
-            print("All the", n_entities_to_download, "entities will be downloaded")
-            log_oa.info("All the", n_entities_to_download, "entities will be downloaded")
+            print(f"All the {n_entities_to_download} entities will be downloaded")
+            log_oa.info(f"All the {n_entities_to_download} entities will be downloaded")
         else:
             n_entities_to_download = config.n_max_entities
-            print("Only", n_entities_to_download, "entities will be downloaded ( out of", count_entities_matched, ")")
-            log_oa.info("Only", n_entities_to_download, "entities will be downloaded ( out of", count_entities_matched,
-                        ")")
+            print(f"Only {n_entities_to_download} entities will be downloaded (out of {count_entities_matched})")
+            log_oa.info(f"Only {n_entities_to_download} entities will be downloaded (out of {count_entities_matched})")
 
         # create a list to store the entities
         entities_list = [None] * n_entities_to_download
@@ -712,7 +721,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
     """
     EntityOpenAlex = Works
 
-    def filter_and_format_entity_data_from_api_response(self, entity: dict) -> dict:
+    def filter_and_format_entity_data_from_api_response(self, entity: dict):
         """
         Filter and format the works data downloaded from the API.
 
@@ -721,60 +730,57 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :return: The works datas.
         :rtype: dict
         """
-        # # transform datas
-        # # abstract
-        entity['extracted_abstract'] = entity['abstract']
 
-        # delete useless datas
-        # for now storing the abstract_inverted_index isn't possible because if expand in the dataframe
-        # and makes it too big --> storing full abstract
+        # Store the abstract as a string
+        entity['abstract'] = entity['abstract']
+        # as we store the abstract as a string, we can delete its inverted index
         del entity['abstract_inverted_index']
 
-        # add computed datas:
-        # concept_score if the downloading list comes from a concept
-        if self.entity_from_type == Concepts:
-            # self.entity_from_id is equal to the concept
-            entity[self.entity_from_id] = float(next((item['score'] for item in entity['concepts'] if
-                                                      item['id'] == "https://openalex.org/" + self.entity_from_id),
-                                                     0))
-        # country_name
-        country_code = self.get_country_code(entity)
-        if country_code is not None:
-            entity['country_name'] = self.cc.convert(names=[self.get_country_code(entity)], to='name_short')
-        else:
-            entity['country_name'] = None
-        # institution_name
-        entity['institution_name'] = self.get_institution_name(entity)
+        # # add computed datas:
+        # # concept_score if the downloading list comes from a concept
+        # if self.entity_from_type == Concepts:
+        #     # self.entity_from_id is equal to the concept
+        #     entity[self.entity_from_id] = float(next((item['score'] for item in entity['concepts'] if
+        #                                               item['id'] == "https://openalex.org/" + self.entity_from_id),
+        #                                              0))
+        # # country_name
+        # country_code = self.get_country_code(entity)
+        # if country_code is not None:
+        #     entity['country_name'] = self.cc.convert(names=[self.get_country_code(entity)], to='name_short')
+        # else:
+        #     entity['country_name'] = None
+        # # institution_name
+        # entity['institution_name'] = self.get_institution_name(entity)
 
-    def get_country_code(self, entity: dict) -> str | None:
-        """
-        Get the country code from an entity.
-
-        :param entity: The entity.
-        :type entity: dict
-        :return: The country code.
-        :rtype: str
-        """
-        if entity['authorships'] != [] and entity['authorships'][0]['institutions'] != [] and 'country_code' in \
-                entity['authorships'][0]['institutions'][0]:
-            return entity['authorships'][0]['institutions'][0]['country_code']
-        else:
-            return None
-
-    def get_institution_name(self, entity: dict) -> str | None:
-        """
-        Get the institution name from an entity.
-
-        :param entity: The entity.
-        :type entity: dict
-        :return: The institution name.
-        :rtype: str
-        """
-        if entity['authorships'] != [] and entity['authorships'][0]['institutions'] != [] and 'display_name' in \
-                entity['authorships'][0]['institutions'][0]:
-            return entity['authorships'][0]['institutions'][0]['display_name']
-        else:
-            return None
+    # def get_country_code(self, entity: dict) -> str | None:
+    #     """
+    #     Get the country code from an entity.
+    #
+    #     :param entity: The entity.
+    #     :type entity: dict
+    #     :return: The country code.
+    #     :rtype: str
+    #     """
+    #     if entity['authorships'] != [] and entity['authorships'][0]['institutions'] != [] and 'country_code' in \
+    #             entity['authorships'][0]['institutions'][0]:
+    #         return entity['authorships'][0]['institutions'][0]['country_code']
+    #     else:
+    #         return None
+    #
+    # def get_institution_name(self, entity: dict) -> str | None:
+    #     """
+    #     Get the institution name from an entity.
+    #
+    #     :param entity: The entity.
+    #     :type entity: dict
+    #     :return: The institution name.
+    #     :rtype: str
+    #     """
+    #     if entity['authorships'] != [] and entity['authorships'][0]['institutions'] != [] and 'display_name' in \
+    #             entity['authorships'][0]['institutions'][0]:
+    #         return entity['authorships'][0]['institutions'][0]['display_name']
+    #     else:
+    #         return None
 
     def get_works_references_count(self, count_years: list[int] | None = None) -> pd.Series:
         """
@@ -1200,55 +1206,19 @@ class InstitutionsAnalysis(EntitiesAnalysis, Institutions):
     """
     EntityOpenAlex = Institutions
 
-    def filter_and_format_entity_data_from_api_response(self, entity: dict) -> dict:
-        """
-        Filter and format the institutions data downloaded from the OpenAlex API.
-
-        :param entity: The institutions data from the API.
-        :type entity: dict
-        :return: The institutions data filtered and formatted.
-        :rtype: dict
-        """
-        # delete useless datas
-        del entity['international']
-        del entity['repositories']
-        del entity['country_code']  # already in geo.country_code
-
-        # keep only the first element in the list of those data
-        # display_name_acronym
-        if entity['display_name_acronyms']:
-            entity['display_name_acronym'] = entity['display_name_acronyms'][0]
-        else:
-            entity['display_name_acronym'] = None
-        del entity['display_name_acronyms']
-        # display_name_alternative
-        if entity['display_name_alternatives']:
-            entity['display_name_alternative'] = entity['display_name_alternatives'][0]
-        else:
-            entity['display_name_alternative'] = None
-        del entity['display_name_alternatives']
-
-        # add computed datas:
-        # works_cited_by_count_average
-        entity['works_cited_by_count_average'] = round(entity['cited_by_count'] / entity['works_count'], 2)
-        # concept_score if the downloading list comes from a concept
-        if self.entity_from_type == Concepts:
-            # self.entity_from_id is equal to the concept
-            entity[self.entity_from_id] = next((item['score'] for item in entity['x_concepts'] if
-                                                item['id'] == "https://openalex.org/" + self.entity_from_id), 0)
-
-    def get_sum_concept_scores(self, institutions: list[dict], concept_links: list[str]) -> int:
-        """
-        Gets the sum of the concept scores of the concepts in the list concepts.
-
-        :param institutions: The institution.
-        :type institutions: list[dict]
-        :param concept_links: The concept links.
-        :type concept_links: list[str]
-        :return: The sum of the concept scores for each institution.
-        :rtype: list[float]
-        """
-        return sum([item['score'] for item in institutions['x_concepts'] if item['id'] in concept_links])
+    # def filter_and_format_entity_data_from_api_response(self, entity: dict):
+    #     """
+    #     Filter and format the institutions data downloaded from the OpenAlex API.
+    #
+    #     :param entity: The institutions data from the API.
+    #     :type entity: dict
+    #     :return: The institutions data filtered and formatted.
+    #     :rtype: dict
+    #     """
+    #
+    #     # # add computed datas:
+    #     # # works_cited_by_count_average
+    #     # entity['works_cited_by_count_average'] = round(entity['cited_by_count'] / entity['works_count'], 2)
 
 
 class ConceptsAnalysis(EntitiesAnalysis, Concepts):

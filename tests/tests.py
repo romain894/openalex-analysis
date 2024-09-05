@@ -6,8 +6,10 @@ import numpy as np
 sys.path.append("..")
 
 from openalex_analysis.analysis import config, WorksAnalysis, InstitutionsAnalysis, \
-    get_multiple_works_from_doi  # noqa: E402
+    get_multiple_works_from_doi, AuthorsAnalysis  # noqa: E402
 from openalex_analysis.plot import WorksPlot  # noqa: E402
+
+config.log_level = "DEBUG"
 
 config.n_max_entities = 200
 
@@ -50,6 +52,15 @@ def test_download_dataset_3():
     first_author = wa.entities_df.at[0, "authorships"][0]
 
     assert isinstance(first_author['author']['display_name'], str)
+
+
+def test_download_dataset_4():
+    # basic test with authors
+    aa = AuthorsAnalysis(institution_src_id)
+    print(aa.entities_df.columns)
+    first_author_name = aa.entities_df.at[0, "display_name"]
+
+    assert isinstance(first_author_name, str)
 
 
 def test_analysis_1():
