@@ -87,7 +87,7 @@ def test_get_multiple_entities_from_id_institutions():
     ]
     entities_names = [
         "Stockholm Resilience Centre",
-        "University of Technology of Troyes",
+        "Université de Technologie de Troyes",
         None
     ]
     res = InstitutionsAnalysis().get_multiple_entities_from_id(entities_ids)
