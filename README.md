@@ -11,6 +11,11 @@ Documentation: [https://romain894.github.io/openalex-analysis](https://romain894
 
 Licence: GPL V3
 
+If you want to export the plots, you need to install `kaleido`:
+```bash
+pip install kaleido
+```
+
 ## Examples
 
 Examples in the documentation: [https://romain894.github.io/openalex-analysis/html/example_works_concepts.html](https://romain894.github.io/openalex-analysis/html/example_works_concepts.html)
