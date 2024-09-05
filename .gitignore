@@ -1,6 +1,6 @@
 .venv
 
-/data/*
+/data
 **/__pycache__/*
 
 openalex_analysis.egg-info/
@@ -9,8 +9,6 @@ dist/
 /.ipynb_checkpoints/*
 
 /doc/_build/doctrees
-
-!/data/README.md
 
 # Other files
 .~lock*
