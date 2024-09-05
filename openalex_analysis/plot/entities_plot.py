@@ -52,17 +52,18 @@ class EntitiesPlot:
         # self.create_institutions_dataframe(concept)
         # self.create_entities_dataframe(concept)
 
-        fig = px.scatter(self.entities_df,
-                         x=x_datas,
-                         y=y_datas,
-                         log_x=True,
-                         custom_data=self.getCustomData(concept),
-                         color=color_data,
-                         # sort the elements and push the None elements at the end
-                         category_orders={
-                             color_data: sorted(self.entities_df[color_data], key=lambda x: (x is None, x))},
-                         labels={x_datas: x_legend, y_datas: y_legend, color_data: color_legend},
-                         height=figure_height)
+        fig = px.scatter(
+            self.entities_df,
+            x=x_datas,
+            y=y_datas,
+            log_x=True,
+            custom_data=self.getCustomData(concept),
+            color=color_data,
+            # sort the elements and push the None elements at the end
+            category_orders={color_data: sorted(self.entities_df[color_data], key=lambda x: (x is None, x))},
+            labels={x_datas: x_legend, y_datas: y_legend, color_data: color_legend},
+            height=figure_height
+        )
 
         fig.update_traces(hovertemplate="<br>".join(self.getHoverTemplate(concept)))
 
@@ -126,11 +127,13 @@ class EntitiesPlot:
 
         df = pd.melt(df, id_vars=x_datas, value_vars=df.columns[1:], var_name='entitie', value_name='nb_used')
 
-        fig = px.line(df,
-                      x=x_datas,
-                      y='nb_used',
-                      color='entitie',
-                      labels={x_datas: x_legend})
+        fig = px.line(
+            df,
+            x=x_datas,
+            y='nb_used',
+            color='entitie',
+            labels={x_datas: x_legend}
+        )
 
         fig.update_layout(
             title={
@@ -158,28 +161,34 @@ class EntitiesPlot:
         :return: The figure
         :rtype: go.Figure
         """
-        self.collaborations_with_institutions_df['marker_size'] = self.collaborations_with_institutions_df['count'] * markers_size_scale
+        self.collaborations_with_institutions_df['marker_size'] = (self.collaborations_with_institutions_df['count'] *
+                                                                   markers_size_scale)
         if plot_title is None:
             plot_title = "Collaborations through journal articles"
             if self.collaborations_with_institutions_year is not None:
                 plot_title += " in "+str(self.collaborations_with_institutions_year)
-            plot_title += '<br><sup>Data from OpenAlex. Made with Openalex Analysis (<a href="https://github.com/romain894/openalex-analysis">https://github.com/romain894/openalex-analysis</a>)</sup>'
-        fig = px.scatter_geo(self.collaborations_with_institutions_df,
-                             lat='lat',
-                             lon='lon',
-                             size='count',
-                             custom_data=['name', 'country', 'count', 'link_to_works'],
-                             width=1600, height=figure_height,
-                             color='name_from',
-                             labels={"name_from": "Entities"},
-                             title=plot_title
-                             )
+            plot_title += (
+                '<br><sup>Data from OpenAlex. Made with Openalex Analysis'
+                '(<a href="https://github.com/romain894/openalex-analysis">'
+                'https://github.com/romain894/openalex-analysis</a>)</sup>'
+            )
+        fig = px.scatter_geo(
+            self.collaborations_with_institutions_df,
+                lat='lat',
+                lon='lon',
+                size='count',
+                custom_data=['name', 'country', 'count', 'link_to_works'],
+                width=1600, height=figure_height,
+                color='name_from',
+                labels={"name_from": "Entities"},
+                title=plot_title
+            )
         # add the hover
         hover_template = [
-                "%{customdata[0]}",
-                "%{customdata[1]}",
-                "<a href=\"%{customdata[3]}\">Click to view collaboration paper(s)</a>",
-                "%{customdata[2]} co-authored paper(s)",
+            "%{customdata[0]}",
+            "%{customdata[1]}",
+            "<a href=\"%{customdata[3]}\">Click to view collaboration paper(s)</a>",
+            "%{customdata[2]} co-authored paper(s)",
         ]
         fig.update_traces(
             hovertemplate="<br>".join(hover_template),
@@ -202,20 +211,22 @@ class EntitiesPlot:
         # add a marker for each institution in the list of entities_from
         for i, entity in enumerate(self.collaborations_with_institutions_df.id_from.unique()):
             if get_entity_type_from_id(entity) == Institutions:
-                fig.add_scattergeo(mode="markers",
-                                   lat=[self.collaborations_with_institutions_entities_from_metadata.at[entity, 'lat']],
-                                   lon=[self.collaborations_with_institutions_entities_from_metadata.at[entity, 'lon']],
-                                   visible = True,
-                                   marker=dict(
-                                               color=fig.data[i].marker.color,
-                                               opacity=1,
-                                               size=15,
-                                               line=dict(width=2, color="DarkSlateGrey"),
-                                               symbol="diamond"),
-                                   hovertemplate=[self.collaborations_with_institutions_entities_from_metadata.at[entity, 'name']],
-                                   name="",
-                                   showlegend=False
-                                   )
+                fig.add_scattergeo(
+                    mode="markers",
+                    lat=[self.collaborations_with_institutions_entities_from_metadata.at[entity, 'lat']],
+                    lon=[self.collaborations_with_institutions_entities_from_metadata.at[entity, 'lon']],
+                    visible = True,
+                    marker=dict(
+                        color=fig.data[i].marker.color,
+                        opacity=1,
+                        size=15,
+                        line=dict(width=2, color="DarkSlateGrey"),
+                        symbol="diamond"
+                    ),
+                    hovertemplate=[self.collaborations_with_institutions_entities_from_metadata.at[entity, 'name']],
+                    name="",
+                    showlegend=False
+                    )
         return fig
 
 
@@ -332,14 +343,15 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
             entity_used_ids=entity_used_ids,
             entity_from_ids=entity_from_ids,
         )
-        fig = px.line(df,
-                      x='works_count',
-                      y='usage_count',
-                      text='years',
-                      color='entity_from',
-                      line_dash='entity_used',
-                      height=600,
-                      )
+        fig = px.line(
+            df,
+            x='works_count',
+            y='usage_count',
+            text='years',
+            color='entity_from',
+            line_dash='entity_used',
+            height=600,
+        )
         fig.update_traces(textposition="bottom right")
         return fig
 

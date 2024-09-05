@@ -164,7 +164,7 @@ class EntitiesData:
         :rtype: dict
         """
         if self.entity_from_id is not None:
-            query_filters = {self.get_entity_type_as_string(self.entity_from_type): {"id": self.entity_from_id}}
+            query_filters = {self.get_entity_type_string_name(self.entity_from_type): {"id": self.entity_from_id}}
             # special cases:
             # concept of institution as the query key word is x_concepts instead of concepts
             if self.get_entity_type_from_id() == Institutions and self.get_entity_type_from_id(
@@ -194,9 +194,9 @@ class EntitiesData:
         """
         Downloads the entities which match the parameters of the instance, and store the dataset as a parquet file .
         """
-        log_oa.info(f"Downloading list of {self.get_entity_type_as_string()}")
+        log_oa.info(f"Downloading list of {self.get_entity_type_string_name()}")
         if self.entity_from_id is not None:
-            log_oa.info(f"of the {self.get_entity_type_as_string(self.entity_from_type)[0:-1]} {self.entity_from_id}")
+            log_oa.info(f"of the {self.get_entity_type_string_name(self.entity_from_type)[0:-1]} {self.entity_from_id}")
         if self.extra_filters is not None:
             log_oa.info(f"with extra filters: {self.extra_filters}")
 
@@ -259,9 +259,9 @@ class EntitiesData:
         Loads an entities dataset from file (or download it if needed and allowed by the instance) to the dataframe of
         the instance.
         """
-        log_oa.info(f"Loading dataframe of {self.get_entity_type_as_string()}")
+        log_oa.info(f"Loading dataframe of {self.get_entity_type_string_name()}")
         if self.entity_from_id is not None:
-            log_oa.info(f"of the {self.get_entity_type_as_string(self.entity_from_type)[0:-1]} {self.entity_from_id}")
+            log_oa.info(f"of the {self.get_entity_type_string_name(self.entity_from_type)[0:-1]} {self.entity_from_id}")
         if self.extra_filters is not None:
             log_oa.info(f"with extra filters: {self.extra_filters}")
 
@@ -320,7 +320,7 @@ class EntitiesData:
             entity_from_id = self.entity_from_id
         if entity_type is None:
             entity_type = self.EntityOpenAlex
-        file_name = self.get_entity_type_as_string(entity_type)
+        file_name = self.get_entity_type_string_name(entity_type)
         if entity_from_id is not None:
             file_name += "_from_" + entity_from_id
         if self.extra_filters is not None:
@@ -334,8 +334,7 @@ class EntitiesData:
         # add warning for nb max entities to large (>999 999 999 999) because of file name
         return file_name + "." + db_format
 
-    # TODO: rename function to get_entitie_type_string_name
-    def get_entity_type_as_string(self, entity: pyalex.api.BaseOpenAlex | None = None) -> str:
+    def get_entity_type_string_name(self, entity: pyalex.api.BaseOpenAlex | None = None) -> str:
         """
         Gets the entity type in the format of a string.
 
@@ -429,7 +428,8 @@ class EntitiesData:
             # create a dictionary with each id as key and the index in the res list as value
             res_ids_index = {entity['id'][21:]: i for i, entity in enumerate(res) if entity is not None}
             # sort based on the index
-            res = [res[res_ids_index[entity_id]] if res_ids_index.get(entity_id) is not None else None for entity_id in ids]
+            res = [res[res_ids_index[entity_id]] if res_ids_index.get(entity_id) is not None else None
+                   for entity_id in ids]
             return res
 
 
@@ -571,7 +571,8 @@ def get_multiple_works_from_doi(dois: list[str], ordered: bool = True) -> list:
         # we use lower as the doi can be valid with either lower or upper cases
         res_dois_index = {entity['doi'].lower(): i for i, entity in enumerate(res) if entity is not None}
         # sort based on the index
-        res = [res[res_dois_index[entity_doi.lower()]] if res_dois_index.get(entity_doi.lower()) is not None else None for entity_doi in dois]
+        res = [res[res_dois_index[entity_doi.lower()]] if res_dois_index.get(entity_doi.lower()) is not None else None
+               for entity_doi in dois]
         return res
 
 
@@ -640,7 +641,8 @@ class EntitiesAnalysis(EntitiesData):
                                                 }
             else:
                 raise ValueError("The entity type provided is not valid (only Institutions and Authors are supported).")
-        self.collaborations_with_institutions_entities_from_metadata = pd.DataFrame(self.collaborations_with_institutions_entities_from_metadata).set_index('id')
+        self.collaborations_with_institutions_entities_from_metadata = pd.DataFrame(
+            self.collaborations_with_institutions_entities_from_metadata).set_index('id')
 
         self.collaborations_with_institutions_df = [pd.DataFrame()] * len(entities_from)
         for i, institution_from in enumerate(entities_from):
@@ -663,9 +665,15 @@ class EntitiesAnalysis(EntitiesData):
             else:
                 works = WorksAnalysis(institution_from)
             # get the list of institutions who collaborated per work:
-            collaborations_per_work = [list(set([institution['id'] for author in work for institution in author['institutions']])) for work in works.entities_df['authorships'].to_list()]
+            collaborations_per_work = [
+                list(set([institution['id'] for author in work for institution in author['institutions']]))
+                for work in works.entities_df['authorships'].to_list()
+            ]
             # list of the institutions we collaborated with
-            institutions_collaborations = set(list([institution for institutions in collaborations_per_work for institution in institutions if institution not in institutions_to_exclude_i]))
+            institutions_collaborations = set(list(
+                [institution for institutions in collaborations_per_work
+                 for institution in institutions if institution not in institutions_to_exclude_i]
+            ))
             log_oa.info(f"{len(institutions_collaborations)} unique institutions with which "
                         f"{self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']} "
                         f"collaborated")
@@ -674,7 +682,10 @@ class EntitiesAnalysis(EntitiesData):
             # count the number of collaboration per institutions:
             # collaborations_per_work contains the institutions we collaborated per work, so we
             # can count on how many works we collaborated with each institution
-            institutions_count_dict = Counter(list([institution for institutions in collaborations_per_work for institution in institutions if institution not in institutions_to_exclude_i]))
+            institutions_count_dict = Counter(list(
+                [institution for institutions in collaborations_per_work for institution in institutions
+                 if institution not in institutions_to_exclude_i]
+            ))
 
             # create dictionaries with the institution id as key and lon, lat and name as item
             institutions_name = [None] * len(institutions_collaborations)
@@ -693,25 +704,43 @@ class EntitiesAnalysis(EntitiesData):
                 institutions_count[j] = institutions_count_dict[institution['id']]
 
             # store in a dataframe
-            self.collaborations_with_institutions_df[i] = pd.DataFrame(list(zip(institutions_name,
-                                                         institutions_id,
-                                                         institutions_lat,
-                                                         institutions_lon,
-                                                         institutions_country,
-                                                         [institution_from] * len(institutions_collaborations),
-                                                         [self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']] * len(institutions_collaborations),
-                                                         institutions_count
-                                                        )), columns = ['name', 'id', 'lat', 'lon', 'country', 'id_from', 'name_from', 'count'])
+            self.collaborations_with_institutions_df[i] = pd.DataFrame(
+                list(zip(
+                    institutions_name,
+                    institutions_id,
+                    institutions_lat,
+                    institutions_lon,
+                    institutions_country,
+                    [institution_from] * len(institutions_collaborations),
+                    [self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']] *
+                         len(institutions_collaborations),
+                    institutions_count
+                )),
+                columns = ['name', 'id', 'lat', 'lon', 'country', 'id_from', 'name_from', 'count']
+            )
 
-            self.collaborations_with_institutions_df[i] = self.collaborations_with_institutions_df[i].sort_values('count', ascending=False)
+            self.collaborations_with_institutions_df[i] = self.collaborations_with_institutions_df[i].sort_values(
+                'count', ascending=False
+            )
 
-        self.collaborations_with_institutions_df = pd.concat(self.collaborations_with_institutions_df, ignore_index=True)
+        self.collaborations_with_institutions_df = pd.concat(
+            self.collaborations_with_institutions_df, ignore_index=True
+        )
 
         # add the link to consult the collaborations works
         if year is not None:
-            self.collaborations_with_institutions_df['link_to_works'] = "https://explore.openalex.org/works?filter=authorships.institutions.lineage:"+self.collaborations_with_institutions_df.id+",authorships.institutions.lineage:"+self.collaborations_with_institutions_df.id_from+",publication_year:"+year
+            self.collaborations_with_institutions_df['link_to_works'] = (
+                f"https://explore.openalex.org/works?filter=authorships.institutions.lineage:"
+                f"{self.collaborations_with_institutions_df.id},"
+                f"authorships.institutions.lineage:{self.collaborations_with_institutions_df.id_from},"
+                f"publication_year:{year}"
+            )
         else:
-            self.collaborations_with_institutions_df['link_to_works'] = "https://explore.openalex.org/works?filter=authorships.institutions.lineage:"+self.collaborations_with_institutions_df.id+",authorships.institutions.lineage:"+self.collaborations_with_institutions_df.id_from
+            self.collaborations_with_institutions_df['link_to_works'] = (
+                f"https://explore.openalex.org/works?filter=authorships.institutions.lineage:"
+                f"{self.collaborations_with_institutions_df.id},"
+                f"authorships.institutions.lineage:{self.collaborations_with_institutions_df.id_from}"
+            )
 
         return self.collaborations_with_institutions_df
 
@@ -792,7 +821,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :return: The works references count.
         :rtype: pd.Series
         """
-        log_oa.info(f"Creating the works references count of {self.get_entity_type_as_string()}...")
+        log_oa.info(f"Creating the works references count of {self.get_entity_type_string_name()}...")
         if count_years is None:
             return self.entities_df['referenced_works'].explode().value_counts().convert_dtypes()
         else:
@@ -814,7 +843,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :return: The concept count.
         :rtype: pd.Series
         """
-        log_oa.info(f"Creating the concept count of {self.get_entity_type_as_string()}...")
+        log_oa.info(f"Creating the concept count of {self.get_entity_type_string_name()}...")
         if count_years is None:
             return self.entities_df['concepts'].explode().apply(
                 lambda c: c['id'] if type(c) == dict else None).value_counts().convert_dtypes()
@@ -979,7 +1008,8 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         # self.create_references_works_count_array_progress_text = "Adding statistics on the references array..."
         if self.element_count_df.empty:
             raise ValueError("Need to create element_count_df before adding statistics")
-        # we need at least 2 entities in the dataframe so 2 columns (self.entitie_id and entitie or 2 entities) (the ref id are the index)
+        # we need at least 2 entities in the dataframe so 2 columns (self.entity_id and entity or 2 entities)
+        # (the ref id are the index)
         nb_entities = len(self.element_count_df.columns)
         if nb_entities < 1:
             raise ValueError("Need at least 2 entities in the dataframe to compare entities")
@@ -999,7 +1029,6 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         self.element_count_df['sum_all_entities'] = self.element_count_df['sum_all_entities'].replace(0, None)
         self.element_count_df['proportion_used_by_main_entity'] = self.element_count_df[main_entity_col_id] / \
                                                                   self.element_count_df['sum_all_entities']
-        # self.element_count_df['proportion_used_by_main_entitie'] = self.element_count_df[main_entity_col_id].div(self.element_count_df['sum_all_entities'])
         # # we put -1 inplace of NaN values (it's where the sum_all_entities is 0 so the division failed)
         # self.element_count_df.fillna(value=-1, inplace=True)
         log_oa.info("Computing sum_all_entities rank...")
