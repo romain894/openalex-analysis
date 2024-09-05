@@ -246,7 +246,7 @@ class EntitiesData:
         log_oa.info("Normalizing the json data downloaded...")
         entities_list_df = pd.json_normalize(entities_list)
         if not os.path.isdir(config.project_datas_folder_path):
-            log_oa.info("Creating the directory to store the datas from OpenAlex")
+            log_oa.info("Creating the directory to store the data from OpenAlex")
             os.makedirs(config.project_datas_folder_path)
         log_oa.info("Checking space left on disk...")
         self.auto_remove_databases_saved()
@@ -259,12 +259,11 @@ class EntitiesData:
         Loads an entities dataset from file (or download it if needed and allowed by the instance) to the dataframe of
         the instance.
         """
-        log_oa.info("Loading dataframe of " + self.get_entity_type_as_string())
+        log_oa.info(f"Loading dataframe of {self.get_entity_type_as_string()}")
         if self.entity_from_id is not None:
-            log_oa.info("of the " + self.get_entity_type_as_string(self.entity_from_type)[0:-1] + " " + str(
-                self.entity_from_id))
+            log_oa.info(f"of the {self.get_entity_type_as_string(self.entity_from_type)[0:-1]} {self.entity_from_id}")
         if self.extra_filters is not None:
-            log_oa.info("with extra filters: " + str(self.extra_filters))
+            log_oa.info(f"with extra filters: {self.extra_filters}")
 
         # # check if the database file exists
         if not exists(self.database_file_path):
@@ -293,13 +292,11 @@ class EntitiesData:
                         first_accessed_file = file
             if first_accessed_file is None:
                 log_oa.warning("No more file to delete.")
-                log_oa.warning(
-                    "Space used on disk: " + str(psutil.disk_usage(config.project_datas_folder_path).percent) + "%")
+                log_oa.warning(f"Space used on disk: {psutil.disk_usage(config.project_datas_folder_path).percent} %")
                 break
             os.remove(join(config.project_datas_folder_path, first_accessed_file))
-            log_oa.info("Removed file " + str(
-                join(config.project_datas_folder_path, first_accessed_file)) + "_(last_used:_" + str(
-                first_accessed_file_time) + ")")
+            log_oa.info(f"Removed file {join(config.project_datas_folder_path, first_accessed_file)} "
+                        f"(last used: {first_accessed_file_time})")
 
 
     def get_database_file_name(self,
@@ -647,7 +644,9 @@ class EntitiesAnalysis(EntitiesData):
 
         self.collaborations_with_institutions_df = [pd.DataFrame()] * len(entities_from)
         for i, institution_from in enumerate(entities_from):
-            log_oa.info(f"Processing {institution_from} ({self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']})...")
+            log_oa.info(f"Processing {institution_from}"
+                        f"({self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']})"
+                        f"...")
             # get the institutions to exclude for this institution
             institutions_to_exclude_i = institutions_to_exclude.get(institution_from)
             # if there is no institution to exclude, we only exclude the institution_from
@@ -667,7 +666,9 @@ class EntitiesAnalysis(EntitiesData):
             collaborations_per_work = [list(set([institution['id'] for author in work for institution in author['institutions']])) for work in works.entities_df['authorships'].to_list()]
             # list of the institutions we collaborated with
             institutions_collaborations = set(list([institution for institutions in collaborations_per_work for institution in institutions if institution not in institutions_to_exclude_i]))
-            log_oa.info(f"{len(institutions_collaborations)} unique institutions with which {self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']} collaborated")
+            log_oa.info(f"{len(institutions_collaborations)} unique institutions with which "
+                        f"{self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']} "
+                        f"collaborated")
             # remove the https://openalex.org/ at the beginning
             institutions_collaborations = [institution_id[21:] for institution_id in institutions_collaborations]
             # count the number of collaboration per institutions:
@@ -791,7 +792,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :return: The works references count.
         :rtype: pd.Series
         """
-        log_oa.info("Creating the works references count of " + self.get_entity_type_as_string() + "...")
+        log_oa.info(f"Creating the works references count of {self.get_entity_type_as_string()}...")
         if count_years is None:
             return self.entities_df['referenced_works'].explode().value_counts().convert_dtypes()
         else:
@@ -813,7 +814,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :return: The concept count.
         :rtype: pd.Series
         """
-        log_oa.info("Creating the concept count of " + self.get_entity_type_as_string() + "...")
+        log_oa.info(f"Creating the concept count of {self.get_entity_type_as_string()}...")
         if count_years is None:
             return self.entities_df['concepts'].explode().apply(
                 lambda c: c['id'] if type(c) == dict else None).value_counts().convert_dtypes()
@@ -952,7 +953,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         :param sort_by_ascending: Whenever to sort the dataframe ascending. The default value is False.
         :type sort_by_ascending: bool
         """
-        log_oa.info("Sorting by " + sort_by)
+        log_oa.info(f"Sorting by {sort_by}")
         if not self.count_element_years:
             # we didn't count per year so we can do a simple sort
             self.element_count_df = self.element_count_df.sort_values(by=sort_by, ascending=sort_by_ascending)
@@ -983,7 +984,7 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         if nb_entities < 1:
             raise ValueError("Need at least 2 entities in the dataframe to compare entities")
         main_entity_col_id = self.element_count_df.columns.values[0]
-        log_oa.info("Main entity:" + str(main_entity_col_id))
+        log_oa.info(f"Main entity: {main_entity_col_id}")
         nb_entities = len(self.element_count_df.columns)
         self.element_count_df.fillna(value=0, inplace=True)
         log_oa.info("Computing sum_all_entities...")
@@ -993,8 +994,8 @@ class WorksAnalysis(EntitiesAnalysis, Works):
         self.element_count_df['average_all_entities'] = self.element_count_df['sum_all_entities'] / nb_entities
         log_oa.info("Computing proportion_used_by_main_entity")
         # use sum all entities (include main entity in the sum)
-        log_oa.info(
-            "fill with NaN values 0 of sum_all_entities to avoid them to be used when ranking (we wan't to ignore these rows as these references aren't used)")
+        log_oa.info("fill with NaN values 0 of sum_all_entities to avoid them to be used when ranking (we want to"
+                    "ignore these rows as these references aren't used)")
         self.element_count_df['sum_all_entities'] = self.element_count_df['sum_all_entities'].replace(0, None)
         self.element_count_df['proportion_used_by_main_entity'] = self.element_count_df[main_entity_col_id] / \
                                                                   self.element_count_df['sum_all_entities']
