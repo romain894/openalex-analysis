@@ -206,34 +206,18 @@ InstitutionsPlot()
 
 The documentation or this notebook [setup_and_settings.ipynb](https://github.com/romain894/openalex-analysis/blob/main/sphinx-doc/notebooks/setup_and_settings.ipynb) contains more setup examples.
 
-### Default settings
+### Available settings
 
-```python
-config.email = None
-config.api_key = None
-config.openalex_url = "https://api.openalex.org"
-config.disable_tqdm_loading_bar = False
-config.n_max_entities = 10000
-config.project_datas_folder_path = "data"·
-config.parquet_compression = "brotli"
-config.max_storage_percent = 95
-```
-
-- `email` The email address is need to access the polite pool from OpenAlex which is faster than the default one.
-
-- `api_key` Optional, if you have one from OpenAlex
-
-- `openalex_url` OpenAlex URL
-
-- `disable_tqdm_loading_bar` If set to True, it will disable the loading bar in the terminal output when downloading data from the OpenAlex API.
-
-- `n_max_entities` When downloading a list of entities from the API (eg a list of works), the maximum number of entities to download. Set to None to have no limitation. This number must be a multiple of 200 (the is the number of element per page used by the library)
-
-- `project_datas_folder_path` Path to store the data downloaded from the API. The data will be stored as parquet files, with each file corresponding to one request.
-
-- `parquet_compression` By default, the parquet files are compressed. The compression can be disabled by setting with parquet_compression = None. For other parquet compression algorithms, see the pandas documentation. Compressing reduces by 2 to 10 the file size while needing a negligeable time to compress or decompress. Disabling the compression is usefull if you want to read the parquet files with an external software.
-
-- `max_storage_percent` Maximum storage usage percentage on the disk before starting to delete data stored in project_datas_folder_path. The parquet file with the oldest last read data will be deleted first.
+  - `email` (*string*) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).
+  - `api_key` (*string*) - Your OpenAlex API key, if you have one. The default value is None.
+  - `openalex_url` (*string*) - OpenAlex API URL or your self-hosted API URL. The default value is "https://api.openalex.org".
+  - `http_retry_times` (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.
+  - `disable_tqdm_loading_bar` (*bool*) - To disable the tqdm loading bar. The default is False.
+  - `n_max_entities` (*int*) - Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.
+  - `project_datas_folder_path` (*string*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "./data".
+  - `parquet_compression` (*string*) - Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is "brotli".
+  - `max_storage_percent` (*int*) - When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.
+  - `log_level` (*string*) - The log detail level for openalex-analysis (library specific). The log_level must be "DEBUG", "INFO", "WARNING", "ERROR" or "CRITICAL". The default value "WARNING".
 
 ## Tests
 
