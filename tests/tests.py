@@ -17,11 +17,12 @@ institution_src_id = "I138595864"
 
 regime_shift_topic_id = "T13377"
 
-data_path = "./data"
+# Use a specific folder for the tests to be able to clear the cache
+config.project_data_folder_path = "./data"
 
-# remove data that may have been downloaded in the previous test
-if isdir(data_path):
-    shutil.rmtree(data_path)
+# remove data (cache) that may have been downloaded in the previous test
+if isdir(config.project_data_folder_path):
+    shutil.rmtree(config.project_data_folder_path)
 
 
 def test_download_dataset_1():

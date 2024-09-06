@@ -1,8 +1,9 @@
 # Romain THOMAS 2024
 
 import os
-from os.path import exists, join  # To check if a file exist
+from os.path import exists, join, isdir, expanduser
 import psutil
+from pathlib import Path
 import hashlib  # to generate file names
 import logging
 
@@ -39,9 +40,13 @@ class AnalysisConfig(dict):
     * **http_retry_times** (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.
     * **disable_tqdm_loading_bar** (*bool*) - To disable the tqdm loading bar. The default is False.
     * **n_max_entities** (*int*) - Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.
-    * **project_datas_folder_path** (*string*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "./data".
+    * **project_data_folder_path** (*string*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "~/openalex-analysis/data".
     * **parquet_compression** (*string*) - Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is "brotli".
     * **max_storage_percent** (*int*) - When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.
+    * **max_storage_files** (*int*) - When the cache folder reaches this number of files, cached parquet files will be deleted. The default value is 10000.
+    * **max_storage_size** (*int*) - When the cache folder reached this size (in bytes), cached parquet files will be deleted. The default value is 5e9 (5 GB).
+    * **min_storage_files** (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 1000.
+    * **min_storage_size** (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 5e8 (500 MB).
     * **log_level** (*string*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
     """
 
@@ -73,9 +78,13 @@ config = AnalysisConfig(email=None,
                         http_retry_times=3,
                         disable_tqdm_loading_bar=False,
                         n_max_entities=10000,
-                        project_datas_folder_path="data",
+                        project_data_folder_path=join(expanduser("~"), "openalex-analysis", "data"),
                         parquet_compression="brotli",
                         max_storage_percent=95,
+                        max_storage_files=10000,
+                        max_storage_size=5e9,
+                        min_storage_files=1000,
+                        min_storage_size=5e8,
                         log_level='WARNING',
                         )
 
@@ -138,7 +147,7 @@ class EntitiesData:
             if self.entity_from_id is not None:
                 self.entity_from_type = self.get_entity_type_from_id(self.entity_from_id)
             if self.database_file_path is None:
-                self.database_file_path = join(config.project_datas_folder_path, self.get_database_file_name())
+                self.database_file_path = join(config.project_data_folder_path, self.get_database_file_name())
             if create_dataframe:
                 self.load_entities_dataframe()
 
@@ -243,9 +252,9 @@ class EntitiesData:
         # normalize the json format (one column for each field)
         log_oa.info("Normalizing the json data downloaded...")
         entities_list_df = pd.json_normalize(entities_list)
-        if not os.path.isdir(config.project_datas_folder_path):
+        if not isdir(config.project_data_folder_path):
             log_oa.info("Creating the directory to store the data from OpenAlex")
-            os.makedirs(config.project_datas_folder_path)
+            os.makedirs(config.project_data_folder_path)
         log_oa.info("Checking space left on disk...")
         self.auto_remove_databases_saved()
         # save as compressed parquet file
@@ -276,24 +285,41 @@ class EntitiesData:
 
     def auto_remove_databases_saved(self):
         """
-        Remove databases files (the data downloaded from OpenAlex) if the storage is full. It keeps the last accessed
-        files.
+        Remove databases files (the cached data downloaded from OpenAlex) if the storage is full, if there are too many
+        files or if the cache uses too much space. It keeps the last accessed files with a minimum of files number, and
+        folder size.
         """
-        while psutil.disk_usage(config.project_datas_folder_path).percent > config.max_storage_percent:
+        def max_cache_storage_usage_reached():
+            nb_files = len(os.listdir(config.project_data_folder_path))
+            size = sum(f.stat().st_size for f in Path(config.project_data_folder_path).glob('**/*') if f.is_file())
+            # if we are reaching the threshold to delete the cache (this is useful if the program is running on a system
+            # with a nearly full disk to avoid the limit from config.max_storage_percent to delete every cached file),
+            # we check that one of the minimum of files number of folder size is exceeded:
+            if nb_files > config.min_storage_files or size > config.min_storage_size:
+                if psutil.disk_usage(config.project_data_folder_path).percent > config.max_storage_percent:
+                    return True
+                if nb_files > config.max_storage_files:
+                    return True
+                if size > config.max_storage_size:
+                    return True
+            return False
+
+
+        while max_cache_storage_usage_reached():
             first_accessed_file = None
             first_accessed_file_time = 0
-            for file in os.listdir(config.project_datas_folder_path):
+            for file in os.listdir(config.project_data_folder_path):
                 if file.endswith(".parquet"):
-                    if os.stat(join(config.project_datas_folder_path,
+                    if os.stat(join(config.project_data_folder_path,
                                     file)).st_atime < first_accessed_file_time or first_accessed_file_time == 0:
-                        first_accessed_file_time = os.stat(join(config.project_datas_folder_path, file)).st_atime
+                        first_accessed_file_time = os.stat(join(config.project_data_folder_path, file)).st_atime
                         first_accessed_file = file
             if first_accessed_file is None:
                 log_oa.warning("No more file to delete.")
-                log_oa.warning(f"Space used on disk: {psutil.disk_usage(config.project_datas_folder_path).percent} %")
+                log_oa.warning(f"Space used on disk: {psutil.disk_usage(config.project_data_folder_path).percent} %")
                 break
-            os.remove(join(config.project_datas_folder_path, first_accessed_file))
-            log_oa.info(f"Removed file {join(config.project_datas_folder_path, first_accessed_file)} "
+            os.remove(join(config.project_data_folder_path, first_accessed_file))
+            log_oa.info(f"Removed file {join(config.project_data_folder_path, first_accessed_file)} "
                         f"(last used: {first_accessed_file_time})")
 
 
@@ -324,7 +350,7 @@ class EntitiesData:
         if self.extra_filters is not None:
             file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
         # add the data format version, we increment this number if the format (e.g. columns) change in the parquet file:
-        file_name += "v2"
+        file_name += "_v2"
         # keep the file name below 120 characters and reserve 22 for the max size + parquet extension
         if len(file_name) > 96:
             # sha224 length: 56
