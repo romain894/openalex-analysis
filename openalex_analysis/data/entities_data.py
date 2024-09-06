@@ -5,6 +5,7 @@ from os.path import exists, join, isdir, expanduser
 import psutil
 from pathlib import Path
 import hashlib  # to generate file names
+from time import time
 import logging
 
 import pyalex.api
@@ -47,6 +48,7 @@ class AnalysisConfig(dict):
     * **max_storage_size** (*int*) - When the cache folder reached this size (in bytes), cached parquet files will be deleted. The default value is 5e9 (5 GB).
     * **min_storage_files** (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 1000.
     * **min_storage_size** (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 5e8 (500 MB).
+    * **cache_max_age** (*int*) - Maximum age of the cache in days. The default value is 365.
     * **log_level** (*string*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
     """
 
@@ -85,6 +87,7 @@ config = AnalysisConfig(email=None,
                         max_storage_size=5e9,
                         min_storage_files=1000,
                         min_storage_size=5e8,
+                        cache_max_age=365,
                         log_level='WARNING',
                         )
 
@@ -275,6 +278,13 @@ class EntitiesData:
         # # check if the database file exists
         if not exists(self.database_file_path):
             self.download_list_entities()
+        # check the age of the cache (aka last date of modification)
+        else:
+            age_in_days = (time() - os.stat(self.database_file_path).st_mtime) / 86400
+            if age_in_days > config.cache_max_age:
+                os.remove(self.database_file_path)
+                log_oa.info(f"Removed file {self.database_file_path} (age (days): {int(age_in_days)})")
+                self.download_list_entities()
         log_oa.info("Loading the list of entities from a parquet file...")
         try:
             self.entities_df = pd.read_parquet(self.database_file_path, columns=self.load_only_columns)
