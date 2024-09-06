@@ -1,5 +1,4 @@
 # Romain THOMAS 2024
-# Stockholm Resilience Centre, Stockholm University
 
 import pandas as pd
 import numpy as np
