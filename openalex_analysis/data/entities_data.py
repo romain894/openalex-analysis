@@ -323,8 +323,9 @@ class EntitiesData:
             file_name += "_from_" + entity_from_id
         if self.extra_filters is not None:
             file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
-        # keep the file name below 120 characters and reserve 22 for the max size + parquet extension (csv extension
-        # is shorter)
+        # add the data format version, we increment this number if the format (e.g. columns) change in the parquet file:
+        file_name += "v2"
+        # keep the file name below 120 characters and reserve 22 for the max size + parquet extension
         if len(file_name) > 96:
             # sha224 length: 56
             file_name = file_name[:39] + "-" + hashlib.sha224(file_name.encode()).hexdigest()
