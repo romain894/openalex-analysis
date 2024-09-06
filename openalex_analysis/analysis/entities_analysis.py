@@ -83,7 +83,7 @@ class EntitiesAnalysis(EntitiesData):
 
         self.collaborations_with_institutions_df = [pd.DataFrame()] * len(entities_from)
         for i, institution_from in enumerate(entities_from):
-            log_oa.info(f"Processing {institution_from}"
+            log_oa.info(f"Processing {institution_from} "
                         f"({self.collaborations_with_institutions_entities_from_metadata.at[institution_from, 'name']})"
                         f"...")
             # get the institutions to exclude for this institution
