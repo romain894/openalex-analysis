@@ -214,10 +214,33 @@ The documentation or this notebook [setup_and_settings.ipynb](https://github.com
   - `http_retry_times` (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.
   - `disable_tqdm_loading_bar` (*bool*) - To disable the tqdm loading bar. The default is False.
   - `n_max_entities` (*int*) - Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.
-  - `project_datas_folder_path` (*string*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "./data".
+  - `project_data_folder_path` (*string*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "~/openalex-analysis/data".
   - `parquet_compression` (*string*) - Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is "brotli".
   - `max_storage_percent` (*int*) - When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.
-  - `log_level` (*string*) - The log detail level for openalex-analysis (library specific). The log_level must be "DEBUG", "INFO", "WARNING", "ERROR" or "CRITICAL". The default value "WARNING".
+  - `max_storage_files` (*int*) - When the cache folder reaches this number of files, cached parquet files will be deleted. The default value is 10000.
+  - `max_storage_size` (*int*) - When the cache folder reached this size (in bytes), cached parquet files will be deleted. The default value is 5e9 (5 GB).
+  - `min_storage_files` (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 1000.
+  - `min_storage_size` (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 5e8 (500 MB).
+  - `cache_max_age` (*int*) - Maximum age of the cache in days. The default value is 365.
+  - `log_level` (*string*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
+
+## Use a configuration file
+
+You can use a configuration file to load your settings. If you save it in
+`~/openalex-analysis/openalex-analysis-conf.toml`, it will be automatically loaded each time you import the library.
+
+If you want to use another path for you configuration file, you can load it after importing the library as follows:
+```python
+from openalex_analysis.analysis import load_config_from_file, WorksAnalysis
+
+load_config_from_file("my-openalex-analysis-conf.toml")
+```
+
+In the configuration file, you can define the available settings with the following format:
+```python
+log_level = "DEBUG"
+n_max_entities = 200
+```
 
 ## Tests
 
