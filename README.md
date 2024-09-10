@@ -16,6 +16,10 @@ If you want to export the plots, you need to install `kaleido`:
 pip install kaleido
 ```
 
+Coming soon:
+  - Option to use Dask DataFrame for big datasets
+  - Documentation update
+
 ## Examples
 
 Examples in the documentation: [https://romain894.github.io/openalex-analysis/html/example_works_concepts.html](https://romain894.github.io/openalex-analysis/html/example_works_concepts.html)
@@ -224,7 +228,7 @@ The documentation or this notebook [setup_and_settings.ipynb](https://github.com
   - `cache_max_age` (*int*) - Maximum age of the cache in days. The default value is 365.
   - `log_level` (*string*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
 
-## Use a configuration file
+### Use a configuration file
 
 You can use a configuration file to load your settings. If you save it in
 `~/openalex-analysis/openalex-analysis-conf.toml`, it will be automatically loaded each time you import the library.
