@@ -1,4 +1,5 @@
 from openalex_analysis.plot.entities_plot import config
+from openalex_analysis.data.entities_data import load_config_from_file
 
 from openalex_analysis.plot.entities_plot import EntitiesPlot
 from openalex_analysis.plot.entities_plot import WorksPlot
@@ -17,6 +18,7 @@ from openalex_analysis.plot.entities_plot import get_multiple_works_from_doi
 
 __all__ = [
     "config",
+    "load_config_from_file",
     "EntitiesPlot",
     "WorksPlot",
     "AuthorsPlot",

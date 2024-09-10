@@ -5,13 +5,17 @@ import numpy as np
 
 sys.path.append("..")
 
-from openalex_analysis.analysis import config, WorksAnalysis, InstitutionsAnalysis, \
+from openalex_analysis.analysis import config, load_config_from_file, WorksAnalysis, InstitutionsAnalysis, \
     get_multiple_works_from_doi, AuthorsAnalysis  # noqa: E402
 from openalex_analysis.plot import WorksPlot  # noqa: E402
 
-config.log_level = "DEBUG"
+# set the default configuration (this avoids using the configuration defined in the file
+# ~/openalex-analysis/openalex-analysis-conf.toml)
+from openalex_analysis.data.entities_data import set_default_config
 
-config.n_max_entities = 200
+set_default_config()
+
+load_config_from_file("openalex-analysis-conf.toml")
 
 institution_src_id = "I138595864"
 

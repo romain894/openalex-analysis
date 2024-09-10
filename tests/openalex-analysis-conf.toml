@@ -1,0 +1,2 @@
+log_level = "DEBUG"
+n_max_entities = 200

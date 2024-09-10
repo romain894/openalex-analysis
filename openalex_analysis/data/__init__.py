@@ -1,4 +1,5 @@
 from openalex_analysis.data.entities_data import config
+from openalex_analysis.data.entities_data import load_config_from_file
 from openalex_analysis.data.entities_data import log_oa
 
 from openalex_analysis.data.entities_data import EntitiesData
@@ -19,6 +20,7 @@ from openalex_analysis.data.entities_data import get_multiple_works_from_doi
 
 __all__ = [
     "config",
+    "load_config_from_file",
     "log_oa",
     "EntitiesData",
     "WorksData",
