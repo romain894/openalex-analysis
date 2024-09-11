@@ -618,41 +618,6 @@ def check_if_entity_exists(entity: str) -> bool:
         return True
 
 
-def get_multiple_works_from_doi(dois: list[str], ordered: bool = True) -> list:
-    """
-    Get multiple works from their DOI by querying them to the OpenAlex API 60 by 60.
-
-    :param dois: the list of DOIs to query
-    :type dois: list[str]
-    :param ordered: keep the order of the input list in the output list. Default is True.
-    :type ordered: bool
-    :return: the list of works as pyalex objects (dictionaries)
-    :rtype: list[]
-    """
-    res = [None] * len(dois)
-    i = 0
-    with tqdm(total=len(dois), disable=config.disable_tqdm_loading_bar) as pbar:
-        # querying more than 60 DOIs causes the HTTP query size being larger than what OpenAlex allows
-        while i + 60 < len(dois):
-            res[i:i+60] = Works().filter(doi='|'.join(dois[i:i+60])).get(per_page=60)
-            i += 60
-            pbar.update(60)
-        res[i:] = Works().filter(doi='|'.join(dois[i:])).get(per_page=60)
-        pbar.update(len(dois) % 60)
-
-    if not ordered:
-        return res
-    else:
-        # sort the res list with the order provided in the list dois
-        # create a dictionary with each doi as key and the index in the res list as value
-        # we use lower as the doi can be valid with either lower or upper cases
-        res_dois_index = {entity['doi'].lower(): i for i, entity in enumerate(res) if entity is not None}
-        # sort based on the index
-        res = [res[res_dois_index[entity_doi.lower()]] if res_dois_index.get(entity_doi.lower()) is not None else None
-               for entity_doi in dois]
-        return res
-
-
 class WorksData(EntitiesData, Works):
     """
     This class contains specific methods for Works entity data.
@@ -665,6 +630,41 @@ class WorksData(EntitiesData, Works):
         """
         self.entities_df['author_citation_style'] = self.entities_df['authorships'].apply(
             extract_authorships_citation_style)
+
+
+    def get_multiple_works_from_doi(self, dois: list[str], ordered: bool = True) -> list:
+        """
+        Get multiple works from their DOI by querying them to the OpenAlex API 60 by 60.
+
+        :param dois: the list of DOIs to query
+        :type dois: list[str]
+        :param ordered: keep the order of the input list in the output list. Default is True.
+        :type ordered: bool
+        :return: the list of works as pyalex objects (dictionaries)
+        :rtype: list[]
+        """
+        res = [None] * len(dois)
+        i = 0
+        with tqdm(total=len(dois), disable=config.disable_tqdm_loading_bar) as pbar:
+            # querying more than 60 DOIs causes the HTTP query size being larger than what OpenAlex allows
+            while i + 60 < len(dois):
+                res[i:i+60] = Works().filter(doi='|'.join(dois[i:i+60])).get(per_page=60)
+                i += 60
+                pbar.update(60)
+            res[i:] = Works().filter(doi='|'.join(dois[i:])).get(per_page=60)
+            pbar.update(len(dois) % 60)
+
+        if not ordered:
+            return res
+        else:
+            # sort the res list with the order provided in the list dois
+            # create a dictionary with each doi as key and the index in the res list as value
+            # we use lower as the doi can be valid with either lower or upper cases
+            res_dois_index = {entity['doi'].lower(): i for i, entity in enumerate(res) if entity is not None}
+            # sort based on the index
+            res = [res[res_dois_index[entity_doi.lower()]] if res_dois_index.get(entity_doi.lower()) is not None else None
+                   for entity_doi in dois]
+            return res
 
 
 class AuthorsData(EntitiesData, Authors):

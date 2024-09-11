@@ -15,7 +15,6 @@ from openalex_analysis.data.entities_data import get_entity_type_from_id
 from openalex_analysis.data.entities_data import get_name_of_entity
 from openalex_analysis.data.entities_data import get_info_about_entity
 from openalex_analysis.data.entities_data import check_if_entity_exists
-from openalex_analysis.data.entities_data import get_multiple_works_from_doi
 
 
 __all__ = [
@@ -34,5 +33,4 @@ __all__ = [
     "get_name_of_entity",
     "get_info_about_entity",
     "check_if_entity_exists",
-    "get_multiple_works_from_doi",
 ]
