@@ -52,9 +52,9 @@ class AnalysisConfig(dict):
     * **cache_max_age** (*int*) - Maximum age of the cache in days. The default value is 365.
     * **log_level** (*string*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
     """
-
     def __getattr__(self, key):
         return super().__getitem__(key)
+
 
     def __setattr__(self, key, value):
         if key == "log_level":
@@ -241,12 +241,6 @@ class EntitiesData:
         log_oa.info(f"query: {query_filters}")
         return query_filters
 
-    def filter_and_format_entity_data_from_api_response(self, entity: dict):
-        """
-        Filter and format the data downloaded from the API.
-        This is a placeholder as not all entity types have this function defined.
-        """
-
 
     def download_list_entities(self):
         """
@@ -285,8 +279,6 @@ class EntitiesData:
             for page in pager:
                 # add the downloaded entities in the main list
                 for entity in page:
-                    self.filter_and_format_entity_data_from_api_response(entity)
-                    # raise ValueError("toto stop")
                     if i < n_entities_to_download:
                         entities_list[i] = entity
                     else:
@@ -666,22 +658,6 @@ class WorksData(EntitiesData, Works):
     This class contains specific methods for Works entity data.
     """
     EntityOpenAlex = Works
-
-    def filter_and_format_entity_data_from_api_response(self, entity: dict):
-        """
-        Filter and format the works data downloaded from the API.
-
-        :param entity: The works data from the API.
-        :type entity: dict
-        :return: The works datas.
-        :rtype: dict
-        """
-
-        # Store the abstract as a string (here, we avoid the key "abstract" as PyAlex redefined __getitem__() for it)
-        entity['extracted_abstract'] = entity['abstract']
-        # as we store the abstract as a string, we can delete its inverted index
-        del entity['abstract_inverted_index']
-
 
     def add_authorships_citation_style(self):
         """
