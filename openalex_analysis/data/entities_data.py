@@ -300,9 +300,11 @@ class EntitiesData:
                 self.entity_downloading_progress_percentage = i / n_entities_to_download * 100 if i else 0
         self.entity_downloading_progress_percentage = 100
 
-        # normalize the json format (one column for each field)
-        log_oa.info("Normalizing the json data downloaded...")
-        entities_list_df = pd.json_normalize(entities_list)
+        log_oa.info("Converting the works list downloaded to a DataFrame...")
+        entities_list_df = pd.DataFrame.from_records(entities_list[:5])
+        if self.EntityOpenAlex == Works:
+            entities_list_df = entities_list_df.rename(columns={'extracted_abstract': 'abstract'})
+
         if not isdir(config.project_data_folder_path):
             log_oa.info("Creating the directory to store the data from OpenAlex")
             os.makedirs(config.project_data_folder_path)
@@ -675,8 +677,8 @@ class WorksData(EntitiesData, Works):
         :rtype: dict
         """
 
-        # Store the abstract as a string
-        entity['abstract'] = entity['abstract']
+        # Store the abstract as a string (here, we avoid the key "abstract" as PyAlex redefined __getitem__() for it)
+        entity['extracted_abstract'] = entity['abstract']
         # as we store the abstract as a string, we can delete its inverted index
         del entity['abstract_inverted_index']
 
