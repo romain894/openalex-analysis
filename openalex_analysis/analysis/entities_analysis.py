@@ -17,7 +17,6 @@ class EntitiesAnalysis(EntitiesData):
     """
     This class contains generic methods to analyse entities.
     """
-
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         # variables for the collaborations with institutions dataframe:
@@ -25,6 +24,7 @@ class EntitiesAnalysis(EntitiesData):
         # for which to look for their collaborations
         self.collaborations_with_institutions_df = pd.DataFrame() # list of the collaborations
         self.collaborations_with_institutions_year = None # years used to calculate the collaborations
+
 
     def get_collaborations_with_institutions(self,
                                              entities_from: list[str] | None = None,
@@ -187,57 +187,10 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
     """
     This class contains specific methods for Works entity analysis.
     """
-
-    def get_works_references_count(self, count_years: list[int] | None = None) -> pd.Series:
-        """
-        Count the number of times each referenced work is used.
-
-        :param count_years: List of years to count the references. The default value is None to not count by years.
-        :type count_years: list[int]
-        :return: The works references count.
-        :rtype: pd.Series
-        """
-        log_oa.info(f"Creating the works references count of {self.get_entity_type_string_name()}...")
-        if count_years is None:
-            return self.entities_df['referenced_works'].explode().value_counts().convert_dtypes()
-        else:
-            counts_df_list = [None] * len(count_years)
-            for i, year in enumerate(count_years):
-                counts_df_list[i] = self.entities_df[self.entities_df.publication_year == year][
-                    'referenced_works'].explode().value_counts().convert_dtypes()
-            entities_count = pd.concat(counts_df_list, axis=1, keys=count_years).reset_index().fillna(0)
-            entities_count = entities_count.set_index('referenced_works').stack()
-            entities_count.name = 'count'
-            return entities_count
-
-    def get_works_concepts_count(self, count_years: list[int] | None = None) -> pd.Series:
-        """
-        Count the number of times each concept is used.
-
-        :param count_years: List of years to count the concepts. The default value is None to not count by years.
-        :type count_years: list[int]
-        :return: The concept count.
-        :rtype: pd.Series
-        """
-        log_oa.info(f"Creating the concept count of {self.get_entity_type_string_name()}...")
-        if count_years is None:
-            return self.entities_df['concepts'].explode().apply(
-                lambda c: c['id'] if type(c) == dict else None).value_counts().convert_dtypes()
-        else:
-            counts_df_list = [None] * len(count_years)
-            for i, year in enumerate(count_years):
-                counts_df_list[i] = self.entities_df[self.entities_df.publication_year == year][
-                    'concepts'].explode().apply(
-                    lambda c: c['id'] if type(c) == dict else None).value_counts().convert_dtypes()
-            entities_count = pd.concat(counts_df_list, axis=1, keys=count_years).reset_index().fillna(0)
-            entities_count = entities_count.set_index('concepts').stack()
-            entities_count.name = 'count'
-            return entities_count
-
     def get_element_count(self, element_type: str, count_years: list[int] | None = None) -> pd.Series:
         """
-        Count the number of times each element (for now references or concepts) is used by year (optional) by the
-        entity.
+        Count the number of times each element (for now references or concepts) is used by the works in self.entities_df
+        in total or by year (optional).
 
         :param element_type: The element type ('reference' or 'concept').
         :type element_type: str
@@ -246,33 +199,77 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
         :return: The element count.
         :rtype: pd.Series
         """
+        def get_works_references_count() -> pd.Series:
+            """
+            Count the number of times each referenced work is used by the works in self.entities_df.
+
+            :return: The works references count.
+            :rtype: pd.Series
+            """
+            log_oa.info(f"Creating the works references count of {self.get_entity_type_string_name()}...")
+            if count_years is None:
+                return self.entities_df['referenced_works'].explode().value_counts().convert_dtypes()
+            else:
+                counts_df_list = [None] * len(count_years)
+                for i, year in enumerate(count_years):
+                    counts_df_list[i] = self.entities_df[self.entities_df.publication_year == year][
+                        'referenced_works'].explode().value_counts().convert_dtypes()
+                entities_count = pd.concat(counts_df_list, axis=1, keys=count_years).reset_index().fillna(0)
+                entities_count = entities_count.set_index('referenced_works').stack()
+                entities_count.name = 'count'
+                return entities_count
+
+        def get_works_concepts_count() -> pd.Series:
+            """
+            Count the number of times each concept is used by the works in self.entities_df.
+
+            :return: The concept count.
+            :rtype: pd.Series
+            """
+            log_oa.info(f"Creating the concept count of {self.get_entity_type_string_name()}...")
+            if count_years is None:
+                return self.entities_df['concepts'].explode().apply(
+                    lambda c: c['id'] if type(c) == dict else None).value_counts().convert_dtypes()
+            else:
+                counts_df_list = [None] * len(count_years)
+                for i, year in enumerate(count_years):
+                    counts_df_list[i] = self.entities_df[self.entities_df.publication_year == year][
+                        'concepts'].explode().apply(
+                        lambda c: c['id'] if type(c) == dict else None).value_counts().convert_dtypes()
+                entities_count = pd.concat(counts_df_list, axis=1, keys=count_years).reset_index().fillna(0)
+                entities_count = entities_count.set_index('concepts').stack()
+                entities_count.name = 'count'
+                return entities_count
+
         match element_type:
             case 'reference':
-                return self.get_works_references_count(count_years=count_years)
+                return get_works_references_count()
             case 'concept':
-                return self.get_works_concepts_count(count_years=count_years)
+                return get_works_concepts_count()
             case _:
                 raise ValueError("Can only count for 'references' or 'concept'")
+
 
     def create_element_used_count_array(self,
                                         element_type: str,
                                         entities_from: list[dict] | None = None,
-                                        out_file_name: str | None = None,
-                                        # save_out_array: bool = False,
                                         count_years: list[int] | None = None
                                         ):
         """
-        Creates the element used count array. Count the number of times each element (eg references, concepts...) are
-        used and save the array as CSV (optional).
+        Creates the element used count array. Count the number of times each element (e.g. references, concepts...) are
+        used. You must provide at least 'element_type' ('reference' or 'concept').
+        If you only provide 'element_type' the default behavior is to count the number of time the element_type are used
+        (e.g. the number of times each reference is used) in the dataset loaded ('entities_df').
+        If you provide 'entities_from', the count will be done for the dataset 'entities_df' if it exists and each
+        entity in the list 'entities_from'.
+        By default, one count is made by entity, but if you provide 'count_years' the count will be done for each given
+        year.
+        The result is saved in 'element_count_df'.
 
         :param element_type: The element type ('reference' or 'concept').
         :type element_type: str
         :param entities_from: The extra entities to which to count the concepts.
         :type entities_from: list[dict]
-        :param out_file_name: The out CSV file name, if not provided, an appropriate name is generated. The default value is None.
-        :type out_file_name: str
-        :param save_out_array: True to save the out array. The default value is False
-        :type save_out_array: bool
         :param count_years: If given, it will compute the count for each year separately
         :type count_years: list[int]
         """
@@ -290,16 +287,8 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
         if self.entity_from_id is None and entities_from == []:
             raise ValueError(
                 "You need either to instance the object with an entity_from_id or to provide entities_from to "
-                "create_element_used_count_array()")
-        # TODO: add parameter to drop references not in the entity to compare from : useless as we can not import it
-        # if out_file_name is None:
-        #     if self.entity_from_id is None:
-        #         out_file_name = self.count_element_type + "s_" + self.get_entity_string_name() + "_of_diverse_entities"
-        #     else:
-        #         out_file_name = self.count_element_type + "s_" + self.get_entity_string_name() + "_of_" + self.get_entity_string_name(
-        #             self.get_entity_type_from_id(self.entity_from_id))[0:-1] + "_" + self.entity_from_id
-        #     out_file_name += ".csv"
-        #     out_file_name = join(config.project_datas_folder_path, out_file_name)
+                "create_element_used_count_array()"
+            )
 
         self.element_count_df = pd.DataFrame()
         self.element_count_df.index.name = self.count_element_type + "s"
@@ -342,9 +331,6 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
 
         self.create_element_count_array_progress_percentage = 100
 
-        # if save_out_array:
-        #     log_oa.info("Saving element_count_df to ", out_file_name)
-        #     self.element_count_df.to_csv(out_file_name)
 
     def sort_count_array(self,
                          sort_by: str = 'h_used_all_l_use_main',
@@ -366,6 +352,7 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
             sorted_sums = self.element_count_df[sort_by].groupby(level=0).sum().sort_values(ascending=sort_by_ascending)
             self.element_count_df = self.element_count_df.reindex(sorted_sums.index, level=0)
 
+
     def add_statistics_to_element_count_array(self,
                                               sort_by: str = 'h_used_all_l_use_main',
                                               sort_by_ascending: bool = False,
@@ -373,6 +360,7 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
         """
         Adds a statistics to the element count array (statistics between the main entity to compare (second column in
         the dataframe) and the sum of the other entities).
+        Note: This function is still experimental and might change in future versions.
 
         :param sort_by: The key to sort the dataframe. The default value is 'h_used_all_l_use_main'.
         :type sort_by: str
@@ -420,6 +408,7 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
 
         self.sort_count_array(sort_by=sort_by, sort_by_ascending=sort_by_ascending)
 
+
     def get_authors_count(self,
                           cols: list[str] | None
                           ) -> pd.DataFrame:
@@ -443,9 +432,10 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
 
         return authors_count[cols]
 
+
     def count_yearly_entity_usage(self, entity: str, count_years: list[int]) -> list[int]:
         """
-        Counts the yearly number of time the entity is used.
+        Counts the yearly number of time the entity is used in entities_df.
 
         :param entity: The entity (id) to count.
         :type entity: str
@@ -476,6 +466,7 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
                 # count_res[i] = count.loc[concept]['count']
         return count_res
 
+
     def count_yearly_works(self, count_years: list[int]) -> list[int]:
         """
         Return the number of works present per year in entities_df.
@@ -495,6 +486,7 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
                 # get the number of rows
                 count_res[i] = len(df.index)
         return count_res
+
 
     def get_df_yearly_usage_of_entities(self,
                                         count_years: list[int],
@@ -543,6 +535,7 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
 
         return df
 
+
     def get_df_yearly_usage_of_entities_by_multiples_entities(self,
                                                               count_years: list[int],
                                                               entity_used_ids: str | list[str],
@@ -590,11 +583,13 @@ class AuthorsAnalysis(EntitiesAnalysis, AuthorsData):
     """
     pass
 
+
 class SourcesAnalysis(EntitiesAnalysis, SourcesData):
     """
     This class contains specific methods for Sources entity analysis. Not used for now.
     """
     pass
+
 
 class InstitutionsAnalysis(EntitiesAnalysis, InstitutionsData):
     """
@@ -602,17 +597,20 @@ class InstitutionsAnalysis(EntitiesAnalysis, InstitutionsData):
     """
     pass
 
+
 class ConceptsAnalysis(EntitiesAnalysis, ConceptsData):
     """
     This class contains specific methods for Concepts entity analysis. Not used for now.
     """
     pass
 
+
 class TopicsAnalysis(EntitiesAnalysis, TopicsData):
     """
     This class contains specific methods for Topics entity analysis. Not used for now.
     """
     pass
+
 
 class PublishersAnalysis(EntitiesAnalysis, PublishersData):
     """

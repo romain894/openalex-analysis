@@ -18,7 +18,6 @@ class EntitiesPlot:
     """
     EntitiesPlot class which contains generic methods to do plots of OpenAlex entities.
     """
-
     def get_figure_entities_of_a_concept_color_country(self,
                                                        concept: str,
                                                        plot_parameters: dict | None = None
@@ -48,8 +47,6 @@ class EntitiesPlot:
         y_legend = plot_parameters['y_legend']
         color_data = self.getCustomData(concept)[1]
         color_legend = 'Country name'
-        # self.create_institutions_dataframe(concept)
-        # self.create_entities_dataframe(concept)
 
         fig = px.scatter(
             self.entities_df,
@@ -86,7 +83,6 @@ class EntitiesPlot:
                                                         x_datas: str = 'year',
                                                         x_legend: str = "Year",
                                                         y_datas: list[str] | None = None,
-                                                        color_legend: str = "Entities"
                                                         ) -> go.Figure:
         """
         Get the figure with the time series usage of a element (eg. reference, concept) by entities.
@@ -101,8 +97,6 @@ class EntitiesPlot:
         :type x_legend: str
         :param y_datas: The y datas (the entities to plot). The default value is None to use all the entities in the dataframe.
         :type y_datas: list[str] | None
-        :param color_legend: The color legend. TODO: delete because unused?
-        :type color_legend: str
         :return: The figure.
         :rtype: go.Figure
         """
@@ -233,7 +227,6 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
     """
     This class contains specific methods for Works plot.
     """
-
     def getCustomData(self, concept: str) -> list[str]:
         """
         Get the custom data for the plot.
@@ -244,6 +237,7 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
         :rtype: list[str]
         """
         return ['display_name', 'country_name', 'institution_name', 'publication_year', 'cited_by_count', concept]
+
 
     def getHoverTemplate(self, concept: str) -> list[str]:
         """
@@ -264,10 +258,10 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
         ]
         return hover_template
 
-    def get_figure_nb_time_referenced(self, element_type: str) -> go.Figure:
+
+    def get_figure_nb_time_used(self, element_type: str) -> go.Figure:
         """
         Gets the figure with the number of time each reference is used in a list of works. Also work with concepts.
-        TODO: change function name to be more inclusive?
 
         :param element_type: The element type ('reference' or 'concept').
         :type element_type: str
@@ -285,6 +279,7 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
                       title="Number of time the same element is used by the works in " + self.get_name_of_entity(),
                       line_shape='hv')
         return fig
+
 
     def get_figure_entities_yearly_usage(self,
                                          count_years: list[int],
@@ -318,6 +313,7 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
                      height=600,
                      )
         return fig
+
 
     def get_figure_entities_yearly_position(self,
                                             count_years: list[int],
@@ -373,7 +369,6 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
     """
     This class contains specific methods for Institutions plot.
     """
-
     def getCustomData(self, concept: str) -> list[str]:
         """
         Get the custom data for the plot.
@@ -384,6 +379,7 @@ class InstitutionsPlot(EntitiesPlot, InstitutionsAnalysis):
         :rtype: list[str]
         """
         return ['display_name', 'geo.country', 'cited_by_count', 'works_cited_by_count_average', concept]
+
 
     def getHoverTemplate(self, concept: str) -> list[str]:
         """
