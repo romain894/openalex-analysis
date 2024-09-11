@@ -5,9 +5,10 @@ import numpy as np
 
 sys.path.append("..")
 
-from openalex_analysis.analysis import config, load_config_from_file, WorksAnalysis, InstitutionsAnalysis, \
-    get_multiple_works_from_doi, AuthorsAnalysis  # noqa: E402
-from openalex_analysis.plot import WorksPlot  # noqa: E402
+from openalex_analysis.analysis import config, load_config_from_file
+from openalex_analysis.data import WorksData
+from openalex_analysis.analysis import WorksAnalysis, InstitutionsAnalysis, AuthorsAnalysis
+from openalex_analysis.plot import WorksPlot
 
 # set the default configuration (this avoids using the configuration defined in the file
 # ~/openalex-analysis/openalex-analysis-conf.toml)
@@ -88,7 +89,7 @@ def test_get_multiple_entities_from_id_works():
         "A safe operating space for humanity",
         "Solutions for a cultivated planet",
     ]
-    res = WorksAnalysis().get_multiple_entities_from_id(entities_ids)
+    res = WorksAnalysis().get_multiple_entities_from_id(entities_ids, return_dataframe=False)
     for i in range(len(entities_names)):
         assert entities_names[i] == res[i]["display_name"]
     # TODO: add a test with more than 100 works
@@ -106,7 +107,7 @@ def test_get_multiple_entities_from_id_institutions():
         "Université de Technologie de Troyes",
         None
     ]
-    res = InstitutionsAnalysis().get_multiple_entities_from_id(entities_ids)
+    res = InstitutionsAnalysis().get_multiple_entities_from_id(entities_ids, return_dataframe=False)
     for i in range(len(entities_names)):
         if entities_ids[i] == "I000000000":
             assert res[i] is None
@@ -128,7 +129,7 @@ def test_get_multiple_works_from_doi():
         "Planetary boundaries: Guiding human development on a changing planet",
         "Solutions for a cultivated planet",
     ]
-    res = get_multiple_works_from_doi(article_dois)
+    res = WorksData().get_multiple_works_from_doi(article_dois, return_dataframe=False)
     for i in range(len(article_dois)):
         assert article_names[i] == res[i]["display_name"]
     # TODO: add a test with more than 60 works

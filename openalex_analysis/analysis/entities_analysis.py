@@ -131,7 +131,8 @@ class EntitiesAnalysis(EntitiesData):
             institutions_lon = [None] * len(institutions_collaborations)
             institutions_country = [None] * len(institutions_collaborations)
             institutions_count = [None] * len(institutions_collaborations)
-            institutions = InstitutionsAnalysis().get_multiple_entities_from_id(institutions_collaborations)
+            institutions = InstitutionsAnalysis().get_multiple_entities_from_id(institutions_collaborations,
+                                                                                return_dataframe=False)
             for j, institution in enumerate(institutions):
                 institutions_name[j] = institution['display_name']
                 institutions_id[j] = institution['id'][21:] # remove https://openalex.org/

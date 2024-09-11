@@ -242,6 +242,20 @@ class EntitiesData:
         return query_filters
 
 
+    def convert_entities_list_to_df(self, entities_list: list) -> pd.DataFrame:
+        """
+        Converts a list of entities (a list of PyAlex objects) downloaded from the OpenAlex API into a dataframe.
+        :param entities_list: The list of entities (PyAlex objects).
+        :param entities_list: list
+        :return: The entities in a DataFrame.
+        :rtype: pd.DataFrame
+        """
+        entities_list_df = pd.DataFrame.from_records(entities_list)
+        if self.EntityOpenAlex == Works:
+            entities_list_df = entities_list_df.rename(columns={'extracted_abstract': 'abstract'})
+        return entities_list_df
+
+
     def download_list_entities(self):
         """
         Downloads the entities which match the parameters of the instance, and store the dataset as a parquet file .
@@ -292,10 +306,8 @@ class EntitiesData:
                 self.entity_downloading_progress_percentage = i / n_entities_to_download * 100 if i else 0
         self.entity_downloading_progress_percentage = 100
 
-        log_oa.info("Converting the works list downloaded to a DataFrame...")
-        entities_list_df = pd.DataFrame.from_records(entities_list[:5])
-        if self.EntityOpenAlex == Works:
-            entities_list_df = entities_list_df.rename(columns={'extracted_abstract': 'abstract'})
+        log_oa.info("Converting the entities list downloaded to a DataFrame...")
+        entities_list_df = self.convert_entities_list_to_df(entities_list)
 
         if not isdir(config.project_data_folder_path):
             log_oa.info("Creating the directory to store the data from OpenAlex")
@@ -476,7 +488,9 @@ class EntitiesData:
         return get_info_about_entity(entity, infos=infos, return_as_pd_series=return_as_pd_series)
 
 
-    def get_multiple_entities_from_id(self, ids: list[str], ordered: bool = True) -> list:
+    def get_multiple_entities_from_id(self, ids: list[str],
+                                      ordered: bool = True,
+                                      return_dataframe: bool = True) -> list:
         """
         Get multiple entities from their OpenAlex IDs by querying them to the OpenAlex API 100 by 100.
 
@@ -484,8 +498,10 @@ class EntitiesData:
         :type ids: list[str]
         :param ordered: keep the order of the input list in the output list. Default is True.
         :type ordered: bool
-        :return: the list of entities as pyalex objects (dictionaries)
-        :rtype: list[]
+        :param return_dataframe: Return a Dataframe. If True, the DataFrame returned will also be stored in self.entities_df and the cache system will be used. If False, a list will be returned. Default is True.
+        :type return_dataframe: bool
+        :return: the list of entities as pyalex objects (dictionaries) or DataFrame.
+        :rtype: pd.DataFrame | list
         """
         res = [None] * len(ids)
         i = 0
@@ -498,17 +514,17 @@ class EntitiesData:
             res[i:] = self.EntityOpenAlex().filter(ids={'openalex': '|'.join(ids[i:])}).get(per_page=100)
             pbar.update(len(ids) % 100)
 
-        if not ordered:
-            return res
-        else:
+        if ordered:
             # sort the res list with the order provided in the list ids
             # create a dictionary with each id as key and the index in the res list as value
             res_ids_index = {entity['id'][21:]: i for i, entity in enumerate(res) if entity is not None}
             # sort based on the index
             res = [res[res_ids_index[entity_id]] if res_ids_index.get(entity_id) is not None else None
                    for entity_id in ids]
-            return res
 
+        if return_dataframe:
+            res = self.convert_entities_list_to_df(res)
+        return res
 
 def get_entity_type_from_id(entity: str) -> pyalex.api.BaseOpenAlex:
     """
@@ -632,7 +648,9 @@ class WorksData(EntitiesData, Works):
             extract_authorships_citation_style)
 
 
-    def get_multiple_works_from_doi(self, dois: list[str], ordered: bool = True) -> list:
+    def get_multiple_works_from_doi(self, dois: list[str],
+                                    ordered: bool = True,
+                                    return_dataframe: bool = True) -> pd.DataFrame | list:
         """
         Get multiple works from their DOI by querying them to the OpenAlex API 60 by 60.
 
@@ -640,8 +658,10 @@ class WorksData(EntitiesData, Works):
         :type dois: list[str]
         :param ordered: keep the order of the input list in the output list. Default is True.
         :type ordered: bool
-        :return: the list of works as pyalex objects (dictionaries)
-        :rtype: list[]
+        :param return_dataframe: Return a Dataframe. If True, the DataFrame returned will also be stored in self.entities_df and the cache system will be used. If False, a list will be returned. Default is True.
+        :type return_dataframe: bool
+        :return: the list of works as pyalex objects (dictionaries) or DataFrame.
+        :rtype: pd.DataFrame | list
         """
         res = [None] * len(dois)
         i = 0
@@ -654,9 +674,7 @@ class WorksData(EntitiesData, Works):
             res[i:] = Works().filter(doi='|'.join(dois[i:])).get(per_page=60)
             pbar.update(len(dois) % 60)
 
-        if not ordered:
-            return res
-        else:
+        if ordered:
             # sort the res list with the order provided in the list dois
             # create a dictionary with each doi as key and the index in the res list as value
             # we use lower as the doi can be valid with either lower or upper cases
@@ -664,7 +682,10 @@ class WorksData(EntitiesData, Works):
             # sort based on the index
             res = [res[res_dois_index[entity_doi.lower()]] if res_dois_index.get(entity_doi.lower()) is not None else None
                    for entity_doi in dois]
-            return res
+
+        if return_dataframe:
+            res = self.convert_entities_list_to_df(res)
+        return res
 
 
 class AuthorsData(EntitiesData, Authors):
