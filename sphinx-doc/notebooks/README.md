@@ -14,7 +14,7 @@ source .venv/bin/activate
 
 Install Jupyter Lab and other required modules:
 ```bash
-pip install jupyterlab kaleido
+pip install jupyterlab kaleido humanize
 ```
 
 Install `openalex-analysis` as a local module:
