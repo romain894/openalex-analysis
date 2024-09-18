@@ -10,5 +10,6 @@ Welcome to OpenAlex Analysis's documentation!
    usage
    setup_and_settings
    examples
+   old_examples
    reference
 
