@@ -7,7 +7,7 @@
   <title>Setup and settings &mdash; OpenAlex Analysis 0.9.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
-      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="../_static/nbsphinx-code-cells.css?v=2aa19091" />
 
   
   <!--[if lt IE 9]>
@@ -51,18 +51,16 @@
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../usage.html">Usage</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Setup and settings</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Import-the-library">Import the library</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="#Other-way-to-import-the-library">Other way to import the library</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#Import-the-analysis-library-only">Import the analysis library only</a></li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="#Import-the-library">Import the library</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Configure-the-library">Configure the library</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Default-configuration">Default configuration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Use-a-configuration-file">Use a configuration file</a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../old_examples.html">Old examples</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../reference.html">Reference</a></li>
 </ul>
 
@@ -93,14 +91,18 @@
              
   <section id="Setup-and-settings">
 <h1>Setup and settings<a class="headerlink" href="#Setup-and-settings" title="Link to this heading"></a></h1>
-<p>Shows the default parameters and how to import and configure the library</p>
+<p>This section shows how to import and configure the library.</p>
 <section id="Import-the-library">
 <h2>Import the library<a class="headerlink" href="#Import-the-library" title="Link to this heading"></a></h2>
+<p>The library is composed of three submodules: - <code class="docutils literal notranslate"><span class="pre">openalex_analysis.data</span></code>: Manage the cache and the downloads from the OpenAlex API. - <code class="docutils literal notranslate"><span class="pre">openalex_analysis.analysis</span></code>: Include <code class="docutils literal notranslate"><span class="pre">openalex_analysis.data</span></code> and provides methods to run analysis on the data - <code class="docutils literal notranslate"><span class="pre">openalex_analysis.plot</span></code>: Include <code class="docutils literal notranslate"><span class="pre">openalex_analysis.analysis</span></code> and provides methods to create plots.</p>
+<p>For example, if you only need the library to manage the downloads from OpenAlex, you can import only <code class="docutils literal notranslate"><span class="pre">openalex_analysis.data</span></code> as you won’t need the other methods located in <code class="docutils literal notranslate"><span class="pre">openalex_analysis.analysis</span></code> or <code class="docutils literal notranslate"><span class="pre">openalex_analysis.plot</span></code>.</p>
+<p>If you don’t know, import <code class="docutils literal notranslate"><span class="pre">openalex_analysis.plot</span></code> to have all the methods available.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openalex_analysis.plot</span> <span class="kn">import</span> <span class="n">WorksPlot</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If you want to work with works, you can import the library as follow:</span>
+<span class="kn">from</span> <span class="nn">openalex_analysis.plot</span> <span class="kn">import</span> <span class="n">WorksPlot</span>
 
 <span class="n">WorksPlot</span><span class="p">()</span>
 </pre></div>
@@ -112,18 +114,17 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;openalex_analysis.plot.entities_plot.WorksPlot at 0x7a64bc762ef0&gt;
+&lt;openalex_analysis.plot.entities_plot.WorksPlot at 0x7080b958be60&gt;
 </pre></div></div>
 </div>
-<section id="Other-way-to-import-the-library">
-<h3>Other way to import the library<a class="headerlink" href="#Other-way-to-import-the-library" title="Link to this heading"></a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">openalex_analysis</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># If you want to work with institutions and only need the methods to manage the downloads from OpenAlex, you can import the library as follow:</span>
+<span class="kn">from</span> <span class="nn">openalex_analysis.data</span> <span class="kn">import</span> <span class="n">WorksData</span>
 
-<span class="n">openalex_analysis</span><span class="o">.</span><span class="n">plot</span><span class="o">.</span><span class="n">WorksPlot</span><span class="p">()</span>
+<span class="n">WorksData</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -133,39 +134,15 @@
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;openalex_analysis.plot.entities_plot.WorksPlot at 0x7a647acf9b70&gt;
+&lt;openalex_analysis.data.entities_data.WorksData at 0x7080e4310a10&gt;
 </pre></div></div>
 </div>
-</section>
-<section id="Import-the-analysis-library-only">
-<h3>Import the analysis library only<a class="headerlink" href="#Import-the-analysis-library-only" title="Link to this heading"></a></h3>
-<p>The analysis submodule is automatically imported when importing the plot module. You can only import the analysis submodule if you don’t need the plot methods.</p>
-<div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openalex_analysis.analysis</span> <span class="kn">import</span> <span class="n">WorksAnalysis</span>
-
-<span class="n">WorksAnalysis</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
-</pre></div>
-</div>
-<div class="output_area docutils container">
-<div class="highlight"><pre>
-&lt;openalex_analysis.analysis.entities_analysis.WorksAnalysis at 0x7a64bc723370&gt;
-</pre></div></div>
-</div>
-</section>
 </section>
 <section id="Configure-the-library">
 <h2>Configure the library<a class="headerlink" href="#Configure-the-library" title="Link to this heading"></a></h2>
-<p>Example to configure the email</p>
+<p>Example to configure the email (to use the polite pool from OpenAlex).</p>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openalex_analysis.plot</span> <span class="kn">import</span> <span class="n">config</span><span class="p">,</span> <span class="n">WorksPlot</span>
@@ -177,29 +154,65 @@
 </div>
 </div>
 <div class="nboutput nblast docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
 </pre></div>
 </div>
 <div class="output_area docutils container">
 <div class="highlight"><pre>
-&lt;openalex_analysis.plot.entities_plot.WorksPlot at 0x7a647acf99c0&gt;
+&lt;openalex_analysis.plot.entities_plot.WorksPlot at 0x7080b8001490&gt;
 </pre></div></div>
 </div>
 <section id="Default-configuration">
 <h3>Default configuration<a class="headerlink" href="#Default-configuration" title="Link to this heading"></a></h3>
 <p>Those are the default parameters. You can change them when importing the library, like in the example above with the email.</p>
 <div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># we need this module to set the path of &#39;project_data_folder_path&#39;:</span>
+<span class="kn">from</span> <span class="nn">os.path</span> <span class="kn">import</span> <span class="n">join</span><span class="p">,</span> <span class="n">expanduser</span>
+
+<span class="n">config</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">config</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="n">config</span><span class="o">.</span><span class="n">openalex_url</span> <span class="o">=</span> <span class="s2">&quot;https://api.openalex.org&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">http_retry_times</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">config</span><span class="o">.</span><span class="n">disable_tqdm_loading_bar</span> <span class="o">=</span> <span class="kc">False</span>
+<span class="n">config</span><span class="o">.</span><span class="n">n_max_entities</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">config</span><span class="o">.</span><span class="n">project_data_folder_path</span> <span class="o">=</span> <span class="n">join</span><span class="p">(</span><span class="n">expanduser</span><span class="p">(</span><span class="s2">&quot;~&quot;</span><span class="p">),</span> <span class="s2">&quot;openalex-analysis&quot;</span><span class="p">,</span> <span class="s2">&quot;data&quot;</span><span class="p">)</span>
+<span class="n">config</span><span class="o">.</span><span class="n">parquet_compression</span> <span class="o">=</span> <span class="s2">&quot;brotli&quot;</span>
+<span class="n">config</span><span class="o">.</span><span class="n">max_storage_percent</span> <span class="o">=</span> <span class="mi">95</span>
+<span class="n">config</span><span class="o">.</span><span class="n">max_storage_files</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">config</span><span class="o">.</span><span class="n">max_storage_size</span> <span class="o">=</span> <span class="mf">5e9</span>
+<span class="n">config</span><span class="o">.</span><span class="n">min_storage_files</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">config</span><span class="o">.</span><span class="n">min_storage_size</span> <span class="o">=</span> <span class="mf">5e8</span>
+<span class="n">config</span><span class="o">.</span><span class="n">cache_max_age</span> <span class="o">=</span> <span class="mi">365</span>
+<span class="n">config</span><span class="o">.</span><span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;WARNING&#39;</span>
+</pre></div>
+</div>
+</div>
+</section>
+<section id="Use-a-configuration-file">
+<h3>Use a configuration file<a class="headerlink" href="#Use-a-configuration-file" title="Link to this heading"></a></h3>
+<p>To avoid having to set the configuration of the library each time you import it, you can use a configuration file.</p>
+<p>When the library is imported, if a configuration file exists at <code class="docutils literal notranslate"><span class="pre">~/openalex-analysis/openalex-analysis-conf.toml</span></code>, it is automatically loaded.</p>
+<p>Alternatively, you can load this configuration as follows if it is located at another location:</p>
+<div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">config</span><span class="o">.</span><span class="n">email</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">config</span><span class="o">.</span><span class="n">api_key</span> <span class="o">=</span> <span class="kc">None</span>
-<span class="n">config</span><span class="o">.</span><span class="n">openalex_url</span> <span class="o">=</span> <span class="s2">&quot;https://api.openalex.org&quot;</span>
-<span class="n">config</span><span class="o">.</span><span class="n">disable_tqdm_loading_bar</span> <span class="o">=</span> <span class="kc">False</span>
-<span class="n">config</span><span class="o">.</span><span class="n">n_max_entities</span> <span class="o">=</span> <span class="mi">10000</span>
-<span class="n">config</span><span class="o">.</span><span class="n">project_datas_folder_path</span> <span class="o">=</span> <span class="s2">&quot;data&quot;</span>
-<span class="n">config</span><span class="o">.</span><span class="n">parquet_compression</span> <span class="o">=</span> <span class="s2">&quot;brotli&quot;</span>
-<span class="n">config</span><span class="o">.</span><span class="n">max_storage_percent</span> <span class="o">=</span> <span class="mi">95</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openalex_analysis.analysis</span> <span class="kn">import</span> <span class="n">load_config_from_file</span>
+
+<span class="n">load_config_from_file</span><span class="p">(</span><span class="s2">&quot;my-openalex-analysis-conf.toml&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<p>Example of configuration file:</p>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_max_entities</span> <span class="o">=</span> <span class="mi">10000</span>
+<span class="n">log_level</span> <span class="o">=</span> <span class="s1">&#39;WARNING&#39;</span>
 </pre></div>
 </div>
 </div>
