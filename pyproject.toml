@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openalex-analysis"
-version = "0.12.1"
+version = "0.13"
 description = "A python library to download, analyse or plot articles, institutions, and other entities from the OpenAlex API"
 readme = "README.md"
 authors = [{ name = "Romain Thomas", email = "romain.thomas@su.se" }]
@@ -32,7 +32,7 @@ requires-python = ">=3.10"
 
 [tool.setuptools]
 #include-package-data = true
-packages = ["openalex_analysis", "openalex_analysis.analysis", "openalex_analysis.plot"]
+packages = ["openalex_analysis", "openalex_analysis.data", "openalex_analysis.analysis", "openalex_analysis.plot"]
 
 [project.urls]
 Homepage = "https://github.com/romain894/openalex-analysis"

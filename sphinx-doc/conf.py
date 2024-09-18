@@ -22,7 +22,7 @@ copyright = '2024, Romain THOMAS'
 author = 'Romain THOMAS'
 
 # The full version, including alpha/beta/rc tags
-release = '0.9.1'
+release = '0.13'
 
 
 # -- General configuration ---------------------------------------------------

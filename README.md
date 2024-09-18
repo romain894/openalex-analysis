@@ -18,7 +18,7 @@ pip install kaleido
 
 Coming soon:
   - Option to use Dask DataFrame for big datasets
-  - Documentation update
+  - More examples in the documentation
 
 ## Examples
 
