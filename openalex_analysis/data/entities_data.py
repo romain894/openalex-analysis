@@ -36,21 +36,21 @@ class AnalysisConfig(dict):
 
         config.n_max_entities = 10000
 
-    * **email** (*string*) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).
-    * **api_key** (*string*) - Your OpenAlex API key, if you have one. The default value is None.
-    * **openalex_url** (*string*) - OpenAlex API URL or your self-hosted API URL. The default value is "https://api.openalex.org".
+    * **email** (*str*) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).
+    * **api_key** (*str*) - Your OpenAlex API key, if you have one. The default value is None.
+    * **openalex_url** (*str*) - OpenAlex API URL or your self-hosted API URL. The default value is "https://api.openalex.org".
     * **http_retry_times** (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.
     * **disable_tqdm_loading_bar** (*bool*) - To disable the tqdm loading bar. The default is False.
     * **n_max_entities** (*int*) - Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.
-    * **project_data_folder_path** (*string*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "~/openalex-analysis/data".
-    * **parquet_compression** (*string*) - Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is "brotli".
+    * **project_data_folder_path** (*str*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "~/openalex-analysis/data".
+    * **parquet_compression** (*str*) - Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is "brotli".
     * **max_storage_percent** (*int*) - When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.
     * **max_storage_files** (*int*) - When the cache folder reaches this number of files, cached parquet files will be deleted. The default value is 10000.
     * **max_storage_size** (*int*) - When the cache folder reached this size (in bytes), cached parquet files will be deleted. The default value is 5e9 (5 GB).
     * **min_storage_files** (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 1000.
     * **min_storage_size** (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 5e8 (500 MB).
     * **cache_max_age** (*int*) - Maximum age of the cache in days. The default value is 365.
-    * **log_level** (*string*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
+    * **log_level** (*str*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
     """
     def __getattr__(self, key):
         return super().__getitem__(key)
@@ -79,6 +79,9 @@ config = AnalysisConfig()
 
 
 def set_default_config():
+    """
+    Set the default configuration of the library. This function is called is no configuration file is found.
+    """
     log_oa.info(f"Setting the default configuration")
     config.email = None
     config.api_key = None
@@ -98,6 +101,13 @@ def set_default_config():
 
 
 def load_config_from_file(config_path: str):
+    """
+    Load and set the configration of the library from a .toml file. When the library is imported, if a configuration
+    file exists at "~/openalex-analysis/openalex-analysis-conf.toml", it is automatically loaded.
+
+    :param config_path: The path of the configuration file.
+    :type config_path: str
+    """
     log_oa.info(f"Loading the configuration from the file {config_path}")
     with open(config_path, "rb") as f:
         config_data = tomllib.load(f)
@@ -157,15 +167,15 @@ class EntitiesData:
         """
 
         :param entity_from_id: The entity identifier (eg an institution id) from which to take the entities (eg the works of this institution) to analyse. If not provided, the default value is None and the entities will be downloaded bases on the extra_filters value.
-        :type entity_from_id: string | None
+        :type entity_from_id: str | None
         :param extra_filters: Optional filters, refer to the documentation of openalex and pyalex for the format. The default value is None.
         :type extra_filters: dict | None
         :param database_file_path: The database file (parquet or csv) path to force the analysis over datas in a specific file. The default value is None to use the data from the OpenAlex API or the cached data.
-        :type database_file_path: string | None
+        :type database_file_path: str | None
         :param create_dataframe: Create the dataframe at the initialisation (and download the data if allowed and entitie_from_id or extra_filters is provided). The default value is True.
         :type create_dataframe: bool
         :param load_only_columns: Load only the specified columns from the parquet file. Everything will be downloaded anyway. The default value is None.
-        :type load_only_columns: string | None
+        :type load_only_columns: str | None
         """
         self.per_page = 200  # maximum allowed by the API
 
