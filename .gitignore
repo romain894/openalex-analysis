@@ -20,6 +20,6 @@ dist/
 tests/data
 tests/*.svg
 
-/sphinx-doc/notebooks/data
+sphinx-doc/notebooks/.ipynb_checkpoints/
 
 .log

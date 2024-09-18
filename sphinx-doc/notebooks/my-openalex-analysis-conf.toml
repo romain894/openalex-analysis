@@ -1,0 +1,2 @@
+n_max_entities = 10000
+log_level = 'WARNING'
