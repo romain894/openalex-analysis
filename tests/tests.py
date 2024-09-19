@@ -116,6 +116,24 @@ def test_get_multiple_entities_from_id_institutions():
     # TODO: add a test with more than 100 institutions
 
 
+def test_get_multiple_entities_from_id_works_to_df():
+    # test with a list of 3 articles
+    entities_ids = [
+        "W1999167944",
+        "W2096885696",
+        "W2126902408",
+    ]
+    entities_names = [
+        "Planetary boundaries: Guiding human development on a changing planet",
+        "A safe operating space for humanity",
+        "Solutions for a cultivated planet",
+    ]
+    res = WorksAnalysis().get_multiple_entities_from_id(entities_ids)
+    for i in range(len(entities_names)):
+        assert entities_names[i] == res.at[i, "display_name"]
+    assert "abstract" in res.columns
+
+
 def test_get_multiple_works_from_doi():
     # test with a list of 3 articles
     article_dois = [

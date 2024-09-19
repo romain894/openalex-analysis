@@ -506,7 +506,7 @@ class EntitiesData:
 
     def get_multiple_entities_from_id(self, ids: list[str],
                                       ordered: bool = True,
-                                      return_dataframe: bool = True) -> list:
+                                      return_dataframe: bool = True) -> pd.DataFrame | list:
         """
         Get multiple entities from their OpenAlex IDs by querying them to the OpenAlex API 100 by 100.
 
@@ -519,7 +519,7 @@ class EntitiesData:
         :return: the list of entities as pyalex objects (dictionaries) or DataFrame.
         :rtype: pd.DataFrame | list
         """
-        res = [None] * len(ids)
+        res = [] * len(ids)
         i = 0
         with tqdm(total=len(ids), disable=config.disable_tqdm_loading_bar) as pbar:
             # reduce 100 if too big for OpenAlex
@@ -539,6 +539,10 @@ class EntitiesData:
                    for entity_id in ids]
 
         if return_dataframe:
+            # similar to the download function, apply the needed formatting (e.g. extracting the abstract for works)
+            for i in range(len(res)):
+                if res[i] is not None:
+                    self.filter_and_format_entity_data_from_api_response(res[i])
             res = self.convert_entities_list_to_df(res)
         return res
 
@@ -693,7 +697,7 @@ class WorksData(EntitiesData, Works):
         :return: the list of works as pyalex objects (dictionaries) or DataFrame.
         :rtype: pd.DataFrame | list
         """
-        res = [None] * len(dois)
+        res = [] * len(dois)
         i = 0
         with tqdm(total=len(dois), disable=config.disable_tqdm_loading_bar) as pbar:
             # querying more than 60 DOIs causes the HTTP query size being larger than what OpenAlex allows
@@ -714,6 +718,10 @@ class WorksData(EntitiesData, Works):
                    for entity_doi in dois]
 
         if return_dataframe:
+            # similar to the download function, apply the needed formatting (e.g. extracting the abstract)
+            for i in range(len(res)):
+                if res[i] is not None:
+                    self.filter_and_format_entity_data_from_api_response(res[i])
             res = self.convert_entities_list_to_df(res)
         return res
 
