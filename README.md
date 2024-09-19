@@ -113,8 +113,12 @@ wplt = WorksAnalysis(concept_sustainability,
 my_dataset = wplt.entities_df
 ```
 
-### Filter entities
+#### More filters
 
+This library uses the same syntax as [PyAlex](https://github.com/J535D165/pyalex).
+
+You can use all the filters available in the OpenAlex documentation, for example,
+for works you can find the list [here](https://docs.openalex.org/api-entities/works/filter-works).
 
 
 ### Institutions collaborations plot
