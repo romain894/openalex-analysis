@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Reference &mdash; OpenAlex Analysis 0.9.1 documentation</title>
+  <title>Reference &mdash; OpenAlex Analysis 0.13.1 documentation</title>
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
@@ -15,7 +15,7 @@
   
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=9dc39874"></script>
+        <script src="_static/documentation_options.js?v=b4617fb1"></script>
         <script src="_static/doctools.js?v=9a2dae69"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -63,7 +63,6 @@
 <li class="toctree-l3"><a class="reference internal" href="#openalex_analysis.data.entities_data.EntitiesData"><code class="docutils literal notranslate"><span class="pre">EntitiesData</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="#openalex_analysis.data.entities_data.EntitiesData.__init__"><code class="docutils literal notranslate"><span class="pre">EntitiesData.__init__()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#openalex_analysis.data.entities_data.EntitiesData.auto_remove_databases_saved"><code class="docutils literal notranslate"><span class="pre">EntitiesData.auto_remove_databases_saved()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="#openalex_analysis.data.entities_data.EntitiesData.cc"><code class="docutils literal notranslate"><span class="pre">EntitiesData.cc</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#openalex_analysis.data.entities_data.EntitiesData.convert_entities_list_to_df"><code class="docutils literal notranslate"><span class="pre">EntitiesData.convert_entities_list_to_df()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#openalex_analysis.data.entities_data.EntitiesData.download_list_entities"><code class="docutils literal notranslate"><span class="pre">EntitiesData.download_list_entities()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="#openalex_analysis.data.entities_data.EntitiesData.filter_and_format_entity_data_from_api_response"><code class="docutils literal notranslate"><span class="pre">EntitiesData.filter_and_format_entity_data_from_api_response()</span></code></a></li>
@@ -281,11 +280,6 @@ files or if the cache uses too much space. It keeps the last accessed files with
 folder size.</p>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="openalex_analysis.data.entities_data.EntitiesData.cc">
-<span class="sig-name descname"><span class="pre">cc</span></span><em class="property"><span class="w"> </span><span class="p"><span class="pre">=</span></span><span class="w"> </span><span class="pre">&lt;country_converter.country_converter.CountryConverter</span> <span class="pre">object&gt;</span></em><a class="headerlink" href="#openalex_analysis.data.entities_data.EntitiesData.cc" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
 <dl class="py method">
 <dt class="sig sig-object py" id="openalex_analysis.data.entities_data.EntitiesData.convert_entities_list_to_df">
 <span class="sig-name descname"><span class="pre">convert_entities_list_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entities_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#openalex_analysis.data.entities_data.EntitiesData.convert_entities_list_to_df" title="Link to this definition"></a></dt>
@@ -418,7 +412,7 @@ This is a placeholder as not all entity types have this function defined.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="openalex_analysis.data.entities_data.EntitiesData.get_multiple_entities_from_id">
-<span class="sig-name descname"><span class="pre">get_multiple_entities_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordered</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">list</span></span></span><a class="headerlink" href="#openalex_analysis.data.entities_data.EntitiesData.get_multiple_entities_from_id" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">get_multiple_entities_from_id</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">ids</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ordered</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_dataframe</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">list</span></span></span><a class="headerlink" href="#openalex_analysis.data.entities_data.EntitiesData.get_multiple_entities_from_id" title="Link to this definition"></a></dt>
 <dd><p>Get multiple entities from their OpenAlex IDs by querying them to the OpenAlex API 100 by 100.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
