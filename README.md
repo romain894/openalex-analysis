@@ -50,6 +50,34 @@ wdata = WorksData(topic_id)
 my_dataset = wdata.entities_df
 ```
 
+#### Other simple examples
+
+You can use the same syntax to get the works of any entity (institution, author, concept...):
+
+```python
+from openalex_analysis.data import WorksData
+
+# Get the works of the institution "Stockholm Resilience Centre"
+wdata = WorksData("I138595864")
+```
+
+This also works to get other type of entities:
+
+```python
+from openalex_analysis.data import AuthorsData
+
+# Get the authors of the institution "Stockholm Resilience Centre"
+adata = AuthorsData("I138595864")
+```
+
+```python
+from openalex_analysis.data import InstitutionsData
+
+# Get the institutions having as topic "Natural Language Processing"
+idata = InstitutionsData("T10028")
+```
+
+
 #### Get the works about two topics
 
 ```python
@@ -84,6 +112,10 @@ wplt = WorksAnalysis(concept_sustainability,
 
 my_dataset = wplt.entities_df
 ```
+
+### Filter entities
+
+
 
 ### Institutions collaborations plot
 
