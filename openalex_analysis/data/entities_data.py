@@ -194,11 +194,6 @@ class EntitiesData:
 
         # to display a loading bar on the web interface
         self.entity_downloading_progress_percentage = 0
-        self.create_element_count_array_progress_percentage = 0
-        self.create_element_count_array_progress_text = ""
-        self.count_element_type = None
-        self.count_element_years = None
-        self.count_entities_cols = []
 
         # initialize the values only if entity_from_type is known
         if self.entity_from_id is not None or self.extra_filters is not None:

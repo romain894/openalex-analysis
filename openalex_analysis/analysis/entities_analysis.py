@@ -19,6 +19,11 @@ class EntitiesAnalysis(EntitiesData):
     """
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.create_element_count_array_progress_percentage = 0
+        self.create_element_count_array_progress_text = ""
+        self.count_element_type = None
+        self.count_element_years = None
+        self.count_entities_cols = []
         # variables for the collaborations with institutions dataframe:
         self.collaborations_with_institutions_entities_from_metadata = pd.DataFrame() # ids and metadata of the entities
         # for which to look for their collaborations
