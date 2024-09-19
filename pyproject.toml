@@ -18,7 +18,6 @@ classifiers = [
 ]
 keywords = ["OpenAlex", "Data analysis", "Scientific research", "Plotly"]
 dependencies = [
-    "country_converter >= 1.0.0",
     "numpy >= 1.21.5",
     "pandas >= 2.0.1",
     "plotly >= 5.15.0",

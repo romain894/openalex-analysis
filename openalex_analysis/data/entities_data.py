@@ -12,7 +12,6 @@ import tomllib
 import pyalex.api
 from tqdm import tqdm
 import pandas as pd
-import country_converter as coco
 import requests
 
 from pyalex import Works, Authors, Sources, Institutions, Topics, Concepts, Publishers, config
@@ -154,8 +153,6 @@ class EntitiesData:
     """
     This class contains methods to download data from the OpenAlex API and manage + cache those datasets locally
     """
-    # to convert country code to country name
-    cc = coco.CountryConverter()
 
     def __init__(self,
                  entity_from_id: str | None = None,
