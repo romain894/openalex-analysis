@@ -60,7 +60,9 @@ class EntitiesAnalysis(EntitiesData):
         """
         if entities_from is None:
             if self.entity_from_id is None:
-                raise ValueError("You must either provide the entities_from or the entity_from_id when instantiating the object.")
+                raise ValueError(
+                    "You must either provide the entities_from or the entity_from_id when instantiating the object."
+                )
             entities_from = [self.entity_from_id]
         if institutions_to_exclude is None:
             institutions_to_exclude = {}
@@ -107,7 +109,9 @@ class EntitiesAnalysis(EntitiesData):
                 institutions_to_exclude_i.append(institution_from)
             log_oa.info(f"Excluding {len(institutions_to_exclude_i)} institution: {institutions_to_exclude_i}")
             # add the https://openalex.org/ at the beggining of each id
-            institutions_to_exclude_i = ["https://openalex.org/" + institution for institution in institutions_to_exclude_i]
+            institutions_to_exclude_i = [
+                "https://openalex.org/" + institution for institution in institutions_to_exclude_i
+            ]
 
             if extra_filters_for_entities_from != {}:
                 works = WorksAnalysis(institution_from, extra_filters = extra_filters_for_entities_from)
@@ -408,12 +412,12 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
         # # we put -1 inplace of NaN values (it's where the sum_all_entities is 0 so the division failed)
         # self.element_count_df.fillna(value=-1, inplace=True)
         log_oa.info("Computing sum_all_entities rank...")
-        self.element_count_df['sum_all_entities_rank'] = self.element_count_df['sum_all_entities'].rank(ascending=True,
-                                                                                                        pct=True)  # , method = 'dense') # before method = 'average' was used
+        self.element_count_df['sum_all_entities_rank'] = self.element_count_df['sum_all_entities'].rank(
+            ascending=True, pct=True)  # , method = 'dense') # before method = 'average' was used
         log_oa.info("Computing proportion_used_by_main_entity rank...")
+        # , method = 'dense') # before method = 'average' was used
         self.element_count_df['proportion_used_by_main_entity_rank'] = self.element_count_df[
-            'proportion_used_by_main_entity'].rank(ascending=False,
-                                                   pct=True)  # , method = 'dense') # before method = 'average' was used
+            'proportion_used_by_main_entity'].rank(ascending=False, pct=True)
         log_oa.info("Computing highly used by all entities and low use by main entity")
         self.element_count_df['h_used_all_l_use_main'] = self.element_count_df['sum_all_entities_rank'] * \
                                                          self.element_count_df['proportion_used_by_main_entity_rank']

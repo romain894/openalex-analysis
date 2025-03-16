@@ -732,8 +732,8 @@ class WorksData(EntitiesData, Works):
             # we use lower as the doi can be valid with either lower or upper cases
             res_dois_index = {entity['doi'].lower(): i for i, entity in enumerate(res) if entity is not None}
             # sort based on the index
-            res = [res[res_dois_index[entity_doi.lower()]] if res_dois_index.get(entity_doi.lower()) is not None else None
-                   for entity_doi in dois]
+            res = [res[res_dois_index[entity_doi.lower()]] if res_dois_index.get(entity_doi.lower()) is not None
+                   else None for entity_doi in dois]
 
         if return_dataframe:
             # similar to the download function, apply the needed formatting (e.g. extracting the abstract)
