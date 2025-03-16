@@ -1,4 +1,5 @@
 # Romain THOMAS 2025
+# Licence GPLv3
 
 import os
 from os.path import exists, join, isdir, isfile, expanduser

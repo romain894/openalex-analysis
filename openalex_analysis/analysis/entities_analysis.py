@@ -1,4 +1,5 @@
-# Romain THOMAS 2024
+# Romain THOMAS 2025
+# Licence GPLv3
 
 import logging
 from collections import Counter
