@@ -207,21 +207,38 @@ are passed to pyalex).</p>
 </pre></div>
 </div>
 <ul class="simple">
-<li><p><strong>email</strong> (<em>str</em>) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).</p></li>
+<li><p><strong>email</strong> (<em>str</em>) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex
+documentation). The default value is None (not using the polite pool).</p></li>
 <li><p><strong>api_key</strong> (<em>str</em>) - Your OpenAlex API key, if you have one. The default value is None.</p></li>
-<li><p><strong>openalex_url</strong> (<em>str</em>) - OpenAlex API URL or your self-hosted API URL. The default value is “<a class="reference external" href="https://api.openalex.org">https://api.openalex.org</a>”.</p></li>
-<li><p><strong>http_retry_times</strong> (<em>int</em>) - maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.</p></li>
+<li><p><strong>openalex_url</strong> (<em>str</em>) - OpenAlex API URL or your self-hosted API URL. The default value is
+“<a class="reference external" href="https://api.openalex.org">https://api.openalex.org</a>”.</p></li>
+<li><p><strong>http_retry_times</strong> (<em>int</em>) - maximum number of retries when querying the OpenAlex API in HTTP. The default value
+is 3.</p></li>
 <li><p><strong>disable_tqdm_loading_bar</strong> (<em>bool</em>) - To disable the tqdm loading bar. The default is False.</p></li>
-<li><p><strong>n_max_entities</strong> (<em>int</em>) - Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.</p></li>
-<li><p><strong>project_data_folder_path</strong> (<em>str</em>) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is “~/openalex-analysis/data”.</p></li>
-<li><p><strong>parquet_compression</strong> (<em>str</em>) - Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is “brotli”.</p></li>
-<li><p><strong>max_storage_percent</strong> (<em>int</em>) - When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.</p></li>
-<li><p><strong>max_storage_files</strong> (<em>int</em>) - When the cache folder reaches this number of files, cached parquet files will be deleted. The default value is 10000.</p></li>
-<li><p><strong>max_storage_size</strong> (<em>int</em>) - When the cache folder reached this size (in bytes), cached parquet files will be deleted. The default value is 5e9 (5 GB).</p></li>
-<li><p><strong>min_storage_files</strong> (<em>int</em>) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 1000.</p></li>
-<li><p><strong>min_storage_size</strong> (<em>int</em>) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 5e8 (500 MB).</p></li>
+<li><p><strong>n_max_entities</strong> (<em>int</em>) - Maximum number of entities to download (the default value is to download maximum
+10 000 entities). If set to None, no limitation will be applied.</p></li>
+<li><p><strong>project_data_folder_path</strong> (<em>str</em>) - Path to the folder containing the data downloaded from the OpenAlex API
+(these data are stored in compressed parquet files and used as a cache). The default path is
+“~/openalex-analysis/data”.</p></li>
+<li><p><strong>parquet_compression</strong> (<em>str</em>) - Type of compression for the parquet files used as cache (see the Pandas
+documentation). The default value is “brotli”.</p></li>
+<li><p><strong>max_storage_percent</strong> (<em>int</em>) - When the disk capacity reaches this percentage, cached parquet files will be
+deleted. The default value is 95.</p></li>
+<li><p><strong>max_storage_files</strong> (<em>int</em>) - When the cache folder reaches this number of files, cached parquet files will be
+deleted. The default value is 10000.</p></li>
+<li><p><strong>max_storage_size</strong> (<em>int</em>) - When the cache folder reached this size (in bytes), cached parquet files will be
+deleted. The default value is 5e9 (5 GB).</p></li>
+<li><p><strong>min_storage_files</strong> (<em>int</em>) - Before deleting files, we check if we exceed the minimum number of files and
+folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to
+avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value
+is 1000.</p></li>
+<li><p><strong>min_storage_size</strong> (<em>int</em>) - Before deleting files, we check if we exceed the minimum number of files and folder
+size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid
+the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 5e8
+(500 MB).</p></li>
 <li><p><strong>cache_max_age</strong> (<em>int</em>) - Maximum age of the cache in days. The default value is 365.</p></li>
-<li><p><strong>log_level</strong> (<em>str</em>) - The log detail level for openalex-analysis (library specific). The log_level must be ‘DEBUG’, ‘INFO’, ‘WARNING’, ‘ERROR’ or ‘CRITICAL’. The default value ‘WARNING’.</p></li>
+<li><p><strong>log_level</strong> (<em>str</em>) - The log detail level for openalex-analysis (library specific). The log_level must be
+‘DEBUG’, ‘INFO’, ‘WARNING’, ‘ERROR’ or ‘CRITICAL’. The default value ‘WARNING’.</p></li>
 </ul>
 </dd></dl>
 
@@ -262,11 +279,17 @@ are passed to pyalex).</p>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>entity_from_id</strong> (<em>str</em><em> | </em><em>None</em>) – The entity identifier (eg an institution id) from which to take the entities (eg the works of this institution) to analyse. If not provided, the default value is None and the entities will be downloaded bases on the extra_filters value.</p></li>
-<li><p><strong>extra_filters</strong> (<em>dict</em><em> | </em><em>None</em>) – Optional filters, refer to the documentation of openalex and pyalex for the format. The default value is None.</p></li>
-<li><p><strong>database_file_path</strong> (<em>str</em><em> | </em><em>None</em>) – The database file (parquet or csv) path to force the analysis over datas in a specific file. The default value is None to use the data from the OpenAlex API or the cached data.</p></li>
-<li><p><strong>create_dataframe</strong> (<em>bool</em>) – Create the dataframe at the initialisation (and download the data if allowed and entitie_from_id or extra_filters is provided). The default value is True.</p></li>
-<li><p><strong>load_only_columns</strong> (<em>str</em><em> | </em><em>None</em>) – Load only the specified columns from the parquet file. Everything will be downloaded anyway. The default value is None.</p></li>
+<li><p><strong>entity_from_id</strong> (<em>str</em><em> | </em><em>None</em>) – The entity identifier (e.g. an institution id) from which to take the entities (e.g. the
+works of this institution) to analyse. If not provided, the default value is None and the entities will be
+downloaded bases on the extra_filters value.</p></li>
+<li><p><strong>extra_filters</strong> (<em>dict</em><em> | </em><em>None</em>) – Optional filters, refer to the documentation of openalex and pyalex for the format.
+The default value is None.</p></li>
+<li><p><strong>database_file_path</strong> (<em>str</em><em> | </em><em>None</em>) – The database file (parquet or csv) path to force the analysis over datas in a
+specific file. The default value is None to use the data from the OpenAlex API or the cached data.</p></li>
+<li><p><strong>create_dataframe</strong> (<em>bool</em>) – Create the dataframe at the initialisation (and download the data if allowed and
+entity_from_id or extra_filters is provided). The default value is True.</p></li>
+<li><p><strong>load_only_columns</strong> (<em>str</em><em> | </em><em>None</em>) – Load only the specified columns from the parquet file. Everything will be downloaded
+anyway. The default value is None.</p></li>
 </ul>
 </dd>
 </dl>
@@ -283,11 +306,21 @@ folder size.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="openalex_analysis.data.entities_data.EntitiesData.convert_entities_list_to_df">
 <span class="sig-name descname"><span class="pre">convert_entities_list_to_df</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entities_list</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">DataFrame</span></span></span><a class="headerlink" href="#openalex_analysis.data.entities_data.EntitiesData.convert_entities_list_to_df" title="Link to this definition"></a></dt>
-<dd><p>Converts a list of entities (a list of PyAlex objects) downloaded from the OpenAlex API into a dataframe.
-:param entities_list: The list of entities (PyAlex objects).
-:param entities_list: list
-:return: The entities in a DataFrame.
-:rtype: pd.DataFrame</p>
+<dd><p>Converts a list of entities (a list of PyAlex objects) downloaded from the OpenAlex API into a dataframe.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>entities_list</strong> – The list of entities (PyAlex objects).</p></li>
+<li><p><strong>entities_list</strong> – list</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The entities in a DataFrame.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>pd.DataFrame</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
@@ -341,8 +374,10 @@ This is a placeholder as not all entity types have this function defined.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>entity_from_id</strong> (<em>str</em><em> | </em><em>None</em>) – The instance entity identifier (eg a concept id) which was used to filter the entities (eg works) in the database. If nothing is provided, the instance entity id will be used. Default is None.</p></li>
-<li><p><strong>entity_type</strong> (<em>pyalex.api.BaseOpenAlex</em><em> | </em><em>None</em>) – The entity type in the database (eg works). If nothing is provided, the instance entity id will be used. Default is None.</p></li>
+<li><p><strong>entity_from_id</strong> (<em>str</em><em> | </em><em>None</em>) – The instance entity identifier (eg a concept id) which was used to filter the entities
+(e.g. works) in the database. If nothing is provided, the instance entity id will be used. Default is None.</p></li>
+<li><p><strong>entity_type</strong> (<em>pyalex.api.BaseOpenAlex</em><em> | </em><em>None</em>) – The entity type in the database (e.g. works). If nothing is provided, the instance entity id
+will be used. Default is None.</p></li>
 <li><p><strong>db_format</strong> (<em>str</em>) – The database file format. The default is “parquet”.</p></li>
 </ul>
 </dd>
@@ -392,13 +427,15 @@ This is a placeholder as not all entity types have this function defined.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="openalex_analysis.data.entities_data.EntitiesData.get_info_about_entity">
 <span class="sig-name descname"><span class="pre">get_info_about_entity</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">entity</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">infos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">list</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">return_as_pd_series</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">dict</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">Series</span></span></span><a class="headerlink" href="#openalex_analysis.data.entities_data.EntitiesData.get_info_about_entity" title="Link to this definition"></a></dt>
-<dd><p>Get information about the entity (eg. name, publication_date…). If no entity is provided, the entity_from_id will be used.</p>
+<dd><p>Get information about the entity (eg. name, publication_date…). If no entity is provided, the entity_from_id
+will be used.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>entity</strong> (<em>str</em><em> | </em><em>None</em>) – The entity id, if not provided, use the one from the instance. Default is None.</p></li>
 <li><p><strong>infos</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The information fields to get. Default is None, which will get [“display_name”].</p></li>
-<li><p><strong>return_as_pd_series</strong> (<em>bool</em>) – True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.</p></li>
+<li><p><strong>return_as_pd_series</strong> (<em>bool</em>) – True to return the results as a Pandas Series. Otherwise, a dictionary is returned.
+Default is True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -419,7 +456,8 @@ This is a placeholder as not all entity types have this function defined.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>ids</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – the list of OpenAlex IDs to query</p></li>
 <li><p><strong>ordered</strong> (<em>bool</em>) – keep the order of the input list in the output list. Default is True.</p></li>
-<li><p><strong>return_dataframe</strong> (<em>bool</em>) – Return a Dataframe. If True, the DataFrame returned will also be stored in self.entities_df and the cache system will be used. If False, a list will be returned. Default is True.</p></li>
+<li><p><strong>return_dataframe</strong> (<em>bool</em>) – Return a Dataframe. If True, the DataFrame returned will also be stored in
+self.entities_df and the cache system will be used. If False, a list will be returned. Default is True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -545,7 +583,8 @@ the instance.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>dois</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – the list of DOIs to query</p></li>
 <li><p><strong>ordered</strong> (<em>bool</em>) – keep the order of the input list in the output list. Default is True.</p></li>
-<li><p><strong>return_dataframe</strong> (<em>bool</em>) – Return a Dataframe. If True, the DataFrame returned will also be stored in self.entities_df and the cache system will be used. If False, a list will be returned. Default is True.</p></li>
+<li><p><strong>return_dataframe</strong> (<em>bool</em>) – Return a Dataframe. If True, the DataFrame returned will also be stored in
+self.entities_df and the cache system will be used. If False, a list will be returned. Default is True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -620,8 +659,10 @@ TODO: check status code for existence of entity as other errors can occur.</p>
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>entity</strong> (<em>str</em>) – The entity id.</p></li>
-<li><p><strong>infos</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The information to get (see OpenAlex API documentation). You can also request “author_citation_style” to get a citation string for the authors. The default is None, which will get [“display_name”].</p></li>
-<li><p><strong>return_as_pd_series</strong> (<em>bool</em>) – True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.</p></li>
+<li><p><strong>infos</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The information to get (see OpenAlex API documentation). You can also request “author_citation_style”
+to get a citation string for the authors. The default is None, which will get [“display_name”].</p></li>
+<li><p><strong>return_as_pd_series</strong> (<em>bool</em>) – True to return the results as a Pandas Series. Otherwise, a dictionary is returned.
+Default is True.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -653,8 +694,11 @@ TODO: check status code for existence of entity as other errors can occur.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="openalex_analysis.data.entities_data.load_config_from_file">
 <span class="sig-prename descclassname"><span class="pre">openalex_analysis.data.entities_data.</span></span><span class="sig-name descname"><span class="pre">load_config_from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">config_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#openalex_analysis.data.entities_data.load_config_from_file" title="Link to this definition"></a></dt>
-<dd><p>Load and set the configration of the library from a .toml file. When the library is imported, if a configuration
-file exists at “~/openalex-analysis/openalex-analysis-conf.toml”, it is automatically loaded.</p>
+<dd><p>Load and set the configration of the library from a .toml file.
+If the file doesn’t exist, a warning is raised.
+If a value isn’t specified in the configuration file, the default value is used (see set_default_config()).
+When the library is imported, if a configuration file exists at “~/openalex-analysis/openalex-analysis-conf.toml”,
+it is automatically loaded.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>config_path</strong> (<em>str</em>) – The path of the configuration file.</p>
@@ -696,11 +740,17 @@ file exists at “~/openalex-analysis/openalex-analysis-conf.toml”, it is auto
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>entity_from_id</strong> (<em>str</em><em> | </em><em>None</em>) – The entity identifier (eg an institution id) from which to take the entities (eg the works of this institution) to analyse. If not provided, the default value is None and the entities will be downloaded bases on the extra_filters value.</p></li>
-<li><p><strong>extra_filters</strong> (<em>dict</em><em> | </em><em>None</em>) – Optional filters, refer to the documentation of openalex and pyalex for the format. The default value is None.</p></li>
-<li><p><strong>database_file_path</strong> (<em>str</em><em> | </em><em>None</em>) – The database file (parquet or csv) path to force the analysis over datas in a specific file. The default value is None to use the data from the OpenAlex API or the cached data.</p></li>
-<li><p><strong>create_dataframe</strong> (<em>bool</em>) – Create the dataframe at the initialisation (and download the data if allowed and entitie_from_id or extra_filters is provided). The default value is True.</p></li>
-<li><p><strong>load_only_columns</strong> (<em>str</em><em> | </em><em>None</em>) – Load only the specified columns from the parquet file. Everything will be downloaded anyway. The default value is None.</p></li>
+<li><p><strong>entity_from_id</strong> (<em>str</em><em> | </em><em>None</em>) – The entity identifier (e.g. an institution id) from which to take the entities (e.g. the
+works of this institution) to analyse. If not provided, the default value is None and the entities will be
+downloaded bases on the extra_filters value.</p></li>
+<li><p><strong>extra_filters</strong> (<em>dict</em><em> | </em><em>None</em>) – Optional filters, refer to the documentation of openalex and pyalex for the format.
+The default value is None.</p></li>
+<li><p><strong>database_file_path</strong> (<em>str</em><em> | </em><em>None</em>) – The database file (parquet or csv) path to force the analysis over datas in a
+specific file. The default value is None to use the data from the OpenAlex API or the cached data.</p></li>
+<li><p><strong>create_dataframe</strong> (<em>bool</em>) – Create the dataframe at the initialisation (and download the data if allowed and
+entity_from_id or extra_filters is provided). The default value is True.</p></li>
+<li><p><strong>load_only_columns</strong> (<em>str</em><em> | </em><em>None</em>) – Load only the specified columns from the parquet file. Everything will be downloaded
+anyway. The default value is None.</p></li>
 </ul>
 </dd>
 </dl>
@@ -713,10 +763,16 @@ file exists at “~/openalex-analysis/openalex-analysis-conf.toml”, it is auto
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>entities_from</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The list of entities to use to count the collaborations. If None, the entity_from_id is used.</p></li>
-<li><p><strong>institutions_to_exclude</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><em>str</em><em>]</em><em>]</em>) – For each entities_from (key), the list of institutions (value) to exclude when counting the collaborations. For example, it is usefull to exclude the parent institution.</p></li>
-<li><p><strong>year</strong> (<em>int</em><em> | </em><em>str</em><em> | </em><em>None</em>) – The years for which to look for the collaborations. Can be an integer or a string. You can provide a range of years as a string (e.g. “2020-2023”)</p></li>
-<li><p><strong>extra_filters_for_entities_from</strong> (<em>dict</em><em> | </em><em>None</em>) – Filters to be used when downloading the datasets of works to extract the collaboration. If you want to use {‘publication_year’:2023}, you should use the year parameter and not provide extra_filters_for_entities_from. The extra filter won’t be used to generate the links on the plot to check the collaboration works</p></li>
+<li><p><strong>entities_from</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – The list of entities to use to count the collaborations. If None, the entity_from_id is
+used.</p></li>
+<li><p><strong>institutions_to_exclude</strong> (<em>dict</em><em>[</em><em>str</em><em>, </em><em>list</em><em>[</em><em>str</em><em>]</em><em>]</em>) – For each entities_from (key), the list of institutions (value) to exclude when
+counting the collaborations. For example, it is usefull to exclude the parent institution.</p></li>
+<li><p><strong>year</strong> (<em>int</em><em> | </em><em>str</em><em> | </em><em>None</em>) – The years for which to look for the collaborations. Can be an integer or a string. You can provide
+a range of years as a string (e.g. “2020-2023”)</p></li>
+<li><p><strong>extra_filters_for_entities_from</strong> (<em>dict</em><em> | </em><em>None</em>) – Filters to be used when downloading the datasets of works to extract the
+collaboration. If you want to use {‘publication_year’:2023}, you should use the year parameter and not
+provide extra_filters_for_entities_from. The extra filter won’t be used to generate the links on the plot to
+check the collaboration works</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -845,13 +901,17 @@ The result is saved in ‘element_count_df’.</p>
 <dd><p>Count the number of times each author appears in entities_df and return the result as a pd.DataFrame.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>cols</strong> (<em>list</em><em>[</em><em>str</em><em>]</em>) – Columns to return in the DataFrame. Must be existing columns names of authorships. The default value is None which correspond to [‘author.id’, ‘count’, ‘raw_affiliation_string’, ‘author.display_name’, ‘author.orcid’].</p>
+<dd class="field-odd"><p><strong>cols</strong> – Columns to return in the DataFrame. Must be existing columns names of authorships. The default</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The authors count.</p>
+</dl>
+<p>value is None which correspond to [‘author.id’, ‘count’, ‘raw_affiliation_string’, ‘author.display_name’,
+‘author.orcid’].</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>The authors count.</p>
 </dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>pd.DataFrame</p>
+<dt class="field-even">Return type<span class="colon">:</span></dt>
+<dd class="field-even"><p>pd.DataFrame</p>
 </dd>
 </dl>
 </dd></dl>
@@ -865,7 +925,8 @@ The result is saved in ‘element_count_df’.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The years for which we need to count the entity.</p></li>
 <li><p><strong>entity_used_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em>) – The entity ids to count.</p></li>
-<li><p><strong>entity_from_legend</strong> (<em>str</em>) – The legend on the plot for the entity_from dataset. The default value is “Custom dataset”. If the default value is unchanged and entitie_from_id was specified, entitie_from_id will be used.</p></li>
+<li><p><strong>entity_from_legend</strong> (<em>str</em>) – The legend on the plot for the entity_from dataset. The default value is “Custom
+dataset”. If the default value is unchanged and entitie_from_id was specified, entitie_from_id will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -886,7 +947,8 @@ The result is saved in ‘element_count_df’.</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The years for which we need to count the entities.</p></li>
 <li><p><strong>entity_used_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em>) – The entity ids to count.</p></li>
-<li><p><strong>entity_from_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The entity from identifiers, aka the entities dataset in which we need to count the entity_used_ids. When the default value None is used, the entitie_from_id will be used.</p></li>
+<li><p><strong>entity_from_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The entity from identifiers, aka the entities dataset in which we need to count the
+entity_used_ids. When the default value None is used, the entitie_from_id will be used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1004,11 +1066,13 @@ in total or by year (optional).</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>element</strong> (<em>str</em><em> | </em><em>None</em>) – The element id. The default value is None. When the element is None, the first element id in the element_count_df is selected.</p></li>
+<li><p><strong>element</strong> (<em>str</em><em> | </em><em>None</em>) – The element id. The default value is None. When the element is None, the first element id in the
+element_count_df is selected.</p></li>
 <li><p><strong>plot_title</strong> (<em>str</em><em> | </em><em>None</em>) – The plot title. The default value is None to generate an appropriate title.</p></li>
 <li><p><strong>x_datas</strong> (<em>str</em>) – The x datas. The default value is ‘year’.</p></li>
 <li><p><strong>x_legend</strong> (<em>str</em>) – The x legend. The default value is “Year”.</p></li>
-<li><p><strong>y_datas</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The y datas (the entities to plot). The default value is None to use all the entities in the dataframe.</p></li>
+<li><p><strong>y_datas</strong> (<em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The y datas (the entities to plot). The default value is None to use all the entities in the
+dataframe.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1133,7 +1197,8 @@ in total or by year (optional).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The years to count.</p></li>
 <li><p><strong>entity_used_ids</strong> (<em>str</em>) – The entity used.</p></li>
-<li><p><strong>entity_from_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The entities which used the entities to count. The default value is None. If None, the entitie_from_id is used.</p></li>
+<li><p><strong>entity_from_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The entities which used the entities to count. The default value is None. If None, the
+entitie_from_id is used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
@@ -1155,11 +1220,12 @@ in total or by year (optional).</p>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>count_years</strong> (<em>list</em><em>[</em><em>int</em><em>]</em>) – The years to count.</p></li>
 <li><p><strong>entity_used_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>]</em>) – The entities used.</p></li>
-<li><p><strong>entity_from_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The entities which used the entities to count. The default value is None. If None, the entitie_from_id is used.</p></li>
+<li><p><strong>entity_from_ids</strong> (<em>str</em><em> | </em><em>list</em><em>[</em><em>str</em><em>] </em><em>| </em><em>None</em>) – The entities which used the entities to count. The default value is None. If None, the
+entitie_from_id is used.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>THe figure.</p>
+<dd class="field-even"><p>The figure.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>go.Figure</p>
