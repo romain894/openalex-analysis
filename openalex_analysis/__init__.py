@@ -1,2 +1,3 @@
+import openalex_analysis.data
 import openalex_analysis.analysis
 import openalex_analysis.plot
