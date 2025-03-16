@@ -1,4 +1,4 @@
-# Romain THOMAS 2024
+# Romain THOMAS 2025
 
 import os
 from os.path import exists, join, isdir, isfile, expanduser
@@ -7,6 +7,7 @@ from pathlib import Path
 import hashlib  # to generate file names
 from time import time
 import logging
+import warnings
 import tomllib
 
 import pyalex.api
@@ -16,6 +17,7 @@ import requests
 
 from pyalex import Works, Authors, Sources, Institutions, Topics, Concepts, Publishers, config
 
+logging.captureWarnings(True)
 # define a custom logging
 log_oa = logging.getLogger(__name__)
 log_oa.addHandler(logging.StreamHandler())
@@ -118,14 +120,16 @@ def load_config_from_file(config_path: str):
             config_data = tomllib.load(f)
         set_parameters = ""
         for attribute, value in config_data.items():
-            set_parameters += attribute + ", "
-            setattr(config, attribute, value)
+            # only load parameters that are defined in set_default_config()
+            if attribute in config.keys():
+                set_parameters += attribute + ", "
+                setattr(config, attribute, value)
         if len(set_parameters) > 0:
             log_oa.info(f"Loaded the following configuration parameters: {set_parameters[:-2]}.")
         else:
-            log_oa.info(f"No configuration parameters were found in the configuration file.")
+            warnings.warn(f"No configuration parameters were found in the configuration file.")
     else:
-        log_oa.warning(f"The configuration file {config_path} was not found. Default configuration set.")
+        warnings.warn(f"The configuration file {config_path} was not found. Default configuration set.")
 
 
 # if the config file exist, load the configuration from it otherwise load the default configuration
@@ -295,7 +299,7 @@ class EntitiesData:
                     else:
                         # useless ?
                         entities_list.append(entity)
-                        log_oa.warning("entities_list was too short, appending the entity")
+                        warnings.warn("entities_list was too short, appending the entity")
                     i += 1
                 # update the progress bar
                 pbar.update(self.per_page)
@@ -376,8 +380,8 @@ class EntitiesData:
                         first_accessed_file_time = os.stat(join(config.project_data_folder_path, file)).st_atime
                         first_accessed_file = file
             if first_accessed_file is None:
-                log_oa.warning("No more file to delete.")
-                log_oa.warning(f"Space used on disk: {psutil.disk_usage(config.project_data_folder_path).percent} %")
+                warnings.warn("No more file to delete.")
+                warnings.warn(f"Space used on disk: {psutil.disk_usage(config.project_data_folder_path).percent} %")
                 break
             os.remove(join(config.project_data_folder_path, first_accessed_file))
             log_oa.info(f"Removed file {join(config.project_data_folder_path, first_accessed_file)} "

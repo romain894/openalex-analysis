@@ -1,6 +1,8 @@
 import sys
 from os.path import isdir
 import shutil
+import pytest
+
 import numpy as np
 
 sys.path.append("..")
@@ -14,9 +16,9 @@ from openalex_analysis.plot import WorksPlot
 # ~/openalex-analysis/openalex-analysis-conf.toml)
 from openalex_analysis.data.entities_data import set_default_config
 
-set_default_config()
+test_configuration_file = "test-openalex-analysis-conf.toml"
 
-load_config_from_file("openalex-analysis-conf.toml")
+load_config_from_file(test_configuration_file)
 
 institution_src_id = "I138595864"
 
@@ -28,6 +30,24 @@ config.project_data_folder_path = "./data"
 # remove data (cache) that may have been downloaded in the previous test
 if isdir(config.project_data_folder_path):
     shutil.rmtree(config.project_data_folder_path)
+
+
+def test_load_configuration_file_warnings():
+    # test for non-existent configuration file
+    non_existent_config_path = "this_path_does_not_exist"
+    with pytest.warns(
+            UserWarning,
+            match=f"The configuration file {non_existent_config_path} was not found. Default configuration set."
+    ):
+        load_config_from_file(non_existent_config_path)
+    # test for empty configuration file
+    with pytest.warns(
+            UserWarning,
+            match=f"No configuration parameters were found in the configuration file."
+    ):
+        load_config_from_file("test-openalex-analysis-conf-without_parameter.toml")
+    # reload the test configuration file
+    load_config_from_file(test_configuration_file)
 
 
 def test_load_configuration():
