@@ -30,6 +30,15 @@ if isdir(config.project_data_folder_path):
     shutil.rmtree(config.project_data_folder_path)
 
 
+def test_load_configuration():
+    # check that the settings in the config file were loaded
+    assert config.log_level == "DEBUG"
+    assert config.n_max_entities == 200
+    # check that the default settings were loaded
+    assert config.parquet_compression == "brotli"
+    assert config.cache_max_age == 365
+
+
 def test_download_dataset_1():
     # basic test with works
     wa = WorksAnalysis(institution_src_id)

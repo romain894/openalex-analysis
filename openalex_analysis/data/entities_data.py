@@ -101,45 +101,31 @@ def set_default_config():
 
 def load_config_from_file(config_path: str):
     """
-    Load and set the configration of the library from a .toml file. When the library is imported, if a configuration
-    file exists at "~/openalex-analysis/openalex-analysis-conf.toml", it is automatically loaded.
+    Load and set the configration of the library from a .toml file.
+    If the file doesn't exist, a warning is raised.
+    If a value isn't specified in the configuration file, the default value is used (see set_default_config()).
+    When the library is imported, if a configuration file exists at "~/openalex-analysis/openalex-analysis-conf.toml",
+    it is automatically loaded.
 
     :param config_path: The path of the configuration file.
     :type config_path: str
     """
-    log_oa.info(f"Loading the configuration from the file {config_path}")
-    with open(config_path, "rb") as f:
-        config_data = tomllib.load(f)
-    if "email" in config_data.keys():
-        config.email = config_data['email']
-    if "api_key" in config_data.keys():
-        config.api_key = config_data['api_key']
-    if "openalex_url" in config_data.keys():
-        config.openalex_url = config_data['openalex_url']
-    if "http_retry_times" in config_data.keys():
-        config.http_retry_times = config_data['http_retry_times']
-    if "disable_tqdm_loading_bar" in config_data.keys():
-        config.disable_tqdm_loading_bar = config_data['disable_tqdm_loading_bar']
-    if "n_max_entities" in config_data.keys():
-        config.n_max_entities = config_data['n_max_entities']
-    if "project_data_folder_path" in config_data.keys():
-        config.project_data_folder_path = config_data['project_data_folder_path']
-    if "parquet_compression" in config_data.keys():
-        config.parquet_compression = config_data['parquet_compression']
-    if "max_storage_percent" in config_data.keys():
-        config.max_storage_percent = config_data['max_storage_percent']
-    if "max_storage_files" in config_data.keys():
-        config.max_storage_files = config_data['max_storage_files']
-    if "max_storage_size" in config_data.keys():
-        config.max_storage_size = config_data['max_storage_size']
-    if "min_storage_files" in config_data.keys():
-        config.min_storage_files = config_data['min_storage_files']
-    if "min_storage_size" in config_data.keys():
-        config.min_storage_size = config_data['min_storage_size']
-    if "cache_max_age" in config_data.keys():
-        config.cache_max_age = config_data['cache_max_age']
-    if "log_level" in config_data.keys():
-        config.log_level = config_data['log_level']
+    set_default_config()
+
+    if isfile(config_path):
+        log_oa.info(f"Loading the configuration from the file {config_path}")
+        with open(config_path, "rb") as f:
+            config_data = tomllib.load(f)
+        set_parameters = ""
+        for attribute, value in config_data.items():
+            set_parameters += attribute + ", "
+            setattr(config, attribute, value)
+        if len(set_parameters) > 0:
+            log_oa.info(f"Loaded the following configuration parameters: {set_parameters[:-2]}.")
+        else:
+            log_oa.info(f"No configuration parameters were found in the configuration file.")
+    else:
+        log_oa.warning(f"The configuration file {config_path} was not found. Default configuration set.")
 
 
 # if the config file exist, load the configuration from it otherwise load the default configuration
