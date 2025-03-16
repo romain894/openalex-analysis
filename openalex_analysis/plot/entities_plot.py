@@ -87,7 +87,8 @@ class EntitiesPlot:
         """
         Get the figure with the time series usage of a element (eg. reference, concept) by entities.
 
-        :param element: The element id. The default value is None. When the element is None, the first element id in the element_count_df is selected.
+        :param element: The element id. The default value is None. When the element is None, the first element id in the
+            element_count_df is selected.
         :type element: str | None
         :param plot_title: The plot title. The default value is None to generate an appropriate title.
         :type plot_title: str | None
@@ -95,7 +96,8 @@ class EntitiesPlot:
         :type x_datas: str
         :param x_legend: The x legend. The default value is "Year".
         :type x_legend: str
-        :param y_datas: The y datas (the entities to plot). The default value is None to use all the entities in the dataframe.
+        :param y_datas: The y datas (the entities to plot). The default value is None to use all the entities in the
+            dataframe.
         :type y_datas: list[str] | None
         :return: The figure.
         :rtype: go.Figure
@@ -294,9 +296,10 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
         :type count_years: list[int]
         :param entity_used_ids: The entities used.
         :type entity_used_ids: str | list[str]
-        :param entity_from_ids: The entities which used the entities to count. The default value is None. If None, the entitie_from_id is used.
+        :param entity_from_ids: The entities which used the entities to count. The default value is None. If None, the
+            entitie_from_id is used.
         :type entity_from_ids: str | list[str] | None
-        :return: THe figure.
+        :return: The figure.
         :rtype: go.Figure
         """
         df = self.get_df_yearly_usage_of_entities_by_multiples_entities(
@@ -328,7 +331,8 @@ class WorksPlot(EntitiesPlot, WorksAnalysis):
         :type count_years: list[int]
         :param entity_used_ids: The entity used.
         :type entity_used_ids: str
-        :param entity_from_ids: The entities which used the entities to count. The default value is None. If None, the entitie_from_id is used.
+        :param entity_from_ids: The entities which used the entities to count. The default value is None. If None, the
+            entitie_from_id is used.
         :type entity_from_ids: str | list[str] | None
         :return: The figure.
         :rtype: go.Figure

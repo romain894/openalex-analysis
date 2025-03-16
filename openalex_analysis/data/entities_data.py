@@ -37,21 +37,38 @@ class AnalysisConfig(dict):
 
         config.n_max_entities = 10000
 
-    * **email** (*str*) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).
+    * **email** (*str*) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex
+      documentation). The default value is None (not using the polite pool).
     * **api_key** (*str*) - Your OpenAlex API key, if you have one. The default value is None.
-    * **openalex_url** (*str*) - OpenAlex API URL or your self-hosted API URL. The default value is "https://api.openalex.org".
-    * **http_retry_times** (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.
+    * **openalex_url** (*str*) - OpenAlex API URL or your self-hosted API URL. The default value is
+      "https://api.openalex.org".
+    * **http_retry_times** (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value
+      is 3.
     * **disable_tqdm_loading_bar** (*bool*) - To disable the tqdm loading bar. The default is False.
-    * **n_max_entities** (*int*) - Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.
-    * **project_data_folder_path** (*str*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "~/openalex-analysis/data".
-    * **parquet_compression** (*str*) - Type of compression for the parquet files used as cache (see the Pandas documentation). The default value is "brotli".
-    * **max_storage_percent** (*int*) - When the disk capacity reaches this percentage, cached parquet files will be deleted. The default value is 95.
-    * **max_storage_files** (*int*) - When the cache folder reaches this number of files, cached parquet files will be deleted. The default value is 10000.
-    * **max_storage_size** (*int*) - When the cache folder reached this size (in bytes), cached parquet files will be deleted. The default value is 5e9 (5 GB).
-    * **min_storage_files** (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 1000.
-    * **min_storage_size** (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 5e8 (500 MB).
+    * **n_max_entities** (*int*) - Maximum number of entities to download (the default value is to download maximum
+      10 000 entities). If set to None, no limitation will be applied.
+    * **project_data_folder_path** (*str*) - Path to the folder containing the data downloaded from the OpenAlex API
+      (these data are stored in compressed parquet files and used as a cache). The default path is
+      "~/openalex-analysis/data".
+    * **parquet_compression** (*str*) - Type of compression for the parquet files used as cache (see the Pandas
+      documentation). The default value is "brotli".
+    * **max_storage_percent** (*int*) - When the disk capacity reaches this percentage, cached parquet files will be
+      deleted. The default value is 95.
+    * **max_storage_files** (*int*) - When the cache folder reaches this number of files, cached parquet files will be
+      deleted. The default value is 10000.
+    * **max_storage_size** (*int*) - When the cache folder reached this size (in bytes), cached parquet files will be
+      deleted. The default value is 5e9 (5 GB).
+    * **min_storage_files** (*int*) - Before deleting files, we check if we exceed the minimum number of files and
+      folder size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to
+      avoid the setting max_storage_percent to delete every cached file when the disk is almost full. The default value
+      is 1000.
+    * **min_storage_size** (*int*) - Before deleting files, we check if we exceed the minimum number of files and folder
+      size. If one of those minimum if exceeded, we allow the program to delete cached parquet files. This is to avoid
+      the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 5e8
+      (500 MB).
     * **cache_max_age** (*int*) - Maximum age of the cache in days. The default value is 365.
-    * **log_level** (*str*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
+    * **log_level** (*str*) - The log detail level for openalex-analysis (library specific). The log_level must be
+      'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
     """
     def __getattr__(self, key):
         return super().__getitem__(key)
@@ -153,15 +170,21 @@ class EntitiesData:
                  ):
         """
 
-        :param entity_from_id: The entity identifier (eg an institution id) from which to take the entities (eg the works of this institution) to analyse. If not provided, the default value is None and the entities will be downloaded bases on the extra_filters value.
+        :param entity_from_id: The entity identifier (e.g. an institution id) from which to take the entities (e.g. the
+            works of this institution) to analyse. If not provided, the default value is None and the entities will be
+            downloaded bases on the extra_filters value.
         :type entity_from_id: str | None
-        :param extra_filters: Optional filters, refer to the documentation of openalex and pyalex for the format. The default value is None.
+        :param extra_filters: Optional filters, refer to the documentation of openalex and pyalex for the format.
+            The default value is None.
         :type extra_filters: dict | None
-        :param database_file_path: The database file (parquet or csv) path to force the analysis over datas in a specific file. The default value is None to use the data from the OpenAlex API or the cached data.
+        :param database_file_path: The database file (parquet or csv) path to force the analysis over datas in a
+            specific file. The default value is None to use the data from the OpenAlex API or the cached data.
         :type database_file_path: str | None
-        :param create_dataframe: Create the dataframe at the initialisation (and download the data if allowed and entitie_from_id or extra_filters is provided). The default value is True.
+        :param create_dataframe: Create the dataframe at the initialisation (and download the data if allowed and
+            entity_from_id or extra_filters is provided). The default value is True.
         :type create_dataframe: bool
-        :param load_only_columns: Load only the specified columns from the parquet file. Everything will be downloaded anyway. The default value is None.
+        :param load_only_columns: Load only the specified columns from the parquet file. Everything will be downloaded
+            anyway. The default value is None.
         :type load_only_columns: str | None
         """
         self.per_page = 200  # maximum allowed by the API
@@ -237,6 +260,7 @@ class EntitiesData:
     def convert_entities_list_to_df(self, entities_list: list) -> pd.DataFrame:
         """
         Converts a list of entities (a list of PyAlex objects) downloaded from the OpenAlex API into a dataframe.
+
         :param entities_list: The list of entities (PyAlex objects).
         :param entities_list: list
         :return: The entities in a DataFrame.
@@ -396,9 +420,11 @@ class EntitiesData:
         """
         Gets the database file name according to the parameters of the object or the arguments given.
 
-        :param entity_from_id: The instance entity identifier (eg a concept id) which was used to filter the entities (eg works) in the database. If nothing is provided, the instance entity id will be used. Default is None.
+        :param entity_from_id: The instance entity identifier (eg a concept id) which was used to filter the entities
+            (e.g. works) in the database. If nothing is provided, the instance entity id will be used. Default is None.
         :type entity_from_id: str | None
-        :param entity_type: The entity type in the database (eg works). If nothing is provided, the instance entity id will be used. Default is None.
+        :param entity_type: The entity type in the database (e.g. works). If nothing is provided, the instance entity id
+            will be used. Default is None.
         :type entity_type: pyalex.api.BaseOpenAlex | None
         :param db_format: The database file format. The default is "parquet".
         :type db_format: str
@@ -471,13 +497,15 @@ class EntitiesData:
                               return_as_pd_series: bool = True,
                               ) -> dict | pd.Series:
         """
-        Get information about the entity (eg. name, publication_date...). If no entity is provided, the entity_from_id will be used.
+        Get information about the entity (eg. name, publication_date...). If no entity is provided, the entity_from_id
+        will be used.
 
         :param entity: The entity id, if not provided, use the one from the instance. Default is None.
         :type entity: str | None
         :param infos: The information fields to get. Default is None, which will get ["display_name"].
         :type infos: list[str] | None
-        :param return_as_pd_series: True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.
+        :param return_as_pd_series: True to return the results as a Pandas Series. Otherwise, a dictionary is returned.
+            Default is True.
         :type return_as_pd_series: bool
         :return:
         :rtype:
@@ -499,7 +527,8 @@ class EntitiesData:
         :type ids: list[str]
         :param ordered: keep the order of the input list in the output list. Default is True.
         :type ordered: bool
-        :param return_dataframe: Return a Dataframe. If True, the DataFrame returned will also be stored in self.entities_df and the cache system will be used. If False, a list will be returned. Default is True.
+        :param return_dataframe: Return a Dataframe. If True, the DataFrame returned will also be stored in
+            self.entities_df and the cache system will be used. If False, a list will be returned. Default is True.
         :type return_dataframe: bool
         :return: the list of entities as pyalex objects (dictionaries) or DataFrame.
         :rtype: pd.DataFrame | list
@@ -599,9 +628,11 @@ def get_info_about_entity(entity: str, infos: list[str] | None = None,
 
     :param entity: The entity id.
     :type entity: str
-    :param infos: The information to get (see OpenAlex API documentation). You can also request "author_citation_style" to get a citation string for the authors. The default is None, which will get ["display_name"].
+    :param infos: The information to get (see OpenAlex API documentation). You can also request "author_citation_style"
+        to get a citation string for the authors. The default is None, which will get ["display_name"].
     :type infos: list[str] | None
-    :param return_as_pd_series: True to return the results as a Pandas Series. Otherwise, a dictionary is returned. Default is True.
+    :param return_as_pd_series: True to return the results as a Pandas Series. Otherwise, a dictionary is returned.
+        Default is True.
     :type return_as_pd_series: bool
     :return: The entity information.
     :rtype: str | pd.Series
@@ -677,7 +708,8 @@ class WorksData(EntitiesData, Works):
         :type dois: list[str]
         :param ordered: keep the order of the input list in the output list. Default is True.
         :type ordered: bool
-        :param return_dataframe: Return a Dataframe. If True, the DataFrame returned will also be stored in self.entities_df and the cache system will be used. If False, a list will be returned. Default is True.
+        :param return_dataframe: Return a Dataframe. If True, the DataFrame returned will also be stored in
+            self.entities_df and the cache system will be used. If False, a list will be returned. Default is True.
         :type return_dataframe: bool
         :return: the list of works as pyalex objects (dictionaries) or DataFrame.
         :rtype: pd.DataFrame | list

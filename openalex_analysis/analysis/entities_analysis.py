@@ -40,13 +40,19 @@ class EntitiesAnalysis(EntitiesData):
         """
         Create the collaborations_with_institutions_df DataFrame.
 
-        :param entities_from: The list of entities to use to count the collaborations. If None, the entity_from_id is used.
+        :param entities_from: The list of entities to use to count the collaborations. If None, the entity_from_id is
+            used.
         :type entities_from: list[str]
-        :param institutions_to_exclude: For each entities_from (key), the list of institutions (value) to exclude when counting the collaborations. For example, it is usefull to exclude the parent institution.
+        :param institutions_to_exclude: For each entities_from (key), the list of institutions (value) to exclude when
+            counting the collaborations. For example, it is usefull to exclude the parent institution.
         :type institutions_to_exclude: dict[str, list[str]]
-        :param year: The years for which to look for the collaborations. Can be an integer or a string. You can provide a range of years as a string (e.g. "2020-2023")
+        :param year: The years for which to look for the collaborations. Can be an integer or a string. You can provide
+            a range of years as a string (e.g. "2020-2023")
         :type year: int | str | None
-        :param extra_filters_for_entities_from: Filters to be used when downloading the datasets of works to extract the collaboration. If you want to use {'publication_year':2023}, you should use the year parameter and not provide extra_filters_for_entities_from. The extra filter won't be used to generate the links on the plot to check the collaboration works
+        :param extra_filters_for_entities_from: Filters to be used when downloading the datasets of works to extract the
+            collaboration. If you want to use {'publication_year':2023}, you should use the year parameter and not
+            provide extra_filters_for_entities_from. The extra filter won't be used to generate the links on the plot to
+            check the collaboration works
         :type extra_filters_for_entities_from: dict | None
         :return: The collaborations_with_institutions_df DataFrame
         :rtype: pd.DataFrame
@@ -420,7 +426,10 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
         """
         Count the number of times each author appears in entities_df and return the result as a pd.DataFrame.
 
-        :param cols: Columns to return in the DataFrame. Must be existing columns names of authorships. The default value is None which correspond to ['author.id', 'count', 'raw_affiliation_string', 'author.display_name', 'author.orcid'].
+        :param cols: Columns to return in the DataFrame. Must be existing columns names of authorships. The default
+        value is None which correspond to ['author.id', 'count', 'raw_affiliation_string', 'author.display_name',
+        'author.orcid'].
+
         :type cols: list[str]
         :return: The authors count.
         :rtype: pd.DataFrame
@@ -505,7 +514,8 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
         :type count_years: list[int]
         :param entity_used_ids: The entity ids to count.
         :type entity_used_ids: str | list[str]
-        :param entity_from_legend: The legend on the plot for the entity_from dataset. The default value is "Custom dataset". If the default value is unchanged and entitie_from_id was specified, entitie_from_id will be used.
+        :param entity_from_legend: The legend on the plot for the entity_from dataset. The default value is "Custom
+            dataset". If the default value is unchanged and entitie_from_id was specified, entitie_from_id will be used.
         :type entity_from_legend: str
         :return: The df yearly usage by works.
         :rtype: pd.DataFrame
@@ -553,7 +563,8 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
         :type count_years: list[int]
         :param entity_used_ids: The entity ids to count.
         :type entity_used_ids: str | list[str]
-        :param entity_from_ids: The entity from identifiers, aka the entities dataset in which we need to count the entity_used_ids. When the default value None is used, the entitie_from_id will be used.
+        :param entity_from_ids: The entity from identifiers, aka the entities dataset in which we need to count the
+            entity_used_ids. When the default value None is used, the entitie_from_id will be used.
         :type entity_from_ids: str | list[str] | None
         :return: The DataFrame of the yearly usage of entity_used_ids by entity_from_ids
         :rtype: pd.DataFrame
