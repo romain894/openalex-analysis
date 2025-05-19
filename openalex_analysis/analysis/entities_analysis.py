@@ -432,8 +432,8 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
         Count the number of times each author appears in entities_df and return the result as a pd.DataFrame.
 
         :param cols: Columns to return in the DataFrame. Must be existing columns names of authorships. The default
-        value is None which correspond to ['author.id', 'count', 'raw_affiliation_string', 'author.display_name',
-        'author.orcid'].
+            value is None which correspond to ['author.id', 'count', 'raw_affiliation_string', 'author.display_name',
+            'author.orcid'].
 
         :type cols: list[str]
         :return: The authors count.
