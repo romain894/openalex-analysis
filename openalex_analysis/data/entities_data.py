@@ -439,29 +439,17 @@ class EntitiesData:
                         f"(last used: {first_accessed_file_time})")
 
 
-    def get_database_file_name(self,
-                               entity_from_id: str | None = None,
-                               entity_type: pyalex.api.BaseOpenAlex | None = None,
-                               db_format: str = "parquet"
-                               ) -> str:
+    def get_database_file_name(self, db_format: str = "parquet") -> str:
         """
-        Gets the database file name according to the parameters of the object or the arguments given.
+        Gets the database file name according to the parameters of the instance.
 
-        :param entity_from_id: The instance entity identifier (eg a concept id) which was used to filter the entities
-            (e.g. works) in the database. If nothing is provided, the instance entity id will be used. Default is None.
-        :type entity_from_id: str | None TODO: deprecated parameter
-        :param entity_type: The entity type in the database (e.g. works). If nothing is provided, the instance entity id
-            will be used. Default is None.
-        :type entity_type: pyalex.api.BaseOpenAlex | None
         :param db_format: The database file format. The default is "parquet".
         :type db_format: str
         :return: The database file name
         :rtype: str
         """
-        if entity_from_id is None:
-            entity_from_id = self.entity_from_id
-        if entity_type is None:
-            entity_type = self.EntityOpenAlex
+        entity_from_id = self.entity_from_id
+        entity_type = self.EntityOpenAlex
         file_name = self.get_entity_type_string_name(entity_type)
         # for list of entities, we directly hash the list:
         if self.entities_from_id_list is not None:
@@ -759,7 +747,7 @@ class WorksData(EntitiesData, Works):
 
         if ordered:
             # normalize DOIs to sort
-            # TODO: add error messages when DOIs badly formatted
+            # TODO: add error messages when DOIs badly formatted: specify format in documentation?
             normalized_dois = [doi if doi.startswith("https://doi.org/") else "https://doi.org/"+doi for doi in dois]
             # sort the res list with the order provided in the list dois
             # create a dictionary with each doi as key and the index in the res list as value
