@@ -16,9 +16,6 @@ If you want to export the plots, you need to install `kaleido`:
 pip install kaleido
 ```
 
-Coming soon:
-  - Option to use Dask DataFrame for big datasets
-  - More examples in the documentation
 
 ## Examples
 
