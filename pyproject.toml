@@ -4,14 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "openalex-analysis"
-version = "0.13.1"
+version = "0.14"
 description = "A python library to download, analyse or plot articles, institutions, and other entities from the OpenAlex API"
 readme = "README.md"
-authors = [{ name = "Romain Thomas", email = "romain.thomas@su.se" }]
-license = { file = "LICENCE.txt" }
+authors = [{ name = "Romain Thomas", email = "contact@romainthomas.net" }]
+license = "GPL-3.0-only"
+license-files = [
+    "LICENCE.txt",
+]
 classifiers = [
     "Development Status :: 3 - Alpha",
-    "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
     "Intended Audience :: Science/Research",
