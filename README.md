@@ -34,6 +34,27 @@ It is possible to save the datasets as a CSV file with the pandas function `my_d
 
 Bellow, a few examples:
 
+#### Get works from a list of DOIs
+
+In this example, we will get works in OpenAlex from a list of DOIs.
+
+```python
+from openalex_analysis.data import WorksData
+
+# list of DOIs to get, you can mix formats:
+article_dois = [
+    "https://doi.org/10.1016/j.cosust.2025.101526",
+    "10.1038/461472a",
+    "https://doi.org/10.1126/SCIENCE.1259855",
+]
+wdata = WorksData(entities_from_id_list = article_dois)
+
+my_dataset = wdata.entities_df
+
+# you get a pandas DataFrame, you can print it with panda's methods:
+my_dataset.head()
+```
+
 #### Get works from a topic
 
 In this example, we will get the works having the topic "Natural Language Processing".
@@ -239,4 +260,4 @@ make html
   - [Explore OpenAlex online](https://explore.openalex.org/)
   - [PyAlex](https://github.com/J535D165/pyalex) (Python library for OpenAlex)
 
-Romain Thomas 2024
+Romain Thomas 2025
