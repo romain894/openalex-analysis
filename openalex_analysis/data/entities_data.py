@@ -165,19 +165,25 @@ class EntitiesData:
     def __init__(self,
                  entity_from_id: str | None = None,
                  extra_filters: dict | None = None,
-                 database_file_path: dict | None = None,
+                 entities_from_id_list: list[str] | None = None,
+                 database_file_path: str | None = None,
                  create_dataframe: bool = True,
                  load_only_columns: list[str] | None = None,
                  ):
         """
 
         :param entity_from_id: The entity identifier (e.g. an institution id) from which to take the entities (e.g. the
-            works of this institution) to analyse. If not provided, the default value is None and the entities will be
-            downloaded bases on the extra_filters value.
+            works of this institution) to analyze.
+            If not provided, the default value is None and the entities will be downloaded based on the extra_filters
+            value.
         :type entity_from_id: str | None
         :param extra_filters: Optional filters, refer to the documentation of openalex and pyalex for the format.
             The default value is None.
         :type extra_filters: dict | None
+        :param entities_from_id_list: Similar to entity_from_id but to explicitly specify the ids of the entities to
+            query. When specified, entity_from_id and extra_filters must be None.
+            For now, only DOIs are supported.
+        :type entities_from_id_list: list[str] | None
         :param database_file_path: The database file (parquet or csv) path to force the analysis over datas in a
             specific file. The default value is None to use the data from the OpenAlex API or the cached data.
         :type database_file_path: str | None
@@ -190,9 +196,14 @@ class EntitiesData:
         """
         self.per_page = 200  # maximum allowed by the API
 
+        if entities_from_id_list is not None and (entity_from_id is not None or extra_filters is not None):
+            raise ValueError("The entity_from_id and extra_filters values cannot be specified with "
+                             "entities_from_id_list.")
+
         self.entity_from_id = entity_from_id
         self.entity_from_type = None
         self.extra_filters = extra_filters
+        self.entities_from_id_list = entities_from_id_list
         self.database_file_path = database_file_path
         self.load_only_columns = load_only_columns
 
@@ -210,7 +221,7 @@ class EntitiesData:
         self.entity_downloading_progress_percentage = 0
 
         # initialize the values only if entity_from_type is known
-        if self.entity_from_id is not None or self.extra_filters is not None:
+        if self.entity_from_id is not None or self.extra_filters is not None or self.entities_from_id_list is not None:
             if self.entity_from_id is not None:
                 self.entity_from_type = self.get_entity_type_from_id(self.entity_from_id)
             if self.database_file_path is None:
@@ -290,50 +301,58 @@ class EntitiesData:
             log_oa.info(f"of the {self.get_entity_type_string_name(self.entity_from_type)[0:-1]} {self.entity_from_id}")
         if self.extra_filters is not None:
             log_oa.info(f"with extra filters: {self.extra_filters}")
+        if self.entities_from_id_list is not None:
+            log_oa.info(f"with {len(self.entities_from_id_list)} entities")
 
-        query = self.get_api_query()
-        log_oa.info(f"Query to download from the API: {query}")
+        if self.entities_from_id_list is None:
+            # download entities from entity_from_id and extra_filters parameters
+            query = self.get_api_query()
+            log_oa.info(f"Query to download from the API: {query}")
 
-        count_entities_matched = self.get_count_entities_matched(query)
+            count_entities_matched = self.get_count_entities_matched(query)
 
-        if config.n_max_entities is None or config.n_max_entities > count_entities_matched:
-            n_entities_to_download = count_entities_matched
-            print(f"All the {n_entities_to_download} entities will be downloaded")
-            log_oa.info(f"All the {n_entities_to_download} entities will be downloaded")
+            if config.n_max_entities is None or config.n_max_entities > count_entities_matched:
+                n_entities_to_download = count_entities_matched
+                print(f"All the {n_entities_to_download} entities will be downloaded")
+                log_oa.info(f"All the {n_entities_to_download} entities will be downloaded")
+            else:
+                n_entities_to_download = config.n_max_entities
+                print(f"Only {n_entities_to_download} entities will be downloaded (out of {count_entities_matched})")
+                log_oa.info(f"Only {n_entities_to_download} entities will be downloaded (out of {count_entities_matched})")
+
+            # create a list to store the entities
+            entities_list = [None] * n_entities_to_download
+
+            # create the pager entity to iterate over the pages of entities to download
+            pager = self.EntityOpenAlex().filter(**query).paginate(per_page=self.per_page, n_max=n_entities_to_download)
+
+            log_oa.info("Downloading the list of entities thought the OpenAlex API...")
+            with tqdm(total=n_entities_to_download, disable=config.disable_tqdm_loading_bar) as pbar:
+                i = 0
+                self.entity_downloading_progress_percentage = 0
+                for page in pager:
+                    # add the downloaded entities in the main list
+                    for entity in page:
+                        self.filter_and_format_entity_data_from_api_response(entity)
+                        if i < n_entities_to_download:
+                            entities_list[i] = entity
+                        else:
+                            # useless ?
+                            entities_list.append(entity)
+                            warnings.warn("entities_list was too short, appending the entity")
+                        i += 1
+                    # update the progress bar
+                    pbar.update(self.per_page)
+                    # update the progress percentage variable
+                    self.entity_downloading_progress_percentage = i / n_entities_to_download * 100 if i else 0
+            self.entity_downloading_progress_percentage = 100
+
+            log_oa.info("Converting the entities list downloaded to a DataFrame...")
+            entities_list_df = self.convert_entities_list_to_df(entities_list)
         else:
-            n_entities_to_download = config.n_max_entities
-            print(f"Only {n_entities_to_download} entities will be downloaded (out of {count_entities_matched})")
-            log_oa.info(f"Only {n_entities_to_download} entities will be downloaded (out of {count_entities_matched})")
-
-        # create a list to store the entities
-        entities_list = [None] * n_entities_to_download
-
-        # create the pager entity to iterate over the pages of entities to download
-        pager = self.EntityOpenAlex().filter(**query).paginate(per_page=self.per_page, n_max=n_entities_to_download)
-
-        log_oa.info("Downloading the list of entities thought the OpenAlex API...")
-        with tqdm(total=n_entities_to_download, disable=config.disable_tqdm_loading_bar) as pbar:
-            i = 0
-            self.entity_downloading_progress_percentage = 0
-            for page in pager:
-                # add the downloaded entities in the main list
-                for entity in page:
-                    self.filter_and_format_entity_data_from_api_response(entity)
-                    if i < n_entities_to_download:
-                        entities_list[i] = entity
-                    else:
-                        # useless ?
-                        entities_list.append(entity)
-                        warnings.warn("entities_list was too short, appending the entity")
-                    i += 1
-                # update the progress bar
-                pbar.update(self.per_page)
-                # update the progress percentage variable
-                self.entity_downloading_progress_percentage = i / n_entities_to_download * 100 if i else 0
-        self.entity_downloading_progress_percentage = 100
-
-        log_oa.info("Converting the entities list downloaded to a DataFrame...")
-        entities_list_df = self.convert_entities_list_to_df(entities_list)
+            # download entities from the list self.entities_from_id_list
+            # for now only DOIs are supported (so only Works are supported)
+            entities_list_df = self.get_multiple_works_from_doi(self.entities_from_id_list)
 
         if not isdir(config.project_data_folder_path):
             log_oa.info("Creating the directory to store the data from OpenAlex")
@@ -346,17 +365,23 @@ class EntitiesData:
 
     def load_entities_dataframe(self):
         """
-        Loads an entities dataset from file (or download it if needed and allowed by the instance) to the dataframe of
-        the instance.
+        Loads an entities' dataset from a file (or download it if needed and allowed by the instance) to the dataframe
+        of the instance.
         """
-        log_oa.info(f"Loading dataframe of {self.get_entity_type_string_name()}")
-        if self.entity_from_id is not None:
-            log_oa.info(f"of the {self.get_entity_type_string_name(self.entity_from_type)[0:-1]} {self.entity_from_id}")
-        if self.extra_filters is not None:
-            log_oa.info(f"with extra filters: {self.extra_filters}")
+        # Load from a list of entities
+        if self.entities_from_id_list is not None:
+            log_oa.info(f"Loading a dataframe of {len(self.entities_from_id_list)} entities...")
+        # load from a single entity
+        else:
+            log_oa.info(f"Loading dataframe of {self.get_entity_type_string_name()}")
+            if self.entity_from_id is not None:
+                log_oa.info(f"of the {self.get_entity_type_string_name(self.entity_from_type)[0:-1]} {self.entity_from_id}")
+            if self.extra_filters is not None:
+                log_oa.info(f"with extra filters: {self.extra_filters}")
 
-        # # check if the database file exists
+        # check if the database file exists
         if not exists(self.database_file_path):
+            # if the database cache was not found, download the data
             self.download_list_entities()
         # check the age of the cache (aka last date of modification)
         else:
@@ -364,6 +389,7 @@ class EntitiesData:
             if age_in_days > config.cache_max_age:
                 os.remove(self.database_file_path)
                 log_oa.info(f"Removed file {self.database_file_path} (age (days): {int(age_in_days)})")
+                # download the data to renew the database cache
                 self.download_list_entities()
         log_oa.info("Loading the list of entities from a parquet file...")
         try:
@@ -423,7 +449,7 @@ class EntitiesData:
 
         :param entity_from_id: The instance entity identifier (eg a concept id) which was used to filter the entities
             (e.g. works) in the database. If nothing is provided, the instance entity id will be used. Default is None.
-        :type entity_from_id: str | None
+        :type entity_from_id: str | None TODO: deprecated parameter
         :param entity_type: The entity type in the database (e.g. works). If nothing is provided, the instance entity id
             will be used. Default is None.
         :type entity_type: pyalex.api.BaseOpenAlex | None
@@ -437,18 +463,23 @@ class EntitiesData:
         if entity_type is None:
             entity_type = self.EntityOpenAlex
         file_name = self.get_entity_type_string_name(entity_type)
-        if entity_from_id is not None:
-            file_name += "_from_" + entity_from_id
-        if self.extra_filters is not None:
-            file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
-        # add the data format version, we increment this number if the format (e.g. columns) change in the parquet file:
-        file_name += "_v2"
-        # keep the file name below 120 characters and reserve 22 for the max size + parquet extension
-        if len(file_name) > 96:
-            # sha224 length: 56
-            file_name = file_name[:39] + "-" + hashlib.sha224(file_name.encode()).hexdigest()
-        file_name += "_max_" + str(config.n_max_entities)
-        # add warning for nb max entities to large (>999 999 999 999) because of file name
+        # for list of entities, we directly hash the list:
+        if self.entities_from_id_list is not None:
+            file_name += "_from_list_" + hashlib.sha224("_".join(self.entities_from_id_list).encode()).hexdigest()
+        # else, more elaborated naming method:
+        else:
+            if entity_from_id is not None:
+                file_name += "_from_" + entity_from_id
+            if self.extra_filters is not None:
+                file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
+            # add the data format version, we increment this number if the format (e.g. columns) change in the parquet file:
+            file_name += "_v2"
+            # keep the file name below 120 characters and reserve 22 for the max size + parquet extension
+            if len(file_name) > 96:
+                # sha224 length: 56
+                file_name = file_name[:39] + "-" + hashlib.sha224(file_name.encode()).hexdigest()
+            file_name += "_max_" + str(config.n_max_entities)
+            # add warning for nb max entities to large (>999 999 999 999) because of file name
         return file_name + "." + db_format
 
     def get_entity_type_string_name(self, entity: pyalex.api.BaseOpenAlex | None = None) -> str:
@@ -727,13 +758,16 @@ class WorksData(EntitiesData, Works):
             pbar.update(len(dois) % 60)
 
         if ordered:
+            # normalize DOIs to sort
+            # TODO: add error messages when DOIs badly formatted
+            normalized_dois = [doi if doi.startswith("https://doi.org/") else "https://doi.org/"+doi for doi in dois]
             # sort the res list with the order provided in the list dois
             # create a dictionary with each doi as key and the index in the res list as value
             # we use lower as the doi can be valid with either lower or upper cases
             res_dois_index = {entity['doi'].lower(): i for i, entity in enumerate(res) if entity is not None}
             # sort based on the index
             res = [res[res_dois_index[entity_doi.lower()]] if res_dois_index.get(entity_doi.lower()) is not None
-                   else None for entity_doi in dois]
+                   else None for entity_doi in normalized_dois]
 
         if return_dataframe:
             # similar to the download function, apply the needed formatting (e.g. extracting the abstract)

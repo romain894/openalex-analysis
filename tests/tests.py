@@ -147,14 +147,15 @@ def test_get_multiple_entities_from_id_institutions():
 
 def test_instancies_from_list_of_ids():
     article_dois = [
-        "https://doi.org/10.1038/461472a",
+        "10.1038/461472a",
         "https://doi.org/10.1126/SCIENCE.1259855",
         "https://doi.org/10.1038/nature10452",
     ]
     wd = WorksData(entities_from_id_list = article_dois)
     assert len(wd.entities_df.index) == len(article_dois)
-    assert wd.entities_df.at[0, "doi"] in article_dois[0]
     assert wd.entities_df.at[0, "display_name"] in "A safe operating space for humanity"
+    assert wd.entities_df.at[0, "doi"][16:] in article_dois[0].lower()
+    assert wd.entities_df.at[1, "doi"] in article_dois[1].lower()
 
 
 def test_get_multiple_entities_from_id_works_to_df():
