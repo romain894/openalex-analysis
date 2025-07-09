@@ -735,15 +735,17 @@ class WorksData(EntitiesData, Works):
         :rtype: pd.DataFrame | list
         """
         res = [] * len(dois)
+        # remove https://doi.org/ to keep request length below 4094 (limit from OpenAlex)
+        short_doi = [doi.replace("https://doi.org/", "").replace("http://doi.org/", "") for doi in dois]
         i = 0
-        with tqdm(total=len(dois), disable=config.disable_tqdm_loading_bar) as pbar:
+        with tqdm(total=len(short_doi), disable=config.disable_tqdm_loading_bar) as pbar:
             # querying more than 60 DOIs causes the HTTP query size being larger than what OpenAlex allows
-            while i + 60 < len(dois):
-                res[i:i+60] = Works().filter(doi='|'.join(dois[i:i+60])).get(per_page=60)
+            while i + 60 < len(short_doi):
+                res[i:i+60] = Works().filter(doi='|'.join(short_doi[i:i+60])).get(per_page=60)
                 i += 60
                 pbar.update(60)
-            res[i:] = Works().filter(doi='|'.join(dois[i:])).get(per_page=60)
-            pbar.update(len(dois) % 60)
+            res[i:] = Works().filter(doi='|'.join(short_doi[i:])).get(per_page=60)
+            pbar.update(len(short_doi) % 60)
 
         if ordered:
             # normalize DOIs to sort
