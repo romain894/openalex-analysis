@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
@@ -5,20 +7,16 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Reference &mdash; OpenAlex Analysis 0.13.1 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b86133f3" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=e59714d7" />
 
   
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/jquery.js?v=5d32c60e"></script>
-        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
-        <script src="_static/documentation_options.js?v=b4617fb1"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/jquery.js?v=5d32c60e"></script>
+      <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+      <script src="_static/documentation_options.js?v=b4617fb1"></script>
+      <script src="_static/doctools.js?v=9bcbadda"></script>
+      <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -201,7 +199,7 @@
 <p>OpenAlex Analysis configuration class. This class contains the settings used by openalex-analysis (some settings
 are passed to pyalex).</p>
 <p>Tu use it, import the class and set the parameters as follows:</p>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">openalex_analysis.plot</span> <span class="kn">import</span> <span class="n">config</span>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">openalex_analysis.plot</span><span class="w"> </span><span class="kn">import</span> <span class="n">config</span>
 
 <span class="n">config</span><span class="o">.</span><span class="n">n_max_entities</span> <span class="o">=</span> <span class="mi">10000</span>
 </pre></div>
@@ -212,8 +210,11 @@ documentation). The default value is None (not using the polite pool).</p></li>
 <li><p><strong>api_key</strong> (<em>str</em>) - Your OpenAlex API key, if you have one. The default value is None.</p></li>
 <li><p><strong>openalex_url</strong> (<em>str</em>) - OpenAlex API URL or your self-hosted API URL. The default value is
 “<a class="reference external" href="https://api.openalex.org">https://api.openalex.org</a>”.</p></li>
-<li><p><strong>http_retry_times</strong> (<em>int</em>) - maximum number of retries when querying the OpenAlex API in HTTP. The default value
+<li><p><strong>max_retries</strong> (<em>int</em>) - maximum number of retries when querying the OpenAlex API in HTTP. The default value
 is 3.</p></li>
+<li><p><strong>retry_backoff_factor</strong> (<em>int</em>) - The time to wait before retrying the request. The default is 2.</p></li>
+<li><p><strong>retry_http_codes</strong> (<em>list[int]</em>) - The HTTP error codes for which to retry the request. The default is
+[429, 500, 503].</p></li>
 <li><p><strong>disable_tqdm_loading_bar</strong> (<em>bool</em>) - To disable the tqdm loading bar. The default is False.</p></li>
 <li><p><strong>n_max_entities</strong> (<em>int</em>) - Maximum number of entities to download (the default value is to download maximum
 10 000 entities). If set to None, no limitation will be applied.</p></li>
@@ -707,7 +708,8 @@ it is automatically loaded.</p>
 <dl class="py function">
 <dt class="sig sig-object py" id="openalex_analysis.data.entities_data.set_default_config">
 <span class="sig-prename descclassname"><span class="pre">openalex_analysis.data.entities_data.</span></span><span class="sig-name descname"><span class="pre">set_default_config</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#openalex_analysis.data.entities_data.set_default_config" title="Link to this definition"></a></dt>
-<dd><p>Set the default configuration of the library. This function is called is no configuration file is found.</p>
+<dd><p>Set the default configuration of the library. This function is called to set the default values before loading an
+optional configuration file.</p>
 </dd></dl>
 
 </section>
