@@ -3,7 +3,7 @@
 ## Install `pytest`
 
 ```bash
-pip install pytest 
+pip install pytest
 ```
 
 ## Run the tests

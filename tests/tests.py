@@ -148,7 +148,7 @@ def test_get_multiple_entities_from_id_institutions():
 def test_instancies_from_list_of_ids():
     article_dois = [
         "10.1038/461472a",
-        "https://doi.org/10.1126/SCIENCE.1259855",
+        "https://doi.org/10.1126/science.1259855",
         "https://doi.org/10.1038/nature10452",
     ]
     wd = WorksData(entities_from_id_list = article_dois)
@@ -180,8 +180,7 @@ def test_get_multiple_works_from_doi():
     # test with a list of 3 articles
     article_dois = [
         "https://doi.org/10.1038/461472a",
-        # added upper case to check that the ordering is working with uppercases:
-        "https://doi.org/10.1126/SCIENCE.1259855",
+        "https://doi.org/10.1126/science.1259855",
         "https://doi.org/10.1038/nature10452",
     ]
     article_names = [
@@ -227,3 +226,20 @@ def test_generating_collaboration_map():
     wplt.get_collaborations_with_institutions()
 
     wplt.get_figure_collaborations_with_institutions()
+
+
+def test_duplicated_doi_for_entities_from_id_list():
+    dois = ['https://doi.org/10.1016/j.cosust.2025.101526', 'https://doi.org/10.1016/j.cosust.2025.101526']
+
+    works = WorksData(entities_from_id_list = dois)
+
+    print(works.entities_df.index)
+    assert len(works.entities_df.index) == 2
+
+
+def test_wrong_doi_for_entities_from_id_list():
+    dois = ['https://doi.org/10.1016/j.cosust.2025.101526', 'https://doi.org/10.1016/j.cosust.2025.101526wrong']
+
+    works = WorksData(entities_from_id_list = dois)
+
+    assert len(works.entities_df.index) == 1

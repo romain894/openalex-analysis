@@ -10,13 +10,15 @@ from time import time
 import logging
 import warnings
 import tomllib
+import re
 
 import pyalex.api
 from tqdm import tqdm
 import pandas as pd
 import requests
 
-from pyalex import Works, Authors, Sources, Institutions, Topics, Concepts, Publishers, config
+from pyalex import Works, Authors, Sources, Institutions, Topics, Concepts, Publishers
+from pyalex import config as pyalex_config
 
 logging.captureWarnings(True)
 # define a custom logging
@@ -43,8 +45,11 @@ class AnalysisConfig(dict):
     * **api_key** (*str*) - Your OpenAlex API key, if you have one. The default value is None.
     * **openalex_url** (*str*) - OpenAlex API URL or your self-hosted API URL. The default value is
       "https://api.openalex.org".
-    * **http_retry_times** (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value
+    * **max_retries** (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value
       is 3.
+    * **retry_backoff_factor** (*int*) - The time to wait before retrying the request. The default is 2.
+    * **retry_http_codes** (*list[int]*) - The HTTP error codes for which to retry the request. The default is
+      [429, 500, 503].
     * **disable_tqdm_loading_bar** (*bool*) - To disable the tqdm loading bar. The default is False.
     * **n_max_entities** (*int*) - Maximum number of entities to download (the default value is to download maximum
       10 000 entities). If set to None, no limitation will be applied.
@@ -76,6 +81,8 @@ class AnalysisConfig(dict):
 
 
     def __setattr__(self, key, value):
+        if key in pyalex_config.keys():
+            pyalex_config.__setitem__(key, value)
         if key == "log_level":
             match value:
                 case 'DEBUG':
@@ -99,13 +106,16 @@ config = AnalysisConfig()
 
 def set_default_config():
     """
-    Set the default configuration of the library. This function is called is no configuration file is found.
+    Set the default configuration of the library. This function is called to set the default values before loading an
+    optional configuration file.
     """
     log_oa.info(f"Setting the default configuration")
     config.email = None
     config.api_key = None
     config.openalex_url = "https://api.openalex.org"
-    config.http_retry_times = 3
+    config.max_retries = 3
+    config.retry_backoff_factor = 2
+    config.retry_http_codes = [429, 500, 503]
     config.disable_tqdm_loading_bar = False
     config.n_max_entities = 10000
     config.project_data_folder_path = join(expanduser("~"), "openalex-analysis", "data")
@@ -278,7 +288,7 @@ class EntitiesData:
         :return: The entities in a DataFrame.
         :rtype: pd.DataFrame
         """
-        entities_list_df = pd.DataFrame.from_records(entities_list)
+        entities_list_df = pd.DataFrame.from_records([entity for entity in entities_list if entity is not None])
         if self.EntityOpenAlex == Works:
             entities_list_df = entities_list_df.rename(columns={'extracted_abstract': 'abstract'})
         return entities_list_df
@@ -351,8 +361,16 @@ class EntitiesData:
             entities_list_df = self.convert_entities_list_to_df(entities_list)
         else:
             # download entities from the list self.entities_from_id_list
-            # for now only DOIs are supported (so only Works are supported)
-            entities_list_df = self.get_multiple_works_from_doi(self.entities_from_id_list)
+            # identify the type of id based on the first ID, this is experimental
+            openalex_id_pattern = r'^(?:https?://openalex\.org/)?[A-Za-z]\d+$'
+            if re.match(openalex_id_pattern, self.entities_from_id_list[0]):
+                log_oa.info("Downloading the entities from OpenAlex ID...")
+                entities_list_df = self.get_multiple_entities_from_id(self.entities_from_id_list)
+            else:
+                if self.EntityOpenAlex != Works:
+                    raise ValueError("The first ID in the list is a DOI, but the entity type is not a Work")
+                log_oa.info("Downloading the entities from DOI...")
+                entities_list_df = self.get_multiple_works_from_doi(self.entities_from_id_list)
 
         if not isdir(config.project_data_folder_path):
             log_oa.info("Creating the directory to store the data from OpenAlex")
@@ -706,9 +724,12 @@ class WorksData(EntitiesData, Works):
         """
 
         # Store the abstract as a string (here, we avoid the key "abstract" as PyAlex redefined __getitem__() for it)
-        entity['extracted_abstract'] = entity['abstract']
-        # as we store the abstract as a string, we can delete its inverted index
-        del entity['abstract_inverted_index']
+        # check if the key abstract_inverted_index exists: it avoids errors when formatting an article that might be
+        # duplicated in the list
+        if "abstract_inverted_index" in entity.keys():
+            entity['extracted_abstract'] = entity['abstract']
+            # as we store the abstract as a string, we can delete its inverted index
+            del entity['abstract_inverted_index']
 
     def add_authorships_citation_style(self):
         """
