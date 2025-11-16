@@ -363,20 +363,37 @@ class EntitiesData:
             # download entities from the list self.entities_from_id_list
             # identify the type of id based on the first ID, this is experimental
             openalex_id_pattern = r'^(?:https?://openalex\.org/)?[A-Za-z]\d+$'
+            doi_pattern = r'^10\.\d{4,9}/[-._;()/:A-Z0-9]+$'
+            ror_pattern = r'^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$'
             if re.match(openalex_id_pattern, self.entities_from_id_list[0]):
                 log_oa.info("Downloading the entities from OpenAlex ID...")
                 entities_list_df = self.get_multiple_entities_from_id(self.entities_from_id_list)
             else:
-                if self.EntityOpenAlex != Works:
-                    raise ValueError("The first ID in the list is a DOI, but the entity type is not a Work")
-                log_oa.info("Downloading the entities from DOI...")
-                entities_list_df = self.get_multiple_works_from_doi(self.entities_from_id_list)
+                if self.EntityOpenAlex == Works and re.match(doi_pattern, self.entities_from_id_list[0]):
+                    log_oa.info("Downloading the entities from DOI...")
+                    entities_list_df = self.get_multiple_works_from_doi(self.entities_from_id_list)
+                # elif self.EntityOpenAlex == Institutions and re.match(ror_pattern, self.entities_from_id_list[0]):
+                #     # TODO
+                else:
+                    raise ValueError("The first ID in the list did not match any ID pattern, unknown ID type")
 
         if not isdir(config.project_data_folder_path):
             log_oa.info("Creating the directory to store the data from OpenAlex")
             os.makedirs(config.project_data_folder_path)
         log_oa.info("Checking space left on disk...")
         self.auto_remove_databases_saved()
+        # fix dataframe: parquet doesn't allow empty structures
+        for col in entities_list_df.columns:
+            # Replace empty dicts
+            if entities_list_df[col].apply(lambda x: isinstance(x, dict) and x == {}).any():
+                entities_list_df[col] = entities_list_df[col].apply(
+                    lambda x: None if isinstance(x, dict) and x == {} else x
+                )
+            # Replace empty lists
+            if entities_list_df[col].apply(lambda x: isinstance(x, list) and x == []).any():
+                entities_list_df[col] = entities_list_df[col].apply(
+                    lambda x: None if isinstance(x, list) and x == [] else x
+                )
         # save as compressed parquet file
         log_oa.info("Saving the list of entities as a parquet file...")
         entities_list_df.to_parquet(self.database_file_path, compression=config.parquet_compression)

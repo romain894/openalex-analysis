@@ -21,6 +21,7 @@ test_configuration_file = "test-openalex-analysis-conf.toml"
 load_config_from_file(test_configuration_file)
 
 institution_src_id = "I138595864"
+institution_upsaclay_id = "I277688954"
 
 regime_shift_topic_id = "T13377"
 
@@ -192,6 +193,19 @@ def test_get_multiple_works_from_doi():
     for i in range(len(article_dois)):
         assert article_names[i] == res[i]["display_name"]
     # TODO: add a test with more than 60 works
+
+
+def test_get_multiple_institutions_from_id():
+    # basic test with institutions
+    institution_ids = [
+        institution_src_id,
+        institution_upsaclay_id
+    ]
+    inst = InstitutionsAnalysis(entities_from_id_list = institution_ids)
+    second_institution_code = inst.entities_df.at[1, "country_code"]
+
+    assert isinstance(second_institution_code, str)
+    assert second_institution_code == "FR"
 
 
 def test_concept_yearly_count():
