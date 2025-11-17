@@ -208,6 +208,13 @@ def test_get_multiple_institutions_from_id():
     assert second_institution_code == "FR"
 
 
+def test_get_empty_list_of_institution_from_id():
+    institution_ids = []
+    inst = InstitutionsAnalysis(entities_from_id_list = institution_ids)
+
+    assert inst.entities_df.empty
+
+
 def test_concept_yearly_count():
     concept_sustainability_id = 'C66204764'
     # create the filter for the API to get only the articles about sustainability
