@@ -363,19 +363,18 @@ class EntitiesData:
             # download entities from the list self.entities_from_id_list
             # identify the type of id based on the first ID, this is experimental
             openalex_id_pattern = r'^(?:https?://openalex\.org/)?[A-Za-z]\d+$'
-            doi_pattern = r'^10\.\d{4,9}/[-._;()/:A-Z0-9]+$'
-            ror_pattern = r'^0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$'
+            doi_pattern = r'^(?:https?://doi\.org/)?10\.\d{4,9}/[-._;()/:A-Za-z0-9]+$'
+            ror_pattern = r'^(?:https?://ror\.org/)?0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$'
             if re.match(openalex_id_pattern, self.entities_from_id_list[0]):
                 log_oa.info("Downloading the entities from OpenAlex ID...")
                 entities_list_df = self.get_multiple_entities_from_id(self.entities_from_id_list)
+            elif self.EntityOpenAlex == Works and re.match(doi_pattern, self.entities_from_id_list[0]):
+                log_oa.info("Downloading the entities from DOI...")
+                entities_list_df = self.get_multiple_works_from_doi(self.entities_from_id_list)
+            # elif self.EntityOpenAlex == Institutions and re.match(ror_pattern, self.entities_from_id_list[0]):
+            #     # TODO
             else:
-                if self.EntityOpenAlex == Works and re.match(doi_pattern, self.entities_from_id_list[0]):
-                    log_oa.info("Downloading the entities from DOI...")
-                    entities_list_df = self.get_multiple_works_from_doi(self.entities_from_id_list)
-                # elif self.EntityOpenAlex == Institutions and re.match(ror_pattern, self.entities_from_id_list[0]):
-                #     # TODO
-                else:
-                    raise ValueError("The first ID in the list did not match any ID pattern, unknown ID type")
+                raise ValueError("The first ID in the list did not match any ID pattern, unknown ID type")
 
         if not isdir(config.project_data_folder_path):
             log_oa.info("Creating the directory to store the data from OpenAlex")
