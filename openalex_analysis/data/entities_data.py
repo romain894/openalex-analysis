@@ -406,6 +406,11 @@ class EntitiesData:
         # Load from a list of entities
         if self.entities_from_id_list is not None:
             log_oa.info(f"Loading a dataframe of {len(self.entities_from_id_list)} entities...")
+            # return empty dataframe for empty list
+            if not self.entities_from_id_list:
+                log_oa.info("entities_from_id_list is empty, returning an empty dataframe...")
+                self.entities_df = pd.DataFrame()
+                return
         # load from a single entity
         else:
             log_oa.info(f"Loading dataframe of {self.get_entity_type_string_name()}")
