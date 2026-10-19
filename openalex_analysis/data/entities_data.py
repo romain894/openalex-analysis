@@ -27,6 +27,19 @@ log_oa.addHandler(logging.StreamHandler())
 # log_oa.addHandler(logging.FileHandler(__name__ + ".log"))
 
 
+def _validate_filters(filters):
+    """Keep credentials out of dataset filters, cache filenames and logs."""
+    if isinstance(filters, dict):
+        for key, value in filters.items():
+            field = str(key).rsplit('.', 1)[-1].lower().replace('-', '').replace('_', '')
+            if field in {'apikey', 'authorization', 'accesstoken'}:
+                raise ValueError('Set API credentials using config.api_key, not entity filters.')
+            _validate_filters(value)
+    elif isinstance(filters, (list, tuple)):
+        for value in filters:
+            _validate_filters(value)
+
+
 class AnalysisConfig(dict):
     """
     OpenAlex Analysis configuration class. This class contains the settings used by openalex-analysis (some settings
@@ -40,16 +53,16 @@ class AnalysisConfig(dict):
 
         config.n_max_entities = 10000
 
-    * **email** (*str*) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex
-      documentation). The default value is None (not using the polite pool).
-    * **api_key** (*str*) - Your OpenAlex API key, if you have one. The default value is None.
-    * **openalex_url** (*str*) - OpenAlex API URL or your self-hosted API URL. The default value is
-      "https://api.openalex.org".
+    * **email** (*str*) - Optional contact email sent to OpenAlex. This does not replace an API key.
+    * **api_key** (*str*) - Your activated OpenAlex API key. Defaults to OPENALEX_API_KEY from the environment,
+      or None. Some operations, including subsequent cursor pages, require a key.
+    * **openalex_url** (*str*) - Base URL passed to PyAlex. The default is "https://api.openalex.org".
+      PyAlex 0.21 currently hardcodes the public host for regular queries.
     * **max_retries** (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value
       is 3.
-    * **retry_backoff_factor** (*int*) - The time to wait before retrying the request. The default is 2.
+    * **retry_backoff_factor** (*int*) - Exponential backoff factor passed to PyAlex. The default is 2.
     * **retry_http_codes** (*list[int]*) - The HTTP error codes for which to retry the request. The default is
-      [429, 500, 503].
+      [429, 500, 502, 503, 504].
     * **disable_tqdm_loading_bar** (*bool*) - To disable the tqdm loading bar. The default is False.
     * **n_max_entities** (*int*) - Maximum number of entities to download (the default value is to download maximum
       10 000 entities). If set to None, no limitation will be applied.
@@ -111,11 +124,11 @@ def set_default_config():
     """
     log_oa.info(f"Setting the default configuration")
     config.email = None
-    config.api_key = None
+    config.api_key = os.environ.get("OPENALEX_API_KEY") or None
     config.openalex_url = "https://api.openalex.org"
     config.max_retries = 3
     config.retry_backoff_factor = 2
-    config.retry_http_codes = [429, 500, 503]
+    config.retry_http_codes = [429, 500, 502, 503, 504]
     config.disable_tqdm_loading_bar = False
     config.n_max_entities = 10000
     config.project_data_folder_path = join(expanduser("~"), "openalex-analysis", "data")
@@ -204,7 +217,7 @@ class EntitiesData:
             anyway. The default value is None.
         :type load_only_columns: str | None
         """
-        self.per_page = 200  # maximum allowed by the API
+        self.per_page = 100  # supported maximum for regular OpenAlex lists
 
         if entities_from_id_list is not None and (entity_from_id is not None or extra_filters is not None):
             raise ValueError("The entity_from_id and extra_filters values cannot be specified with "
@@ -248,8 +261,8 @@ class EntitiesData:
         :return: The entities count matched.
         :rtype: int
         """
-        results, meta = self.EntityOpenAlex().filter(**query_filters).get(per_page=1, return_meta=True)
-        return meta['count']
+        _validate_filters(query_filters)
+        return self.EntityOpenAlex().filter(**query_filters).count()
 
     def get_api_query(self) -> dict:
         """
@@ -275,6 +288,7 @@ class EntitiesData:
             query_filters = {}
         if self.extra_filters is not None:
             query_filters = query_filters | self.extra_filters
+        _validate_filters(query_filters)
         log_oa.info(f"query: {query_filters}")
         return query_filters
 
@@ -306,6 +320,7 @@ class EntitiesData:
         """
         Downloads the entities which match the parameters of the instance, and store the dataset as a parquet file .
         """
+        _validate_filters(self.extra_filters)
         log_oa.info(f"Downloading list of {self.get_entity_type_string_name()}")
         if self.entity_from_id is not None:
             log_oa.info(f"of the {self.get_entity_type_string_name(self.entity_from_type)[0:-1]} {self.entity_from_id}")
@@ -334,7 +349,11 @@ class EntitiesData:
             entities_list = [None] * n_entities_to_download
 
             # create the pager entity to iterate over the pages of entities to download
-            pager = self.EntityOpenAlex().filter(**query).paginate(per_page=self.per_page, n_max=n_entities_to_download)
+            # PyAlex checks n_max between pages, not within a page. Enforce the
+            # existing configured cap locally as well, and never page for zero.
+            pager = (self.EntityOpenAlex().filter(**query).paginate(
+                per_page=min(self.per_page, 100), n_max=n_entities_to_download)
+                if n_entities_to_download > 0 else ())
 
             log_oa.info("Downloading the list of entities thought the OpenAlex API...")
             with tqdm(total=n_entities_to_download, disable=config.disable_tqdm_loading_bar) as pbar:
@@ -342,19 +361,22 @@ class EntitiesData:
                 self.entity_downloading_progress_percentage = 0
                 for page in pager:
                     # add the downloaded entities in the main list
+                    page_start = i
                     for entity in page:
+                        if config.n_max_entities is not None and i >= config.n_max_entities:
+                            break
                         self.filter_and_format_entity_data_from_api_response(entity)
                         if i < n_entities_to_download:
                             entities_list[i] = entity
                         else:
-                            # useless ?
+                            # A page may contain more entities than the preflight count predicted.
                             entities_list.append(entity)
                             warnings.warn("entities_list was too short, appending the entity")
                         i += 1
                     # update the progress bar
-                    pbar.update(self.per_page)
+                    pbar.update(i - page_start)
                     # update the progress percentage variable
-                    self.entity_downloading_progress_percentage = i / n_entities_to_download * 100 if i else 0
+                    self.entity_downloading_progress_percentage = min(i / n_entities_to_download * 100, 100) if i else 0
             self.entity_downloading_progress_percentage = 100
 
             log_oa.info("Converting the entities list downloaded to a DataFrame...")
@@ -402,6 +424,7 @@ class EntitiesData:
         Loads an entities' dataset from a file (or download it if needed and allowed by the instance) to the dataframe
         of the instance.
         """
+        _validate_filters(self.extra_filters)
         # Load from a list of entities
         if self.entities_from_id_list is not None:
             log_oa.info(f"Loading a dataframe of {len(self.entities_from_id_list)} entities...")
@@ -487,6 +510,7 @@ class EntitiesData:
         :return: The database file name
         :rtype: str
         """
+        _validate_filters(self.extra_filters)
         entity_from_id = self.entity_from_id
         entity_type = self.EntityOpenAlex
         file_name = self.get_entity_type_string_name(entity_type)
@@ -592,16 +616,13 @@ class EntitiesData:
         :return: the list of entities as pyalex objects (dictionaries) or DataFrame.
         :rtype: pd.DataFrame | list
         """
-        res = [] * len(ids)
-        i = 0
+        res = []
         with tqdm(total=len(ids), disable=config.disable_tqdm_loading_bar) as pbar:
-            # reduce 100 if too big for OpenAlex
-            while i + 100 < len(ids):
-                res[i:i+100] = self.EntityOpenAlex().filter(ids={'openalex': '|'.join(ids[i:i+100])}).get(per_page=100)
-                i += 100
-                pbar.update(100)
-            res[i:] = self.EntityOpenAlex().filter(ids={'openalex': '|'.join(ids[i:])}).get(per_page=100)
-            pbar.update(len(ids) % 100)
+            for i in range(0, len(ids), 100):
+                batch = ids[i:i+100]
+                res.extend(self.EntityOpenAlex().filter(
+                    ids={'openalex': '|'.join(batch)}).get(per_page=100))
+                pbar.update(len(batch))
 
         if ordered:
             # sort the res list with the order provided in the list ids
@@ -711,22 +732,21 @@ def get_info_about_entity(entity: str, infos: list[str] | None = None,
 
 def check_if_entity_exists(entity: str) -> bool:
     """
-    Check if the entity exists.
-    TODO: check status code for existence of entity as other errors can occur.
+    Check if the entity exists. Return False for HTTP 404; propagate other errors
+    rather than treating an authentication or service failure as existence.
 
     :param entity: The entity id.
     :type entity: str
     :return: True if the entity exists.
     :rtype: bool
     """
-    # get the name of the entity
-    api_path = str(entity).removeprefix("<class 'pyalex.api.").removesuffix("'>").lower() + "s"
-    # call the API
-    response = requests.get("https://api.openalex.org/" + api_path + "/" + entity)
-    if response.status_code == 404:
-        return False
-    else:
-        return True
+    try:
+        get_entity_type_from_id(entity)()[entity]
+    except requests.HTTPError as error:
+        if error.response is not None and error.response.status_code == 404:
+            return False
+        raise
+    return True
 
 
 class WorksData(EntitiesData, Works):
@@ -776,18 +796,15 @@ class WorksData(EntitiesData, Works):
         :return: the list of works as pyalex objects (dictionaries) or DataFrame.
         :rtype: pd.DataFrame | list
         """
-        res = [] * len(dois)
+        res = []
         # remove https://doi.org/ to keep request length below 4094 (limit from OpenAlex)
         short_doi = [doi.replace("https://doi.org/", "").replace("http://doi.org/", "") for doi in dois]
-        i = 0
         with tqdm(total=len(short_doi), disable=config.disable_tqdm_loading_bar) as pbar:
             # querying more than 60 DOIs causes the HTTP query size being larger than what OpenAlex allows
-            while i + 60 < len(short_doi):
-                res[i:i+60] = Works().filter(doi='|'.join(short_doi[i:i+60])).get(per_page=60)
-                i += 60
-                pbar.update(60)
-            res[i:] = Works().filter(doi='|'.join(short_doi[i:])).get(per_page=60)
-            pbar.update(len(short_doi) % 60)
+            for i in range(0, len(short_doi), 60):
+                batch = short_doi[i:i+60]
+                res.extend(Works().filter(doi='|'.join(batch)).get(per_page=60))
+                pbar.update(len(batch))
 
         if ordered:
             # normalize DOIs to sort

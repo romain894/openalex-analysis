@@ -186,13 +186,16 @@ Click on the plot to go to notebook with the interactive view.
 
 By default, the library will run out of the box. Nevertheless, some optional configurations can be done to improve the performance and to fit best the use case.
 
-Setting up the email address allows you to use the polite pool from OpenAlex which is faster than the default one.
+Use an activated OpenAlex API key for authenticated requests and cursor pagination.
+The library reads `OPENALEX_API_KEY` from the environment by default; you can also
+set `config.api_key` or load it from your private TOML configuration. Keys are sent
+in the `Authorization` header. An optional contact email does not replace a key.
 
 
 ```python
 from openalex_analysis.plot import config, InstitutionsPlot
 
-config.email = "email@example.com"
+config.max_retries = 3
 
 InstitutionsPlot()
 ```
@@ -201,10 +204,12 @@ The documentation or this notebook [setup_and_settings.ipynb](https://github.com
 
 ### Available settings
 
-  - `email` (*str*) - Your Email for the OpenAlex API. Allows you to use the polite pool (see OpenAlex documentation). The default value is None (not using the polite pool).
-  - `api_key` (*str*) - Your OpenAlex API key, if you have one. The default value is None.
-  - `openalex_url` (*str*) - OpenAlex API URL or your self-hosted API URL. The default value is "https://api.openalex.org".
-  - `http_retry_times` (*int*) - maximum number of retries when querying the OpenAlex API in HTTP. The default value is 3.
+  - `email` (*str*) - Optional contact email sent to OpenAlex. The default is None.
+  - `api_key` (*str*) - Your activated OpenAlex API key. Defaults to `OPENALEX_API_KEY` from the environment, or None.
+  - `openalex_url` (*str*) - API base URL forwarded to PyAlex. The default is "https://api.openalex.org". PyAlex 0.21 currently hardcodes the public host for regular queries; custom URL support requires an upstream fix.
+  - `max_retries` (*int*) - Retries after the initial HTTP attempt. The default is 3.
+  - `retry_backoff_factor` (*float*) - Exponential backoff factor passed to PyAlex. The default is 2.
+  - `retry_http_codes` (*list[int]*) - HTTP statuses retried. The default is `[429, 500, 502, 503, 504]`.
   - `disable_tqdm_loading_bar` (*bool*) - To disable the tqdm loading bar. The default is False.
   - `n_max_entities` (*int*) - Maximum number of entities to download (the default value is to download maximum 10 000 entities). If set to None, no limitation will be applied.
   - `project_data_folder_path` (*str*) - Path to the folder containing the data downloaded from the OpenAlex API (these data are stored in compressed parquet files and used as a cache). The default path is "~/openalex-analysis/data".
@@ -218,6 +223,8 @@ The documentation or this notebook [setup_and_settings.ipynb](https://github.com
   - `log_level` (*str*) - The log detail level for openalex-analysis (library specific). The log_level must be 'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
 
 ### Use a configuration file
+
+Authentication, retries, sessions, pagination and API errors are handled by PyAlex.
 
 You can use a configuration file to load your settings. If you save it in
 `~/openalex-analysis/openalex-analysis-conf.toml`, it will be automatically loaded each time you import the library.
@@ -236,6 +243,11 @@ n_max_entities = 200
 ```
 
 ## Tests
+
+Mocked API compatibility tests (no network):
+```bash
+python -m pytest tests/test_api.py
+```
 
 In the directory `tests/` run:
 ```bash
@@ -257,4 +269,4 @@ make html
   - [Explore OpenAlex online](https://explore.openalex.org/)
   - [PyAlex](https://github.com/J535D165/pyalex) (Python library for OpenAlex)
 
-Romain Thomas 2025
+Romain Thomas 2026
