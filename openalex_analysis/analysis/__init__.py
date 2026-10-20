@@ -1,5 +1,4 @@
-from openalex_analysis.analysis.entities_analysis import config
-from openalex_analysis.data.entities_data import load_config_from_file
+from openalex_analysis.config import config, load_config_from_file
 
 from openalex_analysis.analysis.entities_analysis import EntitiesAnalysis
 from openalex_analysis.analysis.entities_analysis import WorksAnalysis

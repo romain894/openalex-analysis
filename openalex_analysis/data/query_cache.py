@@ -14,7 +14,7 @@ import warnings
 from pyalex.api import BaseOpenAlex, OpenAlexResponseList, QueryError
 from requests.exceptions import RequestException
 
-from .entities_data import config, _validate_filters
+from ..config import config, _validate_filters
 
 
 SCHEMA_VERSION = 1

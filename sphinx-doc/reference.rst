@@ -1,6 +1,13 @@
 Reference
 =========
 
+Configuration
+-------------
+
+.. automodule:: openalex_analysis.config
+   :members: AnalysisConfig, load_config_from_file, set_default_config
+   :show-inheritance:
+
 Data
 --------
 
