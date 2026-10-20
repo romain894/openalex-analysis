@@ -1,6 +1,7 @@
 from openalex_analysis.data.entities_data import config
 from openalex_analysis.data.entities_data import load_config_from_file
 from openalex_analysis.data.entities_data import log_oa
+from openalex_analysis.data.query_cache import QueryCache, CacheMiss
 
 from openalex_analysis.data.entities_data import EntitiesData
 from openalex_analysis.data.entities_data import WorksData
@@ -21,6 +22,8 @@ __all__ = [
     "config",
     "load_config_from_file",
     "log_oa",
+    "QueryCache",
+    "CacheMiss",
     "EntitiesData",
     "WorksData",
     "AuthorsData",

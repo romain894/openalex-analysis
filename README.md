@@ -244,16 +244,31 @@ n_max_entities = 200
 
 ## Tests
 
-Mocked API compatibility tests (no network):
+From the repository root, install development tools and run the mocked and existing live API tests:
 ```bash
-python -m pytest tests/test_api.py
+make install-dev
+make test
 ```
 
-In the directory `tests/` run:
+The Makefile uses `.venv/bin/python` when available, otherwise `python3`.
+Override it with `make test PYTHON=/path/to/python`, or pass pytest options with
+`make test-unit PYTEST_ARGS='-q -k cache'`.
+
+Run either suite separately:
 ```bash
-pytest tests.py
+make test-unit  # No network
+make test-live  # Existing tests/tests.py against OpenAlex
 ```
 
+The live suite uses a temporary cache and caps downloads at 200 entities per query.
+Set `OPENALEX_API_KEY` to an activated key for authenticated requests, including subsequent cursor pages.
+
+## Build the library
+
+Build a wheel and source archive in `dist/`:
+```bash
+make build
+```
 
 ## Build the documentation
 

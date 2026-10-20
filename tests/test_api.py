@@ -5,13 +5,14 @@ import json
 import logging
 from pathlib import Path
 import socket
+import sqlite3
 from urllib.parse import parse_qs, urlsplit
 
 import pytest
 import requests
 from pyalex import Works
 from pyalex import config as pyalex_config
-from pyalex.api import QueryError
+from pyalex.api import QueryError, not_, or_
 from urllib3.connectionpool import HTTPConnectionPool
 from urllib3.exceptions import NewConnectionError, ReadTimeoutError
 from urllib3.response import HTTPResponse
@@ -325,3 +326,65 @@ def test_configured_api_url_upstream_gap(http):
     responses.append(listed([]))
     WorksData().get_count_entities_matched({})
     assert calls[0][0].url.startswith('https://example.org/openalex/')
+
+
+@pytest.mark.parametrize('filters', [
+    {'institutions': {'id': 'I1'}},
+    {'topics': or_({'id': ['T1', 'T2']})},
+])
+def test_query_cache_second_count_avoids_http(http, tmp_path, filters):
+    from openalex_analysis.data import QueryCache
+    calls, responses = http
+    responses.append(listed([], count=42))
+    cache = QueryCache(tmp_path / 'query-cache.sqlite3')
+    parameters = {'filter': filters}
+    def fetch():
+        return Works().filter(**parameters['filter']).count()
+    assert cache.get_or_fetch('works', 'count', parameters, fetch) == 42
+    assert cache.get_or_fetch('works', 'count', parameters, fetch) == 42
+    assert len(calls) == 1
+    with sqlite3.connect(cache.path) as db:
+        saved_params = json.loads(db.execute('SELECT parameters_json FROM query_cache').fetchone()[0])
+    assert saved_params['filter'] == parse_qs(urlsplit(calls[0][0].url).query)['filter'][0]
+
+
+@pytest.mark.parametrize('mode', ['auto', 'refresh'])
+def test_query_cache_preserves_identity_when_pyalex_mutates_filters(http, tmp_path, mode):
+    from openalex_analysis.data import QueryCache
+    calls, responses = http
+    responses.append(listed([], count=42))
+    cache = QueryCache(tmp_path / 'query-cache.sqlite3')
+    parameters = {'filter': {'title': {'search': not_('ice age')}}}
+    key = cache.make_key('works', 'count', parameters)
+
+    def fetch():
+        return Works().filter(**parameters['filter']).count()
+
+    assert cache.get_or_fetch('works', 'count', parameters, fetch, mode=mode) == 42
+    original = {'filter': {'title': {'search': not_('ice age')}}}
+    different = {'filter': {'title': {'search': not_('ice+age')}}}
+    assert cache.get('works', 'count', different) is None
+    assert cache.get_or_fetch('works', 'count', original,
+                              lambda: pytest.fail('Original query was not cached')) == 42
+    assert len(calls) == 1
+    with sqlite3.connect(cache.path) as db:
+        saved_key, params = db.execute('SELECT query_hash, parameters_json FROM query_cache').fetchone()
+    assert saved_key == key
+    assert json.loads(params)['filter'] == parse_qs(urlsplit(calls[0][0].url).query)['filter'][0]
+
+
+def test_query_cache_complete_pyalex_groups_avoid_http(http, tmp_path):
+    from openalex_analysis.data import QueryCache
+    calls, responses = http
+    pages = [
+        {'meta': {'count': 42, 'next_cursor': 'next'}, 'group_by': [{'key': '2020', 'count': 20}]},
+        {'meta': {'count': 42, 'next_cursor': None}, 'group_by': [{'key': '2021', 'count': 22}]},
+    ]
+    responses.extend((200, page, {}) for page in pages)
+    cache = QueryCache(tmp_path / 'query-cache.sqlite3')
+    parameters = {'filter': {'institutions': {'id': 'I1'}}, 'group_by': 'publication_year'}
+    def fetch_pages():
+        return Works().filter(**parameters['filter']).group_by('publication_year').paginate(per_page=100, n_max=None)
+    assert cache.get_or_fetch_pages('works', parameters, fetch_pages) == pages
+    assert cache.get_or_fetch_pages('works', parameters, fetch_pages) == pages
+    assert len(calls) == 2

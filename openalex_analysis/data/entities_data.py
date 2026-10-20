@@ -86,6 +86,16 @@ class AnalysisConfig(dict):
       the setting max_storage_percent to delete every cached file when the disk is almost full. The default value is 5e8
       (500 MB).
     * **cache_max_age** (*int*) - Maximum age of the cache in days. The default value is 365.
+    * **query_cache_path** (*str*) - SQLite query cache, separate from entity Parquet files.
+      Default: ~/openalex-analysis/query-cache.sqlite3.
+    * **query_cache_enabled** (*bool*) - Enable QueryCache storage. Default: True.
+    * **query_cache_mode** (*str*) - QueryCache mode: auto, refresh or offline. Default: auto.
+    * **query_cache_ttl** (*float*) - Fixed cache duration in seconds for all queries. Default: 604800 (1 week).
+      Freshness and cleanup use this setting with the stored retrieval date, including for existing entries.
+    * **query_cache_stale_if_error** (*bool*) - Allow warned stale fallback on request or PyAlex query errors. Default: False.
+    * **query_cache_max_entries** (*int*) - Maximum SQLite query rows. Default: 10000.
+    * **query_cache_max_size_bytes** (*int*) - Maximum serialized query/result bytes. Default: 100 MB.
+    * **query_cache_busy_timeout_ms** (*int*) - SQLite lock wait timeout. Default: 5000 milliseconds.
     * **log_level** (*str*) - The log detail level for openalex-analysis (library specific). The log_level must be
       'DEBUG', 'INFO', 'WARNING', 'ERROR' or 'CRITICAL'. The default value 'WARNING'.
     """
@@ -139,6 +149,14 @@ def set_default_config():
     config.min_storage_files = 1000
     config.min_storage_size = 5e8
     config.cache_max_age = 365
+    config.query_cache_path = join(expanduser("~"), "openalex-analysis", "query-cache.sqlite3")
+    config.query_cache_enabled = True
+    config.query_cache_mode = 'auto'
+    config.query_cache_ttl = 7 * 86400
+    config.query_cache_stale_if_error = False
+    config.query_cache_max_entries = 10000
+    config.query_cache_max_size_bytes = 100_000_000
+    config.query_cache_busy_timeout_ms = 5000
     config.log_level = 'WARNING'
 
 

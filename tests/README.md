@@ -1,13 +1,19 @@
 # Tests directory
 
-## Install `pytest`
+From the repository root:
 
 ```bash
-pip install pytest
+make install-dev
+make test
 ```
 
-## Run the tests
+`make test` runs both the mocked tests and the existing live API tests in `tests.py`.
 
+To run either suite separately:
 ```bash
-pytest tests.py
+make test-unit
+make test-live
 ```
+
+The live suite uses a temporary cache and caps downloads at 200 entities per query.
+Set `OPENALEX_API_KEY` to an activated key for authenticated requests, including subsequent cursor pages.

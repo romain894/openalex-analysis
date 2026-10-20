@@ -1,6 +1,5 @@
 import sys
-from os.path import isdir
-import shutil
+from pathlib import Path
 import pytest
 
 import numpy as np
@@ -16,7 +15,8 @@ from openalex_analysis.plot import WorksPlot
 # ~/openalex-analysis/openalex-analysis-conf.toml)
 from openalex_analysis.data.entities_data import set_default_config
 
-test_configuration_file = "test-openalex-analysis-conf.toml"
+test_directory = Path(__file__).resolve().parent
+test_configuration_file = str(test_directory / "test-openalex-analysis-conf.toml")
 
 load_config_from_file(test_configuration_file)
 
@@ -25,12 +25,15 @@ institution_upsaclay_id = "I277688954"
 
 regime_shift_topic_id = "T13377"
 
-# Use a specific folder for the tests to be able to clear the cache
-config.project_data_folder_path = "./data"
+@pytest.fixture(scope="session")
+def live_cache_directory(tmp_path_factory):
+    return tmp_path_factory.mktemp("openalex-live-cache")
 
-# remove data (cache) that may have been downloaded in the previous test
-if isdir(config.project_data_folder_path):
-    shutil.rmtree(config.project_data_folder_path)
+
+@pytest.fixture(autouse=True)
+def isolated_live_cache(live_cache_directory):
+    # Configuration-loading tests reset this setting, so restore it before each test.
+    config.project_data_folder_path = str(live_cache_directory)
 
 
 def test_load_configuration_file_warnings():
@@ -46,7 +49,7 @@ def test_load_configuration_file_warnings():
             UserWarning,
             match=f"No configuration parameters were found in the configuration file."
     ):
-        load_config_from_file("test-openalex-analysis-conf-without_parameter.toml")
+        load_config_from_file(str(test_directory / "test-openalex-analysis-conf-without_parameter.toml"))
     # reload the test configuration file
     load_config_from_file(test_configuration_file)
 
