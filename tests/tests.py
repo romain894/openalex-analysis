@@ -34,6 +34,7 @@ def live_cache_directory(tmp_path_factory):
 def isolated_live_cache(live_cache_directory):
     # Configuration-loading tests reset this setting, so restore it before each test.
     config.project_data_folder_path = str(live_cache_directory)
+    config.query_cache_path = str(live_cache_directory / 'queries.sqlite3')
 
 
 def test_load_configuration_file_warnings():
@@ -65,7 +66,7 @@ def test_load_configuration():
 
 def test_download_dataset_1():
     # basic test with works
-    wa = WorksAnalysis(institution_src_id)
+    wa = WorksAnalysis(institution_src_id, create_dataframe=True)
     first_author = wa.entities_df.at[0, "authorships"][0]
 
     assert isinstance(first_author['author']['display_name'], str)
@@ -78,7 +79,7 @@ def test_download_dataset_2():
         'authorships': {'institutions': {'id': institution_src_id}},
     }
 
-    wa = WorksAnalysis(extra_filters=extra_filters)
+    wa = WorksAnalysis(extra_filters=extra_filters, create_dataframe=True)
     first_author = wa.entities_df.at[0, "authorships"][0]
 
     assert isinstance(first_author['author']['display_name'], str)
@@ -86,7 +87,7 @@ def test_download_dataset_2():
 
 def test_download_dataset_3():
     # test with a topic dataset
-    wa = WorksPlot(regime_shift_topic_id)
+    wa = WorksPlot(regime_shift_topic_id, create_dataframe=True)
     print(wa.entities_df.authorships[0])
     first_author = wa.entities_df.at[0, "authorships"][0]
 
@@ -95,7 +96,7 @@ def test_download_dataset_3():
 
 def test_download_dataset_4():
     # basic test with authors
-    aa = AuthorsAnalysis(institution_src_id)
+    aa = AuthorsAnalysis(institution_src_id, create_dataframe=True)
     print(aa.entities_df.columns)
     first_author_name = aa.entities_df.at[0, "display_name"]
 
@@ -103,7 +104,7 @@ def test_download_dataset_4():
 
 
 def test_analysis_1():
-    wa = WorksAnalysis(institution_src_id)
+    wa = WorksAnalysis(institution_src_id, create_dataframe=True)
 
     wa.create_element_used_count_array('reference')
 
@@ -155,7 +156,8 @@ def test_instancies_from_list_of_ids():
         "https://doi.org/10.1126/science.1259855",
         "https://doi.org/10.1038/nature10452",
     ]
-    wd = WorksData(entities_from_id_list = article_dois)
+    wd = WorksData(entities_from_id_list=article_dois)
+    wd.load_entities_dataframe()
     assert len(wd.entities_df.index) == len(article_dois)
     assert wd.entities_df.at[0, "display_name"] in "A safe operating space for humanity"
     assert wd.entities_df.at[0, "doi"][16:] in article_dois[0].lower()
@@ -204,7 +206,8 @@ def test_get_multiple_institutions_from_id():
         institution_src_id,
         institution_upsaclay_id
     ]
-    inst = InstitutionsAnalysis(entities_from_id_list = institution_ids)
+    inst = InstitutionsAnalysis(entities_from_id_list=institution_ids)
+    inst.load_entities_dataframe()
     second_institution_code = inst.entities_df.at[1, "country_code"]
 
     assert isinstance(second_institution_code, str)
@@ -213,7 +216,8 @@ def test_get_multiple_institutions_from_id():
 
 def test_get_empty_list_of_institution_from_id():
     institution_ids = []
-    inst = InstitutionsAnalysis(entities_from_id_list = institution_ids)
+    inst = InstitutionsAnalysis(entities_from_id_list=institution_ids)
+    inst.load_entities_dataframe()
 
     assert inst.entities_df.empty
 
@@ -255,7 +259,8 @@ def test_generating_collaboration_map():
 def test_duplicated_doi_for_entities_from_id_list():
     dois = ['https://doi.org/10.1016/j.cosust.2025.101526', 'https://doi.org/10.1016/j.cosust.2025.101526']
 
-    works = WorksData(entities_from_id_list = dois)
+    works = WorksData(entities_from_id_list=dois)
+    works.load_entities_dataframe()
 
     print(works.entities_df.index)
     assert len(works.entities_df.index) == 2
@@ -264,6 +269,7 @@ def test_duplicated_doi_for_entities_from_id_list():
 def test_wrong_doi_for_entities_from_id_list():
     dois = ['https://doi.org/10.1016/j.cosust.2025.101526', 'https://doi.org/10.1016/j.cosust.2025.101526wrong']
 
-    works = WorksData(entities_from_id_list = dois)
+    works = WorksData(entities_from_id_list=dois)
+    works.load_entities_dataframe()
 
     assert len(works.entities_df.index) == 1

@@ -23,7 +23,22 @@ Examples in the documentation: [https://romain894.github.io/openalex-analysis/ht
 
 ### Get a dataset
 
-You can use the library simply to download and work with datasets from OpenAlex. The library can download these datasets and cache them on the computer automatically.
+Constructing an object configures its query without downloading entities. Counts and grouped statistics use that
+same query and the SQLite cache:
+
+```python
+from openalex_analysis.data import WorksData
+
+wdata = WorksData("I138595864", extra_filters={"publication_year": "2020-2024"})
+total = wdata.get_count()
+yearly = wdata.get_count_by_year()
+
+# Load the entity dataset only when needed, using the Parquet cache when available.
+wdata.load_entities_dataframe()
+my_dataset = wdata.entities_df
+```
+
+Use `create_dataframe=True` at construction if you want to load entities immediately.
 
 These datasets can then be used in python outside the library, as they are pandas DataFrame objects.
 
@@ -45,6 +60,7 @@ article_dois = [
     "https://doi.org/10.1126/SCIENCE.1259855",
 ]
 wdata = WorksData(entities_from_id_list = article_dois)
+wdata.load_entities_dataframe()
 
 my_dataset = wdata.entities_df
 
@@ -64,6 +80,7 @@ from openalex_analysis.data import WorksData
 topic_id = 'T10028' # Natural Language Processing
 
 wdata = WorksData(topic_id)
+wdata.load_entities_dataframe()
 
 my_dataset = wdata.entities_df
 ```
@@ -77,6 +94,7 @@ from openalex_analysis.data import WorksData
 
 # Get the works of the institution "Stockholm Resilience Centre"
 wdata = WorksData("I138595864")
+wdata.load_entities_dataframe()
 ```
 
 This also works to get other type of entities:
@@ -86,6 +104,7 @@ from openalex_analysis.data import AuthorsData
 
 # Get the authors of the institution "Stockholm Resilience Centre"
 adata = AuthorsData("I138595864")
+adata.load_entities_dataframe()
 ```
 
 ```python
@@ -93,6 +112,7 @@ from openalex_analysis.data import InstitutionsData
 
 # Get the institutions having as topic "Natural Language Processing"
 idata = InstitutionsData("T10028")
+idata.load_entities_dataframe()
 ```
 
 
@@ -109,6 +129,7 @@ extra_filters = {
 }
 
 wdata = WorksData(extra_filters = extra_filters)
+wdata.load_entities_dataframe()
 
 my_dataset = wdata.entities_df
 ```
@@ -127,6 +148,7 @@ extra_filters = {
 
 wplt = WorksAnalysis(concept_sustainability,
                      extra_filters = extra_filters)
+wplt.load_entities_dataframe()
 
 my_dataset = wplt.entities_df
 ```

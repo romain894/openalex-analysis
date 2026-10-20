@@ -117,6 +117,7 @@ class EntitiesAnalysis(EntitiesData):
                 works = WorksAnalysis(institution_from, extra_filters = extra_filters_for_entities_from)
             else:
                 works = WorksAnalysis(institution_from)
+            works.load_entities_dataframe()
             # get the list of institutions who collaborated per work:
             collaborations_per_work = [
                 list(set([institution['id'] for author in work for institution in author['institutions']]))
@@ -329,6 +330,7 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
                 self.create_element_count_array_progress_percentage = int(i / len(entities_from) * 100)
                 # initialise the WorksAnalysis instance
                 works = WorksAnalysis(**entity, load_only_columns=cols_to_load)
+                works.load_entities_dataframe()
                 col_name = works.entity_from_id + " " + works.get_name_of_entity()
                 self.count_entities_cols.append(col_name)
                 # if there is no data in the dataframe, we add a blank column
@@ -588,6 +590,7 @@ class WorksAnalysis(EntitiesAnalysis, WorksData):
 
         for entity_from_id in entity_from_ids:
             work_analysis = WorksAnalysis(entity_from_id)
+            work_analysis.load_entities_dataframe()
             df = pd.concat([
                 df,
                 work_analysis.get_df_yearly_usage_of_entities(count_years=count_years,

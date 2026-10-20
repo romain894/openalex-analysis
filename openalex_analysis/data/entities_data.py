@@ -2,6 +2,7 @@
 # Licence GPLv3
 
 import os
+from copy import deepcopy
 from os.path import exists, join, isdir, isfile, expanduser
 import psutil
 from pathlib import Path
@@ -19,6 +20,9 @@ import requests
 
 from pyalex import Works, Authors, Sources, Institutions, Topics, Concepts, Publishers
 from pyalex import config as pyalex_config
+
+OPENALEX_ID_PATTERN = r'^(?:https?://openalex\.org/)?[A-Za-z]\d+$'
+DOI_PATTERN = r'^(?:https?://doi\.org/)?10\.\d{4,9}/[-._;()/:A-Za-z0-9]+$'
 
 logging.captureWarnings(True)
 # define a custom logging
@@ -208,7 +212,7 @@ class EntitiesData:
                  extra_filters: dict | None = None,
                  entities_from_id_list: list[str] | None = None,
                  database_file_path: str | None = None,
-                 create_dataframe: bool = True,
+                 create_dataframe: bool = False,
                  load_only_columns: list[str] | None = None,
                  ):
         """
@@ -228,8 +232,8 @@ class EntitiesData:
         :param database_file_path: The database file (parquet or csv) path to force the analysis over datas in a
             specific file. The default value is None to use the data from the OpenAlex API or the cached data.
         :type database_file_path: str | None
-        :param create_dataframe: Create the dataframe at the initialisation (and download the data if allowed and
-            entity_from_id or extra_filters is provided). The default value is True.
+        :param create_dataframe: Load the dataframe at initialization, downloading entities if needed.
+            Defaults to False; call load_entities_dataframe() when the entity dataset is needed.
         :type create_dataframe: bool
         :param load_only_columns: Load only the specified columns from the parquet file. Everything will be downloaded
             anyway. The default value is None.
@@ -267,8 +271,8 @@ class EntitiesData:
                 self.entity_from_type = self.get_entity_type_from_id(self.entity_from_id)
             if self.database_file_path is None:
                 self.database_file_path = join(config.project_data_folder_path, self.get_database_file_name())
-            if create_dataframe:
-                self.load_entities_dataframe()
+        if create_dataframe:
+            self.load_entities_dataframe()
 
     def get_count_entities_matched(self, query_filters: dict) -> int:
         """
@@ -280,16 +284,90 @@ class EntitiesData:
         :rtype: int
         """
         _validate_filters(query_filters)
-        return self.EntityOpenAlex().filter(**query_filters).count()
+        return self.EntityOpenAlex(params={'filter': deepcopy(query_filters)}).count()
+
+    def get_count(self, *, mode: str | None = None,
+                  stale_if_error: bool | None = None) -> int:
+        """
+        Count all matching entities without downloading the collection or applying config.n_max_entities.
+        Uses the instance's filters or ID list.
+
+        :param mode: "auto" uses fresh cache entries, "refresh" fetches again, and "offline" uses cached data only.
+            None uses config.query_cache_mode. Offline cache misses raise CacheMiss.
+        :param stale_if_error: Use cached data with a warning on request errors. None uses the configuration setting.
+        :return: The total number of matching entities.
+        """
+        from .query_cache import QueryCache
+
+        parameters = {'filter': self.get_api_query()}
+
+        def fetch_count():
+            """Count the instance query, avoiding an API request for an empty ID list."""
+            if self.entities_from_id_list == []:
+                return 0
+            return self.EntityOpenAlex(params=deepcopy(parameters)).count()
+
+        return QueryCache().get_or_fetch(
+            self.get_entity_type_string_name(), 'count', parameters,
+            fetch_count,
+            mode=mode, stale_if_error=stale_if_error)
+
+    def get_group_by(self, field: str, *,
+                     mode: str | None = None, stale_if_error: bool | None = None) -> pd.DataFrame:
+        """
+        Count matching entities by a grouping field, fetching all groups regardless of config.n_max_entities.
+        Uses the instance's filters or ID list. Only complete results are cached; entities_df is unchanged.
+
+        :param field: An OpenAlex grouping field, such as "publication_year". Append ``:include_unknown`` to include
+            groups with missing values.
+        :param mode: "auto", "refresh" or "offline"; see get_count(). None uses config.query_cache_mode.
+        :param stale_if_error: Use cached data with a warning on request errors. None uses the configuration setting.
+        :return: Groups in API order with key, key_display_name and count columns, including when empty.
+        """
+        from .query_cache import QueryCache
+
+        if not isinstance(field, str) or not field.strip():
+            raise ValueError('A non-empty OpenAlex grouping field is required.')
+        parameters = {'filter': self.get_api_query(), 'group-by': field}
+
+        def fetch_pages():
+            """Yield PyAlex grouped pages without changing the filters between requests."""
+            if self.entities_from_id_list == []:
+                return
+            query = self.EntityOpenAlex(params=deepcopy(parameters))
+            for page in query.paginate(per_page=200, n_max=None):
+                # PyAlex quotes logical expressions in place on each request.
+                query.params['filter'] = deepcopy(parameters['filter'])
+                yield page
+
+        pages = QueryCache().get_or_fetch_pages(
+            self.get_entity_type_string_name(), parameters, fetch_pages,
+            mode=mode, stale_if_error=stale_if_error)
+        groups = [group for page in pages for group in page['group_by']]
+        return pd.DataFrame.from_records(
+            groups, columns=['key', 'key_display_name', 'count']).astype({'count': 'int64'})
 
     def get_api_query(self) -> dict:
         """
-        Gets the api query from the parameters of the instance.
+        Get the API query from the instance filters or ID list.
+        ID lists use OR filters and remain subject to OpenAlex query-size limits.
 
         :return: The api query
         :rtype: dict
         """
-        if self.entity_from_id is not None:
+        if self.entities_from_id_list is not None:
+            ids = self.entities_from_id_list
+            if not ids or re.match(OPENALEX_ID_PATTERN, ids[0]):
+                ids = [ident.removeprefix('https://openalex.org/').removeprefix('http://openalex.org/')
+                       for ident in ids]
+                query_filters = {'ids': {'openalex': '|'.join(ids)}}
+            elif self.EntityOpenAlex == Works and re.match(DOI_PATTERN, ids[0]):
+                dois = [doi.removeprefix('https://doi.org/').removeprefix('http://doi.org/').lower()
+                        for doi in ids]
+                query_filters = {'doi': '|'.join(dois)}
+            else:
+                raise ValueError('The first ID in the list did not match any supported ID pattern.')
+        elif self.entity_from_id is not None:
             query_filters = {self.get_entity_type_string_name(self.entity_from_type): {"id": self.entity_from_id}}
             # special cases:
             # concept of institution as the query key word is x_concepts instead of concepts
@@ -305,7 +383,7 @@ class EntitiesData:
         else:
             query_filters = {}
         if self.extra_filters is not None:
-            query_filters = query_filters | self.extra_filters
+            query_filters = type(self.extra_filters)(query_filters | self.extra_filters)
         _validate_filters(query_filters)
         log_oa.info(f"query: {query_filters}")
         return query_filters
@@ -339,6 +417,8 @@ class EntitiesData:
         Downloads the entities which match the parameters of the instance, and store the dataset as a parquet file .
         """
         _validate_filters(self.extra_filters)
+        if self.database_file_path is None:
+            self.database_file_path = join(config.project_data_folder_path, self.get_database_file_name())
         log_oa.info(f"Downloading list of {self.get_entity_type_string_name()}")
         if self.entity_from_id is not None:
             log_oa.info(f"of the {self.get_entity_type_string_name(self.entity_from_type)[0:-1]} {self.entity_from_id}")
@@ -352,6 +432,7 @@ class EntitiesData:
             query = self.get_api_query()
             log_oa.info(f"Query to download from the API: {query}")
 
+            # A cached statistic must not limit a new entity download.
             count_entities_matched = self.get_count_entities_matched(query)
 
             if config.n_max_entities is None or config.n_max_entities > count_entities_matched:
@@ -369,7 +450,8 @@ class EntitiesData:
             # create the pager entity to iterate over the pages of entities to download
             # PyAlex checks n_max between pages, not within a page. Enforce the
             # existing configured cap locally as well, and never page for zero.
-            pager = (self.EntityOpenAlex().filter(**query).paginate(
+            entity_query = self.EntityOpenAlex(params={'filter': deepcopy(query)})
+            pager = (entity_query.paginate(
                 per_page=min(self.per_page, 100), n_max=n_entities_to_download)
                 if n_entities_to_download > 0 else ())
 
@@ -378,6 +460,7 @@ class EntitiesData:
                 i = 0
                 self.entity_downloading_progress_percentage = 0
                 for page in pager:
+                    entity_query.params['filter'] = deepcopy(query)
                     # add the downloaded entities in the main list
                     page_start = i
                     for entity in page:
@@ -402,13 +485,10 @@ class EntitiesData:
         else:
             # download entities from the list self.entities_from_id_list
             # identify the type of id based on the first ID, this is experimental
-            openalex_id_pattern = r'^(?:https?://openalex\.org/)?[A-Za-z]\d+$'
-            doi_pattern = r'^(?:https?://doi\.org/)?10\.\d{4,9}/[-._;()/:A-Za-z0-9]+$'
-            ror_pattern = r'^(?:https?://ror\.org/)?0[a-hj-km-np-tv-z|0-9]{6}[0-9]{2}$'
-            if re.match(openalex_id_pattern, self.entities_from_id_list[0]):
+            if re.match(OPENALEX_ID_PATTERN, self.entities_from_id_list[0]):
                 log_oa.info("Downloading the entities from OpenAlex ID...")
                 entities_list_df = self.get_multiple_entities_from_id(self.entities_from_id_list)
-            elif self.EntityOpenAlex == Works and re.match(doi_pattern, self.entities_from_id_list[0]):
+            elif self.EntityOpenAlex == Works and re.match(DOI_PATTERN, self.entities_from_id_list[0]):
                 log_oa.info("Downloading the entities from DOI...")
                 entities_list_df = self.get_multiple_works_from_doi(self.entities_from_id_list)
             # elif self.EntityOpenAlex == Institutions and re.match(ror_pattern, self.entities_from_id_list[0]):
@@ -439,8 +519,8 @@ class EntitiesData:
 
     def load_entities_dataframe(self):
         """
-        Loads an entities' dataset from a file (or download it if needed and allowed by the instance) to the dataframe
-        of the instance.
+        Load entities into entities_df from the Parquet cache, downloading them if missing or expired.
+        Uses the instance query and config.n_max_entities for filtered downloads.
         """
         _validate_filters(self.extra_filters)
         # Load from a list of entities
@@ -459,6 +539,8 @@ class EntitiesData:
             if self.extra_filters is not None:
                 log_oa.info(f"with extra filters: {self.extra_filters}")
 
+        if self.database_file_path is None:
+            self.database_file_path = join(config.project_data_folder_path, self.get_database_file_name())
         # check if the database file exists
         if not exists(self.database_file_path):
             # if the database cache was not found, download the data
@@ -540,9 +622,10 @@ class EntitiesData:
             if entity_from_id is not None:
                 file_name += "_from_" + entity_from_id
             if self.extra_filters is not None:
-                file_name += "_" + str(self.extra_filters).replace("'", '').replace(":", '').replace(' ', '_')
-            # add the data format version, we increment this number if the format (e.g. columns) change in the parquet file:
-            file_name += "_v2"
+                query = pyalex.api.BaseOpenAlex(params={'filter': deepcopy(self.extra_filters)}).url
+                file_name += "_" + hashlib.sha224(query.encode()).hexdigest()
+            # Change the version when cache identity or the stored data format changes.
+            file_name += "_v3"
             # keep the file name below 120 characters and reserve 22 for the max size + parquet extension
             if len(file_name) > 96:
                 # sha224 length: 56
@@ -647,8 +730,10 @@ class EntitiesData:
             # create a dictionary with each id as key and the index in the res list as value
             res_ids_index = {entity['id'][21:]: i for i, entity in enumerate(res) if entity is not None}
             # sort based on the index
+            normalized_ids = [entity_id.removeprefix('https://openalex.org/').removeprefix('http://openalex.org/')
+                              for entity_id in ids]
             res = [res[res_ids_index[entity_id]] if res_ids_index.get(entity_id) is not None else None
-                   for entity_id in ids]
+                   for entity_id in normalized_ids]
 
         if return_dataframe:
             # similar to the download function, apply the needed formatting (e.g. extracting the abstract for works)
@@ -772,6 +857,52 @@ class WorksData(EntitiesData, Works):
     This class contains specific methods for Works entity data.
     """
     EntityOpenAlex = Works
+
+    def get_count_by_year(self, **kwargs) -> pd.DataFrame:
+        """
+        Count works per publication year across all matching works.
+
+        :param kwargs: Cache options mode and stale_if_error; see get_group_by().
+        :return: Year groups with key, key_display_name and count columns.
+        """
+        return self.get_group_by('publication_year', **kwargs)
+
+    def get_count_by_type(self, **kwargs) -> pd.DataFrame:
+        """
+        Count works per publication type across all matching works.
+
+        :param kwargs: Cache options mode and stale_if_error; see get_group_by().
+        :return: Publication type groups with key, key_display_name and count columns.
+        """
+        return self.get_group_by('type', **kwargs)
+
+    def get_count_by_institution(self, **kwargs) -> pd.DataFrame:
+        """
+        Count works per institution, including the source institution when filtering by one.
+        Works affiliated with several institutions can appear in several groups.
+
+        :param kwargs: Cache options mode and stale_if_error; see get_group_by().
+        :return: Institution groups with key, key_display_name and count columns.
+        """
+        return self.get_group_by('authorships.institutions.id', **kwargs)
+
+    def get_count_by_country(self, **kwargs) -> pd.DataFrame:
+        """
+        Count works per authorship country. International works can appear in several groups.
+
+        :param kwargs: Cache options mode and stale_if_error; see get_group_by().
+        :return: Country groups with key, key_display_name and count columns.
+        """
+        return self.get_group_by('authorships.countries', **kwargs)
+
+    def get_count_by_topic(self, **kwargs) -> pd.DataFrame:
+        """
+        Count works per topic. Works assigned several topics can appear in several groups.
+
+        :param kwargs: Cache options mode and stale_if_error; see get_group_by().
+        :return: Topic groups with key, key_display_name and count columns.
+        """
+        return self.get_group_by('topics.id', **kwargs)
 
     def filter_and_format_entity_data_from_api_response(self, entity: dict):
         """
